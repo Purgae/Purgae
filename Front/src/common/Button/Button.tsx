@@ -1,11 +1,9 @@
 import React from 'react'
 import './Button.css'
 
-type Props = {
-  variant: string,
-  args?: any,
-  children: any, 
-
+interface Props {
+  variant: string;
+  children: any;
 }
 
 const Button = (props: Props) => {

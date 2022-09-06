@@ -28,7 +28,7 @@ public class User extends BaseEntity{
     Long gameScore;
 
     @Column(name = "profilePublic", nullable = false)
-    @ColumnDefault("0")
-    boolean profilePublic;
+    boolean profilePublic = true;
+
 
 }

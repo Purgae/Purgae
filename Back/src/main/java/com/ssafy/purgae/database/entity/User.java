@@ -29,6 +29,6 @@ public class User extends BaseEntity{
 
     @Column(name = "profilePublic", nullable = false)
     @ColumnDefault("0")
-    Boolean profilePublic;
+    boolean profilePublic;
 
 }

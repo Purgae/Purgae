@@ -11,6 +11,8 @@ public interface UserService {
 
     public User getUserInfo(String walletAddress);
 
+    public User getUserInfoById(Long userId);
+
     public boolean checkNFT(List<Map<String,String>> NFTList, String profileHash);
 
     public int updateProfileImg(long userId, String profileHash);

@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService {
         return userRepository.findFirstByWalletAddress(walletAddress);
     }
 
+    @Override
+    public User getUserInfoById(Long userId) {
+        return userRepository.findFirstById(userId);
+    }
+
 
     @Override
     public boolean checkNFT(List<Map<String,String>> NFTList, String profileHash) {

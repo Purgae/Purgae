@@ -12,7 +12,12 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class User extends BaseEntity{
+public class User{
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-Increment
+    @Column(name = "userId")
+    Long id = null;
 
     @Column(name = "walletAddress", length = 50, nullable = false)
     String walletAddress;

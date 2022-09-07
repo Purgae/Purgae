@@ -33,11 +33,12 @@ spring:
         default-page-size: 10
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
     properties:
       hibernate:
-        show_sql: false
+        show_sql: true
         format_sql: false
+    generate-ddl: true
 logging:
   level:
     org.hibernate:

@@ -13,6 +13,10 @@ public interface LikeRepository extends JpaRepository<LikeUser, Long> {
 
     public List<LikeUser> findAllByToUser(User toUser);
 
+    public List<LikeUser> findAllByFromUser(User fromUser);
+
+    public LikeUser findByFromUserAndToUser(User fromUser, User toUser);
+
 //    @Query("select l from LikeUser l where l.toUser =:toUser")
 //    public List<LikeUser> getFollower(long toUser);
 }

@@ -1,6 +1,7 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -30,5 +31,7 @@ public interface UserService {
     public User updateUserInfo(long userId, String profileImage, String nickname, boolean profilePublic);
 
     public User updateGameScore(Long userId, Long gameScore);
+
+
 
 }

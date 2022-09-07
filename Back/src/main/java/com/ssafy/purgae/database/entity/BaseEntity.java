@@ -15,4 +15,5 @@ public class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-Increment
     Long id = null;
+
 }

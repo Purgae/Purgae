@@ -6,7 +6,9 @@ import java.util.List;
 
 public interface LikeUserService {
 
-    public boolean likeUser(long fromUserId, long toUserId);
+    public String likeUser(long fromUserId, long toUserId);
 
     public List<User> getFollower(User user);
+
+    public List<User> getFollowing(User user);
 }

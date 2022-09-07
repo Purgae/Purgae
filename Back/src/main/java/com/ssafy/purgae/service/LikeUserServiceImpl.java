@@ -24,18 +24,25 @@ public class LikeUserServiceImpl implements LikeUserService{
     UserRepository userRepository;
 
     @Override
-    public boolean likeUser(long fromUserId, long toUserId) {
+    public String likeUser(long fromUserId, long toUserId) {
         User fromUser = userRepository.findFirstById(fromUserId);
         User toUser = userRepository.findFirstById(toUserId);
         if(fromUser == null || toUser == null){
-            return false;
+            return "fail";
         }
-        LikeUser likeUser = new LikeUser();
-        likeUser.setFromUser(fromUser);
-        likeUser.setToUser(toUser);
+        LikeUser user = likeRepository.findByFromUserAndToUser(fromUser, toUser);
+        System.out.println(user);
+        if(user != null){
+            likeRepository.delete(user);
+            return "unfollow";
+        }else {
+            LikeUser likeUser = new LikeUser();
+            likeUser.setFromUser(fromUser);
+            likeUser.setToUser(toUser);
+            likeRepository.save(likeUser);
+            return "follow";
+        }
 
-        likeRepository.save(likeUser);
-        return true;
     }
 
     @Override
@@ -46,6 +53,18 @@ public class LikeUserServiceImpl implements LikeUserService{
 
         for(int i=0;i<likeUsers.size();i++){
             result.add(userRepository.findFirstById(likeUsers.get(i).getFromUser().getId()));
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> getFollowing(User user) {
+        List<LikeUser> likeUsers = likeRepository.findAllByFromUser(user);
+//        System.out.println(likeUsers);
+        List<User> result = new ArrayList<>();
+
+        for(int i=0;i<likeUsers.size();i++){
+            result.add(userRepository.findFirstById(likeUsers.get(i).getToUser().getId()));
         }
         return result;
     }

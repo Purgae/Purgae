@@ -31,8 +31,11 @@ public class LikeUserController {
         long fromUserId = Long.valueOf((int)reqData.get("fromUser"));
         long toUserId = Long.valueOf((int)reqData.get("toUser"));
 
-        if(likeUserService.likeUser(fromUserId, toUserId)){
-            result.put("message", SUCCESS);
+        String tmp = likeUserService.likeUser(fromUserId, toUserId);
+        if(tmp.equals("follow")){
+            result.put("message", "follow");
+        }else if(tmp.equals("unfollow")){
+            result.put("message", "unfollow");
         }else{
             result.put("message", FAIL);
         }
@@ -49,6 +52,21 @@ public class LikeUserController {
         if(likeUsers != null){
             result.put("message", SUCCESS);
             result.put("follower", likeUsers);
+        }else {
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/following/{userId}")
+    public ResponseEntity<Map<String,Object>> getFollowing(@PathVariable long userId){
+        Map<String, Object> result = new HashMap<>();
+        System.out.println(userId);
+        User user = userService.getUserInfoById(userId);
+        List<User> likeUsers = likeUserService.getFollowing(user);
+        if(likeUsers != null){
+            result.put("message", SUCCESS);
+            result.put("following", likeUsers);
         }else {
             result.put("message", FAIL);
         }

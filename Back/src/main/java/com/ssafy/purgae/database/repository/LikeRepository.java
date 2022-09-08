@@ -4,9 +4,11 @@ import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.entity.rankingUser;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -14,9 +16,9 @@ public interface LikeRepository extends JpaRepository<LikeUser, Long> {
 
     public List<LikeUser> findAllByToUser(User toUser);
 
-    @Query(nativeQuery = true,
-            value = "select l.toUser, count(l.fromUser) from LikeUser as l group by l.toUser order by count(l.fromUser) desc")
-    public List<rankingUser> getLikeRanking();
+    @Query("SELECT new com.ssafy.purgae.database.entity.rankingUser(l.toUser, COUNT(l.fromUser)) FROM LikeUser as l GROUP BY l.toUser ORDER BY COUNT(l.fromUser) DESC")
+    public List<rankingUser> findLikeUserWithJPQL();
+
     public List<LikeUser> findAllByFromUser(User fromUser);
 
     public LikeUser findByFromUserAndToUser(User fromUser, User toUser);

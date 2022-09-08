@@ -2,6 +2,8 @@ package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.service.RankingService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api(tags = {"랭킹 API Controller"})
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/ranking")
@@ -24,6 +27,7 @@ public class RankingController {
     @Autowired
     RankingService rankingService;
 
+    @ApiOperation(value = "게임 랭킹", notes = "요청시 탑10 게임 랭킹 조회")
     @GetMapping("/game")
     public ResponseEntity<Map<String, Object>> gameRanking(){
         Map<String, Object> result = new HashMap<>();

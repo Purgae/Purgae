@@ -1,6 +1,8 @@
 package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.database.entity.UserMapping;
+import com.ssafy.purgae.database.entity.rankingUser;
 import com.ssafy.purgae.service.RankingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +29,21 @@ public class RankingController {
     @GetMapping("/game")
     public ResponseEntity<Map<String, Object>> gameRanking(){
         Map<String, Object> result = new HashMap<>();
-        List<User> top10 = rankingService.getTop10GameScore();
+        List<UserMapping> top10 = rankingService.getTop10GameScore();
+
+        if(top10 != null){
+            result.put("top10", top10);
+            result.put("message", SUCCESS);
+        }else{
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+    @GetMapping("/like")
+    public ResponseEntity<Map<String, Object>> likeRanking(){
+        Map<String, Object> result = new HashMap<>();
+        List<rankingUser> top10 = rankingService.getTop10Like();
 
         if(top10 != null){
             result.put("top10", top10);

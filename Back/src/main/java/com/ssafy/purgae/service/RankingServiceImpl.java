@@ -1,26 +1,36 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.database.entity.UserMapping;
+import com.ssafy.purgae.database.entity.rankingUser;
+import com.ssafy.purgae.database.repository.LikeRepository;
 import com.ssafy.purgae.database.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service("rankingService")
 @RequiredArgsConstructor
 @Transactional
 public class RankingServiceImpl implements RankingService{
-    @Autowired
-    UserRepository userRepository;
+    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
+
     @Override
-    public List<User> getTop10GameScore() {
-        List<User> gameTop10 = userRepository.findTop10ByOrderByGameScoreDesc();
+    public List<UserMapping> getTop10GameScore() {
+        List<UserMapping> gameTop10 = userRepository.findTop10ByOrderByGameScoreDesc();
+
+
         return gameTop10;
+    }
+
+    @Override
+    public List<rankingUser> getTop10Like() {
+        List<rankingUser> likeTop10 = likeRepository.findLikeUserWithJPQL();
+
+        return likeTop10;
     }
 }

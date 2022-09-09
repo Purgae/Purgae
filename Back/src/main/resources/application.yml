@@ -3,6 +3,9 @@ server:
   address: localhost
   servlet:
     context-path: /api
+  error:
+    whitelabel:
+      enabled: false
 
 spring:
   servlet:

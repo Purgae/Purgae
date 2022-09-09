@@ -1,9 +1,11 @@
 package com.ssafy.purgae.database.entity;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+
 
 @Table(name = "User")
 @Entity
@@ -30,7 +32,7 @@ public class User{
 
     @Column(name = "gameScore")
     @ColumnDefault("0")
-    Long gameScore;
+    Long gameScore = 0L;
 
     @Column(name = "profilePublic", nullable = false)
     boolean profilePublic = true;

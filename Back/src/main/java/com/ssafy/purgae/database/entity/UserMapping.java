@@ -4,4 +4,5 @@ public interface UserMapping {
     Long getId();
     String getNickname();
     String getProfileImage();
+    String getGameScore();
 }

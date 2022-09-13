@@ -1,32 +1,24 @@
+import Login from "@/components/auth/login/Login";
 import Home from "@/components/home/Home";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
+import Web3 from "web3";
+import { useAppSelector } from "./hooks";
+
+
+const ROPSTEN_URL = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
+
 
 const App = () => {
-  //todo. 실행시, 크립토좀비 참고
-  // - metamask검사
-  const [account, setAccount] = useState ("");
-
-  const getAccount = async () => {
-    try {
-      if (window.ethereum) {
-        const accounts = await window.ethereum.request({
-          method: "eth_requestAccounts",
-        });
-        // -> window.ethereum.request 찍어보기
-
-        setAccount(accounts[0]);
-      } else {
-        alert("Install Metamask!");
-      }
-    } catch (error) {
-      console.error(error); 
-    }
-  };
+  // https://redux-toolkit.js.org/tutorials/typescript
+  const account = useAppSelector(state => state.auth.userInfo.account)
+  
+  // todo. 실행시, 크립토좀비 참고
+  // // - metamask검사
 
   useEffect(() => {
-    getAccount(); 
+    // getAccount(); 
   }, []);
 
 
@@ -35,6 +27,7 @@ const App = () => {
     <>
     <Routes>
       <Route path="/" element={<Home />}/>
+      <Route path="/login" element={<Login />}/>
     </Routes>
     </>
   );

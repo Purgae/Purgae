@@ -12,7 +12,7 @@ const ROPSTEN_URL = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa44561
 
 const App = () => {
   // https://redux-toolkit.js.org/tutorials/typescript
-  const account = useAppSelector(state => state.auth.userInfo.account)
+  // const account = useAppSelector(state => state.auth.userInfo.account)
   
   // todo. 실행시, 크립토좀비 참고
   // // - metamask검사

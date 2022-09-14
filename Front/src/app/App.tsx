@@ -1,15 +1,15 @@
+
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import Web3 from "web3";
 import { useAppSelector } from "../hooks/storehooks";
 
-
 // 최상위 컴포넌트 :  최상위에 코드 추가 
 import { GlobalStyle } from "./styles";
 
-
 import Login from "@/features/auth/login/Login";
 import Home from "@/features/home/Home";
+import Counter from "@/features/counter/Counter";
 
 
 const ROPSTEN_URL = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161';
@@ -17,8 +17,6 @@ const ROPSTEN_URL = 'https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa44561
 
 
 const App = () => {
-
-
   return (
     <>
     {/* 글로벌-스타일-컴포넌트 위치 */}
@@ -47,9 +45,11 @@ const App = () => {
       {/* 자주 묻는 질문 */}
       <Route path="/faq"/>
       <Route path="/faq/detail"/>
+      {/* Redux 테스트 페이지 */}
+      <Route path="/counter" element={<Counter />} />
     </Routes>
     </>
   );
-}
+};
 
 export default App;

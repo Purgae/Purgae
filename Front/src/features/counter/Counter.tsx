@@ -1,12 +1,8 @@
 import { Fragment } from "react";
-import { useAppDispatch, useAppSelector } from "@/hooks/storeHooks";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 
 // * action creator, selector를 import한다.
-import {
-  selectCounter,
-  increment,
-  decrement,
-} from "@/store/slices/counterSlice";
+import { selectCounter, increment, decrement } from "@/store/slices/counterSlice";
 
 // * props를 넘긴다면 props 타입을 지정한다.
 interface TestProps {}
@@ -25,7 +21,7 @@ const Counter = (props: TestProps) => {
     <Fragment>
       <h1>Test</h1>
       <div> {counter} </div>
-      {/* acion 크리에이터를 활용하여 action을 dispatch한다! */}
+      {/* action 크리에이터를 활용하여 action을 dispatch한다! */}
       <button onClick={() => dispatch(increment(5))}>+5</button>
       <button onClick={() => dispatch(decrement(5))}>-5</button>
     </Fragment>

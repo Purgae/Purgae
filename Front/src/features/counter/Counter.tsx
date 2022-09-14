@@ -21,7 +21,7 @@ const Counter = (props: TestProps) => {
     <Fragment>
       <h1>Test</h1>
       <div> {counter} </div>
-      {/* action 크리에이터를 활용하여 action을 dispatch한다! */}
+      {/* acion 크리에이터를 활용하여 action을 dispatch한다! */}
       <button onClick={() => dispatch(increment(5))}>+5</button>
       <button onClick={() => dispatch(decrement(5))}>-5</button>
     </Fragment>

@@ -27,16 +27,17 @@ const App = () => {
     <>
     <Routes>
       {/* 메인 페이지 입장하기 전 수족관 */}
-      <Route path="/" element={<Home />}/>
+      <Route path="/"/>
       {/* 메인 페이지 */}
-      <Route path="/main"/>
+      <Route path="/main" element={<Home />}/>
+      {/* 로그인 */}
       <Route path="/login" element={<Login />}/>
       {/* 개인 프로필 페이지 */}
       <Route path="/profile/:userId"/>
       {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
       <Route path="/profile/:userId/:id"/>
       {/* 개인 수족관 */}
-      <Route path="/profile/:userId/aquaria"/>
+      <Route path="/profile/:userId/aquarium"/>
       {/* 개인 팔로우/팔로워 */}
       <Route path="/profile/:userId/follow"/>
       {/* 게임 */}

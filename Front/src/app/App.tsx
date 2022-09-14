@@ -26,8 +26,28 @@ const App = () => {
   return (
     <>
     <Routes>
+      {/* 메인 페이지 입장하기 전 수족관 */}
       <Route path="/" element={<Home />}/>
+      {/* 메인 페이지 */}
+      <Route path="/main"/>
       <Route path="/login" element={<Login />}/>
+      {/* 개인 프로필 페이지 */}
+      <Route path="/profile/:userId"/>
+      {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
+      <Route path="/profile/:userId/:id"/>
+      {/* 개인 수족관 */}
+      <Route path="/profile/:userId/aquaria"/>
+      {/* 개인 팔로우/팔로워 */}
+      <Route path="/profile/:userId/follow"/>
+      {/* 게임 */}
+      <Route path="/game"/>
+      {/* 랭킹 */}
+      <Route path="/ranking"/>
+      {/* 기부 */}
+      <Route path="/donate"/>
+      {/* 자주 묻는 질문 */}
+      <Route path="/faq"/>
+      <Route path="/faq/detail"/>
     </Routes>
     </>
   );

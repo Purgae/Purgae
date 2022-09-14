@@ -16,6 +16,7 @@ const Login = (props: Props) => {
     <div>
       {/* 초기 로그인 되어있지 않을시. 기부시 실행할 버튼 */}
       {/*  */}
+      <li>ji</li>
       <button onClick={intoLogin}>기부 및 로그인</button>
     </div>
   )

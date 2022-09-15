@@ -1,4 +1,4 @@
-import baseStyled, { ThemedStyledInterface } from "styled-components";
+import baseStyled, { ThemedStyledInterface, DefaultTheme } from "styled-components";
 
 const sizes = {
   tablet: "screen and (min-width: 768px)",

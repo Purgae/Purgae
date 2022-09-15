@@ -1,5 +1,6 @@
 import { useAppDispatch } from "@/hooks/storeHook";
-import { loginAccountFetch } from "@/store/slices/authSlice";
+import { loginAccountFetch } from "@/redux/slices/authSlice";
+
 import React from "react";
 import Web3 from "web3";
 

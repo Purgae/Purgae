@@ -1,8 +1,5 @@
-import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import Web3 from "web3";
 import { useAppSelector } from "@/hooks/storeHook";
-
 // 최상위 컴포넌트 :  최상위에 코드 추가
 import { GlobalStyle } from "../styles/global-styles";
 import { ThemeProvider } from "styled-components";
@@ -16,6 +13,9 @@ import ThemeTest from "@/features/counter/ThemeTest";
 const ROPSTEN_URL = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
 
 const App = () => {
+  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb
+  const { account } = useAppSelector((state) => state.auth.userInfo);
+
   return (
     <>
       {/* 글로벌-스타일-컴포넌트 위치 */}

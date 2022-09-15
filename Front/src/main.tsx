@@ -7,6 +7,7 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import store from "./store/store";
 
+// *web3객체를 인스턴스화 함
 const getLibrary = (provider: any) => new Web3Provider(provider);
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

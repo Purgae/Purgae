@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 // 외부에서 import 해서 사용
 //app.tsx에 적용함

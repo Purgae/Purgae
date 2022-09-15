@@ -19,6 +19,12 @@ const Counter = (props: TestProps) => {
   // * useDispatch()함수 대신에 사용한다.
   const dispatch = useAppDispatch();
 
+  const [login] = useLoginMutation();
+
+  const clickHandler = () => {
+    login({ walletAddress: "0x123123", nft: [{ hash: "123123" }] });
+  };
+
   return (
     <Fragment>
       <section className="counter-section">
@@ -30,7 +36,7 @@ const Counter = (props: TestProps) => {
       </section>
       <section className="counter-section">
         <h1>API TEST</h1>
-        <button>API TEST</button>
+        <button onClick={clickHandler}>API TEST</button>
       </section>
     </Fragment>
   );

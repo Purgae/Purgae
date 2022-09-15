@@ -1,10 +1,13 @@
 import React from "react";
-import styled from "styled-components";
+import { styled } from "../../styles/theme";
 
-type Props = {};
+const Button = styled.button`
+  border: none;
+  color: ${({ theme }) => theme.color.mainDanger};
+`;
 
-const ThemeTest = (props: Props) => {
-  return <div>ThemeTest</div>;
+const ThemeTest = () => {
+  return <Button>ThemeTest</Button>;
 };
 
 export default ThemeTest;

@@ -1,11 +1,11 @@
-import baseStyled, { css, CSSProp, ThemedStyledInterface } from "styled-components";
+import baseStyled, { ThemedStyledInterface } from "styled-components";
 
-const sizes: { [key: string]: string } = {
+const sizes = {
   tablet: "screen and (min-width: 768px)",
   pc: "screen and (min-width: 1350px)",
 };
 
-const color: { [key: string]: string } = {
+const color = {
   // Main 컬러
   mainParagraph: "#2A2A2A",
   mainPrimary: "#40B6FF",
@@ -78,7 +78,7 @@ const color: { [key: string]: string } = {
   lightBlue300p: "#C5D6E3",
 };
 
-const fontWeight: { [key: string]: number } = {
+const fontWeight = {
   bold: 700,
   semiBold: 600,
   medium: 500,
@@ -88,11 +88,12 @@ const fontWeight: { [key: string]: number } = {
   button: 700,
 };
 
-const letterSpacing: { [key: string]: number } = {
+const letterSpacing = {
   button: 1.2,
 };
 
 const theme = {
+  sizes,
   color,
   fontWeight,
   letterSpacing,

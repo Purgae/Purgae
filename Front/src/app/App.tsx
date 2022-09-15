@@ -13,7 +13,7 @@ import ThemeTest from "@/features/counter/ThemeTest";
 const ROPSTEN_URL = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
 
 const App = () => {
-  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb
+  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb 
 
   return (
     <>

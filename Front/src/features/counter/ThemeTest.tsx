@@ -4,7 +4,9 @@ import { styled } from "../../styles/theme";
 
 const Button = styled.button`
   border: none;
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.mainPrimary};
+  font-weight: ${({ theme }) => theme.fontWeight.bold};
+  letter-spacing: ${({ theme }) => theme.letterSpacing.button};
 `;
 
 const ThemeTest = () => {

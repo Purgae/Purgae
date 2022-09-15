@@ -1,4 +1,4 @@
-import baseStyled, { ThemedStyledInterface, DefaultTheme } from "styled-components";
+import baseStyled, { ThemedStyledInterface } from "styled-components";
 
 const sizes = {
   tablet: "screen and (min-width: 768px)",
@@ -89,7 +89,7 @@ const fontWeight = {
 };
 
 const letterSpacing = {
-  button: 1.2,
+  button: "1.2px",
 };
 
 const theme = {

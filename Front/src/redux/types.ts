@@ -1,17 +1,13 @@
-export interface CheckNickname {
-  message: string;
-}
-
 export interface UserDetail {
   nickname: string;
   profileImage: null | string;
   profilePublic: boolean;
 }
 
-interface User extends UserDetail {
+export interface User extends UserDetail {
   id: number;
   walletAddress: string;
-  gameScore: number;
+  gameScore: number | null;
 }
 
 export interface UserProfile {
@@ -19,14 +15,4 @@ export interface UserProfile {
   data: User;
   follower_cnt?: number;
   following_cnt?: number;
-}
-
-export interface GameScore {
-  userId: number;
-  gameScore: number;
-}
-
-export interface Login {
-  walletAddress: string;
-  nft: [{ hash: string }];
 }

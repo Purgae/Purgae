@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { Login } from "./types";
 import { UserProfile } from "@/redux/types";
+import { setUser } from "@/redux/slices/userSlice";
 
 export const authApi = createApi({
   reducerPath: "authApi",
@@ -14,6 +15,12 @@ export const authApi = createApi({
         body: data,
       }),
       invalidatesTags: ["Auth"],
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          await dispatch(setUser(data.data));
+        } catch (error) {}
+      },
     }),
   }),
 });

@@ -89,7 +89,7 @@ const fontWeight = {
 };
 
 const letterSpacing = {
-  button: 1.2,
+  button: "1.2px",
 };
 
 const theme = {

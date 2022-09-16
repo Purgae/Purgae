@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { useAppSelector } from "@/hooks/storeHook";
 // 최상위 컴포넌트 :  최상위에 코드 추가
-import { GlobalStyle } from "../styles/global-styles";
+import { GlobalStyle } from "@/styles/global-styles";
 import { ThemeProvider } from "styled-components";
-import theme from "../styles/theme";
+import theme from "@/styles/theme";
 
 import Login from "@/features/auth/login/Login";
 import Home from "@/features/home/Home";
@@ -13,7 +13,7 @@ import ThemeTest from "@/features/counter/ThemeTest";
 const ROPSTEN_URL = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
 
 const App = () => {
-  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb 
+  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb
 
   return (
     <>

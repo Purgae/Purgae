@@ -13,9 +13,7 @@ interface CommonInputProps {
 // * StyledComponent
 const InputTag = styled.input.attrs({ required: true })``;
 
-const InputLabel = styled.p`
-  font-family: "Pretendard Variable";
-`;
+const InputLabel = styled.p``;
 
 const ErrorMessage = styled.p``;
 

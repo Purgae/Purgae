@@ -117,7 +117,7 @@ const shadows = {
 };
 
 const mixins = {
-  //* flex
+  //* flex 
   flexBox: (direction = "row", align = "center", justify = "center") => `
     display: flex;
     flex-direction: ${direction};

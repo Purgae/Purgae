@@ -117,7 +117,7 @@ const shadows = {
 };
 
 const mixins = {
-  //* flex 
+  //* flex
   flexBox: (direction = "row", align = "center", justify = "center") => `
     display: flex;
     flex-direction: ${direction};
@@ -137,10 +137,9 @@ const mixins = {
   `,
 
   //* font
-  font: (size = "18px", weight = fontWeights.medium, color = colors.mainParagraph) => `
+  font: (size = "1rem", weight = "500") => `
     font-size: ${size};
     font-weight: ${weight};
-    color: ${color};
   `,
 };
 

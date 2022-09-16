@@ -5,27 +5,30 @@ import { CommonInputProps } from "./CommonInput.types";
 export default {
   title: "Form/Input",
   component: CommonInput,
+  parameters: {
+    componentSubtitle: "기본적으로 사용되는 Input 컴포넌트",
+  },
+  argTypes: {},
 } as Meta;
 
 export const Default: Story<CommonInputProps> = (args) => <CommonInput {...args}> 아이디</CommonInput>;
-export const Basic = () => (
-  <CommonInput id="input-default" placeHolder="아이디를 입력해주세요" fontSize="18px">
-    아이디
-  </CommonInput>
+export const Status: Story<CommonInputProps> = (args) => (
+  <div>
+    <CommonInput {...args} id="input-true" status={true}>
+      {" "}
+      아이디
+    </CommonInput>
+    <div>&nbsp;</div>
+    <CommonInput {...args} id="input-false" status={false} errorMessage="에러가 발생했습니다">
+      {" "}
+      아이디
+    </CommonInput>
+  </div>
 );
-export const Error = () => (
-  <CommonInput id="input-error" status={false} errorMessage="에러가 발생했습니다" fontSize="18px">
-    아이디
-  </CommonInput>
-);
-
-export const Full = () => (
-  <CommonInput id="input-default" placeHolder="아이디를 입력해주세요" fontSize="18px" width="100%">
-    아이디
-  </CommonInput>
-);
-export const NoProps = () => <CommonInput id="input-noprops" />;
 
 Default.args = {
   id: "input-default",
+  status: true,
+  fontSize: "16px",
+  width: "fit-content",
 };

@@ -19,7 +19,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
-
     @Override
     public String newNickname() {
         String nick = makeNickname();
@@ -88,7 +87,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkSlang(String inputNickname) {
-        if(inputNickname.contains("병신")) return true;
+        List<String> badword = Arrays.asList("병신", "시발", "바보", "개새끼", "ㅅ1발", "ㅂㅅ", "ㅅㅂ", "죽어");
+        for(int i = 0; i<badword.size(); i++){
+            if(inputNickname.contains(badword.get(i))) return true;
+        }
         return false;
     }
 
@@ -102,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkBlank(String inputNickname) {
-        if(inputNickname.contains(" ")) return true;
+        if(inputNickname.contains("  ")) return true;
         return false;
     }
 

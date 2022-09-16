@@ -16,7 +16,7 @@ const slice = createSlice({
   initialState,
 
   reducers: {
-    // * 유저 데이터를 Store에 저장한다.
+    // * 유저 데이터를 인자로 전달 받아 Store에 저장한다.
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },

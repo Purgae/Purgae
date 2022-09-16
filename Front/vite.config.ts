@@ -8,6 +8,14 @@ export default defineConfig(() => {
   // const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [react()],
+    // optimizeDeps: {
+    //   include: ["@vite-mono/lib-cjs"],
+    // },
+    // build: {
+    //   commonjsOptions: {
+    //     include: [/lib-cjs/, /node_modules/],
+    //   },
+    // },
     resolve: {
       // 절대 경로 설정
       alias: {

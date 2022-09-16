@@ -1,14 +1,13 @@
-import React from 'react'
-import Input from './Input'
+import CommonInput from "./CommonInput";
 
 export default {
-  title: 'Form/Input',
-  component: Input
-}
+  title: "Form/Input",
+  component: CommonInput,
+};
 
-export const Small = () => <Input size='small' placeholder ='Small size' />
-export const Medium = () => <Input size='medium' placeholder='Medium size' />
-export const Large = () => <Input size='large' placeholder='Large size' />
+export const defaultInput = () => <CommonInput>라벨</CommonInput>;
+export const noLabelInput = () => <CommonInput />;
 
 // rename가능
-Small.storyName = 'Small Input'
+defaultInput.storyName = "default";
+noLabelInput.storyName = "noLabel";

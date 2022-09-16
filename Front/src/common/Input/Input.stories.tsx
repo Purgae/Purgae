@@ -11,7 +11,10 @@ export default {
   argTypes: {},
 } as Meta;
 
+//* Default
 export const Default: Story<CommonInputProps> = (args) => <CommonInput {...args}> 아이디</CommonInput>;
+
+//* 상태에 따른 분류 (정상 or 오류)
 export const Status: Story<CommonInputProps> = (args) => (
   <div>
     <CommonInput {...args} id="input-true" status={true}>
@@ -26,6 +29,7 @@ export const Status: Story<CommonInputProps> = (args) => (
   </div>
 );
 
+//* Default args의 기본 값
 Default.args = {
   id: "input-default",
   status: true,

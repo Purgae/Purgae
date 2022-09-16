@@ -6,6 +6,10 @@ import { Web3ReactProvider } from "@web3-react/core";
 import { Web3Provider } from "@ethersproject/providers";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { GlobalStyle } from "@/styles/global-styles";
+import { ThemeProvider } from "styled-components";
+import theme from "@/styles/theme";
+
 import store from "@/redux/store";
 
 let persistor = persistStore(store);
@@ -18,7 +22,10 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
     <Web3ReactProvider getLibrary={getLibrary}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <App />
+          <ThemeProvider theme={theme}>
+            <GlobalStyle />
+            <App />
+          </ThemeProvider>
         </PersistGate>
       </Provider>
     </Web3ReactProvider>

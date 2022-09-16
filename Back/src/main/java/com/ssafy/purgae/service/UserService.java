@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
+    public String newNickname();
 
-    public User getUserWalletAddress(String nickname);
+    public String makeNickname();
+
+    public User getUserWalletAddress(Long userId);
 
     public User getUserInfo(String walletAddress);
 

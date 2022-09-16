@@ -9,9 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.sql.Array;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service("userService")
 @RequiredArgsConstructor
@@ -23,8 +21,34 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public User getUserWalletAddress(String nickname) {
-        return userRepository.findFirstByNickname(nickname);
+    public String newNickname() {
+        String nick = makeNickname();
+
+        while(checkDuplicate(nick)){
+            nick = makeNickname();
+        }
+
+        return nick;
+    }
+
+    @Override
+    public String makeNickname() {
+        List<String> color = Arrays.asList("빨간색 ", "주황색 ", "노란색 ", "초록색 ", "파란색 ", "남색 ", "보라색 ", "갈색 ", "검정색 "
+                                , "귤색 ", "금색 ", "군청색 ", "다홍색 ", "담청색 ", "라임색 ", "바다색 ", "밤색 ", "분홍색 ", "살구색 "
+                                , "산호색 ", "연두색 ", "옥색 ", "은색 ", "자주색 ", "자홍색 ", "카키색 ", "하늘색 ", "하양색 ");
+        List<String> fish = Arrays.asList("가물치", "가사리", "가오리", "가자미", "갈치", "개복치", "검복", "고도리", "고등어", "광어"
+                                , "금붕어", "날치", "노가리", "노래미", "다랑어", "대구", "도다리", "도미", "돌고래", "메기", "멸치", "명태"
+                                , "물고기", "민어", "방어", "뱀장어", "북어", "붕어", "상어", "숭어", "쏘가리", "아귀", "연어", "은어"
+                                , "장어", "전어", "조기", "쥐치", "참치", "청어", "피라냐", "해마", "홍어");
+        Collections.shuffle(color);
+        Collections.shuffle(fish);
+
+        return color.get(0) + fish.get(0);
+    }
+
+    @Override
+    public User getUserWalletAddress(Long userId) {
+        return userRepository.findFirstById(userId);
     }
 
 
@@ -50,7 +74,6 @@ public class UserServiceImpl implements UserService {
     }
 
     public int updateProfileImg(long userId, String profileHash){
-
         return userRepository.updateProfileImage(userId,profileHash);
     }
 

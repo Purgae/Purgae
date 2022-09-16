@@ -29,18 +29,24 @@ public class UserController {
 
 
     @ApiOperation(value = "사용자 정보 가져오기", notes = "닉네임으로 사용자 정보 받아오는 API입니다.")
-    @GetMapping("/{nickname}")
-    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable String nickname) {
+    @GetMapping("/{userId}")
+    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable Long userId) {
         Map<String, Object> result = new HashMap<>();
-        User user = userService.getUserWalletAddress(nickname);
-        User userDto = userService.getUserInfo(user.getWalletAddress());
-
-        if (userDto != null) {
-            result.put("message", SUCCESS);
-            result.put("data", userDto);
-        } else {
+        User user = userService.getUserWalletAddress(userId);
+        if(user != null) {
+            User userDto = userService.getUserInfo(user.getWalletAddress());
+            if (userDto != null) {
+                result.put("message", SUCCESS);
+                result.put("data", userDto);
+            } else {
+                result.put("message", FAIL);
+            }
+        }
+        else{
             result.put("message", FAIL);
         }
+
+
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
@@ -64,7 +70,8 @@ public class UserController {
         long cnt = userService.countUser();
         if(user == null){
             User newUser = new User();
-            newUser.setNickname("회원"+(cnt+1));
+            String newNickname = userService.newNickname();
+            newUser.setNickname(newNickname);
             newUser.setWalletAddress(walletAddress);
             User tmp = userService.saveUser(newUser);
             if(tmp == null){

@@ -17,7 +17,7 @@ const CommonInput = ({
     <DivTag fontSize={fontSize} width={width}>
       <label htmlFor={props.id}> {props.children}</label>
       <InputTag id={props.id} onChange={changeInputValue} placeholder={props?.placeHolder} status={status}></InputTag>
-      <ErrorMessage> {props?.errorMessage}</ErrorMessage>
+      {!status && <ErrorMessage> {props?.errorMessage}</ErrorMessage>}
     </DivTag>
   );
 };

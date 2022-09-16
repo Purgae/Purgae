@@ -57,6 +57,7 @@ div, span, article, section, header, footer, aside, p, ul, li, fieldset, legend,
 }
 
 button {
+    font-family: "Pretendard Variable", -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", sans-serif;
     border: 0;
     background: transparent;
     cursor: pointer;

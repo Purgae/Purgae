@@ -6,6 +6,8 @@ const sizes = {
 };
 
 const colors = {
+  transparent: "transparent",
+
   // Main 컬러
   mainParagraph: "#2A2A2A",
   mainPrimary: "#40B6FF",

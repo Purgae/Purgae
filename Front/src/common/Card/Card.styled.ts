@@ -13,7 +13,7 @@ export const Background = styled.div<{ selected: boolean }>`
 export const Image = styled.div<{ url: string }>`
   height: 9.25rem;
   width: 9rem;
-  margin: auto;
+  margin-top: 1rem;
   background-image: url(${(props) => props.url});
   background-size: contain;
   background-repeat: no-repeat;

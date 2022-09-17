@@ -5,10 +5,10 @@ export const Background = styled.div<{ selected: boolean }>`
   height: 11.25rem;
   width: 9.5rem;
   margin: 1.25rem;
-  ${({ theme }) => theme.mixins.flexBox()}
   border: ${({ selected, theme }) => (selected ? `0.1876rem solid ${theme.colors.white}` : "0")};
   border-radius: 1.3125rem;
   background-color: ${({ theme }) => theme.colors.lightBlue300};
+  ${({ theme }) => theme.mixins.flexBox()}
 `;
 
 export const Image = styled.div<{ url: string }>`

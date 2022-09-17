@@ -5,15 +5,16 @@ export const Background = styled.div<{ selected: boolean }>`
   height: 11.25rem;
   width: 9.5rem;
   margin: 1.25rem;
+  ${({ theme }) => theme.mixins.flexBox()}
+  border: ${({ selected, theme }) => (selected ? `0.1876rem solid ${theme.colors.white}` : "0")};
   border-radius: 1.3125rem;
   background-color: ${({ theme }) => theme.colors.lightBlue300};
-  border: ${({ selected, theme }) => (selected ? `0.1876rem solid ${theme.colors.white}` : "0")};
 `;
 
 export const Image = styled.div<{ url: string }>`
   height: 9.25rem;
   width: 9rem;
-  margin: 1rem auto;
+  margin: auto auto;
   background-image: url(${(props) => props.url});
   background-size: contain;
   background-repeat: no-repeat;

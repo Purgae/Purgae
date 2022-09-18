@@ -1,40 +1,56 @@
-import React from "react";
+import { Meta, Story } from "@storybook/react";
+import { colorsKey } from "../../styles/theme.type";
 import Button from "./Button";
-import { ComponentStory } from '@storybook/react';
+import { ButtonProps } from "./Button.types";
 
 export default {
-  title: 'Form/Button',
+  title: "Form/Button",
   component: Button,
-  argTypes: {
-    children: 'Button'
+  parameters: {
+    componentSubtitle: `Button 컴포넌트: 색상은 theme에 추가된 키워드로만 선택이 가능하다.`,
   },
-}
+  argTypes: {
+    style: {
+      options: ["solid", "outline"],
+      control: "select",
+    },
+    bgColor: {
+      options: colorsKey,
+      control: "select",
+    },
+    fontColor: {
+      options: colorsKey,
+      control: "select",
+    },
+  },
+} as Meta;
 
-export const Primary = () => <Button variant='primary'>Primary</Button>
-export const Secondary = () => <Button variant='secondary'>Secondary</Button>
-export const Success = () => <Button variant='success'>Success</Button>
-export const Danger = () => <Button variant='danger'>Danger</Button>
+//* Default
+export const Default: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
+export const Styles: Story<ButtonProps> = (args) => (
+  <div>
+    <Button {...args} style="solid">
+      Button
+    </Button>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <Button {...args} style="outline">
+      Button
+    </Button>
+  </div>
+);
 
+Default.args = {
+  style: "solid",
+  width: "fit-content",
+  fontSize: "18px",
+  bgColor: "transparent",
+  fontColor: "mainButton",
+};
 
-
-// https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-
-
-export const PrimaryA = Template.bind({})
-PrimaryA.args = {
-  variant: 'primary',
-  // children: 'Primary Args',
-}
-
-export const SecondaryA = Template.bind({})
-SecondaryA.args = {
-  variant: 'secondary',
-  // children: 'Secondary Args',
-}
-
-export const LongPrimaryA = Template.bind({})
-LongPrimaryA.args = {
-  ...PrimaryA.args,
-  // children: 'Long Primary Args',
-}
+Styles.args = {
+  width: "fit-content",
+  fontSize: "18px",
+  bgColor: "transparent",
+  fontColor: "mainButton",
+};

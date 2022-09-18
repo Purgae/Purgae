@@ -1,18 +1,28 @@
-import React from 'react'
-import './Button.css'
+import { ButtonProps } from "./Button.types";
+import { SolidButton, OutLineButton } from "./Button.styled";
 
-interface Props {
-  variant: string;
-  children: any;
-}
-
-const Button = (props: Props) => {
-  const {variant= "primary", children, ...rest} = props
+const Button = ({
+  style = "solid",
+  width = "fit-content",
+  fontSize = "18px",
+  bgColor = "transparent",
+  fontColor = "mainButton",
+  ...props
+}: React.PropsWithChildren<ButtonProps>) => {
+  if (style == "solid") {
+    return (
+      <SolidButton width={width} fontSize={fontSize} bgColor={bgColor} fontColor={fontColor}>
+        {" "}
+        {props.children}
+      </SolidButton>
+    );
+  }
   return (
-    <button className={`button ${variant}`} {...rest}>
-      {children}
-    </button>
-  )
-}
+    <OutLineButton width={width} fontSize={fontSize} bgColor={bgColor} fontColor={fontColor}>
+      {" "}
+      {props.children}
+    </OutLineButton>
+  );
+};
 
-export default Button
+export default Button;

@@ -1,5 +1,5 @@
 import { ButtonProps } from "./Button.types";
-import { SolidButton, OutLineButton } from "./ButtonInput.styled";
+import { SolidButton, OutLineButton } from "./Button.styled";
 
 const Button = ({
   style = "solid",

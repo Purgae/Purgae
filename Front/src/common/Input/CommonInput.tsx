@@ -3,7 +3,7 @@ import { CommonInputProps } from "./CommonInput.types";
 
 const CommonInput = ({
   status = true,
-  fontSize = "16px",
+  fontSize = "1.25rem",
   width = "fit-content",
   ...props
 }: React.PropsWithChildren<CommonInputProps>) => {

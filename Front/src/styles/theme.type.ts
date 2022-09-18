@@ -7,6 +7,7 @@ export const colorsKey = [
   "mainDanger",
   "mainButton",
   "mainModalBg",
+  "mainWhite",
   "primary300",
   "primary400",
   "primary500",

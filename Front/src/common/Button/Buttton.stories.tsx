@@ -4,7 +4,7 @@ import Button from "./Button";
 import { ButtonProps } from "./Button.types";
 
 export default {
-  title: "Form/Button",
+  title: "Button/Button",
   component: Button,
   parameters: {
     componentSubtitle: `Button 컴포넌트: 색상은 theme에 추가된 키워드로만 선택이 가능하다.`,

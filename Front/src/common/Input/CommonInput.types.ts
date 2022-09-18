@@ -7,7 +7,7 @@ export interface CommonInputProps {
   status?: boolean; // * default: true
 
   // 폰트 사이즈 (label: 1em , input: 0.9em , errorMessage: 0.8em )
-  fontSize?: string; // * default: "16px"
+  fontSize?: string; // * default: "1.25rem"
 
   // input의 너비
   width?: string; //* default: "fit-content"

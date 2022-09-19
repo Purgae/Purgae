@@ -3,7 +3,7 @@ import Card, { CardGroup } from "./Card";
 import { CardGroupProps } from "./Card.types";
 
 export default {
-  title: "Form/Card",
+  title: "Profile/Card",
   component: Card,
   parameters: {
     componentSubtitle: "기본적으로 사용되는 NFT Card 컴포넌트",

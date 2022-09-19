@@ -3,14 +3,14 @@ import ProfileImage from "./ProfileImage";
 import { ProfileImageProps } from "./ProfileImage.types";
 
 export default {
-  title: "Form/ProfileImage",
+  title: "Profile/ProfileImage",
   component: ProfileImage,
   parameters: {
     componentSubtitle: "기본적으로 사용되는 ProfileImage 컴포넌트",
   },
   argTypes: {
     size: {
-      options: ["extraLarge", "large", "medium", "small", "extraSmall", "null"],
+      options: ["extraLarge", "large", "medium", "small", "extraSmall", "navBar", "null"],
       control: "select",
     },
   },

@@ -14,10 +14,7 @@ const ThemeTest = () => {
   return (
     <div>
       <Button>ThemeTest</Button>
-      <ProfileImage
-        size="extraLarge"
-        url="https://search.pstatic.net/sunny/?src=https%3A%2F%2Fimg.theqoo.net%2Fimg%2FxFOEZ.jpg&type=sc960_832"
-      ></ProfileImage>
+      <ProfileImage size="extraLarge"></ProfileImage>
     </div>
   );
 };

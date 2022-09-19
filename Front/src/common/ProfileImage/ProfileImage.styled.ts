@@ -26,6 +26,10 @@ export const ExtraSmall = styled(Round)`
   height: 3.5rem;
   width: 3.5rem;
 `;
+export const NavBar = styled(Round)`
+  height: 2.25rem;
+  width: 2.25rem;
+`;
 export const Custom = styled(Round)<{ width: string }>`
   height: ${(props) => props.width};
   width: ${(props) => props.width};

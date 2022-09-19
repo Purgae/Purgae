@@ -6,6 +6,8 @@ import "./counter.css";
 // * action creator, selector를 import한다.
 import { selectCounter, increment, decrement } from "@/redux/slices/counterSlice";
 
+import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
+
 // * props를 넘긴다면 props 타입을 지정한다.
 interface TestProps {}
 
@@ -21,8 +23,15 @@ const Counter = (props: TestProps) => {
 
   const [login] = useLoginMutation();
 
+  const { openAlertModal } = useAlertModal();
+
   const clickHandler = () => {
     login({ walletAddress: "0x123123", nft: [{ hash: "123123" }] });
+  };
+
+  const showAlertModal = () => {
+    const data: OpenAlertModalArg = { content: "오류가 발생했다는 테스트를 하고 있습니다", styles: "DANGER" };
+    openAlertModal(data);
   };
 
   return (
@@ -37,6 +46,10 @@ const Counter = (props: TestProps) => {
       <section className="counter-section">
         <h1>API TEST</h1>
         <button onClick={clickHandler}>API TEST</button>
+      </section>
+      <section className="counter-section">
+        <h1>Alert Test</h1>
+        <button onClick={showAlertModal}>Alert Test</button>
       </section>
     </Fragment>
   );

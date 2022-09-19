@@ -1,5 +1,16 @@
 import { styled } from "../../styles/theme";
 import { AlertStylesType } from "./AlertModal.types";
+import { keyframes } from "@/styles/theme-components";
+
+const FadeInAnimation = keyframes`
+  from {
+    opacity:0;
+    transform: translate3d(50%, 100%, 0);
+  }
+  to {
+    opacity:1;
+    transform: translate3d(50%, 50%, 0);
+  }`;
 
 const AlertModal = styled.div<{ top: string; right: string }>`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
@@ -12,6 +23,7 @@ const AlertModal = styled.div<{ top: string; right: string }>`
   padding: 1.25rem 1rem 1.25rem 2rem;
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
+  animation: ${FadeInAnimation} 1s;
 `;
 
 export const DefaultAlertModal = styled(AlertModal)`

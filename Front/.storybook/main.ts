@@ -1,3 +1,5 @@
+const path = require("path");
+
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
@@ -12,7 +14,14 @@ module.exports = {
   core: {
     builder: "@storybook/builder-vite",
   },
-  // features: {
-  //   storyStoreV7: true,
-  // },
+
+  //* alias (절대 경로)
+  viteFinal: async (config, { configType }) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": path.resolve(__dirname, "../src"),
+    };
+
+    return config;
+  },
 };

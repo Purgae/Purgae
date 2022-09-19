@@ -1,9 +1,10 @@
-import { ExtraLarge, Large, Medium, Small, ExtraSmall, Custom } from "./ProfileImage.styled";
+import { ExtraLarge, Large, Medium, Small, ExtraSmall, NavBar, Custom } from "./ProfileImage.styled";
 import { ProfileImageProps } from "./ProfileImage.types";
+import imgUrl from "/profile.png";
 
 const ProfileImage = ({
   size,
-  url = "public/profile.png",
+  url = imgUrl,
   width = "5.5rem",
   ...props
 }: React.PropsWithChildren<ProfileImageProps>) => {
@@ -21,6 +22,9 @@ const ProfileImage = ({
   }
   if (size === "extraSmall") {
     return <ExtraSmall url={url}></ExtraSmall>;
+  }
+  if (size === "navBar") {
+    return <NavBar url={url}></NavBar>;
   }
 
   return <Custom url={url} width={width}></Custom>;

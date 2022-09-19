@@ -1,6 +1,7 @@
 import { AlertModalProps } from "./AlertModal.types";
-import { Fragment } from "react";
+import { Fragment, useEffect } from "react";
 import FlexDiv from "../FlexDiv/FlexDiv";
+import { useAlertModal } from "@/hooks/useAlertModal";
 
 import {
   DefaultAlertModal,
@@ -18,14 +19,25 @@ const AlertModal = ({ styles = "DEFAULT", icon = true, ...props }: React.PropsWi
     right: props.right,
   };
 
+  const { closeAlertModal } = useAlertModal();
+
+  // * 15초 뒤에 자동으로 사라진다.
+  useEffect(() => {
+    setTimeout(() => {
+      closeAlertModal();
+    }, 1500);
+  }, []);
+
   const content = (
     <Fragment>
       <FlexDiv>
         {icon && <div className="material-icons-outlined">error_outline</div>}
         <div>{props.children}</div>
       </FlexDiv>
-      <XButton styles={styles} onClick={props.offModal}>
-        <span className="material-icons">close</span>
+      <XButton styles={styles}>
+        <span className="material-icons" onClick={closeAlertModal}>
+          close
+        </span>
       </XButton>
     </Fragment>
   );

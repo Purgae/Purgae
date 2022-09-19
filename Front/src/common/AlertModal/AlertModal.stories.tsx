@@ -21,9 +21,7 @@ const content = "오류가 발생했습니다. 잠시 후에 시도해주세요.
 //* Default
 export const Default: Story<AlertModalProps> = (args) => (
   <div style={{ paddingBottom: "10rem" }}>
-    <AlertModal {...args} offModal={() => console.log("종료")}>
-      {content}
-    </AlertModal>
+    <AlertModal {...args}>{content}</AlertModal>
   </div>
 );
 

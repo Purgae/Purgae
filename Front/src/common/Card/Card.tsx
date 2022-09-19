@@ -10,8 +10,8 @@ const Card = ({ url, selected = false, ...props }: React.PropsWithChildren<CardP
   );
 };
 
-export const CardGroup = ({ width = "75rem", ...props }: React.PropsWithChildren<CardGroupProps>) => {
-  return <Group width={width}>{props.children}</Group>;
+export const CardGroup = ({ ...props }: React.PropsWithChildren<CardGroupProps>) => {
+  return <Group>{props.children}</Group>;
 };
 
 export default Card;

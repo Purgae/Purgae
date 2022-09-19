@@ -6,6 +6,7 @@ import storageSession from "redux-persist/lib/storage/session";
 // ! reducer import
 import counter from "@/redux/slices/counterSlice";
 import user from "@/redux/slices/userSlice";
+import alert from "@/redux/slices/alertSlice";
 import { userApi } from "@/redux/api/user/userApi";
 import { authApi } from "@/redux/api/auth/authApi";
 
@@ -13,6 +14,7 @@ import { authApi } from "@/redux/api/auth/authApi";
 const reducers = combineReducers({
   counter,
   user,
+  alert,
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
 });

@@ -3,9 +3,6 @@ export interface AlertModalProps {
   top: string; //* required
   right: string; //* required
 
-  // 모달을 종료하는 함수
-  offModal: () => void; // * required
-
   /* Alert type 
   1. DEFAULT: 회색 배경에 검정 글씨
   2. NOTICE: 프라이머리 배경에 흰색 글씨

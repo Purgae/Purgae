@@ -24,10 +24,10 @@ export const Group = styled.div`
   row-gap: 6%;
   column-gap: 2%;
   width: 100%;
-  @media screen and (min-width: 768px) {
+  @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(25%, auto));
   }
-  @media screen and (min-width: 1350px) {
+  @media ${({ theme }) => theme.sizes.pc} {
     grid-template-columns: repeat(auto-fill, minmax(13%, auto));
   }
 `;

@@ -33,6 +33,7 @@ export const Status: Story<CommonInputProps> = (args) => (
 Default.args = {
   id: "input-default",
   status: true,
-  fontSize: "16px",
+  fontSize: "1.25rem",
   width: "fit-content",
+  errorMessage: "에러가 발생했습니다",
 };

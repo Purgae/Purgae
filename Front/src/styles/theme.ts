@@ -14,6 +14,7 @@ const colors = {
   mainDanger: "#FF697A",
   mainButton: "#323232",
   mainModalBg: "rgba(50, 50, 50, 0.3)",
+  mainWhite: "#FCFCFC",
 
   // 푸르게 Primary
   primary300: "#ABDCFF",
@@ -97,7 +98,7 @@ const letterSpacing = {
 //* 그림자
 const shadows = {
   shadow700: () => `
-    box-shadow: 0px 100px 80px rgba(0, 0, 0, 0.07), 
+    0px 100px 80px rgba(0, 0, 0, 0.07), 
     0px 41.78px 33.4px rgba(0, 0, 0, 0.0503), 
     0px 22.34px 17.87px rgba(0, 0, 0, 0.0417), 
     0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 
@@ -106,15 +107,15 @@ const shadows = {
   `,
 
   shadow600: () => `
-    box-shadow: 0px 20px 80px rgba(0, 0, 0, 0.07), 0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
+    0px 20px 80px rgba(0, 0, 0, 0.07), 0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
   `,
 
   shadow500: () => `
-    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
+    0px 0px 8px rgba(0, 0, 0, 0.1);
   `,
 
   shadow400: () => `
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+    0px 0px 4px rgba(0, 0, 0, 0.1);
   `,
 };
 

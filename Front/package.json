@@ -24,6 +24,7 @@
     "react-router-dom": "^6.3.0",
     "redux": "^4.2.0",
     "redux-persist": "^6.0.0",
+    "storybook-addon-react-router-v6": "^0.2.1",
     "storybook-addon-styled-component-theme": "^2.0.0",
     "styled-components": "^5.3.5",
     "styled-reset": "^4.4.2",

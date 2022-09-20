@@ -12,6 +12,7 @@ import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
 import Start from "@/features/start/Start";
+import Donate from "@/features/donate/Donate";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -47,7 +48,7 @@ const App = () => {
         {/* 랭킹 */}
         <Route path="/ranking" />
         {/* 기부 */}
-        <Route path="/donate" />
+        <Route path="/donate" element={<Donate />} />
         {/* 자주 묻는 질문 */}
         <Route path="/faq" />
         <Route path="/faq/detail" />

@@ -1,6 +1,6 @@
 // * color 타입 생성
 
-export const colorsKey = [
+export const ColorsKey = [
   "transparent",
   "mainParagraph",
   "mainPrimary",
@@ -62,4 +62,11 @@ export const colorsKey = [
   "lightBlue300p",
 ] as const;
 
-export type ColorType = typeof colorsKey[number];
+export type ColorType = typeof ColorsKey[number];
+export type ColorTypeWithGradient = typeof ColorsKey[number] | "gradient";
+
+export const FontWeightKey = ["bold", "semiBold", "medium", "regular", "light", "extraLight"] as const;
+export type FontWeightType = typeof FontWeightKey[number];
+
+export const ShadowsKey = ["shadow700", "shadow600", "shadow500", "shadow400"] as const;
+export type ShadowType = typeof ShadowsKey[number];

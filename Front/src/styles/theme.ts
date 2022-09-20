@@ -6,6 +6,9 @@ const sizes = {
 };
 
 const colors = {
+  // background-image
+  gradient: "linear-gradient(350deg, #5e30ff, #5f6bff, #5299ff, #1ec5ff)",
+
   transparent: "transparent",
 
   // Main 컬러
@@ -97,7 +100,7 @@ const letterSpacing = {
 
 //* 그림자
 const shadows = {
-  shadow700: () => `
+  shadow700: `
     0px 100px 80px rgba(0, 0, 0, 0.07), 
     0px 41.78px 33.4px rgba(0, 0, 0, 0.0503), 
     0px 22.34px 17.87px rgba(0, 0, 0, 0.0417), 
@@ -106,15 +109,15 @@ const shadows = {
     0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
   `,
 
-  shadow600: () => `
+  shadow600: `
     0px 20px 80px rgba(0, 0, 0, 0.07), 0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
   `,
 
-  shadow500: () => `
+  shadow500: `
     0px 0px 8px rgba(0, 0, 0, 0.1);
   `,
 
-  shadow400: () => `
+  shadow400: `
     0px 0px 4px rgba(0, 0, 0, 0.1);
   `,
 };

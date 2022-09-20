@@ -14,13 +14,13 @@ export const NavbarBackground = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
 `;
 
-export const ItemWrapper = styled.div`
+export const NavbarItemWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
   width: 117rem;
   padding: 0rem;
 `;
 
-export const LinkWrappper = styled.div<{ display: string }>`
+export const NavbarLinkWrappper = styled.div<{ display: string }>`
   ${({ theme }) => theme.mixins.flexBox()}
   padding: 0rem;
   gap: 3rem;
@@ -37,13 +37,13 @@ export const LinkWrappper = styled.div<{ display: string }>`
   }
 `;
 
-export const LoginWrapper = styled.div`
+export const NavbarLoginWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox()}
   padding: 0rem;
   gap: 1.25rem;
 `;
 
-export const PurgaeLink = styled(NavLink)`
+export const NavbarPurgaeLink = styled(NavLink)`
   ${({ theme }) => theme.mixins.font("2rem", "700")};
   color: ${({ theme }) => theme.colors.white};
   text-decoration: none;
@@ -78,7 +78,7 @@ export const NavbarLink = styled(NavLink)`
   }
 `;
 
-export const LoginLink = styled(NavLink)`
+export const NavbarLoginLink = styled(NavLink)`
   ${({ theme }) => theme.mixins.font("1.25rem", "500")};
   color: ${({ theme }) => theme.colors.white};
   letter-spacing: 0.075rem;
@@ -93,7 +93,7 @@ export const LoginLink = styled(NavLink)`
   }
 `;
 
-export const Hamburger = styled.button`
+export const NavbarHamburger = styled.button`
   display: none;
   width: 1.5rem;
   height: 1.5rem;

@@ -11,6 +11,7 @@ import Login from "@/features/auth/login/Login";
 import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
+import Start from "@/features/start/Start";
 import Donate from "@/features/donate/Donate";
 
 // * Navbar
@@ -29,7 +30,7 @@ const App = () => {
       <Navbar />
       <Routes>
         {/* 메인 페이지 입장하기 전 수족관 */}
-        <Route path="/" />
+        <Route path="/" element={<Start />} />
         {/* 메인 페이지 */}
         <Route path="/main" element={<Home />} />
         {/* 로그인 */}

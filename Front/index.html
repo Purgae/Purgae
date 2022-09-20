@@ -1,40 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- font -->
-    <link
-      rel="stylesheet"
-      as="style"
-      crossorigin
-      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/variable/pretendardvariable.css"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- icon -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
+  <!-- font -->
+  <link rel="stylesheet" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.5/dist/web/variable/pretendardvariable.css" />
 
-    <!-- about web3 -->
-    <script>
-      window.global = window;
-    </script>
-    <script type="module">
-      import process from "process";
-      import { Buffer } from "buffer";
-      import EventEmitter from "events";
+  <!-- icon -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined" />
 
-      window.Buffer = Buffer;
-      window.process = process;
-      window.EventEmitter = EventEmitter;
-    </script>
+  <!-- about web3 -->
+  <script>
+    window.global = window;
+  </script>
+  <script type="module">
+    import process from "process";
+    import { Buffer } from "buffer";
+    import EventEmitter from "events";
 
-    <title>Vite + React + TS</title>
-  </head>
+    window.Buffer = Buffer;
+    window.process = process;
+    window.EventEmitter = EventEmitter;
+  </script>
 
-  <body>
-    <div id="root" style="height: 100vh"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+  <title>Vite + React + TS</title>
+</head>
+
+<body>
+  <div id="root" style="height: 100vh;"></div>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
+
 </html>

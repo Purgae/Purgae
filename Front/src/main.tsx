@@ -10,10 +10,7 @@ import theme from "@/styles/theme";
 
 import store from "@/redux/store";
 
-import Web3 from "web3";
 import { MetaMaskProvider } from "metamask-react";
-
-import { RopstenUrl } from "./utils/MetaEnv";
 
 let persistor = persistStore(store);
 

@@ -13,6 +13,9 @@ import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
 import Start from "@/features/start/Start";
 
+// * Navbar
+import Navbar from "@/common/Navbar/Navbar";
+
 const ROPSTEN_URL = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
 
 const App = () => {
@@ -23,6 +26,7 @@ const App = () => {
 
   return (
     <Fragment>
+      <Navbar />
       <Routes>
         {/* 메인 페이지 입장하기 전 수족관 */}
         <Route path="/" element={<Start />} />

@@ -26,3 +26,7 @@ dist-ssr
 
 ### StorybookJs ###
 storybook-static/
+
+
+## env
+.env

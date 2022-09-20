@@ -8,18 +8,15 @@ export default defineConfig(() => {
   // const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [react()],
-    // optimizeDeps: {
-    //   include: ["@vite-mono/lib-cjs"],
-    // },
-    // build: {
-    //   commonjsOptions: {
-    //     include: [/lib-cjs/, /node_modules/],
-    //   },
-    // },
     resolve: {
-      // 절대 경로 설정
       alias: {
+        // 절대 경로 설정
         "@": path.resolve(__dirname, "src"),
+        process: "process/browser",
+        stream: "stream-browserify",
+        zlib: "browserify-zlib",
+        util: "util",
+        https: "agent-base",
       },
     },
   };

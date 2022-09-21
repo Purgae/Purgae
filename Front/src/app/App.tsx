@@ -27,8 +27,8 @@ const App = () => {
     <Fragment>
       <Navbar />
       <Routes>
-        {/* 메인 페이지 입장하기 전 수족관 */}
-        <Route path="/" />
+        {/* <Route element={<Navbar />}> */}
+        {/* navbar하위 컴포넌트 */}
         {/* 메인 페이지 */}
         <Route path="/main" element={<Home />} />
         {/* 로그인 */}
@@ -54,6 +54,10 @@ const App = () => {
         <Route path="/counter" element={<Counter />} />
         {/* Theme 테스트 페이지 */}
         <Route path="/theme" element={<ThemeTest />} />
+        {/* </Route> */}
+        {/* not nav */}
+        {/* 메인 페이지 입장하기 전 수족관 */}
+        <Route path="/" />
       </Routes>
       {status && (
         <AlertModal top="4rem" right="50%" styles={styles}>

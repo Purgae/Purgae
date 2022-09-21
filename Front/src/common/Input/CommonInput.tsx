@@ -9,14 +9,19 @@ const CommonInput = ({
 }: React.PropsWithChildren<CommonInputProps>) => {
   const changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const data = event.target.value;
-    if (props.onChangeInputValue) {
-      props.onChangeInputValue(data);
-    }
+    props.onChangeInputValue(data);
   };
+
   return (
     <DivTag fontSize={fontSize} width={width}>
       <label htmlFor={props.id}> {props.children}</label>
-      <InputTag id={props.id} onChange={changeInputValue} placeholder={props?.placeHolder} status={status}></InputTag>
+      <InputTag
+        id={props.id}
+        value={props.inputValue}
+        onChange={changeInputValue}
+        status={status}
+        {...props?.attrs}
+      ></InputTag>
       {!status && <ErrorMessage> {props?.errorMessage}</ErrorMessage>}
     </DivTag>
   );

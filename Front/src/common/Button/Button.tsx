@@ -11,13 +11,27 @@ const Button = ({
 }: React.PropsWithChildren<ButtonProps>) => {
   if (styles == "solid") {
     return (
-      <SolidButton width={width} fontSize={fontSize} bgColor={bgColor} fontColor={fontColor}>
+      <SolidButton
+        width={width}
+        fontSize={fontSize}
+        bgColor={bgColor}
+        fontColor={fontColor}
+        onClick={props.onClick}
+        {...props?.attrs}
+      >
         {props.children}
       </SolidButton>
     );
   }
   return (
-    <OutLineButton width={width} fontSize={fontSize} bgColor={bgColor} fontColor={fontColor}>
+    <OutLineButton
+      width={width}
+      fontSize={fontSize}
+      bgColor={bgColor}
+      fontColor={fontColor}
+      onClick={props.onClick}
+      {...props?.attrs}
+    >
       {props.children}
     </OutLineButton>
   );

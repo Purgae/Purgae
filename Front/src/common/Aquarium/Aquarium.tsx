@@ -1,7 +1,11 @@
 import { useState } from "react";
-import { Scene, Cube, Front, Back, Right, Left, Top, Bottom } from "./Aquarium.styled";
+import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish } from "./Aquarium.styled";
 
-const Aquarium = () => {
+type Props = {
+  fishImages: string[];
+};
+
+const Aquarium = (props: Props) => {
   const [rotationX, setRotationX] = useState(0.0);
   const [rotationY, setRotationY] = useState(0.0);
   const handleMouseMove = (event: React.MouseEvent) => {
@@ -10,10 +14,12 @@ const Aquarium = () => {
     setRotationX(x * 3);
     setRotationY(-y * 3);
   };
+  const generateFish = props.fishImages.map((fish, idx) => <Fish fish={fish} key={idx} />);
 
   return (
-    <Scene>
-      <Cube onMouseMove={handleMouseMove} rotationX={rotationX} rotationY={rotationY}>
+    <Scene onMouseMove={handleMouseMove}>
+      {generateFish}
+      <Cube rotationX={rotationX} rotationY={rotationY}>
         <Front />
         <Back />
         <Right />

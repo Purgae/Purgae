@@ -1,5 +1,27 @@
+FROM openjdk:8-jdk-alpine AS builder
+
+COPY gradlew .
+
+COPY gradle gradle
+
+COPY build.gradle .
+
+COPY settings.gradle .
+
+COPY src src
+
+RUN echo "hi"
+
+RUN echo ls
+
+RUN chmod +x /gradlew
+
+RUN ./gradlew bootJar
+
 FROM openjdk:8-jdk-alpine
-ARG JAR_FILE=./build/libs/purgae-0.0.1-SNAPSHOT.jar
-WORKDIR /var/jenkins_home/workspace/b107/Back
-COPY ${JAR_FILE} app.jar
+
+COPY --from=builder build/libs/*.jar app.jar
+
+EXPOSE 8081
+
 ENTRYPOINT ["java","-jar","/app.jar"]

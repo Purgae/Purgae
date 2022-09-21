@@ -11,6 +11,8 @@ import Login from "@/features/auth/login/Login";
 import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
+import Start from "@/features/start/Start";
+import Donate from "@/features/donate/Donate";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -27,8 +29,8 @@ const App = () => {
     <Fragment>
       <Navbar />
       <Routes>
-        {/* <Route element={<Navbar />}> */}
-        {/* navbar하위 컴포넌트 */}
+        {/* 메인 페이지 입장하기 전 수족관 */}
+        <Route path="/" element={<Start />} />
         {/* 메인 페이지 */}
         <Route path="/main" element={<Home />} />
         {/* 로그인 */}
@@ -46,7 +48,7 @@ const App = () => {
         {/* 랭킹 */}
         <Route path="/ranking" />
         {/* 기부 */}
-        <Route path="/donate" />
+        <Route path="/donate" element={<Donate />} />
         {/* 자주 묻는 질문 */}
         <Route path="/faq" />
         <Route path="/faq/detail" />
@@ -54,10 +56,6 @@ const App = () => {
         <Route path="/counter" element={<Counter />} />
         {/* Theme 테스트 페이지 */}
         <Route path="/theme" element={<ThemeTest />} />
-        {/* </Route> */}
-        {/* not nav */}
-        {/* 메인 페이지 입장하기 전 수족관 */}
-        <Route path="/" />
       </Routes>
       {status && (
         <AlertModal top="4rem" right="50%" styles={styles}>

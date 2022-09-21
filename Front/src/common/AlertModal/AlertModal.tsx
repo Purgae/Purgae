@@ -1,6 +1,6 @@
 import { AlertModalProps } from "./AlertModal.types";
 import { Fragment, useEffect } from "react";
-import FlexDiv from "../FlexDiv/FlexDiv";
+import { FlexDiv } from "@/common/Common.styled";
 import { useAlertModal } from "@/hooks/useAlertModal";
 
 import {

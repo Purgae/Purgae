@@ -4,6 +4,8 @@ import { addDecorator } from "@storybook/react";
 
 import { ThemeProvider } from "styled-components";
 import theme from "../src/styles/theme";
+import store from "../src/redux/store";
+import { Provider } from "react-redux";
 
 export const parameters = {
   actions: { argTypesRegex: "^on[A-Z].*" },
@@ -19,8 +21,10 @@ export const parameters = {
 };
 
 addDecorator((story) => (
-  <ThemeProvider theme={theme}>
-    <GlobalStyle />
-    {story()}
-  </ThemeProvider>
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      {story()}
+    </ThemeProvider>
+  </Provider>
 ));

@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-import { colorsKey } from "../../styles/theme.type";
+import { ColorsKey } from "@/styles/theme.type";
 import Button from "./Button";
 import { ButtonProps } from "./Button.types";
 
@@ -15,11 +15,11 @@ export default {
       control: "select",
     },
     bgColor: {
-      options: colorsKey,
+      options: [...ColorsKey, "gradient"],
       control: "select",
     },
     fontColor: {
-      options: colorsKey,
+      options: ColorsKey,
       control: "select",
     },
   },
@@ -29,19 +29,19 @@ export default {
 export const Default: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
 export const Styles: Story<ButtonProps> = (args) => (
   <div>
-    <Button {...args} style="solid">
+    <Button {...args} styles="solid">
       Button
     </Button>
     <div>&nbsp;</div>
     <div>&nbsp;</div>
-    <Button {...args} style="outline">
+    <Button {...args} styles="outline">
       Button
     </Button>
   </div>
 );
 
 Default.args = {
-  style: "solid",
+  styles: "solid",
   width: "fit-content",
   fontSize: "18px",
   bgColor: "transparent",

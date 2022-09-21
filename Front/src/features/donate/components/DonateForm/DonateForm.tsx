@@ -22,7 +22,6 @@ const DonateForm = () => {
 
   useEffect(() => {
     // let debounce: ReturnType<typeof setTimeout>;
-
     const debounce = setTimeout(() => {
       dispatch(validInputValue());
     }, 500);

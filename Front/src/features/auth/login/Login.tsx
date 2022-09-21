@@ -1,10 +1,7 @@
-import FlexDiv from "@/common/FlexDiv/FlexDiv";
-import { useAppDispatch } from "@/hooks/storeHook";
-import { RopstenUrl } from "@/utils/MetaEnv";
 import { isEmpty } from "lodash";
 import { useMetaMask } from "metamask-react";
 import { useEffect } from "react";
-import Web3 from "web3";
+
 import {
   LoginBox,
   LoginDescription,

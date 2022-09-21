@@ -16,9 +16,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 public class RankingServiceImpl implements RankingService{
-    @Autowired
-    UserRepository userRepository;
-    LikeRepository likeRepository;
+    private final UserRepository userRepository;
+    private final LikeRepository likeRepository;
 
     @Override
     public List<UserMapping> getTop10GameScore() {
@@ -30,8 +29,8 @@ public class RankingServiceImpl implements RankingService{
 
     @Override
     public List<rankingUser> getTop10Like() {
-        System.out.println(likeRepository.getLikeRanking());
-        List<rankingUser> likeTop10 = likeRepository.getLikeRanking();
+        List<rankingUser> likeTop10 = likeRepository.findLikeUserWithJPQL();
+
         return likeTop10;
     }
 }

@@ -3,15 +3,19 @@ package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.service.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Api(tags = {"회원 API Controller"})
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/user")
@@ -23,22 +27,31 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @GetMapping("/{nickname}")
-    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable String nickname) {
-        Map<String, Object> result = new HashMap<>();
-        User user = userService.getUserWalletAddress(nickname);
-        User userDto = userService.getUserInfo(user.getWalletAddress());
 
-        if (userDto != null) {
-            result.put("message", SUCCESS);
-            result.put("data", userDto);
-        } else {
+    @ApiOperation(value = "사용자 정보 가져오기", notes = "닉네임으로 사용자 정보 받아오는 API입니다.")
+    @GetMapping("/{userId}")
+    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable Long userId) {
+        Map<String, Object> result = new HashMap<>();
+        User user = userService.getUserWalletAddress(userId);
+        if(user != null) {
+            User userDto = userService.getUserInfo(user.getWalletAddress());
+            if (userDto != null) {
+                result.put("message", SUCCESS);
+                result.put("data", userDto);
+            } else {
+                result.put("message", FAIL);
+            }
+        }
+        else{
             result.put("message", FAIL);
         }
+
+
 
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody Map<String, Object> reqData){
         Map<String, Object> result = new HashMap<>();
@@ -57,7 +70,8 @@ public class UserController {
         long cnt = userService.countUser();
         if(user == null){
             User newUser = new User();
-            newUser.setNickname("회원"+(cnt+1));
+            String newNickname = userService.newNickname();
+            newUser.setNickname(newNickname);
             newUser.setWalletAddress(walletAddress);
             User tmp = userService.saveUser(newUser);
             if(tmp == null){
@@ -82,6 +96,7 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "닉네임 확인", notes = "닉네임 중복, 길이, 욕설, 공백 검사")
     @GetMapping ("/modify/{nickname}")
     public ResponseEntity<Map<String, Object>> checkNickname(@PathVariable String nickname){
         Map<String, Object> result = new HashMap<>();
@@ -112,6 +127,7 @@ public class UserController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "회원정보 수정", notes = "닉네임, 프로필 이미지, 공개여부 수정")
     @PutMapping("{userId}")
     public ResponseEntity<Map<String, Object>> updateUser(@PathVariable long userId, @RequestBody Map<String, Object> reqData){
         Map<String, Object> result = new HashMap<>();
@@ -134,6 +150,7 @@ public class UserController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+    @ApiOperation(value = "게임 점수 입력", notes = "회원 Id와 게임 점수 입력")
     @PutMapping("/score")
     public ResponseEntity<Map<String, Object>> updateGameScore(@RequestBody Map<String, Object> reqData){
         Map<String, Object> result = new HashMap<>();

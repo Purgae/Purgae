@@ -12,7 +12,7 @@ COPY settings.gradle .
 
 COPY src src
 
-COPY /jenkins/images_tar/env.properties ./src/main/resource/properties/env.properties
+COPY /var/jenkins_home/images_tar/env.properties ./src/main/resource/properties/env.properties
 
 RUN chmod +x /gradlew
 

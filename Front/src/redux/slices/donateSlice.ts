@@ -1,5 +1,5 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-import { checkNumberType, checkMinValue } from "@/utils/validationInput";
+import { checkNumberType, checkMinValue, checkMaxValue } from "@/utils/validationInput";
 import { RootState } from "@/redux/store";
 
 // * state의 타입을 지정한다.
@@ -49,9 +49,13 @@ const slice = createSlice({
       if (checkNumberType(state.inputValue)) {
         return;
       }
-      const n: number = state.inputValue.length;
+      const n: boolean = state.inputValue.includes(".");
       const value = Number(state.inputValue) + action.payload;
-      state.inputValue = value.toFixed(n - 2);
+      if (!n) {
+        state.inputValue = String(value);
+      } else {
+        state.inputValue = value.toFixed(4);
+      }
     },
 
     validInputValue: (state) => {
@@ -75,6 +79,14 @@ const slice = createSlice({
         state.submitStatus = false;
         return;
       }
+
+      if (checkMaxValue({ data: state.inputValue, max: 100 })) {
+        state.inputStatus = false;
+        state.errorMessage = "100ETH보다 큰 금액은 기부할 수 없습니다.";
+        state.submitStatus = false;
+        return;
+      }
+
       state.inputStatus = true;
       state.errorMessage = "";
       state.submitStatus = true;

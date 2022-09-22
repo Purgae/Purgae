@@ -11,3 +11,9 @@ export const checkMinValue = (arg: { data: string; min: number }): boolean => {
   const valid = Number(arg.data) < arg.min;
   return valid;
 };
+
+// 최댓값보다 큰가 작은가. true => 최댓값보다 크다.
+export const checkMaxValue = (arg: { data: string; max: number }): boolean => {
+  const valid = Number(arg.data) > arg.max;
+  return valid;
+};

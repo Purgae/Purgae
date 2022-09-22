@@ -12,7 +12,7 @@ const Donate = () => {
         borderRadius="1rem"
         width="100%"
         gap="7rem"
-        padding="3rem 1rem"
+        padding="3rem 1rem 2rem"
       >
         <DonateForm></DonateForm>
         <DonateCost></DonateCost>

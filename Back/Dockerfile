@@ -1,4 +1,4 @@
-FROM openjdk:8 AS builder
+FROM openjdk:8-jdk-alpine AS builder
 
 COPY gradlew .
 
@@ -14,7 +14,7 @@ RUN chmod +x /gradlew
 
 RUN ./gradlew bootJar
 
-FROM openjdk:8
+FROM openjdk:8-jdk-alpine
 
 COPY --from=builder build/libs/*.jar app.jar
 

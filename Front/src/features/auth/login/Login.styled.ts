@@ -1,5 +1,5 @@
 import styled from "@/styles/theme-components";
-import MetaImg from "@/assets/metamask.png";
+import MetaImg from "/assets/metamask.png";
 
 export const LoginBox = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
@@ -39,6 +39,7 @@ export const LoginMetaDiv = styled.div`
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   color: ${({ theme }) => theme.colors.gray300};
   ${({ theme }) => theme.mixins.font("1.5rem", `${theme.fontWeights.bold}`)};
+  cursor: pointer;
 `;
 
 export const LoginMetaImgDiv = styled.div(({ theme }) => ({

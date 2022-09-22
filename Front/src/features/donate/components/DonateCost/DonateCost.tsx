@@ -5,7 +5,7 @@ import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
 import { useFetchCoinPriceQuery } from "@/redux/api/coinApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { selectDonate, setWon, setTrash } from "@/redux/slices/donateSlice";
-import { ethToTrash } from "@/utils/ethChange";
+import { ethToTrash } from "@/utils/functions/ethChange";
 
 const DonateCost = () => {
   const { inputValue, won, trash } = useAppSelector(selectDonate);

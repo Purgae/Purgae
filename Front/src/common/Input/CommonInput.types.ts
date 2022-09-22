@@ -1,3 +1,5 @@
+import { PayloadAction } from "@reduxjs/toolkit";
+
 //* props types
 export interface CommonInputProps {
   // input과 label을 연결 하는 id 값
@@ -12,12 +14,18 @@ export interface CommonInputProps {
   // input의 너비
   width?: string; //* default: "fit-content"
 
-  // placeHolder 문구
+  // placeholder
   placeHolder?: string;
+
+  // maxLength
+  maxLength?: number;
 
   // errorMessage 문구 (status가 false여야 보인다)
   errorMessage?: string;
 
   // input 값이 변경될 때 실행하는 함수
-  onChangeInputValue?: (data: number | string) => void;
+  onChangeInputValue?: (arg: string) => void;
+
+  // input value
+  inputValue?: string;
 }

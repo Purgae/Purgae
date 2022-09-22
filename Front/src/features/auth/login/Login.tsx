@@ -1,5 +1,5 @@
 import { networkChainId, WrongNetwork } from "@/utils/chain";
-import { RopstenUrl } from "@/utils/MetaEnv";
+import { RinkebyRpcUrl } from "@/utils/MetaEnv";
 import { isEmpty } from "lodash";
 import { useMetaMask } from "metamask-react";
 import { useEffect, useState } from "react";
@@ -18,29 +18,28 @@ type Props = {};
 
 const Login = (props: Props) => {
   const { status, connect, account, chainId, ethereum, switchChain } = useMetaMask();
-  const web3 = new Web3(new Web3.providers.HttpProvider(RopstenUrl));
+  const web3 = new Web3(new Web3.providers.HttpProvider(RinkebyRpcUrl));
   // console.log(web3.eth);
   // , connect, account, chainId, ethereum
-  console.log(status);
+  console.log(window.ethereum);
   const [chain, setChain] = useState(<p>MetaMask</p>);
 
   const LoginFunction = async () => {
     if (status === "notConnected") {
-      if (chainId !== networkChainId.ropsten) {
-        return setChain(<p onClick={() => switchChain(networkChainId.ropsten)}>click! switch to RopstenTestNet</p>);
+      if (chainId !== networkChainId.rinkeby) {
+        return setChain(
+          <>
+            <p onClick={() => switchChain(networkChainId.rinkeby)}>click! switch to RinkebyTestNet</p>
+          </>
+        );
       } else {
-        connect();
+        const asdf = await connect();
+        console.log("asdf", asdf);
       }
     }
-    if (status === "connected") console.log("내계정", account, "체인아이디", chainId);
-
-    // if (status === "notConnected") return <button onClick={connect}>Connect to MetaMask</button>;
-    // if (status === "connected")
-    //   return (
-    //     <div>
-    //       Connected account {account} on chain ID {chainId}
-    //     </div>
-    //   );
+    if (status === "connected") {
+      console.log("내계정", account, "체인아이디", chainId);
+    }
   };
 
   // const asdf = await web3.eth.getStorageAt(web3.eth.getAccounts, 0);

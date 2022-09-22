@@ -5,13 +5,6 @@ import { useMetaMask } from "metamask-react";
 export const WrongNetwork = () => {
   const { switchChain } = useMetaMask();
 
-  // const { openAlertModal } = useAlertModal();
-  // const showAlertModal = () => {
-  //   const data: OpenAlertModalArg = { content: "Ropsten Test Network로 변경해주세요", styles: "RED" };
-  //   openAlertModal(data);
-  // };
-  // Request a switch to Ethereum Mainnet
-
   return <button onClick={() => switchChain(networkChainId.ropsten)}>Switch to Ethereum Mainnet</button>;
 };
 

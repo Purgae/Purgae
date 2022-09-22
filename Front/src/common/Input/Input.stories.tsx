@@ -18,12 +18,10 @@ export const Default: Story<CommonInputProps> = (args) => <CommonInput {...args}
 export const Status: Story<CommonInputProps> = (args) => (
   <div>
     <CommonInput {...args} id="input-true" status={true}>
-      {" "}
       아이디
     </CommonInput>
     <div>&nbsp;</div>
-    <CommonInput {...args} id="input-false" status={false} errorMessage="에러가 발생했습니다">
-      {" "}
+    <CommonInput {...args} id="input-false" status={false}>
       아이디
     </CommonInput>
   </div>
@@ -35,5 +33,21 @@ Default.args = {
   status: true,
   fontSize: "1.25rem",
   width: "fit-content",
+  placeHolder: "아이디를 입력해주세요",
+  maxLength: 8,
   errorMessage: "에러가 발생했습니다",
+  onChangeInputValue: () => {
+    console.log("입력");
+  },
+};
+
+Status.args = {
+  fontSize: "1.25rem",
+  width: "fit-content",
+  placeHolder: "아이디를 입력해주세요",
+  maxLength: 8,
+  errorMessage: "에러가 발생했습니다",
+  onChangeInputValue: () => {
+    console.log("입력");
+  },
 };

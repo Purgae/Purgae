@@ -2,12 +2,48 @@ import { FlexDiv, StrongSpan } from "@/common/Common.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
 import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
+import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
+import { useEffect } from "react";
 
 const DonateForm = () => {
+  const dispatch = useAppDispatch();
+  const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
+
+  const submitButtonStyle = submitStatus ? "gradient" : "white250";
+
+  const clickAddButton = (value: number) => {
+    dispatch(addInputValue(value));
+  };
+
+  const changeInputValue = (value: string) => {
+    dispatch(setInputValue(value));
+  };
+
+  useEffect(() => {
+    // let debounce: ReturnType<typeof setTimeout>;
+    const debounce = setTimeout(() => {
+      dispatch(validInputValue());
+    }, 500);
+
+    return () => {
+      clearTimeout(debounce);
+    };
+  }, [inputValue]);
+
   return (
     <StyleDonateForm>
       <FlexDiv direction="column" align="flex-start" width="100%">
-        <CommonInput id="donate-input" placeHolder="기부 금액을 입력해주세요." width="100%">
+        <CommonInput
+          id="donate-input"
+          width="100%"
+          placeHolder="기부 금액을 입력해주세요"
+          maxLength={6}
+          inputValue={inputValue}
+          onChangeInputValue={changeInputValue}
+          status={inputStatus}
+          errorMessage={errorMessage}
+        >
           <FlexDiv align="flex-start">
             <p>기부 금액(단위: ETH) </p>
             <span className="material-icons-outlined">error_outline</span>
@@ -19,21 +55,21 @@ const DonateForm = () => {
         </p>
       </FlexDiv>
       <DonateGridDiv>
-        <Button styles="outline" width="100%">
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.005)}>
           +0.005
         </Button>
-        <Button styles="outline" width="100%">
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.015)}>
           +0.015
         </Button>
-        <Button styles="outline" width="100%">
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.025)}>
           +0.025
         </Button>
-        <Button styles="outline" width="100%">
-          +0.0.05
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.05)}>
+          +0.05
         </Button>
       </DonateGridDiv>
       <FlexDiv direction="column" width="100%">
-        <Button width="100%" bgColor="gradient" fontColor="white100">
+        <Button disabled={!submitStatus} width="100%" bgColor={submitButtonStyle} fontColor="white100">
           기부하고 NFT 받기
         </Button>
         <p>

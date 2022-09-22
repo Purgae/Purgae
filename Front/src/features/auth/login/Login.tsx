@@ -28,16 +28,21 @@ const Login = (props: Props) => {
 
   const GetHash = async () => {
     if (account) {
+      const asdfasdf = await alchemy.core.getBalance;
       const nft = await alchemy.nft.getNftsForOwner(account);
       console.log("nft", nft);
       for (let i = 0; i < nft.ownedNfts.length; i++) {
-        console.log(nft.ownedNfts[i]);
+        // console.log(nft.ownedNfts[i]);
         // purgae꺼인지 검사
+        // *myNFTView
+        // 지갑주소 -> contract주소로 연결 -> *myNftView -> abi가져오는거
+        //
         // metadata넘기기
       }
     }
   };
   GetHash();
+
   const LoginFunction = async () => {
     if (status === "notConnected") {
       if (chainId !== networkChainId.goerli) {

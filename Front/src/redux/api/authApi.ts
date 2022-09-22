@@ -1,7 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Login } from "./types";
 import { UserProfile } from "@/redux/types";
 import { setUser } from "@/redux/slices/userSlice";
+
+export interface Login {
+  walletAddress: string;
+  nft?: [{ hash: string }];
+}
 
 export const authApi = createApi({
   reducerPath: "authApi",

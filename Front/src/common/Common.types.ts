@@ -1,8 +1,8 @@
 import { FontWeightType, ShadowType, ColorType } from "@/styles/theme.type";
 
 export interface FlexDivProps {
-  width?: string; // * default: "fit-content%"
-  height?: string; // * default: "fit-content"
+  width?: string; // * default: "fit-content"
+  height?: string; // * default: "auto"
   padding?: string; // *default: 0 0
   margin?: string; // * margin: 0 0
   direction?: "row" | "column" | "row-reverse" | "column-reverse"; //* default: row

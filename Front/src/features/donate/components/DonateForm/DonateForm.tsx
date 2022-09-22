@@ -55,17 +55,17 @@ const DonateForm = () => {
         </p>
       </FlexDiv>
       <DonateGridDiv>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0005)}>
+          +0.0005
+        </Button>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0015)}>
+          +0.0015
+        </Button>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0025)}>
+          +0.0025
+        </Button>
         <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.005)}>
-          +0.005
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.015)}>
-          +0.015
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.025)}>
-          +0.025
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.05)}>
-          +0.05
+          +0.0050
         </Button>
       </DonateGridDiv>
       <FlexDiv direction="column" width="100%">

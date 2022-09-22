@@ -8,13 +8,14 @@ import {
   NavbarHamburger,
   NavbarLoginLink,
 } from "./Navbar.styled";
-import { useState } from "react";
+import { Outlet } from "react-router";
+import { useState, Fragment } from "react";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
   return (
-    <>
+    <Fragment>
       <NavbarBackground>
         <NavbarItemWrapper>
           <NavbarHamburger onClick={() => (menuToggle ? setMenuToggle(false) : setMenuToggle(true))}>
@@ -32,7 +33,8 @@ const Navbar = () => {
           </NavbarLoginWrapper>
         </NavbarItemWrapper>
       </NavbarBackground>
-    </>
+      <Outlet />
+    </Fragment>
   );
 };
 

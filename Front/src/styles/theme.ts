@@ -147,6 +147,15 @@ const mixins = {
     font-size: ${size};
     font-weight: ${weight};
   `,
+
+  defaultLayOut: () => `
+  width: 100%;
+  height: 100%;
+  padding: 4rem 1rem;
+  @media screen and (min-width: 1350px) {
+    padding: 4rem 6rem
+  };
+  `,
 };
 
 const theme = {

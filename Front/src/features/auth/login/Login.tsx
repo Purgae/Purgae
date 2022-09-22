@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import { networkChainId } from "@/utils/smart-contract/chain";
+import { networkChainId } from "@/utils/smart-contract/variables";
 import { AlchemyApikey } from "@/utils/smart-contract/MetaEnv";
 import { Alchemy, Network } from "alchemy-sdk";
 

@@ -8,8 +8,8 @@ interface DonateState {
   submitStatus: boolean;
   inputValue: string;
   errorMessage: string;
-  won: number;
-  trash: number;
+  won: string;
+  trash: string;
 }
 
 //* state의 초기값을 지정한다..
@@ -18,8 +18,8 @@ const initialState: DonateState = {
   submitStatus: false,
   inputValue: "",
   errorMessage: "",
-  won: 0,
-  trash: 0,
+  won: "0",
+  trash: "0",
 };
 
 const slice = createSlice({
@@ -27,10 +27,6 @@ const slice = createSlice({
   initialState,
 
   reducers: {
-    resetState: (state) => {
-      state = initialState;
-    },
-
     setInputValue: (state, action: PayloadAction<string>) => {
       state.inputValue = action.payload;
     },
@@ -83,6 +79,14 @@ const slice = createSlice({
       state.errorMessage = "";
       state.submitStatus = true;
     },
+
+    setWon: (state, action: PayloadAction<string>) => {
+      state.won = action.payload;
+    },
+
+    setTrash: (state, action: PayloadAction<string>) => {
+      state.trash = action.payload;
+    },
   },
 });
 
@@ -93,12 +97,13 @@ export const selectDonate = createSelector(
 );
 
 export const {
-  resetState,
   setInputValue,
   resetInputValue,
   setErrorStatus,
   resetErrorStatus,
   addInputValue,
   validInputValue,
+  setWon,
+  setTrash,
 } = slice.actions;
 export default slice.reducer;

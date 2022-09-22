@@ -1,4 +1,5 @@
 import Aquarium from "@/common/Aquarium/Aquarium";
+
 import { useNavigate } from "react-router-dom";
 import { Div, Button } from "./Start.styled";
 

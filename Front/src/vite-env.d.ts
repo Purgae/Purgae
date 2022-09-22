@@ -7,6 +7,7 @@ interface ImportMetaEnv {
   readonly VITE_BE_METAMASK_ADDRESS: string;
   readonly VITE_BE_METAMASK_SECRET_KEY: string;
   readonly VITE_PURGAE_NET: string;
+  readonly VITE_BE_CONTRACT_ADDRESS: string;
   readonly VITE_PURGAE_NET_ALCHEMY: string;
 }
 

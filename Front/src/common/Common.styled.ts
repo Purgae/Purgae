@@ -17,8 +17,8 @@ export const FlexDiv = styled.div<FlexDivProps>`
   justify-content: ${({ justify }) => (justify !== undefined ? justify : "center")};
   gap: ${({ gap }) => (gap !== undefined ? gap : "1rem")};
   border-radius: ${({ borderRadius }) => (borderRadius !== undefined ? borderRadius : "0")};
-  width: ${({ width }) => (width !== undefined ? width : "fit-content%")};
-  height: ${({ height }) => (height !== undefined ? height : "fit-content%")};
+  width: ${({ width }) => (width !== undefined ? width : "fit-content")};
+  height: ${({ height }) => (height !== undefined ? height : "auto")};
   margin: ${({ margin }) => (margin !== undefined ? margin : "0 0")};
   padding: ${({ padding }) => (padding !== undefined ? padding : "0 0")};
   box-sizing: border-box;
@@ -37,4 +37,8 @@ export const FontP = styled.p<FontPProps>`
   font-size: ${({ fontSize }) => (fontSize !== undefined ? fontSize : "1.125rem")};
   font-weight: ${({ fontWeight }) => (fontWeight !== undefined ? fontWeight : "medium")};
   color: ${({ color, theme }) => (color !== undefined ? theme.colors[color] : "mainParagraph")};
+`;
+
+export const RootComponent = styled(FlexDiv)`
+  ${({ theme }) => theme.mixins.defaultLayOut}
 `;

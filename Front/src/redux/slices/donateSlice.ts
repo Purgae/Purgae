@@ -1,5 +1,5 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-import { checkNumberType, checkMinValue } from "@/utils/validationInput";
+import { checkNumberType, checkMinValue, checkMaxValue } from "@/utils/validationInput";
 import { RootState } from "@/redux/store";
 
 // * state의 타입을 지정한다.
@@ -8,8 +8,8 @@ interface DonateState {
   submitStatus: boolean;
   inputValue: string;
   errorMessage: string;
-  won: number;
-  trash: number;
+  won: string;
+  trash: string;
 }
 
 //* state의 초기값을 지정한다..
@@ -18,8 +18,8 @@ const initialState: DonateState = {
   submitStatus: false,
   inputValue: "",
   errorMessage: "",
-  won: 0,
-  trash: 0,
+  won: "0",
+  trash: "0",
 };
 
 const slice = createSlice({
@@ -27,10 +27,6 @@ const slice = createSlice({
   initialState,
 
   reducers: {
-    resetState: (state) => {
-      state = initialState;
-    },
-
     setInputValue: (state, action: PayloadAction<string>) => {
       state.inputValue = action.payload;
     },
@@ -53,9 +49,13 @@ const slice = createSlice({
       if (checkNumberType(state.inputValue)) {
         return;
       }
-      const n: number = state.inputValue.length;
+      const n: boolean = state.inputValue.includes(".");
       const value = Number(state.inputValue) + action.payload;
-      state.inputValue = value.toFixed(n - 2);
+      if (!n) {
+        state.inputValue = String(value);
+      } else {
+        state.inputValue = value.toFixed(4);
+      }
     },
 
     validInputValue: (state) => {
@@ -79,9 +79,25 @@ const slice = createSlice({
         state.submitStatus = false;
         return;
       }
+
+      if (checkMaxValue({ data: state.inputValue, max: 100 })) {
+        state.inputStatus = false;
+        state.errorMessage = "100ETH보다 큰 금액은 기부할 수 없습니다.";
+        state.submitStatus = false;
+        return;
+      }
+
       state.inputStatus = true;
       state.errorMessage = "";
       state.submitStatus = true;
+    },
+
+    setWon: (state, action: PayloadAction<string>) => {
+      state.won = action.payload;
+    },
+
+    setTrash: (state, action: PayloadAction<string>) => {
+      state.trash = action.payload;
     },
   },
 });
@@ -93,12 +109,13 @@ export const selectDonate = createSelector(
 );
 
 export const {
-  resetState,
   setInputValue,
   resetInputValue,
   setErrorStatus,
   resetErrorStatus,
   addInputValue,
   validInputValue,
+  setWon,
+  setTrash,
 } = slice.actions;
 export default slice.reducer;

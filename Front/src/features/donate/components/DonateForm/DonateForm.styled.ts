@@ -4,6 +4,18 @@ import { styled } from "@/styles/theme";
 export const StyleDonateForm = styled.form`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "flex-start")};
   gap: 3.5rem;
+  flex-shrink: 0;
+  min-height: 29rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    min-width: 80%;
+    min-height: 23rem;
+  }
+
+  @media ${({ theme }) => theme.sizes.pc} {
+    min-width: 55%;
+    width: 55%;
+  }
 `;
 
 export const DonateGridDiv = styled.div`

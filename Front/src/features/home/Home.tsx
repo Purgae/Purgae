@@ -1,9 +1,18 @@
-import React from "react";
+import { MainBackground } from "./Home.styled";
+import SaveTheSea from "./components/SaveTheSea/SaveTheSea";
+import WhatIsPurgae from "./components/WhatIsPurgae/WhatIsPurgae";
 
 type Props = {};
 
 const Home = (props: Props) => {
-  return <div>Home</div>;
+  return (
+    <>
+      <MainBackground>
+        <SaveTheSea />
+        <WhatIsPurgae />
+      </MainBackground>
+    </>
+  );
 };
 
 export default Home;

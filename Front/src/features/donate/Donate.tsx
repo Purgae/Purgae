@@ -4,7 +4,7 @@ import DonateCost from "./components/DonateCost/DonateCost";
 
 const Donate = () => {
   return (
-    <DonateFlexDiv width="100%" height="100%">
+    <DonateFlexDiv>
       <DonateFlexShadowDiv
         direction="column-reverse"
         shadow="shadow600"

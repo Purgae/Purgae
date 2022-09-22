@@ -12,8 +12,6 @@ COPY settings.gradle .
 
 COPY src src
 
-COPY /var/jenkins_home/images_tar/env.properties ./src/main/resource/properties/env.properties
-
 RUN chmod +x /gradlew
 
 RUN ./gradlew bootJar

@@ -9,6 +9,7 @@ import {
   NavbarLoginLink,
 } from "./Navbar.styled";
 import { useState } from "react";
+import { Outlet } from "react-router-dom";
 
 const Navbar = () => {
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
@@ -32,6 +33,7 @@ const Navbar = () => {
           </NavbarLoginWrapper>
         </NavbarItemWrapper>
       </NavbarBackground>
+      <Outlet />
     </>
   );
 };

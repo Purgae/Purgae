@@ -1,9 +1,9 @@
-import { networkChainId, WrongNetwork } from "@/utils/chain";
-import { RinkebyRpcUrl } from "@/utils/MetaEnv";
-import { isEmpty } from "lodash";
-import { useMetaMask } from "metamask-react";
 import { useEffect, useState } from "react";
-import Web3 from "web3";
+import { useMetaMask } from "metamask-react";
+import { networkChainId } from "@/utils/smart-contract/chain";
+import { AlchemyApikey } from "@/utils/smart-contract/MetaEnv";
+import { Alchemy, Network } from "alchemy-sdk";
+
 import {
   LoginBox,
   LoginDescription,
@@ -17,24 +17,38 @@ import {
 type Props = {};
 
 const Login = (props: Props) => {
-  const { status, connect, account, chainId, ethereum, switchChain } = useMetaMask();
-  const web3 = new Web3(new Web3.providers.HttpProvider(RinkebyRpcUrl));
-  // console.log(web3.eth);
-  // , connect, account, chainId, ethereum
-  console.log(window.ethereum);
   const [chain, setChain] = useState(<p>MetaMask</p>);
+  const { status, connect, ethereum, switchChain, account, chainId } = useMetaMask();
+  // const { account, chainId } = useConnectedMetaMask();
+  const config = {
+    apiKey: AlchemyApikey,
+    network: Network.ETH_GOERLI,
+  };
+  const alchemy = new Alchemy(config);
 
+  const GetHash = async () => {
+    if (account) {
+      const nft = await alchemy.nft.getNftsForOwner(account);
+      console.log("nft", nft);
+      for (let i = 0; i < nft.ownedNfts.length; i++) {
+        console.log(nft.ownedNfts[i]);
+        // purgae꺼인지 검사
+        // metadata넘기기
+      }
+    }
+  };
+  GetHash();
   const LoginFunction = async () => {
     if (status === "notConnected") {
-      if (chainId !== networkChainId.rinkeby) {
+      if (chainId !== networkChainId.goerli) {
         return setChain(
           <>
-            <p onClick={() => switchChain(networkChainId.rinkeby)}>click! switch to RinkebyTestNet</p>
+            <p onClick={() => switchChain(networkChainId.goerli)}>click! switch to GoerliTestNet</p>
           </>
         );
       } else {
         const asdf = await connect();
-        console.log("asdf", asdf);
+        // console.log("asdf", asdf);
       }
     }
     if (status === "connected") {
@@ -43,15 +57,15 @@ const Login = (props: Props) => {
   };
 
   // const asdf = await web3.eth.getStorageAt(web3.eth.getAccounts, 0);
-
   useEffect(() => {
-    if (isEmpty(account)) {
+    if (account) {
+      // alert("이미 로그인 되어 있습니다.");
       return;
     } else {
-      // alert("이미 로그인되어 있습니다.");
       return;
     }
   }, []);
+
   return (
     <>
       <LoginBox>
@@ -59,7 +73,7 @@ const Login = (props: Props) => {
         <LoginDescription>
           <LoginDescription1>지갑 연결 하기</LoginDescription1>
           <LoginDescription2>
-            <span>
+            <span className="asdf">
               로그인을 위해서 <LoginDescription2blue>지갑</LoginDescription2blue>을 연결해야해요
             </span>
             <span>지갑은 간단하게 생성할 수 있어요.</span>
@@ -71,7 +85,7 @@ const Login = (props: Props) => {
         </LoginDescription>
         <LoginMetaDiv onClick={LoginFunction}>
           <LoginMetaImgDiv />
-          {chainId === networkChainId.ropsten ? "MetaMask" : chain}
+          {chainId === networkChainId.rinkeby ? "MetaMask" : chain}
         </LoginMetaDiv>
       </LoginBox>
     </>

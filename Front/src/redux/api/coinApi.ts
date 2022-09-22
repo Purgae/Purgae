@@ -7,12 +7,11 @@ interface CoinPrice {
 
 export const coinApi = createApi({
   reducerPath: "coinApi",
-
-  baseQuery: fetchBaseQuery({ baseUrl: "https://api.upbit.com/v1/ticker?markets" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://api.upbit.com/v1/" }),
   tagTypes: ["Coin"],
   endpoints: (build) => ({
-    fetchCoinPrice: build.query<CoinPrice, string>({
-      query: () => "=KRW-ETH",
+    fetchCoinPrice: build.query<CoinPrice[], string>({
+      query: (coin) => `ticker?markets=KRW-${coin}`,
       providesTags: ["Coin"],
     }),
   }),

@@ -5,6 +5,7 @@ import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
 import { useEffect } from "react";
+import { contract } from "@/utils/smart-contract/variables";
 
 const DonateForm = () => {
   const dispatch = useAppDispatch();
@@ -20,6 +21,18 @@ const DonateForm = () => {
     dispatch(setInputValue(value));
   };
 
+  const submitDonateForm = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.dir(contract);
+    async () => {
+      try {
+        const data = await contract.methods.viewTodayNFT().call();
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  };
   useEffect(() => {
     // let debounce: ReturnType<typeof setTimeout>;
     const debounce = setTimeout(() => {
@@ -32,7 +45,7 @@ const DonateForm = () => {
   }, [inputValue]);
 
   return (
-    <StyleDonateForm>
+    <StyleDonateForm onSubmit={submitDonateForm}>
       <FlexDiv direction="column" align="flex-start" width="100%">
         <CommonInput
           id="donate-input"

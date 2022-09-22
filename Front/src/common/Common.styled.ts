@@ -38,3 +38,7 @@ export const FontP = styled.p<FontPProps>`
   font-weight: ${({ fontWeight }) => (fontWeight !== undefined ? fontWeight : "medium")};
   color: ${({ color, theme }) => (color !== undefined ? theme.colors[color] : "mainParagraph")};
 `;
+
+export const RootComponent = styled(FlexDiv)`
+  ${({ theme }) => theme.mixins.defaultLayOut}
+`;

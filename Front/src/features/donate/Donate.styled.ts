@@ -16,7 +16,3 @@ export const DonateFlexShadowDiv = styled(FlexShadowDiv)`
     padding: 7.5rem 2.5rem;
   }
 `;
-
-export const DonateFlexDiv = styled(FlexDiv)`
-  ${({ theme }) => theme.mixins.defaultLayOut}
-`;

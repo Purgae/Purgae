@@ -1,10 +1,11 @@
-import { DonateFlexShadowDiv, DonateFlexDiv } from "./Donate.styled";
+import { DonateFlexShadowDiv } from "./Donate.styled";
+import { RootComponent } from "@/common/Common.styled";
 import DonateForm from "./components/DonateForm/DonateForm";
 import DonateCost from "./components/DonateCost/DonateCost";
 
 const Donate = () => {
   return (
-    <DonateFlexDiv>
+    <RootComponent>
       <DonateFlexShadowDiv
         direction="column-reverse"
         shadow="shadow600"
@@ -16,7 +17,7 @@ const Donate = () => {
         <DonateForm></DonateForm>
         <DonateCost></DonateCost>
       </DonateFlexShadowDiv>
-    </DonateFlexDiv>
+    </RootComponent>
   );
 };
 

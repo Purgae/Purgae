@@ -8,8 +8,9 @@ import counter from "@/redux/slices/counterSlice";
 import user from "@/redux/slices/userSlice";
 import alert from "@/redux/slices/alertSlice";
 import donate from "@/redux/slices/donateSlice";
-import { userApi } from "@/redux/api/user/userApi";
-import { authApi } from "@/redux/api/auth/authApi";
+import { userApi } from "@/redux/api/userApi";
+import { authApi } from "@/redux/api/authApi";
+import { coinApi } from "@/redux/api/coinApi";
 
 // * 리듀서
 const reducers = combineReducers({
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   donate,
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [coinApi.reducerPath]: coinApi.reducer,
 });
 
 // * session storage
@@ -39,7 +41,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware, authApi.middleware),
+    }).concat(userApi.middleware, authApi.middleware, coinApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

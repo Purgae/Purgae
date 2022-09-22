@@ -2,6 +2,12 @@ import { ColorType, ColorTypeWithGradient } from "@/styles/theme.type";
 
 //* props types
 export interface ButtonProps {
+  // 버튼 타입
+  type?: "submit" | "button"; //* default: "submit"
+
+  // 버튼 활성화 여부
+  disabled?: boolean; //* default: false
+
   // 버튼 스타일: solid or outline
   styles?: string; //* default: "solid"
 
@@ -20,7 +26,4 @@ export interface ButtonProps {
 
   // 클릭 이벤트
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
-
-  //추가 속성
-  attrs?: object;
 }

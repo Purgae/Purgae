@@ -9,7 +9,9 @@ const CommonInput = ({
 }: React.PropsWithChildren<CommonInputProps>) => {
   const changeInputValue = (event: React.ChangeEvent<HTMLInputElement>) => {
     const data = event.target.value;
-    props.onChangeInputValue(data);
+    if (props.onChangeInputValue) {
+      props?.onChangeInputValue(data);
+    }
   };
 
   return (
@@ -17,10 +19,10 @@ const CommonInput = ({
       <label htmlFor={props.id}> {props.children}</label>
       <InputTag
         id={props.id}
-        value={props.inputValue}
-        onChange={changeInputValue}
         status={status}
-        {...props?.attrs}
+        placeholder={props?.placeHolder}
+        onChange={changeInputValue}
+        value={props?.inputValue}
       ></InputTag>
       {!status && <ErrorMessage> {props?.errorMessage}</ErrorMessage>}
     </DivTag>

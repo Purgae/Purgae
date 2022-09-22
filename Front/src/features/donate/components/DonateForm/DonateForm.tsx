@@ -36,12 +36,12 @@ const DonateForm = () => {
       <FlexDiv direction="column" align="flex-start" width="100%">
         <CommonInput
           id="donate-input"
+          width="100%"
+          placeHolder="기부 금액을 입력해주세요"
           inputValue={inputValue}
           onChangeInputValue={changeInputValue}
           status={inputStatus}
           errorMessage={errorMessage}
-          width="100%"
-          attrs={{ placeholder: "기부 금액을 입력해주세요" }}
         >
           <FlexDiv align="flex-start">
             <p>기부 금액(단위: ETH) </p>
@@ -54,21 +54,21 @@ const DonateForm = () => {
         </p>
       </FlexDiv>
       <DonateGridDiv>
-        <Button styles="outline" width="100%" attrs={{ type: "button" }} onClick={() => clickAddButton(0.005)}>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.005)}>
           +0.005
         </Button>
-        <Button styles="outline" width="100%" attrs={{ type: "button" }} onClick={() => clickAddButton(0.015)}>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.015)}>
           +0.015
         </Button>
-        <Button styles="outline" width="100%" attrs={{ type: "button" }} onClick={() => clickAddButton(0.025)}>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.025)}>
           +0.025
         </Button>
-        <Button styles="outline" width="100%" attrs={{ type: "button" }} onClick={() => clickAddButton(0.05)}>
+        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.05)}>
           +0.05
         </Button>
       </DonateGridDiv>
       <FlexDiv direction="column" width="100%">
-        <Button width="100%" bgColor={submitButtonStyle} fontColor="white100" attrs={{ disabled: !submitStatus }}>
+        <Button disabled={!submitStatus} width="100%" bgColor={submitButtonStyle} fontColor="white100">
           기부하고 NFT 받기
         </Button>
         <p>

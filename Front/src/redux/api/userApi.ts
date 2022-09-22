@@ -1,6 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { CheckNickname, GameScore } from "./types";
 import { UserProfile, UserDetail } from "@/redux/types";
+
+export interface CheckNickname {
+  message: string;
+}
+
+export interface GameScore {
+  userId: number;
+  gameScore: number;
+}
 
 export const userApi = createApi({
   reducerPath: "userApi",

@@ -1,6 +1,6 @@
 import { Fragment } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
-import { useLoginMutation } from "@/redux/api/auth/authApi";
+import { useLoginMutation } from "@/redux/api/authApi";
 import "./counter.css";
 
 // * action creator, selector를 import한다.

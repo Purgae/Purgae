@@ -53,7 +53,9 @@ const slice = createSlice({
       if (checkNumberType(state.inputValue)) {
         return;
       }
-      state.inputValue = String(Number(state.inputValue) + action.payload);
+      const n: number = state.inputValue.length;
+      const value = Number(state.inputValue) + action.payload;
+      state.inputValue = value.toFixed(n - 2);
     },
 
     validInputValue: (state) => {

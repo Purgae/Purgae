@@ -17,6 +17,9 @@ export interface CommonInputProps {
   // placeholder
   placeHolder?: string;
 
+  // maxLength
+  maxLength?: number;
+
   // errorMessage 문구 (status가 false여야 보인다)
   errorMessage?: string;
 

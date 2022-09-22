@@ -21,6 +21,7 @@ const CommonInput = ({
         id={props.id}
         status={status}
         placeholder={props?.placeHolder}
+        maxLength={props?.maxLength}
         onChange={changeInputValue}
         value={props?.inputValue}
       ></InputTag>

@@ -34,6 +34,7 @@ Default.args = {
   fontSize: "1.25rem",
   width: "fit-content",
   placeHolder: "아이디를 입력해주세요",
+  maxLength: 8,
   errorMessage: "에러가 발생했습니다",
   onChangeInputValue: () => {
     console.log("입력");
@@ -44,6 +45,7 @@ Status.args = {
   fontSize: "1.25rem",
   width: "fit-content",
   placeHolder: "아이디를 입력해주세요",
+  maxLength: 8,
   errorMessage: "에러가 발생했습니다",
   onChangeInputValue: () => {
     console.log("입력");

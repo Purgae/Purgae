@@ -38,6 +38,7 @@ const DonateForm = () => {
           id="donate-input"
           width="100%"
           placeHolder="기부 금액을 입력해주세요"
+          maxLength={6}
           inputValue={inputValue}
           onChangeInputValue={changeInputValue}
           status={inputStatus}

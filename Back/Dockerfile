@@ -1,3 +1,5 @@
+
+
 FROM openjdk:8-jdk-alpine AS builder
 
 COPY gradlew .
@@ -9,10 +11,6 @@ COPY build.gradle .
 COPY settings.gradle .
 
 COPY src src
-
-RUN echo "hi"
-
-RUN echo ls
 
 RUN chmod +x /gradlew
 

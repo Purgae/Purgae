@@ -1,4 +1,6 @@
-export const purgaeAbi = [
+import { AbiItem } from "web3-utils";
+
+export const purgaeAbi: AbiItem[] = [
   {
     inputs: [],
     stateMutability: "nonpayable",

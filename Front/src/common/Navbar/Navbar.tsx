@@ -9,14 +9,36 @@ import {
   NavbarLoginLink,
 } from "./Navbar.styled";
 import { Outlet } from "react-router";
-import { useState, Fragment } from "react";
+import { useState, Fragment, useEffect } from "react";
 
 const Navbar = () => {
+  const [ScrollY, setHeaderColor] = useState(0);
+  const [HeaderStatus, setHeaderStatus] = useState(false);
+
+  const Navbar = document.getElementById("navbar");
+  const NavbarHeight: any = Navbar?.getBoundingClientRect().height;
+
+  const handleColor = () => {
+    setHeaderColor(window.pageYOffset);
+    ScrollY > NavbarHeight ? setHeaderStatus(true) : setHeaderStatus(false);
+  };
+
+  useEffect(() => {
+    const watch = () => {
+      window.addEventListener("scroll", handleColor);
+    };
+    handleColor();
+    watch();
+    return () => {
+      window.removeEventListener("scroll", handleColor);
+    };
+  });
+
   const [menuToggle, setMenuToggle] = useState<boolean>(false);
 
   return (
     <Fragment>
-      <NavbarBackground>
+      <NavbarBackground opacity={!HeaderStatus ? "1" : "0"} id="navbar">
         <NavbarItemWrapper>
           <NavbarHamburger onClick={() => (menuToggle ? setMenuToggle(false) : setMenuToggle(true))}>
             <div className="material-icons">menu</div>

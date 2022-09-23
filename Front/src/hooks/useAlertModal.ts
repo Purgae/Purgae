@@ -10,7 +10,7 @@ import {
 import { AlertStylesType } from "@/common/AlertModal/AlertModal.types";
 
 export interface OpenAlertModalArg {
-  content: string;
+  content: React.ReactNode;
   styles: AlertStylesType;
 }
 

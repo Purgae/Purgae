@@ -21,11 +21,11 @@ const AlertModal = ({ styles = "DEFAULT", icon = true, ...props }: React.PropsWi
 
   const { closeAlertModal } = useAlertModal();
 
-  // * 15초 뒤에 자동으로 사라진다.
+  // * 2.5초 뒤에 자동으로 사라진다.
   useEffect(() => {
     setTimeout(() => {
       closeAlertModal();
-    }, 1500);
+    }, 2500);
   }, []);
 
   const content = (

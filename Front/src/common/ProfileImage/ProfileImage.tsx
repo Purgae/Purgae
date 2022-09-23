@@ -1,6 +1,6 @@
 import { ExtraLarge, Large, Medium, Small, ExtraSmall, NavBar, Custom } from "./ProfileImage.styled";
 import { ProfileImageProps } from "./ProfileImage.types";
-import imgUrl from "/profile.png";
+import imgUrl from "/assets/profile.png";
 
 const ProfileImage = ({
   size,

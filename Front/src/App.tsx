@@ -7,7 +7,7 @@ import { useAppSelector } from "@/hooks/storeHook";
 import { selectAlert } from "@/redux/slices/alertSlice";
 
 //* 최상위 컴포넌트 :  최상위에 코드 추가
-// import Login from "@/features/auth/login/Login";
+import Login from "@/features/auth/login/Login";
 import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
@@ -32,7 +32,7 @@ const App = () => {
           {/* 메인 페이지 */}
           <Route path="/main" element={<Home />} />
           {/* 로그인 */}
-          {/* <Route path="/login" element={<Login />} /> */}
+          <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
           <Route path="/profile/:userId" />
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}

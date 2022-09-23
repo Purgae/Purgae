@@ -1,6 +1,7 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
 import { AlertStylesType } from "@/common/AlertModal/AlertModal.types";
 import { RootState } from "@/redux/store";
+import React from "react";
 
 //* state의 타입을 지정한다.
 interface AlertState {
@@ -8,7 +9,7 @@ interface AlertState {
   status: boolean;
 
   // * 알럿 문구
-  content: string;
+  content: React.ReactNode;
 
   //* 알럿 스타일
   styles?: AlertStylesType;
@@ -35,7 +36,7 @@ const slice = createSlice({
     },
 
     // * Alert 문구 설정
-    setAlertContent: (state, action: PayloadAction<string>) => {
+    setAlertContent: (state, action: PayloadAction<React.ReactNode>) => {
       state.content = action.payload;
     },
 

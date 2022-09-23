@@ -21,7 +21,7 @@ import java.util.Map;
 @Api(tags = {"랭킹 API Controller"})
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/ranking")
+@RequestMapping("/api/ranking")
 public class RankingController {
     private static final String SUCCESS = "SUCCESS";
     private static final String FAIL = "FAIL";

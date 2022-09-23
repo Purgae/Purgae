@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import {
-  ALCHEMY_API_KEY,
-  TEST_WALLET_ADDRESS,
-  CONTRACT_ADDRESS,
-  RINKEBY_RPC_URL,
-} from "@/utils/smart-contract/MetaEnv";
-import { networkChainId } from "@/utils/smart-contract/web3";
+import { CONTRACT_ADDRESS } from "@/utils/smart-contract/MetaEnv";
+import useProvider from "@/hooks/useProvider";
 import {
   LoginBox,
   LoginDescription,
@@ -24,9 +19,9 @@ import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
-
 const Login = (props: Props) => {
   const { status, connect, switchChain, account, chainId } = useMetaMask();
+  const { networkChainId } = useProvider();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
   const navigate = useNavigate();

@@ -8,5 +8,5 @@ export interface FishProps {
   key?: number;
   left?: number;
   top?: number;
-  translateZ?: number;
+  size?: number;
 }

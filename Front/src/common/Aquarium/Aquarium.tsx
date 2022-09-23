@@ -23,7 +23,7 @@ const Aquarium = (props: Props) => {
           key={idx}
           left={Math.floor(Math.random() * 85)}
           top={Math.floor(Math.random() * 80)}
-          translateZ={-Math.floor(Math.random() * 100)}
+          size={Math.floor(Math.random() * 12) + 8}
         />
       )),
     []
@@ -35,23 +35,22 @@ const Aquarium = (props: Props) => {
       console.log(fishCollection);
       var fishes: HTMLElement[] = Array.prototype.slice.call(fishCollection);
       console.log(fishes);
-      const velocity: number = 10;
-      let moveX: number[] = new Array(fishes.length);
+      let moveX: number[] = new Array();
       let moveZ: number[] = new Array();
-      moveX.fill(-velocity);
       for (let i = 0; i < fishes.length; i++) {
         moveZ.push(-Math.floor(Math.random() * 100));
+        moveX.push(-(Math.floor(Math.random() * 16) + 4));
       }
       for (let i = 0; i < fishes.length; i++) {
-        console.log(moveZ);
+        console.log(moveX);
         fishes[i].style.left = fishes[i].offsetLeft + "px";
         setInterval(() => {
           if (fishes[i].offsetLeft + moveX[i] <= 0) {
-            moveX[i] = velocity;
+            moveX[i] = -moveX[i];
             fishes[i].style.transform = `translateZ(${moveZ[i]}vw) scaleX(-1)`;
           }
-          if (fishes[i].offsetLeft + moveX[i] >= window.innerWidth - 180) {
-            moveX[i] = -velocity;
+          if (fishes[i].offsetLeft + moveX[i] >= window.innerWidth - fishes[i].offsetWidth) {
+            moveX[i] = -moveX[i];
             fishes[i].style.transform = `translateZ(${moveZ[i]}vw) scaleX(1)`;
           }
           if (fishes[i].offsetTop <= 0) {

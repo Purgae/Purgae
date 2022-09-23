@@ -26,14 +26,14 @@ const Counter = (props: TestProps) => {
 
   const [NFTList, setNFTList] = useState<string[]>([]);
 
-  const [loading, setLoading] = useState<boolean>(false);
+  // const [loading, setLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (NFTList.length > 1) {
-      console.log("트루~~~");
-      setLoading(true);
-    }
-  }, [NFTList]);
+  // useEffect(() => {
+  //   if (NFTList.length > 1) {
+  //     console.log("트루~~~");
+  //     setLoading(true);
+  //   }
+  // }, [NFTList]);
 
   const [login] = useLoginMutation();
 
@@ -82,11 +82,9 @@ const Counter = (props: TestProps) => {
         <h1>NFT Test</h1>
         <button onClick={clickNFTList}>NFTLIST</button>
         {/* <>{generateFish}</> */}
-        {loading
-          ? NFTList.map((item, index) => {
-              return <img src={item} key={index} />;
-            })
-          : null}
+        {NFTList.map((item, index) => {
+          return <img src={item} key={index} />;
+        })}
       </section>
     </Fragment>
   );

@@ -5,6 +5,7 @@ import MoneyGo from "./components/MoneyGo/MoneyGo";
 import HowMany from "./components/HowMany/HowMany";
 import MainHowDonate from "./components/MainHowDonate/HowDonate";
 import MainFaq from "./components/MainFaq/MainFaq";
+import TopButton from "@/common/TopButton/TopButton";
 
 type Props = {};
 
@@ -18,6 +19,7 @@ const Home = (props: Props) => {
         <HowMany />
         <MainHowDonate />
         <MainFaq />
+        <TopButton />
       </MainBackground>
     </>
   );

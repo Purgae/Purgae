@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import { AlchemyApikey, BEAddress, BEContractAddress, RinkebyRpcUrl } from "@/utils/smart-contract/MetaEnv";
+import {
+  ALCHEMY_API_KEY,
+  TEST_WALLET_ADDRESS,
+  CONTRACT_ADDRESS,
+  RINKEBY_RPC_URL,
+} from "@/utils/smart-contract/MetaEnv";
 import { networkChainId } from "@/utils/smart-contract/web3";
 import { Alchemy, Network } from "alchemy-sdk";
 
@@ -14,7 +19,7 @@ import {
   LoginMetaImgDiv,
 } from "./Login.styled";
 import Web3 from "web3";
-import { purgaeAbi } from "@/utils/smart-contract/abi";
+import CONTRACT_ABI from "@/utils/smart-contract/abi";
 import { useLoginMutation } from "@/redux/api/authApi";
 
 type Props = {};
@@ -24,17 +29,17 @@ const Login = (props: Props) => {
   const { status, connect, ethereum, switchChain, account, chainId } = useMetaMask();
   // const { account, chainId } = useConnectedMetaMask();
   const config = {
-    apiKey: AlchemyApikey,
+    apiKey: ALCHEMY_API_KEY,
     network: Network.ETH_RINKEBY,
     // network: Network.ETH_GOERLI,
   };
   const alchemy = new Alchemy(config);
 
   const asdfasdf = alchemy.core.findContractDeployer;
-  const web3 = new Web3(RinkebyRpcUrl);
-  const contract = new web3.eth.Contract(purgaeAbi, BEContractAddress);
+  const web3 = new Web3(RINKEBY_RPC_URL);
+  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
   const aaa = async () => {
-    const sdf = await contract.methods?.myNFTView(BEAddress).call();
+    const sdf = await contract.methods?.myNFTView(TEST_WALLET_ADDRESS).call();
     console.log("asdfasdf", sdf);
     // jsonparsing하기
   };
@@ -49,7 +54,7 @@ const Login = (props: Props) => {
       for (let i = 0; i < nft.ownedNfts.length; i++) {
         console.log(nft.ownedNfts[i].tokenUri?.raw);
 
-        const dfd = await contract.methods?.balanceOf(BEContractAddress).call();
+        const dfd = await contract.methods?.balanceOf(CONTRACT_ADDRESS).call();
         console.log("asdf", dfd);
         // purgae꺼인지 검사
         // *myNFTView

@@ -1,12 +1,15 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { useLoginMutation } from "@/redux/api/authApi";
 import "./counter.css";
+import Card from "@/common/Card/Card";
 
 // * action creator, selector를 import한다.
+
 import { selectCounter, increment, decrement } from "@/redux/slices/counterSlice";
 
 import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
+import useFetchNFT from "@/hooks/useFetchNFT";
 
 // * props를 넘긴다면 props 타입을 지정한다.
 interface TestProps {}
@@ -25,6 +28,8 @@ const Counter = (props: TestProps) => {
 
   const { openAlertModal } = useAlertModal();
 
+  const { fetchMyNFT } = useFetchNFT();
+
   const clickHandler = () => {
     login({ walletAddress: "0x123123", nft: [] });
   };
@@ -32,6 +37,16 @@ const Counter = (props: TestProps) => {
   const showAlertModal = () => {
     const data: OpenAlertModalArg = { content: "오류가 발생했다는 테스트를 하고 있습니다", styles: "DANGER" };
     openAlertModal(data);
+  };
+
+  const [NFTList, setNFTList] = useState<string[]>([]);
+  console.log(NFTList);
+  console.log("리랜더링");
+  console.log(NFTList);
+
+  const clickNFTList = async () => {
+    const myNFTList: string[] = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
+    await setNFTList(myNFTList);
   };
 
   return (
@@ -50,6 +65,13 @@ const Counter = (props: TestProps) => {
       <section className="counter-section">
         <h1>Alert Test</h1>
         <button onClick={showAlertModal}>Alert Test</button>
+      </section>
+      <section className="counter-section">
+        <h1>NFT Test</h1>
+        <button onClick={clickNFTList}>NFTLIST</button>
+        {NFTList?.map((item, index) => (
+          <Card url={item} key={index}></Card>
+        ))}
       </section>
     </Fragment>
   );

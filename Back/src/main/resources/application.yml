@@ -1,6 +1,6 @@
 server:
   port: 8080
-  address: localhost
+  address: 172.26.14.38
   servlet:
     context-path: /api
   error:

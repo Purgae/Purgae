@@ -9,16 +9,16 @@ export const MainBackground = styled.div`
 `;
 
 export const MainTitle = styled.div<{ mt: string }>`
-  ${({ theme }) => theme.mixins.font("3rem", "700")};
+  ${({ theme }) => theme.mixins.font("2.4rem", "700")};
   margin-top: ${(props) => props.mt};
   color: ${({ theme }) => theme.colors.mainParagraph};
 `;
 
 export const MainText = styled.p<{ textalign: string }>`
-  ${({ theme }) => theme.mixins.font("1.125rem", "500")};
+  ${({ theme }) => theme.mixins.font("0.9rem", "500")};
   text-align: ${(props) => props.textalign};
   color: ${({ theme }) => theme.colors.gray300};
-  line-height: 1.5rem;
+  line-height: 1.2rem;
 `;
 
 export const MainTextPrimary = styled.span`

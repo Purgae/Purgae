@@ -9,6 +9,25 @@ import {
 } from "./SaveTheSea.styled";
 
 const SaveTheSea = () => {
+  const WhatIsPurgae = document.getElementById("whatispurgae");
+  const WhatIsPurgaeHeight: any = WhatIsPurgae?.getBoundingClientRect().height;
+  console.log(WhatIsPurgaeHeight);
+  const onHandleWhatIsPurgae = () => {
+    window.scrollTo({
+      top: WhatIsPurgaeHeight * 1.4,
+      behavior: "smooth",
+    });
+  };
+
+  const HowDonate = document.getElementById("howdonate");
+  const HowDonateHeight: any = HowDonate?.getBoundingClientRect().height;
+  const onHandleHowDonate = () => {
+    window.scrollTo({
+      top: HowDonateHeight * 2.3,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <MainTopBackground>
@@ -23,14 +42,26 @@ const SaveTheSea = () => {
               푸른 바다를 지켜주세요.
             </MainTopSubhead>
             <MainButtonWrapper>
-              <OutLineButton fontSize="1rem" width="12rem" bgColor="white" fontColor="lightBlue500">
+              <OutLineButton
+                fontSize="0.8rem"
+                width="9.6rem"
+                bgColor="white"
+                fontColor="lightBlue500"
+                onClick={onHandleWhatIsPurgae}
+              >
                 푸르게가 뭔가요?
               </OutLineButton>
-              <SolidButton fontSize="1rem" width="12rem" bgColor="lightBlue500" fontColor="white">
+              <SolidButton
+                fontSize="0.8rem"
+                width="9.6rem"
+                bgColor="lightBlue500"
+                fontColor="white"
+                onClick={onHandleHowDonate}
+              >
                 어떻게 기부하나요?
               </SolidButton>
             </MainButtonWrapper>
-            <SolidButton fontSize="1rem" width="27rem" bgColor="lightBlue500" fontColor="white">
+            <SolidButton fontSize="0.8rem" width="21rem" bgColor="lightBlue500" fontColor="white">
               기부하고 NFT 받기
             </SolidButton>
           </MainTopLetterButtonWrapper>

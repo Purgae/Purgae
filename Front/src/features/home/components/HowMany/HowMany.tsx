@@ -4,7 +4,7 @@ import { HowManyBackground, HowManyCardWrapper, HowManyCard, HowManyCardTitle } 
 const HowMany = () => {
   return (
     <HowManyBackground>
-      <MainTitle mt="10rem">얼마나 많이 참여하고 있나요?</MainTitle>
+      <MainTitle mt="8rem">얼마나 많이 참여하고 있나요?</MainTitle>
       <HowManyCardWrapper>
         <HowManyCard backgroundimg="url(/public/MainPage/card/card1.jpg)">
           <HowManyCardTitle>

@@ -4,7 +4,7 @@ import { MainTitle, MainTextPrimary, MainIcon, MainLink } from "../../Home.style
 const MoneyGoBackground = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   width: 100%;
-  min-height: 46rem;
+  min-height: 38rem;
   padding: 4rem 1rem 1rem;
   @media screen and (min-width: 1350px) {
     padding: 4rem 6rem 1rem;
@@ -14,23 +14,23 @@ const MoneyGoBackground = styled.div`
 
 const MoneyGoIconWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 46rem;
+  width: 38rem;
 `;
 
 const MoneyGoText = styled.p`
-  ${({ theme }) => theme.mixins.font("1.25rem", "500")};
+  ${({ theme }) => theme.mixins.font("1rem", "500")};
   color: ${({ theme }) => theme.colors.gray300};
-  line-height: 2rem;
+  line-height: 1.6rem;
   text-align: center;
 `;
 
 const MoneyGo = () => {
   return (
-    <MoneyGoBackground>
-      <MainTitle mt="10rem">기부받은 돈은 어디로 가나요?</MainTitle>
+    <MoneyGoBackground id="whatispurgae">
+      <MainTitle mt="8rem">기부받은 돈은 어디로 가나요?</MainTitle>
       <MoneyGoIconWrapper>
-        <MainIcon src={"/public/MainPage/Icon/5.png"} width="18rem" />
-        <MainIcon src={"/public/MainPage/Icon/6.png"} width="18rem" />
+        <MainIcon src={"/public/MainPage/Icon/5.png"} width="14rem" />
+        <MainIcon src={"/public/MainPage/Icon/6.png"} width="14rem" />
       </MoneyGoIconWrapper>
       <MoneyGoText>
         여러분이 기부해주신 모든 금액은 <MainTextPrimary>푸르게</MainTextPrimary>의 지갑에 보관된 후,

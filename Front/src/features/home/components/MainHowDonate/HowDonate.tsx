@@ -4,7 +4,7 @@ import { OutLineButton } from "@/common/Button/Button.styled";
 
 const MainHowDonateBackground = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
-  min-height: 46rem;
+  min-height: 38rem;
   width: 100%;
   padding: 4rem 1rem 1rem;
   @media screen and (min-width: 1350px) {
@@ -15,21 +15,21 @@ const MainHowDonateBackground = styled.div`
 
 const MainHowDonateContentWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 80%;
+  width: 64%;
 `;
 
 const MainHowDonateIconTextButtonWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
-  height: 25rem;
+  height: 20rem;
 `;
 
 export const MainHowDonate = () => {
   return (
     <MainHowDonateBackground>
-      <MainTitle mt="10rem">그럼 어떻게 기부할 수 있나요?</MainTitle>
+      <MainTitle mt="8rem">그럼 어떻게 기부할 수 있나요?</MainTitle>
       <MainHowDonateContentWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/7.png"} width="16.25rem" />
+          <MainIcon src={"/public/MainPage/Icon/7.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary>에서는 블록체인 서버를 기반으로
             <br />
@@ -39,12 +39,12 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="1.125rem" width="12rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
             블록체인이 뭔가요?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/8.png"} width="16.25rem" />
+          <MainIcon src={"/public/MainPage/Icon/8.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary> 서비스를 이용하기 위해서는 <br />
             지갑 연결이 필요해요.
@@ -55,12 +55,12 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="1.125rem" width="12rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
             암호화폐 지갑이란?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/9.png"} width="16.25rem" />
+          <MainIcon src={"/public/MainPage/Icon/9.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary>에서 기부를 하면
             <br />
@@ -72,7 +72,7 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="1.125rem" width="12rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
             NFT가 뭔가요?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>

@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
 import { useEffect } from "react";
 import { contract, provider, etherToWei } from "@/utils/smart-contract/web3";
-import { BEAddress } from "@/utils/smart-contract/MetaEnv";
+import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 
 const DonateForm = () => {
   const dispatch = useAppDispatch();
@@ -34,14 +34,11 @@ const DonateForm = () => {
         // const data = await contract.methods?.myNFTView("0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62").call();
         const sendTransactionObject = {
           from: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62",
-          to: BEAddress,
-          value: 250000000000000,
-          data: contract.methods.transferNFT(1, BEAddress, "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62").encodeABI(),
+          to: TEST_WALLET_ADDRESS,
+          value: wei,
+          // data: contract.methods.transferNFT(1, BEAddress, "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62").encodeABI(),
         };
-        const data = await provider.eth.signTransaction(
-          sendTransactionObject,
-          "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62"
-        );
+        const data = await provider.eth.sendTransaction(sendTransactionObject);
         console.log(data);
       } catch (error) {
         console.log(error);

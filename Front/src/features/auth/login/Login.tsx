@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import { AlchemyApikey, BEAddress, BEContractAddress, RinkebyRpcUrl } from "@/utils/smart-contract/MetaEnv";
+import {
+  ALCHEMY_API_KEY,
+  TEST_WALLET_ADDRESS,
+  CONTRACT_ADDRESS,
+  RINKEBY_RPC_URL,
+} from "@/utils/smart-contract/MetaEnv";
 import { networkChainId } from "@/utils/smart-contract/web3";
-import { Alchemy, Network } from "alchemy-sdk";
-
 import {
   LoginBox,
   LoginDescription,
@@ -14,107 +17,95 @@ import {
   LoginMetaImgDiv,
 } from "./Login.styled";
 import Web3 from "web3";
-import { purgaeAbi } from "@/utils/smart-contract/abi";
+import CONTRACT_ABI from "@/utils/smart-contract/abi";
 import { useLoginMutation } from "@/redux/api/authApi";
+import { Alchemy, Network } from "alchemy-sdk";
+import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
+import { useNavigate } from "react-router-dom";
 
 type Props = {};
 
 const Login = (props: Props) => {
-  const [chain, setChain] = useState(<p>MetaMask</p>);
-  const { status, connect, ethereum, switchChain, account, chainId } = useMetaMask();
-  // const { account, chainId } = useConnectedMetaMask();
-  const config = {
-    apiKey: AlchemyApikey,
-    network: Network.ETH_RINKEBY,
-    // network: Network.ETH_GOERLI,
-  };
-  const alchemy = new Alchemy(config);
+  const { status, connect, switchChain, account, chainId } = useMetaMask();
+  const [login] = useLoginMutation();
+  const { openAlertModal } = useAlertModal();
+  const navigate = useNavigate();
 
-  const asdfasdf = alchemy.core.findContractDeployer;
-  const web3 = new Web3(RinkebyRpcUrl);
-  const contract = new web3.eth.Contract(purgaeAbi, BEContractAddress);
-  const aaa = async () => {
-    const sdf = await contract.methods?.myNFTView(BEAddress).call();
-    console.log("asdfasdf", sdf);
-    // jsonparsing하기
-  };
-  // aaa();
-  // https://ipfs.io/ipfs/QmNycC6eqSawSBZvW4cGwn45jBRX4QPqmuJ7KQFAG2pAuV/74.json
+  // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
+  // const config = {
+  //   apiKey: ALCHEMY_API_KEY,
+  //   network: Network.ETH_GOERLI,
+  // };
+
+  // const alchemy = new Alchemy(config);
+  // const nft = await alchemy.nft.getNftsForOwner(account);
+
+  const web3 = new Web3(window.ethereum);
+  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
   const getHash = async () => {
     if (account) {
-      // const asdfasdf = await alchemy.core.getBalance;
-      const nft = await alchemy.nft.getNftsForOwner(account);
-      console.log("nft", nft);
-      for (let i = 0; i < nft.ownedNfts.length; i++) {
-        console.log(nft.ownedNfts[i].tokenUri?.raw);
-
-        const dfd = await contract.methods?.balanceOf(BEContractAddress).call();
-        console.log("asdf", dfd);
-        // purgae꺼인지 검사
-        // *myNFTView
-        // 지갑주소 -> contract주소로 연결 -> *myNftView -> abi가져오는거
-        //
-        // metadata넘기기
+      const existHash = await contract.methods?.myNFTView(account).call();
+      if (existHash.length > 1) {
+        return existHash;
+      } else {
+        return [];
       }
+    } else {
+      return false;
     }
   };
-  getHash();
-  const [login] = useLoginMutation();
+
+  const connectMetamask = async () => {
+    const hashData = await getHash();
+    await connect();
+    return hashData;
+  };
 
   const LoginFunction = async () => {
-    if (status === "notConnected") {
-      if (chainId !== networkChainId.rinkeby) {
-        return setChain(
-          <>
-            <p onClick={() => switchChain(networkChainId.rinkeby)}>click! switch to GoerliTestNet</p>
-          </>
-        );
-      } else {
-        const asdf = await connect();
-        // console.log("asdf", asdf);
+    try {
+      // notconnected
+      if (status === "notConnected") {
+        if (chainId !== networkChainId.rinkeby) {
+          const hashData = await connectMetamask();
+          await switchChain(networkChainId.rinkeby);
+          console.log(hashData);
+          if (account) {
+            login({ walletAddress: account, nft: hashData });
+          }
+        } else {
+          const hashData = await connectMetamask();
+          if (account) {
+            login({ walletAddress: account, nft: hashData });
+          }
+        }
+      } else if (status === "connecting") {
+        const data: OpenAlertModalArg = {
+          content: "현재 메타마스크에 연결중에 있습니다. 지갑을 확인해주세요.",
+          styles: "RED",
+        };
+        openAlertModal(data);
       }
-    }
-    if (status === "connected") {
-      console.log("내계정", account, "체인아이디", chainId);
+    } catch (err) {
+      console.log("err", err);
     }
   };
 
-  // const asdf = await web3.eth.getStorageAt(web3.eth.getAccounts, 0);
+  const navigateHome = () => {
+    const data: OpenAlertModalArg = {
+      content: "로그인되어 메인 페이지로 이동합니다.",
+      styles: "PRIMARY",
+    };
+    openAlertModal(data);
+    navigate("/main");
+  };
+
   useEffect(() => {
-    if (account) {
-      // alert("이미 로그인 되어 있습니다.");
-      return;
-    } else {
+    if (status === "connected") {
+      // navigateHome();
       return;
     }
-  }, []);
-
-  // const func = async () => {
-  //   const nonce = await web3.eth.getTransactionCount(account, "latest"); // nonce starts counting from 0
-
-  //   const transaction = {
-  //     to: "0x31B98D14007bDEe637298086988A0bBd31184523", // faucet address to return eth
-  //     value: 100,
-  //     gas: 30000,
-  //     maxFeePerGas: 1000000108,
-  //     nonce: nonce,
-  //     // optional data field to send message or execute smart contract
-  //   };
-
-  //   const signedTx = await web3.eth.accounts.signTransaction(transaction, PRIVATE_KEY);
-  //   web3.eth.sendSignedTransaction(signedTx.rawTransaction, function (error, hash) {
-  //     if (!error) {
-  //       console.log(
-  //         "🎉 The hash of your transaction is: ",
-  //         hash,
-  //         "\n Check Alchemy's Mempool to view the status of your transaction!"
-  //       );
-  //     } else {
-  //       console.log("❗Something went wrong while submitting your transaction:", error);
-  //     }
-  //   });
-  // };
+  }, [status]);
 
   return (
     <>
@@ -135,7 +126,7 @@ const Login = (props: Props) => {
         </LoginDescription>
         <LoginMetaDiv onClick={LoginFunction}>
           <LoginMetaImgDiv />
-          {chainId === networkChainId.rinkeby ? "MetaMask" : chain}
+          MetaMask
         </LoginMetaDiv>
       </LoginBox>
     </>

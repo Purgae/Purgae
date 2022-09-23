@@ -1,5 +1,5 @@
-import { BEContractAddress, RinkebyRpcUrl } from "@/utils/smart-contract/MetaEnv";
-import { purgaeAbi } from "./abi";
+import { CONTRACT_ADDRESS, RINKEBY_RPC_URL } from "@/utils/smart-contract/MetaEnv";
+import CONTRACT_ABI from "./abi";
 import Web3 from "web3";
 
 export const networkChainId = {
@@ -11,11 +11,10 @@ export const networkChainId = {
 
 // * provider
 // export const web3 = new Web3(`https://eth-goerli.alchemyapi.io/v2/${AlchemyApikey}`);
-export const provider = new Web3(RinkebyRpcUrl);
+export const provider = new Web3(window.ethereum);
 
 //* contract
-export const contract = new provider.eth.Contract(purgaeAbi, BEContractAddress);
-
+export const contract = new provider.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 //* EtherToWei
 export const etherToWei = (ether: string): string => {
   const eth = Number(ether);

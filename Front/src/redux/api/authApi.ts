@@ -34,7 +34,9 @@ export const authApi = createApi({
         try {
           const { data } = await queryFulfilled;
           await dispatch(setUser(data.data));
-        } catch (error) {}
+        } catch (error) {
+          console.log("login error", error);
+        }
       },
     }),
   }),

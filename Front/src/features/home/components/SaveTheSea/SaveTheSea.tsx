@@ -1,7 +1,7 @@
 import { OutLineButton, SolidButton } from "@/common/Button/Button.styled";
+import { FlexDiv } from "@/common/Common.styled";
 import {
   MainTopBackground,
-  MainSaveTheSeaWrapper,
   MainSaveTheSeaLetter,
   MainTopSubhead,
   MainTopLetterButtonWrapper,
@@ -12,7 +12,7 @@ const SaveTheSea = () => {
   return (
     <>
       <MainTopBackground>
-        <MainSaveTheSeaWrapper>
+        <FlexDiv>
           <MainTopLetterButtonWrapper>
             <MainSaveTheSeaLetter>바다를 구해주세요.</MainSaveTheSeaLetter>
             <MainTopSubhead>
@@ -34,7 +34,7 @@ const SaveTheSea = () => {
               기부하고 NFT 받기
             </SolidButton>
           </MainTopLetterButtonWrapper>
-        </MainSaveTheSeaWrapper>
+        </FlexDiv>
       </MainTopBackground>
     </>
   );

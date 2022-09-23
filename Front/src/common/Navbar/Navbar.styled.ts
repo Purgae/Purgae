@@ -1,17 +1,23 @@
 import { NavLink } from "react-router-dom";
 import { styled } from "../../styles/theme";
 
-export const NavbarBackground = styled.div`
+export const NavbarBackground = styled.div<{ opacity: string }>`
   display: flex;
   position: fixed;
   flex-direction: row;
   align-items: center;
+  max-width: 100%;
   height: 4rem;
   width: ${({ theme }) => theme.sizes.pc};
   padding: 0rem 1.5rem;
   gap: 10.625rem;
   background-image: linear-gradient(350deg, #666af6, #5f6bff, #5299ff, #1ec5ff);
+  opacity: ${(props) => props.opacity};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
+  transition: opacity 0.5s linear;
+  &:hover {
+    opacity: 1;
+  }
 `;
 
 export const NavbarItemWrapper = styled.div`

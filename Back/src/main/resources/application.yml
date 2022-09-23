@@ -2,7 +2,7 @@ server:
   port: 8081
   address: localhost
   servlet:
-    context-path: /api
+    context-path: ""
   error:
     whitelabel:
       enabled: false

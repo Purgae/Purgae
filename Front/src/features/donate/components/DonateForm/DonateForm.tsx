@@ -5,14 +5,11 @@ import Button from "@/common/Button/Button";
 import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
-import useProvider from "@/hooks/useProvider";
-import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
-import { useMetaMask } from "metamask-react";
+import useDonate from "@/hooks/useDonate";
 
 const DonateForm = () => {
-  const { contract, changeEtherToWei, networkChainId } = useProvider();
-  const { chainId } = useMetaMask();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
+  const { donate } = useDonate();
   const dispatch = useAppDispatch();
 
   const submitButtonStyle = submitStatus ? "gradient" : "white250";
@@ -26,26 +23,12 @@ const DonateForm = () => {
   };
   const submitDonateForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const wei = changeEtherToWei(inputValue);
-    // console.log(chainId);
-    // (async () => {
-    //   try {
-    //     const data = await contract.methods.viewTodayNFT().call();
-    //     console.log(data);
-    //   } catch (err) {
-    //     console.log(err);
-    //   }
-    // })();
-
-    const data = "ipfs://QmTLtCgnuaNyQ8LbdLtqbfHDcQRKsXHweav7KtizEwCTS8/1.json";
-    const link = "https://ipfs.io/ipfs/" + data.split("://")[1];
-
-    (async () => {
-      const response = await fetch(link);
-      const data = await response.json();
-      const image = "https://ipfs.io/ipfs/" + data.properties.image.description.split("://")[1];
-      console.log(image);
-    })();
+    const data = {
+      id: 10,
+      address: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62",
+      ether: inputValue,
+    };
+    donate(data);
   };
 
   useEffect(() => {

@@ -26,15 +26,6 @@ const Counter = (props: TestProps) => {
 
   const [NFTList, setNFTList] = useState<string[]>([]);
 
-  // const [loading, setLoading] = useState<boolean>(false);
-
-  // useEffect(() => {
-  //   if (NFTList.length > 1) {
-  //     console.log("트루~~~");
-  //     setLoading(true);
-  //   }
-  // }, [NFTList]);
-
   const [login] = useLoginMutation();
 
   const { openAlertModal } = useAlertModal();
@@ -50,17 +41,10 @@ const Counter = (props: TestProps) => {
     openAlertModal(data);
   };
 
-  // const NFTList = useMemo(async () => {
-  //   const myNFTList: string[] = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
-  //   return myNFTList;
-  // }, []);
-
   const clickNFTList = async () => {
     const myNFTList = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
     setNFTList(myNFTList);
   };
-  // const generateFish = useMemo(() => NFTList.map((url, idx) => <Card url={url} key={idx} />), []);
-  console.log("리랜더링");
   return (
     <Fragment>
       <section className="counter-section">

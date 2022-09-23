@@ -1,9 +1,14 @@
 import { styled } from "@/styles/theme";
-import { CubeProps, FishProps } from "./Aquarium.types";
+import { FishProps } from "./Aquarium.types";
+import back from "/assets/aquarium/back.png";
+import side from "/assets/aquarium/side1.png";
+import top from "/assets/aquarium/top.png";
+import bottom from "/assets/aquarium/bottom.png";
 
 export const Scene = styled.div`
   width: 100vw;
   height: 100vh;
+  background-image: url(${back});
   overflow: hidden;
 `;
 
@@ -40,54 +45,46 @@ export const CubeFace = styled.div`
 export const Front = styled(CubeFace)`
   z-index: 2;
   transform: rotateY(0deg) scale(1.1) translateZ(200px);
-  /* background-image: url(https://cdn.pixabay.com/photo/2017/05/31/13/09/ice-2360348_960_720.jpg); */
-  /* background-image: url(https://cdn.pixabay.com/photo/2022/08/18/19/00/water-7395510_960_720.jpg); */
-  background-image: url(https://cdn-ak.f.st-hatena.com/images/fotolife/d/dala/20180713/20180713230600.jpg);
-  background-size: cover;
-  opacity: 0.1;
+  background-image: url(${side});
+  background-size: 100vw 100vh;
+  opacity: 0.2;
 `;
 
 export const Back = styled(CubeFace)`
   z-index: -2;
   transform: rotateY(180deg) translateZ(100vw);
-  background-image: url(https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg);
-  background-size: cover;
-  filter: brightness(80%);
-  /* opacity: 0.15; */
+  background-image: url(${back});
+  background-size: 101vw 100vh;
 `;
 
 export const Right = styled(CubeFace)`
   z-index: 0;
   width: 1000vw;
   transform: rotateY(90deg) translateZ(-400vw);
-  background-image: url(https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg);
-  background-size: 30%;
-  opacity: 0.7;
+  background-image: url(${side});
+  background-size: 100vw 100vh;
 `;
 
 export const Left = styled(CubeFace)`
   z-index: 0;
   width: 1000vw;
   transform: rotateY(90deg) translateZ(-500vw);
-  background-image: url(https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg);
-  background-size: 30%;
-  opacity: 0.7;
+  background-image: url(${side});
+  background-size: 100vw 100vh;
 `;
 
 export const Top = styled(CubeFace)`
   z-index: 0;
   transform: translateY(-50vh) rotateX(90deg) scaleY(5);
-  background-image: url(https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg);
-  background-size: cover;
-  opacity: 0.7;
+  background-image: url(${top});
+  background-size: 100vw 50%;
 `;
 
 export const Bottom = styled(CubeFace)`
   z-index: 0;
   transform: translateY(50vh) rotateX(90deg) scaleY(5);
-  background-image: url(https://cdn.pixabay.com/photo/2016/04/15/04/02/water-1330252_960_720.jpg);
-  background-size: cover;
-  opacity: 0.7;
+  background-image: url(${bottom});
+  background-size: 100vw 50%;
 `;
 
 export const Fish = styled.div<FishProps>`
@@ -95,9 +92,8 @@ export const Fish = styled.div<FishProps>`
   position: absolute;
   background-image: url(${(props) => props.fish});
   background-size: cover;
-  width: 12vw;
+  width: ${(props) => props.size}vw; // 8이상 ~ 20vw이하의 함수
   aspect-ratio: 152/148;
   left: ${(props) => props.left}vw; // 0이상 85vw이하의 랜덤 수
   top: ${(props) => props.top}vh; // 0이상 80vh 이하의 랜덤 수
-  transform: translateZ(${(props) => props.translateZ}vw); // -100 이상 0 미만의 랜덤 수
 `;

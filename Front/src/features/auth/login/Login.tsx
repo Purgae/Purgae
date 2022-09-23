@@ -14,17 +14,17 @@ import {
 import Web3 from "web3";
 import CONTRACT_ABI from "@/utils/smart-contract/abi";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { Alchemy, Network } from "alchemy-sdk";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 
 type Props = {};
 const Login = (props: Props) => {
-  const { status, connect, switchChain, account, chainId } = useMetaMask();
-  const { networkChainId } = useProvider();
+  const { status, connect, switchChain, account, chainId, ethereum } = useMetaMask();
+  const { networkChainId, contract } = useProvider();
+  const navigate = useNavigate();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
-  const navigate = useNavigate();
+  const [tmp, setTmp] = useState({});
 
   // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
   // const config = {
@@ -34,14 +34,18 @@ const Login = (props: Props) => {
 
   // const alchemy = new Alchemy(config);
   // const nft = await alchemy.nft.getNftsForOwner(account);
+  const main = async () => {
+    const asdfasdf = await contract.methods?.myNFTView("0xca78caC2505bd2829083649F8845132B352E106E").call();
+    console.log(asdfasdf);
+  };
+  main();
 
-  const web3 = new Web3(window.ethereum);
-  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
-
-  const getHash = async () => {
-    if (account) {
-      const existHash = await contract.methods?.myNFTView(account).call();
-      if (existHash.length > 1) {
+  const getHash = async (wa: string[]) => {
+    console.log("waaaaaaa", wa);
+    if (wa) {
+      const existHash = await contract.methods?.myNFTView(wa[0]).call();
+      console.log("asdfasdf", existHash);
+      if (existHash.length > 0) {
         return existHash;
       } else {
         return [];
@@ -51,27 +55,32 @@ const Login = (props: Props) => {
     }
   };
 
-  const connectMetamask = async () => {
-    const hashData = await getHash();
-    await connect();
-    return hashData;
-  };
-
+  console.log(account);
+  console.log(status);
   const LoginFunction = async () => {
-    try {
-      // notconnected
+    if (ethereum) {
       if (status === "notConnected") {
-        if (chainId !== networkChainId.rinkeby) {
-          const hashData = await connectMetamask();
-          await switchChain(networkChainId.rinkeby);
-          console.log(hashData);
-          if (account) {
-            login({ walletAddress: account, nft: hashData });
+        // *고릴일때
+        if (chainId === networkChainId.goerli) {
+          const wa = await connect();
+          if (wa) {
+            console.log("asdfasdfasdfasfd");
+            const hashData = await getHash(wa);
+            console.log("ishash", hashData);
+            setTmp({ account, hashData });
           }
-        } else {
-          const hashData = await connectMetamask();
+
+          // login({ walletAddress: account, nft: hashData });
+        }
+        // *고릴아닐때
+        else {
+          await connect();
+          await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
+          const hashData = await getHash();
           if (account) {
-            login({ walletAddress: account, nft: hashData });
+            setTmp({ account, hashData });
+            console.log(tmp);
+            // login({ walletAddress: account, nft: hashData });
           }
         }
       } else if (status === "connecting") {
@@ -81,10 +90,18 @@ const Login = (props: Props) => {
         };
         openAlertModal(data);
       }
-    } catch (err) {
-      console.log("err", err);
+    } else {
+      const data: OpenAlertModalArg = {
+        content: "메타마스크 설치 후 이용해주세요",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+      setTimeout(() => {
+        window.open("https://metamask.io/");
+      }, 2000);
     }
   };
+  console.log(tmp);
 
   const navigateHome = () => {
     const data: OpenAlertModalArg = {

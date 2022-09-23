@@ -1,6 +1,6 @@
 import { AbiItem } from "web3-utils";
 
-export const purgaeAbi: AbiItem[] = [
+const CONTRACT_ABI: AbiItem[] = [
   {
     inputs: [],
     stateMutability: "nonpayable",
@@ -515,3 +515,5 @@ export const purgaeAbi: AbiItem[] = [
     type: "function",
   },
 ];
+
+export default CONTRACT_ABI;

@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
+import {
+  ALCHEMY_API_KEY,
+  TEST_WALLET_ADDRESS,
+  CONTRACT_ADDRESS,
+  RINKEBY_RPC_URL,
+} from "@/utils/smart-contract/MetaEnv";
 import { networkChainId } from "@/utils/smart-contract/web3";
-import { AlchemyApikey } from "@/utils/smart-contract/MetaEnv";
 import { Alchemy, Network } from "alchemy-sdk";
 
 import {
@@ -13,6 +18,9 @@ import {
   LoginMetaDiv,
   LoginMetaImgDiv,
 } from "./Login.styled";
+import Web3 from "web3";
+import CONTRACT_ABI from "@/utils/smart-contract/abi";
+import { useLoginMutation } from "@/redux/api/authApi";
 
 type Props = {};
 
@@ -21,18 +29,33 @@ const Login = (props: Props) => {
   const { status, connect, ethereum, switchChain, account, chainId } = useMetaMask();
   // const { account, chainId } = useConnectedMetaMask();
   const config = {
-    apiKey: AlchemyApikey,
-    network: Network.ETH_GOERLI,
+    apiKey: ALCHEMY_API_KEY,
+    network: Network.ETH_RINKEBY,
+    // network: Network.ETH_GOERLI,
   };
   const alchemy = new Alchemy(config);
 
-  const GetHash = async () => {
+  const asdfasdf = alchemy.core.findContractDeployer;
+  const web3 = new Web3(RINKEBY_RPC_URL);
+  const contract = new web3.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+  const aaa = async () => {
+    const sdf = await contract.methods?.myNFTView(TEST_WALLET_ADDRESS).call();
+    console.log("asdfasdf", sdf);
+    // jsonparsing하기
+  };
+  // aaa();
+  // https://ipfs.io/ipfs/QmNycC6eqSawSBZvW4cGwn45jBRX4QPqmuJ7KQFAG2pAuV/74.json
+
+  const getHash = async () => {
     if (account) {
-      const asdfasdf = await alchemy.core.getBalance;
+      // const asdfasdf = await alchemy.core.getBalance;
       const nft = await alchemy.nft.getNftsForOwner(account);
       console.log("nft", nft);
       for (let i = 0; i < nft.ownedNfts.length; i++) {
-        // console.log(nft.ownedNfts[i]);
+        console.log(nft.ownedNfts[i].tokenUri?.raw);
+
+        const dfd = await contract.methods?.balanceOf(CONTRACT_ADDRESS).call();
+        console.log("asdf", dfd);
         // purgae꺼인지 검사
         // *myNFTView
         // 지갑주소 -> contract주소로 연결 -> *myNftView -> abi가져오는거
@@ -41,14 +64,15 @@ const Login = (props: Props) => {
       }
     }
   };
-  GetHash();
+  getHash();
+  const [login] = useLoginMutation();
 
   const LoginFunction = async () => {
     if (status === "notConnected") {
-      if (chainId !== networkChainId.goerli) {
+      if (chainId !== networkChainId.rinkeby) {
         return setChain(
           <>
-            <p onClick={() => switchChain(networkChainId.goerli)}>click! switch to GoerliTestNet</p>
+            <p onClick={() => switchChain(networkChainId.rinkeby)}>click! switch to GoerliTestNet</p>
           </>
         );
       } else {
@@ -70,6 +94,32 @@ const Login = (props: Props) => {
       return;
     }
   }, []);
+
+  // const func = async () => {
+  //   const nonce = await web3.eth.getTransactionCount(account, "latest"); // nonce starts counting from 0
+
+  //   const transaction = {
+  //     to: "0x31B98D14007bDEe637298086988A0bBd31184523", // faucet address to return eth
+  //     value: 100,
+  //     gas: 30000,
+  //     maxFeePerGas: 1000000108,
+  //     nonce: nonce,
+  //     // optional data field to send message or execute smart contract
+  //   };
+
+  //   const signedTx = await web3.eth.accounts.signTransaction(transaction, PRIVATE_KEY);
+  //   web3.eth.sendSignedTransaction(signedTx.rawTransaction, function (error, hash) {
+  //     if (!error) {
+  //       console.log(
+  //         "🎉 The hash of your transaction is: ",
+  //         hash,
+  //         "\n Check Alchemy's Mempool to view the status of your transaction!"
+  //       );
+  //     } else {
+  //       console.log("❗Something went wrong while submitting your transaction:", error);
+  //     }
+  //   });
+  // };
 
   return (
     <>

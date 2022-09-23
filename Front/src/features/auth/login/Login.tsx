@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import { networkChainId } from "@/utils/smart-contract/variables";
 import { AlchemyApikey, BEAddress, BEContractAddress, RinkebyRpcUrl } from "@/utils/smart-contract/MetaEnv";
+import { networkChainId } from "@/utils/smart-contract/web3";
 import { Alchemy, Network } from "alchemy-sdk";
 
 import {

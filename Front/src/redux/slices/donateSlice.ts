@@ -1,5 +1,5 @@
 import { createSlice, createSelector, PayloadAction } from "@reduxjs/toolkit";
-import { checkNumberType, checkMinValue, checkMaxValue } from "@/utils/validationInput";
+import { checkNumberType, checkMinValue, checkMaxValue } from "@/utils/functions/validationInput";
 import { RootState } from "@/redux/store";
 
 // * state의 타입을 지정한다.

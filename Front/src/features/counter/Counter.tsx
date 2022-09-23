@@ -26,7 +26,7 @@ const Counter = (props: TestProps) => {
   const { openAlertModal } = useAlertModal();
 
   const clickHandler = () => {
-    login({ walletAddress: "0x123123", nft: [{ hash: "123123" }] });
+    login({ walletAddress: "0x123123", nft: [] });
   };
 
   const showAlertModal = () => {

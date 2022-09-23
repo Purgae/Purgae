@@ -1,16 +1,17 @@
+import { useEffect } from "react";
 import { FlexDiv, StrongSpan } from "@/common/Common.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
 import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
-import { useEffect } from "react";
-import { contract, provider, etherToWei } from "@/utils/smart-contract/web3";
+import useProvider from "@/hooks/useProvider";
 import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 
 const DonateForm = () => {
-  const dispatch = useAppDispatch();
+  const { contract, changeEtherToWei, networkChainId } = useProvider();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
+  const dispatch = useAppDispatch();
 
   const submitButtonStyle = submitStatus ? "gradient" : "white250";
 
@@ -21,30 +22,15 @@ const DonateForm = () => {
   const changeInputValue = (value: string) => {
     dispatch(setInputValue(value));
   };
-
   const submitDonateForm = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const wei = etherToWei(inputValue);
-    //Todo: 기부하기 함수 구현되면 완료
-    (async () => {
-      try {
-        // const data = await contract.methods
-        //   ?.transferNFT(1, BEAddress, "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62")
-        //   .send({ from: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62", value: wei });
-        // const data = await contract.methods?.myNFTView("0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62").call();
-        const sendTransactionObject = {
-          from: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62",
-          to: TEST_WALLET_ADDRESS,
-          value: wei,
-          // data: contract.methods.transferNFT(1, BEAddress, "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62").encodeABI(),
-        };
-        const data = await provider.eth.sendTransaction(sendTransactionObject);
-        console.log(data);
-      } catch (error) {
-        console.log(error);
-      }
-    })();
+    const wei = changeEtherToWei(inputValue);
+    const func: Function = contract.methods
+      ?.transferNFT(1, TEST_WALLET_ADDRESS, "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62")
+      .send({ from: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62", value: wei });
+    // switchChainId(func);
   };
+
   useEffect(() => {
     // let debounce: ReturnType<typeof setTimeout>;
     const debounce = setTimeout(() => {

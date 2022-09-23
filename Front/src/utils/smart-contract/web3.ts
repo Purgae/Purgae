@@ -1,7 +1,3 @@
-import { CONTRACT_ADDRESS, RINKEBY_RPC_URL } from "@/utils/smart-contract/MetaEnv";
-import CONTRACT_ABI from "./abi";
-import Web3 from "web3";
-
 export const networkChainId = {
   mainnet: "0x1", // 1
   // Test nets
@@ -10,17 +6,16 @@ export const networkChainId = {
 };
 
 // * provider
-// export const web3 = new Web3(`https://eth-goerli.alchemyapi.io/v2/${AlchemyApikey}`);
-export const provider = new Web3(RINKEBY_RPC_URL);
+// export const provider = new Web3(window.ethereum);
 
 //* contract
-export const contract = new provider.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
+// export const contract = new provider.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
 //* EtherToWei
-export const etherToWei = (ether: string): string => {
-  const eth = Number(ether);
-  return Web3.utils.toWei(ether);
-};
+// export const etherToWei = (ether: string): string => {
+// const eth = Number(ether);
+// return Web3.utils.toWei(ether);
+// };
 
 //* ===========================================================================
 //* 함수 사용 예시

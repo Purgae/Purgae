@@ -4,7 +4,7 @@ import { setUser } from "@/redux/slices/userSlice";
 
 export interface Login {
   walletAddress: string;
-  nft?: [{ hash: string }];
+  nft: string[];
 }
 
 export const authApi = createApi({

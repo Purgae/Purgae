@@ -3,14 +3,23 @@ import { StyleEditProfileModal, StyledEditProfileForm, StyledAbsoluteIcon } from
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
 import ProfileImage from "@/common/ProfileImage/ProfileImage";
-import { closeEditProfile } from "@/redux/slices/modalSlice";
-import { useAppDispatch } from "@/hooks/storeHook";
+import { closeEditProfile, selectModal, openSelectNFTProfile, closeSelectNFTProfile } from "@/redux/slices/modalSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 
 const EditProfileModal = () => {
   const dispatch = useAppDispatch();
+  const { selectNFTProfile } = useAppSelector(selectModal);
 
   const clickContainer = () => {
-    dispatch(closeEditProfile());
+    if (selectNFTProfile) {
+      dispatch(closeSelectNFTProfile());
+    } else {
+      dispatch(closeEditProfile());
+    }
+  };
+
+  const openNFTList = () => {
+    dispatch(openSelectNFTProfile());
   };
 
   const keepModalWindow = (event: React.MouseEvent) => {
@@ -31,7 +40,7 @@ const EditProfileModal = () => {
         <StyledEditProfileForm>
           <FlexDiv width="100%" height="100%" direction="column" gap="0.5rem">
             <ProfileImage size="large"></ProfileImage>
-            <Button width="100%" type="button" fontColor="primary700" fontSize="1rem">
+            <Button type="button" fontColor="primary700" fontSize="1rem" onClick={openNFTList}>
               이미지 수정
             </Button>
           </FlexDiv>

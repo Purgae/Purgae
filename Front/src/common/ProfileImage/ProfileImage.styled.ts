@@ -5,6 +5,7 @@ const Round = styled.div<{ url: string }>`
   border-radius: 50%;
   background-image: url(${(props) => props.url});
   background-size: cover;
+  background-repeat: no-repeat;
 `;
 export const ExtraLarge = styled(Round)`
   height: 8.5rem;

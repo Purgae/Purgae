@@ -2,7 +2,7 @@ import { Meta, Story } from "@storybook/react";
 import EditProfileModal from "./EditProfileModal";
 
 export default {
-  title: "Profile/EditChangeModal",
+  title: "Modal/EditChangeModal",
   component: EditProfileModal,
   parameters: {
     componentSubtitle: "개인 정보 수정 모달",

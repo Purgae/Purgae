@@ -1,5 +1,5 @@
 const path = require("path");
-
+const webpack = require("webpack");
 module.exports = {
   stories: ["../src/**/*.stories.mdx", "../src/**/*.stories.@(js|jsx|ts|tsx)"],
   addons: [
@@ -21,8 +21,8 @@ module.exports = {
     config.resolve.alias = {
       ...config.resolve.alias,
       "@": path.resolve(__dirname, "../src"),
+      stream: path.resolve(__dirname, "../node_modules/readable-stream"),
     };
-
     return config;
   },
 };

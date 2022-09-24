@@ -1,6 +1,7 @@
 import React from "react";
 import { GlobalStyle } from "../src/styles/global-styles";
 import { addDecorator } from "@storybook/react";
+import { MetaMaskProvider } from "metamask-react";
 
 import { ThemeProvider } from "styled-components";
 import theme from "../src/styles/theme";
@@ -21,10 +22,12 @@ export const parameters = {
 };
 
 addDecorator((story) => (
-  <Provider store={store}>
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      {story()}
-    </ThemeProvider>
-  </Provider>
+  <MetaMaskProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        {story()}
+      </ThemeProvider>
+    </Provider>
+  </MetaMaskProvider>
 ));

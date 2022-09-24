@@ -13,6 +13,7 @@ import {
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
+import { RootComponent } from "@/common/Common.styled";
 
 type Props = {};
 const Login = (props: Props) => {
@@ -21,7 +22,6 @@ const Login = (props: Props) => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
-  const [tmp, setTmp] = useState({});
 
   // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
   // const config = {
@@ -56,7 +56,7 @@ const Login = (props: Props) => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            login({ walletAddress: connectAddress[0], nft: hashData });
+            // login({ walletAddress: connectAddress[0], nft: hashData });
             navigateHome();
           }
         }
@@ -66,7 +66,7 @@ const Login = (props: Props) => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            login({ walletAddress: connectAddress[0], nft: hashData });
+            // login({ walletAddress: connectAddress[0], nft: hashData });
             navigateHome();
           }
         }
@@ -108,7 +108,7 @@ const Login = (props: Props) => {
   }, []);
 
   return (
-    <>
+    <RootComponent>
       <LoginBox>
         {/* 초기 로그인 되어있지 않을시. 기부시 실행할 버튼 */}
         <LoginDescription>
@@ -129,7 +129,7 @@ const Login = (props: Props) => {
           MetaMask
         </LoginMetaDiv>
       </LoginBox>
-    </>
+    </RootComponent>
   );
 };
 

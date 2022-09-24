@@ -1,36 +1,53 @@
 import styled from "@/styles/theme-components";
 import { MainTitle, MainTextPrimary, MainIcon, MainLink } from "../../Home.styled";
+import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
-const MoneyGoBackground = styled.div`
+const MoneyGoBackground = styled.div<{ animation: string; visibility: string }>`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   width: 100%;
-  min-height: 46rem;
+  min-height: 38rem;
   padding: 4rem 1rem 1rem;
   @media screen and (min-width: 1350px) {
     padding: 4rem 6rem 1rem;
   }
   background-color: ${({ theme }) => theme.colors.transparent};
+  & > * {
+    visibility: ${(props) => props.visibility};
+    animation: ${(props) => props.animation};
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const MoneyGoIconWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 46rem;
+  width: 38rem;
 `;
 
 const MoneyGoText = styled.p`
-  ${({ theme }) => theme.mixins.font("1.25rem", "500")};
+  ${({ theme }) => theme.mixins.font("1rem", "500")};
   color: ${({ theme }) => theme.colors.gray300};
-  line-height: 2rem;
+  line-height: 1.6rem;
   text-align: center;
 `;
 
 const MoneyGo = () => {
+  const animation = ScrollToAppear("moneygo_animation", 35);
+
   return (
-    <MoneyGoBackground>
-      <MainTitle mt="10rem">기부받은 돈은 어디로 가나요?</MainTitle>
+    <MoneyGoBackground animation={animation ? "fadein 2.5s" : "none"} visibility={animation ? "visible" : "hidden"}>
+      <MainTitle mt="8rem" id="moneygo_animation">
+        기부받은 돈은 어디로 가나요?
+      </MainTitle>
       <MoneyGoIconWrapper>
-        <MainIcon src={"/public/MainPage/Icon/5.png"} width="18rem" />
-        <MainIcon src={"/public/MainPage/Icon/6.png"} width="18rem" />
+        <MainIcon src={"/assets/MainPage/Icon/5.png"} width="14rem" />
+        <MainIcon src={"/assets/MainPage/Icon/6.png"} width="14rem" />
       </MoneyGoIconWrapper>
       <MoneyGoText>
         여러분이 기부해주신 모든 금액은 <MainTextPrimary>푸르게</MainTextPrimary>의 지갑에 보관된 후,

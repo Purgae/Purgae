@@ -1,5 +1,4 @@
 import styled from "@/styles/theme-components";
-import { FlexDiv } from "@/common/Common.styled";
 import { MainTitle, MainText } from "../../Home.styled";
 
 //* 바다를 구해주세요
@@ -11,14 +10,14 @@ export const MainFaqBackground = styled.div`
   @media screen and (min-width: 1350px) {
     padding: 4rem 6rem 1rem;
   }
-  background-image: url(/MainPage/background_bottom.png);
+  background-image: url(/assets/MainPage/background_bottom.png);
   background-repeat: no-repeat;
   background-size: 100vw;
 `;
 
 export const MainFaqBoxWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
-  height: 40rem;
+  height: 36rem;
   margin-top: 6rem;
   & > * {
     color: ${({ theme }) => theme.colors.gray300};
@@ -26,17 +25,17 @@ export const MainFaqBoxWrapper = styled.div`
 `;
 
 export const MainFaqTextBox = styled.div`
-  ${({ theme }) => theme.mixins.flexBox("row", "start", "space-between")};
-  width: 44rem;
-  padding: 1.25rem;
-  border-radius: 1rem;
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+  width: 40rem;
+  padding: 1rem;
+  border-radius: 0.8rem;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
 `;
 
 const MainFaq = () => {
   return (
-    <MainFaqBackground>
+    <MainFaqBackground id="howdonate">
       <MainTitle mt="10rem">자주 묻는 질문</MainTitle>
       <MainFaqBoxWrapper>
         <MainFaqTextBox>

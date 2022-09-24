@@ -150,8 +150,9 @@ const mixins = {
 
   defaultLayOut: () => `
   width: 100%;
-  min-height: 100%;
+  min-height: 100vh;
   padding: 4rem 1rem 1rem;
+  margin:0;
 
   @media screen and (min-width: 1350px) {
     padding: 4rem 6rem 1rem;

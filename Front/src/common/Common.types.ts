@@ -10,6 +10,7 @@ export interface FlexDivProps {
   justify?: "flex-start" | "flex-end" | "center" | "space-between" | "space-around" | "space-evenly"; //*default: center
   gap?: string; //* default: 1rem
   borderRadius?: string; // *default: 0
+  bgColor?: ColorType; //* default: transparent
 }
 
 export interface StrongSpanProps {

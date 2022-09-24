@@ -21,6 +21,7 @@ export const FlexDiv = styled.div<FlexDivProps>`
   height: ${({ height }) => (height !== undefined ? height : "auto")};
   margin: ${({ margin }) => (margin !== undefined ? margin : "0 0")};
   padding: ${({ padding }) => (padding !== undefined ? padding : "0 0")};
+  background-color: ${({ bgColor, theme }) => (bgColor !== undefined ? theme.colors[bgColor] : "transparent")};
   box-sizing: border-box;
 `;
 

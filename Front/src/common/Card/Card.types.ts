@@ -6,5 +6,6 @@ export interface CardProps {
 }
 
 export interface CardGroupProps {
-  width?: string;
+  lst: string[];
+  selectCard?: number;
 }

@@ -12,8 +12,6 @@ WORKDIR /app
 RUN mkdir ./dist
 
 COPY --from=build-stage /var/jenkins_home/workspace/b107/Front/dist ./dist
-RUN rm /etc/nginx/conf.d/default
-
 COPY ./nginx.conf /etc/nginx/conf.d
 
 EXPOSE 80

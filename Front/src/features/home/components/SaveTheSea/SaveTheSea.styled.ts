@@ -10,7 +10,7 @@ export const MainTopBackground = styled.div`
     padding: 4rem 6rem 1rem;
   }
   padding: 4rem 1rem 1rem;
-  background-image: url(/MainPage/background_top.png);
+  background-image: url(/assets/MainPage/background_top.png);
   background-repeat: no-repeat;
   background-size: 100vw;
 `;
@@ -18,25 +18,43 @@ export const MainTopBackground = styled.div`
 export const MainTopLetterButtonWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "start", "space-between")};
   & > * {
-    margin-top: 1.5rem;
+    margin-top: 1.25rem;
     margin-left: 8rem;
   }
 `;
 
 export const MainSaveTheSeaLetter = styled.div`
-  margin-top: 8rem;
-  ${({ theme }) => theme.mixins.font("3rem", "700")};
+  margin-top: 6rem;
+  ${({ theme }) => theme.mixins.font("2.4rem", "700")};
   color: ${({ theme }) => theme.colors.mainParagraph};
+  animation: fadein 1.5s;
+  @keyframes fadein {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const MainTopSubhead = styled.div`
-  ${({ theme }) => theme.mixins.font("1.5rem", "500")};
+  ${({ theme }) => theme.mixins.font("1.2rem", "500")};
   color: ${({ theme }) => theme.colors.mainParagraph};
   line-height: 2rem;
+  animation: fadein 1.5s;
+  @keyframes fadein {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const MainButtonWrapper = styled(FlexDiv)`
   & > * {
-    margin-right: 2rem;
+    margin-right: 0.8rem;
   }
 `;

@@ -1,5 +1,5 @@
 import styled from "@/styles/theme-components";
-import BackgroundImg from "/MainPage/background_top.png";
+import BackgroundImg from "/assets/MainPage/background_top.png";
 
 export const BgImg = styled.div(({ theme }) => ({
   width: "100%",

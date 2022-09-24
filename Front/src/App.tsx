@@ -1,4 +1,4 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import { Fragment } from "react";
 
 // * Alert
@@ -7,12 +7,13 @@ import { useAppSelector } from "@/hooks/storeHook";
 import { selectAlert } from "@/redux/slices/alertSlice";
 
 //* 최상위 컴포넌트 :  최상위에 코드 추가
-import Login from "@/features/auth/login/Login";
+import Login from "@/features/login/Login";
 import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
 import Start from "@/features/start/Start";
 import Donate from "@/features/donate/Donate";
+import Profile from "@/features/profile/Profile";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -34,7 +35,7 @@ const App = () => {
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
-          <Route path="/profile/:userId" />
+          <Route path="/profile/:userId" element={<Profile />} />
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" />
           {/* 개인 수족관 */}

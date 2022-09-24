@@ -29,7 +29,7 @@ const useFetchNFT = () => {
       const data: string[] = await contract.methods.myNFTView(address).call();
       const NFTList = await changeNFTUrl(data);
       const myNFTList = await Promise.all(NFTList);
-      console.log("이거심", myNFTList);
+      // console.log("이거심", myNFTList);
       return myNFTList;
     } catch (error) {
       console.log(error);

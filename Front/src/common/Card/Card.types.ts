@@ -8,4 +8,5 @@ export interface CardProps {
 export interface CardGroupProps {
   lst: string[];
   selectCard?: number;
+  onClick?: React.MouseEventHandler;
 }

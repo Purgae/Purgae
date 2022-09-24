@@ -8,6 +8,7 @@ import counter from "@/redux/slices/counterSlice";
 import user from "@/redux/slices/userSlice";
 import alert from "@/redux/slices/alertSlice";
 import donate from "@/redux/slices/donateSlice";
+import modal from "@/redux/slices/modalSlice";
 import { userApi } from "@/redux/api/userApi";
 import { authApi } from "@/redux/api/authApi";
 import { coinApi } from "@/redux/api/coinApi";
@@ -18,6 +19,7 @@ const reducers = combineReducers({
   user,
   alert,
   donate,
+  modal,
   [userApi.reducerPath]: userApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
   [coinApi.reducerPath]: coinApi.reducer,

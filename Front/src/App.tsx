@@ -1,5 +1,5 @@
-import { Route, Routes, BrowserRouter } from "react-router-dom";
-import { Fragment } from "react";
+import { Route, Routes } from "react-router-dom";
+import { Fragment, useEffect } from "react";
 
 // * Alert
 import AlertModal from "@/common/AlertModal/AlertModal";
@@ -7,23 +7,39 @@ import { useAppSelector } from "@/hooks/storeHook";
 import { selectAlert } from "@/redux/slices/alertSlice";
 
 //* 최상위 컴포넌트 :  최상위에 코드 추가
-import Login from "@/features/auth/login/Login";
+import Login from "@/features/login/Login";
 import Home from "@/features/home/Home";
 import Counter from "@/features/counter/Counter";
 import ThemeTest from "@/features/counter/ThemeTest";
 import Start from "@/features/start/Start";
 import Donate from "@/features/donate/Donate";
+import Profile from "@/features/profile/Profile";
+import Ranking from "@/features/ranking/Ranking";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
-
-const ROPSTEN_URL = "https://ropsten.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161";
+import { useMetaMask } from "metamask-react";
+import { selectUser } from "./redux/slices/userSlice";
+import { useSelector } from "react-redux";
 
 const App = () => {
-  // TODO 저장된 account와 현재 account *초마다 비교하기 -pdb
-
   //* AlertModal Status
   const { status, content, styles } = useAppSelector(selectAlert);
+
+  /* 
+  TODO login check (server연결 후 test해볼것-addlistener)
+  @이더리움이 없을때도 고려
+  로그인한 유저와, 저장된 유저가 다르면서 연결 안 된 유저일시 - store reset
+  로그인한 유저와, 저장된 유저가 다르면서 연결 된 유저일시 -  로그인 요청
+  로그인 하지 않았으나, 접속 시 연결된 유저일시 - 로그인 요청
+  로그인 하지 않았으나, 접속 시 연결안된 유저일시 - store reset
+  const currentUser = useSelector(state => selectUser(user))
+  const { account, ethereum, connect, status: accountStatus } = useMetaMask();
+  console.log(account);
+  useEffect(() => {
+    if (accountStatus === "connected") {
+    }
+  }, [account]); */
 
   return (
     <Fragment>
@@ -34,7 +50,8 @@ const App = () => {
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
-          <Route path="/profile/:userId" />
+          {/* <Route path="/profile/:userId" element={<Profile />} /> */}
+          <Route path="/profile" element={<Profile />} />
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" />
           {/* 개인 수족관 */}
@@ -44,7 +61,7 @@ const App = () => {
           {/* 게임 */}
           <Route path="/game" />
           {/* 랭킹 */}
-          <Route path="/ranking" />
+          <Route path="/ranking" element={<Ranking />} />
           {/* 기부 */}
           <Route path="/donate" element={<Donate />} />
           {/* 자주 묻는 질문 */}

@@ -1,13 +1,15 @@
-import { Fragment, useEffect, useState, useMemo, Suspense } from "react";
+import { Fragment, useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { useLoginMutation } from "@/redux/api/authApi";
 import "./counter.css";
 import Card from "@/common/Card/Card";
+import EditProfileModal from "@/features/profile/components/EditProfileModal/EditProfileModal";
 
 // * action creator, selector를 import한다.
 
 import { selectCounter, increment, decrement } from "@/redux/slices/counterSlice";
-
+import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";
 import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
 import useFetchNFT from "@/hooks/useFetchNFT";
 
@@ -25,6 +27,7 @@ const Counter = (props: TestProps) => {
   const dispatch = useAppDispatch();
 
   const [NFTList, setNFTList] = useState<string[]>([]);
+  const [modalState, toggleModal] = useState<boolean>(false);
 
   const [login] = useLoginMutation();
 
@@ -45,6 +48,14 @@ const Counter = (props: TestProps) => {
     const myNFTList = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
     setNFTList(myNFTList);
   };
+
+  const { editProfile } = useAppSelector(selectModal);
+
+  const clickModalToggle = () => {
+    dispatch(openEditProfile());
+  };
+
+  const el = document.getElementById("modal")!;
   return (
     <Fragment>
       <section className="counter-section">
@@ -69,6 +80,11 @@ const Counter = (props: TestProps) => {
         {NFTList.map((item, index) => {
           return <img src={item} key={index} />;
         })}
+      </section>
+      <section className="counter-section">
+        <h1>ModalTest</h1>
+        <button onClick={clickModalToggle}>toggle모달</button>
+        {editProfile && createPortal(<EditProfileModal />, el)}
       </section>
     </Fragment>
   );

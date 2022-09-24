@@ -22,6 +22,8 @@
     // 해당 매핑은 "baseUrl"에 상대적이다.
     "paths": {
       "@/*": ["src/*"]
+      // nononono
+      // "stream": ["./node_modules/readable-stream"]
     }
   },
   "include": ["src"],

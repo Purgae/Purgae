@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
-import { CONTRACT_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 import useProvider from "@/hooks/useProvider";
 import {
   LoginBox,
@@ -11,8 +10,6 @@ import {
   LoginMetaDiv,
   LoginMetaImgDiv,
 } from "./Login.styled";
-import Web3 from "web3";
-import CONTRACT_ABI from "@/utils/smart-contract/abi";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
@@ -34,19 +31,15 @@ const Login = (props: Props) => {
 
   // const alchemy = new Alchemy(config);
   // const nft = await alchemy.nft.getNftsForOwner(account);
-  const main = async () => {
-    const asdfasdf = await contract.methods?.myNFTView("0xca78caC2505bd2829083649F8845132B352E106E").call();
-    console.log(asdfasdf);
-  };
-  main();
 
-  const getHash = async (wa: string[]) => {
-    console.log("waaaaaaa", wa);
-    if (wa) {
-      const existHash = await contract.methods?.myNFTView(wa[0]).call();
-      console.log("asdfasdf", existHash);
+  const getHash = async (connectAddress: string[]) => {
+    if (connectAddress) {
+      const existHash = await contract.methods?.myNFTView(connectAddress[0]).call();
       if (existHash.length > 0) {
-        return existHash;
+        const newExistHash = existHash.map((element: string) => {
+          return element.split("://")[1];
+        });
+        return newExistHash;
       } else {
         return [];
       }
@@ -55,32 +48,26 @@ const Login = (props: Props) => {
     }
   };
 
-  console.log(account);
-  console.log(status);
   const LoginFunction = async () => {
     if (ethereum) {
       if (status === "notConnected") {
         // *고릴일때
         if (chainId === networkChainId.goerli) {
-          const wa = await connect();
-          if (wa) {
-            console.log("asdfasdfasdfasfd");
-            const hashData = await getHash(wa);
-            console.log("ishash", hashData);
-            setTmp({ account, hashData });
+          const connectAddress = await connect();
+          if (connectAddress) {
+            const hashData = await getHash(connectAddress);
+            login({ walletAddress: connectAddress[0], nft: hashData });
+            navigateHome();
           }
-
-          // login({ walletAddress: account, nft: hashData });
         }
         // *고릴아닐때
         else {
-          await connect();
+          const connectAddress = await connect();
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
-          const hashData = await getHash();
-          if (account) {
-            setTmp({ account, hashData });
-            console.log(tmp);
-            // login({ walletAddress: account, nft: hashData });
+          if (connectAddress) {
+            const hashData = await getHash(connectAddress);
+            login({ walletAddress: connectAddress[0], nft: hashData });
+            navigateHome();
           }
         }
       } else if (status === "connecting") {
@@ -101,7 +88,6 @@ const Login = (props: Props) => {
       }, 2000);
     }
   };
-  console.log(tmp);
 
   const navigateHome = () => {
     const data: OpenAlertModalArg = {
@@ -109,15 +95,17 @@ const Login = (props: Props) => {
       styles: "PRIMARY",
     };
     openAlertModal(data);
-    navigate("/main");
+    setTimeout(() => {
+      navigate("/main");
+    }, 2000);
   };
 
   useEffect(() => {
-    if (status === "connected") {
-      // navigateHome();
+    if (account) {
+      navigateHome();
       return;
     }
-  }, [status]);
+  }, []);
 
   return (
     <>

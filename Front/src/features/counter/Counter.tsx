@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useEffect, useState, useMemo, Suspense } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { useLoginMutation } from "@/redux/api/authApi";
 import "./counter.css";
@@ -24,6 +24,8 @@ const Counter = (props: TestProps) => {
   // * useDispatch()함수 대신에 사용한다.
   const dispatch = useAppDispatch();
 
+  const [NFTList, setNFTList] = useState<string[]>([]);
+
   const [login] = useLoginMutation();
 
   const { openAlertModal } = useAlertModal();
@@ -39,16 +41,10 @@ const Counter = (props: TestProps) => {
     openAlertModal(data);
   };
 
-  const [NFTList, setNFTList] = useState<string[]>([]);
-  console.log(NFTList);
-  console.log("리랜더링");
-  console.log(NFTList);
-
   const clickNFTList = async () => {
-    const myNFTList: string[] = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
-    await setNFTList(myNFTList);
+    const myNFTList = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
+    setNFTList(myNFTList);
   };
-
   return (
     <Fragment>
       <section className="counter-section">
@@ -69,9 +65,10 @@ const Counter = (props: TestProps) => {
       <section className="counter-section">
         <h1>NFT Test</h1>
         <button onClick={clickNFTList}>NFTLIST</button>
-        {NFTList?.map((item, index) => (
-          <Card url={item} key={index}></Card>
-        ))}
+        {/* <>{generateFish}</> */}
+        {NFTList.map((item, index) => {
+          return <img src={item} key={index} />;
+        })}
       </section>
     </Fragment>
   );

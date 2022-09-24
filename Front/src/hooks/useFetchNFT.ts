@@ -1,38 +1,36 @@
 import useProvider from "./useProvider";
-import { useMetaMask } from "metamask-react";
 
 const useFetchNFT = () => {
-  const { contract, provider } = useProvider();
-  const { ethereum } = useMetaMask();
+  const { contract } = useProvider();
 
   const changeMetaToLink = (meta: string): string => {
     const url = "https://ipfs.io/ipfs/" + meta.split("://")[1];
     return url;
   };
 
-  const changeNFTUrl = (meta: string[]) => {
-    const NFTList: string[] = [];
-    meta.forEach((item) => {
+  const changeNFTUrl = async (meta: string[]) => {
+    const data = await meta.map(async (item) => {
       const link = changeMetaToLink(item);
-      (async () => {
-        try {
-          const response = await fetch(link);
-          const data = await response.json();
-          const imageUrl = changeMetaToLink(data.properties.image.description);
-          NFTList.push(imageUrl);
-        } catch (error) {
-          console.log(error);
-        }
-      })();
+      try {
+        const response = await fetch(link);
+        const data = await response.json();
+        const imageUrl = await changeMetaToLink(data.properties.image.description);
+        return imageUrl;
+      } catch (error) {
+        console.log(error);
+        return "";
+      }
     });
-    return NFTList;
+    return data;
   };
 
   const fetchMyNFT = async (address: string): Promise<string[]> => {
     try {
       const data: string[] = await contract.methods.myNFTView(address).call();
       const NFTList = await changeNFTUrl(data);
-      return NFTList;
+      const myNFTList = await Promise.all(NFTList);
+      console.log("이거심", myNFTList);
+      return myNFTList;
     } catch (error) {
       console.log(error);
       return [];

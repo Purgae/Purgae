@@ -27,30 +27,6 @@ public class UserController {
     @Autowired
     UserService userService;
 
-
-    @ApiOperation(value = "사용자 정보 가져오기", notes = "닉네임으로 사용자 정보 받아오는 API입니다.")
-    @GetMapping("/{userId}")
-    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable Long userId) {
-        Map<String, Object> result = new HashMap<>();
-        User user = userService.getUserWalletAddress(userId);
-        if(user != null) {
-            User userDto = userService.getUserInfo(user.getWalletAddress());
-            if (userDto != null) {
-                result.put("message", SUCCESS);
-                result.put("data", userDto);
-            } else {
-                result.put("message", FAIL);
-            }
-        }
-        else{
-            result.put("message", FAIL);
-        }
-
-
-
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
-
     @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody Map<String, Object> reqData){
@@ -93,6 +69,30 @@ public class UserController {
                 result.put("message", SUCCESS);
             }
         }
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
+
+
+    @ApiOperation(value = "사용자 정보 가져오기", notes = "닉네임으로 사용자 정보 받아오는 API입니다.")
+    @GetMapping("/{userId}")
+    public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable Long userId) {
+        Map<String, Object> result = new HashMap<>();
+        User user = userService.getUserWalletAddress(userId);
+        if(user != null) {
+            User userDto = userService.getUserInfo(user.getWalletAddress());
+            if (userDto != null) {
+                result.put("message", SUCCESS);
+                result.put("data", userDto);
+            } else {
+                result.put("message", FAIL);
+            }
+        }
+        else{
+            result.put("message", FAIL);
+        }
+
+
+
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 

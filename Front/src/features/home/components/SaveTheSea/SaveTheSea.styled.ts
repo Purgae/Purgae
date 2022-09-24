@@ -27,12 +27,30 @@ export const MainSaveTheSeaLetter = styled.div`
   margin-top: 6rem;
   ${({ theme }) => theme.mixins.font("2.4rem", "700")};
   color: ${({ theme }) => theme.colors.mainParagraph};
+  animation: fadein 1.5s;
+  @keyframes fadein {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const MainTopSubhead = styled.div`
   ${({ theme }) => theme.mixins.font("1.2rem", "500")};
   color: ${({ theme }) => theme.colors.mainParagraph};
   line-height: 2rem;
+  animation: fadein 1.5s;
+  @keyframes fadein {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 1;
+    }
+  }
 `;
 
 export const MainButtonWrapper = styled(FlexDiv)`

@@ -1,12 +1,18 @@
 import { WhatIsPurgaeBackground, WhatIsPurgaeIconTextWrapper, WhatIsPurgaeTextBox } from "./WhatIsPurgae.styled";
-
 import { MainTitle, MainText, MainTextPrimary, MainIcon } from "../../Home.styled";
+import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
 const WhatIsPurgae = () => {
+  const Animation = ScrollToAppear("whatispurgae_animation", 10);
   return (
     <>
-      <WhatIsPurgaeBackground>
-        <MainTitle mt="0rem">푸르게가 뭔가요?</MainTitle>
+      <WhatIsPurgaeBackground
+        animation={Animation ? "fadeInDown 2s" : "none"}
+        visibility={Animation ? "visible" : "hidden"}
+      >
+        <MainTitle mt="0rem" id="whatispurgae_animation">
+          푸르게가 뭔가요?
+        </MainTitle>
         <WhatIsPurgaeIconTextWrapper>
           <MainIcon src={"/public/MainPage/Icon/1.png"} width="13rem" />
           <WhatIsPurgaeTextBox>

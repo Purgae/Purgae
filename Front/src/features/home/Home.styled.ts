@@ -27,6 +27,10 @@ export const MainTextPrimary = styled.span`
 
 export const MainIcon = styled.img<{ width: string }>`
   width: ${(props) => props.width};
+  transition: all 0.3s linear;
+  &:hover {
+    transform: scale(1.02);
+  }
 `;
 
 export const MainLink = styled(NavLink)`

@@ -1,7 +1,8 @@
 import styled from "@/styles/theme-components";
 import { MainTitle, MainTextPrimary, MainIcon, MainLink } from "../../Home.styled";
+import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
-const MoneyGoBackground = styled.div`
+const MoneyGoBackground = styled.div<{ animation: string; visibility: string }>`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   width: 100%;
   min-height: 38rem;
@@ -10,6 +11,18 @@ const MoneyGoBackground = styled.div`
     padding: 4rem 6rem 1rem;
   }
   background-color: ${({ theme }) => theme.colors.transparent};
+  & > * {
+    visibility: ${(props) => props.visibility};
+    animation: ${(props) => props.animation};
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const MoneyGoIconWrapper = styled.div`
@@ -25,9 +38,13 @@ const MoneyGoText = styled.p`
 `;
 
 const MoneyGo = () => {
+  const Animation = ScrollToAppear("moneygo_animation", 35);
+
   return (
-    <MoneyGoBackground id="whatispurgae">
-      <MainTitle mt="8rem">기부받은 돈은 어디로 가나요?</MainTitle>
+    <MoneyGoBackground animation={Animation ? "fadein 2.5s" : "none"} visibility={Animation ? "visible" : "hidden"}>
+      <MainTitle mt="8rem" id="moneygo_animation">
+        기부받은 돈은 어디로 가나요?
+      </MainTitle>
       <MoneyGoIconWrapper>
         <MainIcon src={"/public/MainPage/Icon/5.png"} width="14rem" />
         <MainIcon src={"/public/MainPage/Icon/6.png"} width="14rem" />

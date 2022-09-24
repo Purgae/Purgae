@@ -1,10 +1,20 @@
 import { MainTitle } from "../../Home.styled";
-import { HowManyBackground, HowManyCardWrapper, HowManyCard, HowManyCardTitle } from "./HowMany.styled";
+import {
+  HowManyBackground,
+  HowManyCardWrapper,
+  HowManyCard,
+  HowManyCardTitle,
+  HowManyCardContent,
+} from "./HowMany.styled";
+import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
 const HowMany = () => {
+  const Animation = ScrollToAppear("howmany_animation", 48);
   return (
-    <HowManyBackground>
-      <MainTitle mt="8rem">얼마나 많이 참여하고 있나요?</MainTitle>
+    <HowManyBackground animation={Animation ? "fadeInDown 2.5s" : "none"} visibility={Animation ? "visible" : "hidden"}>
+      <MainTitle mt="8rem" id="howmany_animation">
+        얼마나 많이 참여하고 있나요?
+      </MainTitle>
       <HowManyCardWrapper>
         <HowManyCard backgroundimg="url(/public/MainPage/card/card1.jpg)">
           <HowManyCardTitle>
@@ -12,6 +22,7 @@ const HowMany = () => {
             <br />
             해양생물 NFT
           </HowManyCardTitle>
+          <HowManyCardContent>2000개</HowManyCardContent>
         </HowManyCard>
         <HowManyCard backgroundimg="url(/public/MainPage/card/card2.jpg)">
           <HowManyCardTitle>
@@ -19,6 +30,7 @@ const HowMany = () => {
             <br />
             쓰레기의 양
           </HowManyCardTitle>
+          <HowManyCardContent>1000kg</HowManyCardContent>
         </HowManyCard>
         <HowManyCard backgroundimg="url(/public/MainPage/card/card3.jpg)">
           <HowManyCardTitle>
@@ -26,6 +38,7 @@ const HowMany = () => {
             <br />
             기부된 이더리움
           </HowManyCardTitle>
+          <HowManyCardContent>3.4ETH</HowManyCardContent>
         </HowManyCard>
       </HowManyCardWrapper>
     </HowManyBackground>

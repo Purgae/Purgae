@@ -1,8 +1,9 @@
 import styled from "@/styles/theme-components";
 import { MainTitle, MainIcon, MainText, MainTextPrimary } from "../../Home.styled";
 import { OutLineButton } from "@/common/Button/Button.styled";
+import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
-const MainHowDonateBackground = styled.div`
+const MainHowDonateBackground = styled.div<{ animation: string; visibility: string }>`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   min-height: 38rem;
   width: 100%;
@@ -11,6 +12,18 @@ const MainHowDonateBackground = styled.div`
     padding: 4rem 6rem 1rem;
   }
   background-color: ${({ theme }) => theme.colors.transparent};
+  & > * {
+    visibility: ${(props) => props.visibility};
+    animation: ${(props) => props.animation};
+    @keyframes fadein {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  }
 `;
 
 const MainHowDonateContentWrapper = styled.div`
@@ -24,9 +37,15 @@ const MainHowDonateIconTextButtonWrapper = styled.div`
 `;
 
 export const MainHowDonate = () => {
+  const Animation = ScrollToAppear("moneygo_animation", 60);
   return (
-    <MainHowDonateBackground>
-      <MainTitle mt="8rem">그럼 어떻게 기부할 수 있나요?</MainTitle>
+    <MainHowDonateBackground
+      animation={Animation ? "fadein 2.5s" : "none"}
+      visibility={Animation ? "visible" : "hidden"}
+    >
+      <MainTitle mt="8rem" id="moneygo_animation">
+        그럼 어떻게 기부할 수 있나요?
+      </MainTitle>
       <MainHowDonateContentWrapper>
         <MainHowDonateIconTextButtonWrapper>
           <MainIcon src={"/public/MainPage/Icon/7.png"} width="13rem" />

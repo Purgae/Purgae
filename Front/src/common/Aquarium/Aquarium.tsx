@@ -30,11 +30,8 @@ const Aquarium = (props: Props) => {
   );
   useEffect(() => {
     const fishCollection = document.getElementById("fishes")?.children;
-    console.log(fishCollection);
     if (fishCollection) {
-      console.log(fishCollection);
       var fishes: HTMLElement[] = Array.prototype.slice.call(fishCollection);
-      console.log(fishes);
       let moveX: number[] = new Array();
       let moveZ: number[] = new Array();
       for (let i = 0; i < fishes.length; i++) {
@@ -42,7 +39,6 @@ const Aquarium = (props: Props) => {
         moveX.push(-(Math.floor(Math.random() * 16) + 4));
       }
       for (let i = 0; i < fishes.length; i++) {
-        console.log(moveX);
         fishes[i].style.left = fishes[i].offsetLeft + "px";
         setInterval(() => {
           if (fishes[i].offsetLeft + moveX[i] <= 0) {

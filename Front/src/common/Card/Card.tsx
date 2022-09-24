@@ -10,8 +10,18 @@ const Card = ({ url, selected = false, ...props }: React.PropsWithChildren<CardP
   );
 };
 
-export const CardGroup = ({ ...props }: React.PropsWithChildren<CardGroupProps>) => {
-  return <Group>{props.children}</Group>;
+const CardGroup = ({ lst, selectCard, ...props }: React.PropsWithChildren<CardGroupProps>) => {
+  return (
+    <Group>
+      {lst.map((item, idx) => {
+        if (idx === selectCard) {
+          return <Card url={item} key={idx} selected={true} />;
+        } else {
+          return <Card url={item} key={idx} />;
+        }
+      })}
+    </Group>
+  );
 };
 
-export default Card;
+export default CardGroup;

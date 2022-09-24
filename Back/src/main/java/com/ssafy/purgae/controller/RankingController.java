@@ -1,6 +1,5 @@
 package com.ssafy.purgae.controller;
 
-import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.entity.UserMapping;
 import com.ssafy.purgae.database.entity.rankingUser;
 import com.ssafy.purgae.service.RankingService;
@@ -21,7 +20,7 @@ import java.util.Map;
 @Api(tags = {"랭킹 API Controller"})
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/api/ranking")
+@RequestMapping("/ranking")
 public class RankingController {
     private static final String SUCCESS = "SUCCESS";
     private static final String FAIL = "FAIL";

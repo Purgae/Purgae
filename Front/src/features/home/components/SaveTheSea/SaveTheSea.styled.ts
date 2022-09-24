@@ -10,7 +10,7 @@ export const MainTopBackground = styled.div`
     padding: 4rem 6rem 1rem;
   }
   padding: 4rem 1rem 1rem;
-  background-image: url(/MainPage/background_top.png);
+  background-image: url(/assets/MainPage/background_top.png);
   background-repeat: no-repeat;
   background-size: 100vw;
 `;

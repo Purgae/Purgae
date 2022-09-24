@@ -28,12 +28,12 @@ const TopButtonStyled = styled.button`
   }
 `;
 const TopButton = () => {
-  const [ScrollY, setScrollY] = useState(0);
-  const [ButtonStatus, setButtonStatus] = useState(false); // 버튼 상태
+  const [scrollY, setScrollY] = useState(0);
+  const [buttonStatus, setButtonStatus] = useState(false); // 버튼 상태
 
   const onToggleTopButton = () => {
     setScrollY(window.pageYOffset);
-    ScrollY > 100 ? setButtonStatus(true) : setButtonStatus(false);
+    scrollY > 100 ? setButtonStatus(true) : setButtonStatus(false);
   };
 
   const onHandleTop = () => {
@@ -53,12 +53,12 @@ const TopButton = () => {
     return () => {
       window.removeEventListener("scroll", onToggleTopButton);
     };
-  });
+  }, [scrollY]);
 
   return (
     <div>
       <TopButtonStyled
-        className={ButtonStatus ? "active" : ""} // 버튼 노출 여부
+        className={buttonStatus ? "active" : ""} // 버튼 노출 여부
         onClick={onHandleTop} // 버튼 클릭시 함수 호출
       >
         <div className="material-icons">expand_less</div>

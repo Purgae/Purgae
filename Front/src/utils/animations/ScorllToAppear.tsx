@@ -1,16 +1,15 @@
 import { useState, useEffect } from "react";
 
 const ScrollToAppear = (id: string, location: number) => {
-  const [ScrollY, setScrollY] = useState(0);
-  const [Animation, setAnimation] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [animation, setAnimation] = useState(false);
 
-  const MoneygoElement = document.getElementById(id);
-  const ElementHeight: any = MoneygoElement?.getBoundingClientRect().height;
+  const moneygoElement = document.getElementById(id);
+  const elementHeight: any = moneygoElement?.getBoundingClientRect().height;
 
   const handleAnimation = () => {
     setScrollY(window.pageYOffset);
-    ScrollY > ElementHeight * location ? setAnimation(true) : null;
-    console.log(Animation);
+    scrollY > elementHeight * location ? setAnimation(true) : null;
   };
 
   useEffect(() => {
@@ -23,7 +22,7 @@ const ScrollToAppear = (id: string, location: number) => {
       window.removeEventListener("scroll", handleAnimation);
     };
   });
-  return Animation;
+  return animation;
 };
 
 export default ScrollToAppear;

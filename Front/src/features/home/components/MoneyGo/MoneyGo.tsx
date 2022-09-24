@@ -38,16 +38,16 @@ const MoneyGoText = styled.p`
 `;
 
 const MoneyGo = () => {
-  const Animation = ScrollToAppear("moneygo_animation", 35);
+  const animation = ScrollToAppear("moneygo_animation", 35);
 
   return (
-    <MoneyGoBackground animation={Animation ? "fadein 2.5s" : "none"} visibility={Animation ? "visible" : "hidden"}>
+    <MoneyGoBackground animation={animation ? "fadein 2.5s" : "none"} visibility={animation ? "visible" : "hidden"}>
       <MainTitle mt="8rem" id="moneygo_animation">
         기부받은 돈은 어디로 가나요?
       </MainTitle>
       <MoneyGoIconWrapper>
-        <MainIcon src={"/public/MainPage/Icon/5.png"} width="14rem" />
-        <MainIcon src={"/public/MainPage/Icon/6.png"} width="14rem" />
+        <MainIcon src={"/assets/MainPage/Icon/5.png"} width="14rem" />
+        <MainIcon src={"/assets/MainPage/Icon/6.png"} width="14rem" />
       </MoneyGoIconWrapper>
       <MoneyGoText>
         여러분이 기부해주신 모든 금액은 <MainTextPrimary>푸르게</MainTextPrimary>의 지갑에 보관된 후,

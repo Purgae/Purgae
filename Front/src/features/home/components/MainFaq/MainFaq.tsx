@@ -10,7 +10,7 @@ export const MainFaqBackground = styled.div`
   @media screen and (min-width: 1350px) {
     padding: 4rem 6rem 1rem;
   }
-  background-image: url(/MainPage/background_bottom.png);
+  background-image: url(/assets/MainPage/background_bottom.png);
   background-repeat: no-repeat;
   background-size: 100vw;
 `;

@@ -48,7 +48,7 @@ export const MainHowDonate = () => {
       </MainTitle>
       <MainHowDonateContentWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/7.png"} width="13rem" />
+          <MainIcon src={"/assets/MainPage/Icon/7.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary>에서는 블록체인 서버를 기반으로
             <br />
@@ -63,7 +63,7 @@ export const MainHowDonate = () => {
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/8.png"} width="13rem" />
+          <MainIcon src={"/assets/MainPage/Icon/8.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary> 서비스를 이용하기 위해서는 <br />
             지갑 연결이 필요해요.
@@ -79,7 +79,7 @@ export const MainHowDonate = () => {
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
         <MainHowDonateIconTextButtonWrapper>
-          <MainIcon src={"/public/MainPage/Icon/9.png"} width="13rem" />
+          <MainIcon src={"/assets/MainPage/Icon/9.png"} width="13rem" />
           <MainText textalign="center">
             <MainTextPrimary>푸르게</MainTextPrimary>에서 기부를 하면
             <br />

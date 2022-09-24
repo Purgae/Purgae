@@ -39,7 +39,7 @@ const useFetchNFT = () => {
 
   const fetchTodayNFT = async (): Promise<string[]> => {
     try {
-      const data: string[] = await contract.methods.viewTodayNFT().call();
+      const data: string[] = await fetchContract.methods.viewTodayNFT().call();
       const NFTList = await changeNFTUrl(data);
       const todayNFTList = await Promise.all(NFTList);
       console.log("이거심", todayNFTList);

@@ -1,7 +1,7 @@
 import useProvider from "./useProvider";
 
 const useFetchNFT = () => {
-  const { contract } = useProvider();
+  const { fetchContract } = useProvider();
 
   const changeMetaToLink = (meta: string): string => {
     const url = "https://ipfs.io/ipfs/" + meta.split("://")[1];
@@ -26,10 +26,10 @@ const useFetchNFT = () => {
 
   const fetchMyNFT = async (address: string): Promise<string[]> => {
     try {
-      const data: string[] = await contract.methods.myNFTView(address).call();
+      const data: string[] = await fetchContract.methods.myNFTView(address).call();
       const NFTList = await changeNFTUrl(data);
       const myNFTList = await Promise.all(NFTList);
-      // console.log("이거심", myNFTList);
+      console.log("이거심", myNFTList);
       return myNFTList;
     } catch (error) {
       console.log(error);

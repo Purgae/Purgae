@@ -14,6 +14,7 @@ import ThemeTest from "@/features/counter/ThemeTest";
 import Start from "@/features/start/Start";
 import Donate from "@/features/donate/Donate";
 import Profile from "@/features/profile/Profile";
+import Ranking from "@/features/ranking/Ranking";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -27,6 +28,7 @@ const App = () => {
 
   /* 
   TODO login check (server연결 후 test해볼것-addlistener)
+  @이더리움이 없을때도 고려
   로그인한 유저와, 저장된 유저가 다르면서 연결 안 된 유저일시 - store reset
   로그인한 유저와, 저장된 유저가 다르면서 연결 된 유저일시 -  로그인 요청
   로그인 하지 않았으나, 접속 시 연결된 유저일시 - 로그인 요청
@@ -59,7 +61,7 @@ const App = () => {
           {/* 게임 */}
           <Route path="/game" />
           {/* 랭킹 */}
-          <Route path="/ranking" />
+          <Route path="/ranking" element={<Ranking />} />
           {/* 기부 */}
           <Route path="/donate" element={<Donate />} />
           {/* 자주 묻는 질문 */}

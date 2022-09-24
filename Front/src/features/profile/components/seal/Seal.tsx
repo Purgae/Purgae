@@ -3,6 +3,9 @@ import CardGroup from "@/common/Card/Card";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useMetaMask } from "metamask-react";
 import { isEmpty } from "lodash";
+import Web3 from "web3";
+import { Goeril_RPC_URL, TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
+import useProvider from "@/hooks/useProvider";
 
 type Props = {
   children?: React.ReactNode;
@@ -12,39 +15,50 @@ const Seal = (props: Props) => {
   const { fetchMyNFT } = useFetchNFT();
   const { account, status } = useMetaMask();
   const [nfts, setNfts] = useState<string[]>([]);
-
-  const myNftArr = (): string[] | void => {
-    if (account) {
-      const requestNftArr = fetchMyNFT(account);
-      requestNftArr.then((res) => {
-        setNfts(res);
-        return res;
-      });
-    }
+  const { fetchProvider } = useProvider();
+  //  usecallback, usememo
+  // const myNftArr = async (): string[] | void => {
+  //   // if (account) {
+  //   // const requestNftArr = fetchMyNFT(account);
+  //   const requestNftArr = await fetchMyNFT(TEST_WALLET_ADDRESS);
+  //   requestNftArr
+  //     setNfts(requestNftArr);
+  //     return requestNftArr;
+  //   };
+  //   // }
+  // };
+  const myNftArr = async () => {
+    const requestNftArr = await fetchMyNFT(TEST_WALLET_ADDRESS);
+    console.log(requestNftArr);
+    setNfts(requestNftArr);
+    return requestNftArr;
   };
-  console.log(status);
 
   useEffect(() => {
-    if (status === "connected" || "initializing") {
-      if (account) {
-        myNftArr();
-      }
+    if (fetchProvider) {
+      myNftArr();
+      console.log("asdf");
     } else {
-      alert("연결해주세요, 로그아웃 등");
+      console.log("실행못해");
     }
-  }, [account]);
+    // if (status === "connected" || "initializing") {
+    //   if (account) {
+    //     myNftArr();
+    //   }
+    // } else {
+    //   myNftArr();
+    //   alert("연결해주세요, 로그아웃 등");
+    // }
+  }, []);
+  useEffect(() => {});
 
   return (
     <div style={{ paddingTop: 100 }}>
-      {/* 왜 안될까 */}
-      {/* {myNftArr()?.map((ele: string, idx: number) => (
-        <p key={idx}>{ele}</p>
-      ))} */}
       {nfts?.map((ele, idx) => (
         <Fragment key={idx}>
           {ele}
           <br />
-          {/* <CardGroup url={ele} width={"123"} /> */}
+          {/* <CardGroup url={ele} /> */}
         </Fragment>
       ))}
     </div>

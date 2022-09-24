@@ -3,9 +3,10 @@ import { FlexShadowDiv } from "@/common/Common.styled";
 
 export const StyleEditProfileModal = styled(FlexShadowDiv)`
   position: relative;
+  max-width: 40rem;
   border-radius: 1rem;
-  padding: 5rem 7rem 3rem 7rem;
-  @media ${({ theme }) => theme.sizes.pc} {
+  @media ${({ theme }) => theme.sizes.tablet} {
+    padding: 5rem 7rem 3rem 7rem;
   }
 `;
 

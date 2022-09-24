@@ -1,4 +1,4 @@
-import { FlexDiv, FontP } from "@/common/Common.styled";
+import { FlexDiv, FontP, RootComponent } from "@/common/Common.styled";
 import { StyleEditProfileModal, StyledEditProfileForm, StyledAbsoluteIcon } from "./EditProfileModal.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
@@ -17,14 +17,14 @@ const EditProfileModal = () => {
     event.stopPropagation();
   };
   return (
-    <FlexDiv
-      width="100vw"
-      height="100vh"
-      bgColor="mainModalBg"
-      style={{ position: "absolute" }}
-      onClick={clickContainer}
-    >
-      <StyleEditProfileModal shadow="shadow700" bgColor="white" onClick={keepModalWindow}>
+    <RootComponent width="100%" height="100vh" bgColor="mainModalBg" onClick={clickContainer}>
+      <StyleEditProfileModal
+        shadow="shadow700"
+        bgColor="white"
+        onClick={keepModalWindow}
+        padding="2rem 1rem 2rem 1rem"
+        width="100%"
+      >
         <StyledAbsoluteIcon className="material-icons" onClick={clickContainer}>
           close
         </StyledAbsoluteIcon>
@@ -47,7 +47,7 @@ const EditProfileModal = () => {
           </Button>
         </StyledEditProfileForm>
       </StyleEditProfileModal>
-    </FlexDiv>
+    </RootComponent>
   );
 };
 

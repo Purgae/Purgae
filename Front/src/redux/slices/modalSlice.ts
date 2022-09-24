@@ -3,12 +3,12 @@ import { RootState } from "@/redux/store";
 
 interface ModalState {
   editProfile: boolean;
-  editProfileImage: boolean;
+  selectNFTProfile: boolean;
 }
 
 const initialState: ModalState = {
   editProfile: false,
-  editProfileImage: false,
+  selectNFTProfile: false,
 };
 
 const slice = createSlice({
@@ -24,12 +24,12 @@ const slice = createSlice({
       state.editProfile = false;
     },
 
-    openEditProfileImage: (state) => {
-      state.editProfileImage = true;
+    openSelectNFTProfile: (state) => {
+      state.selectNFTProfile = true;
     },
 
-    closeEditProfileImage: (state) => {
-      state.editProfileImage = false;
+    closeSelectNFTProfile: (state) => {
+      state.selectNFTProfile = false;
     },
   },
 });
@@ -40,6 +40,6 @@ export const selectModal = createSelector(
   (modal) => modal
 );
 
-export const { openEditProfile, closeEditProfile, openEditProfileImage, closeEditProfileImage } = slice.actions;
+export const { openEditProfile, closeEditProfile, openSelectNFTProfile, closeSelectNFTProfile } = slice.actions;
 
 export default slice.reducer;

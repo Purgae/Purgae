@@ -1,14 +1,12 @@
 package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.FollowerInfo;
-import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.service.LikeUserService;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

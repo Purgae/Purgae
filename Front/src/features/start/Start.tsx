@@ -25,7 +25,6 @@ const Start = () => {
     } else {
       setFishImages(myNFTList);
     }
-
     setLoading(false);
   };
 

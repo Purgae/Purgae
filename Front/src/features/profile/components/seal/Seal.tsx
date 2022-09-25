@@ -4,7 +4,7 @@ import useFetchNFT from "@/hooks/useFetchNFT";
 import { useMetaMask } from "metamask-react";
 import { isEmpty } from "lodash";
 import { RootComponent } from "@/common/Common.styled";
-
+import CardPage from "@/common/CardPageNation/CardPage";
 import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 import useProvider from "@/hooks/useProvider";
 
@@ -32,13 +32,13 @@ const Seal = (props: Props) => {
   //   // }
   // };
   const myNftArr = async () => {
-    // if (account) {
-    const requestNftArr = await fetchMyNFT(TEST_WALLET_ADDRESS);
-    console.log(requestNftArr);
-    setNfts(requestNftArr);
-    console.log(nfts);
-    return requestNftArr;
-    // }
+    if (account) {
+      const requestNftArr = await fetchMyNFT(account);
+      console.log(requestNftArr);
+      setNfts(requestNftArr);
+      console.log(nfts);
+      return requestNftArr;
+    }
   };
 
   useEffect(() => {
@@ -63,7 +63,7 @@ const Seal = (props: Props) => {
   return (
     <RootComponent>
       <div style={{ paddingTop: 100, width: "100%" }}>
-        <CardGroup lst={nfts}></CardGroup>
+        <CardPage nftLst={nfts}></CardPage>
       </div>
     </RootComponent>
   );

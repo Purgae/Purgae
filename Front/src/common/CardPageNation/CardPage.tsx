@@ -1,34 +1,36 @@
+import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import CardGroup from "../Card/Card";
 import PageNation from "../PageNation/PageNation";
 import { CardPageProps } from "./CardPage.types";
 
-let NN = [
-  //13개
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/1.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/2.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/3.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/4.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/5.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/6.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/7.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/9.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/10.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/11.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/12.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/13.png",
-  "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/14.png",
-];
+// NN = props.nftLst?.slice(0, 12)
+const CardPage = (props: React.PropsWithChildren<CardPageProps>) => {
+  const [exist, setExist] = useState<boolean>(false);
+  const [selectNumber, setSelectNumber] = useState<number>(0);
+  const [selectedList, setSelectedList] = useState<string[]>(props.nftLst?.slice(0, 12));
 
-const CardPage = ({ nftLst, gameSelectCard, ...props }: React.PropsWithChildren<CardPageProps>) => {
-  const [selectNumber, setSelectNumber] = useState<number>(1);
-  const [selectedList, setSelectedList] = useState([]);
-  // 함수에 넣었을때, 12개씩 자름,
-  useEffect(() => {}, [selectNumber]);
+  useEffect(() => {
+    if (!isEmpty(props.nftLst) && props.nftLst?.length > 0) {
+      setExist(true);
+      setSelectedList(props.nftLst?.slice(selectNumber * 12, selectNumber * 12 + 12));
+    } else {
+      setExist(false);
+    }
+  }, []);
+  console.log(selectNumber);
+  console.log(selectedList);
+
   return (
     <div style={{ width: "100%" }}>
-      <CardGroup lst={NN} />
-      <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} />
+      {exist ? (
+        <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: 3 }}>
+          <CardGroup lst={selectedList} selectCard={props?.gameSelectCard} onClick={props?.onClick} />
+          <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={props.nftLst} />
+        </div>
+      ) : (
+        <p> NFT가 존재하지 않습니다.</p>
+      )}
     </div>
   );
 };

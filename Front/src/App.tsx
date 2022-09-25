@@ -15,6 +15,7 @@ import Start from "@/features/start/Start";
 import Donate from "@/features/donate/Donate";
 import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
+import Game from "@/features/game/Game";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -59,7 +60,7 @@ const App = () => {
           {/* 개인 팔로우/팔로워 */}
           <Route path="/profile/:userId/follow" />
           {/* 게임 */}
-          <Route path="/game" />
+          <Route path="/game" element={<Game />} />
           {/* 랭킹 */}
           <Route path="/ranking" element={<Ranking />} />
           {/* 기부 */}

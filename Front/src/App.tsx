@@ -16,6 +16,7 @@ import Donate from "@/features/donate/Donate";
 import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
 import Game from "@/features/game/Game";
+import ProfileAquarium from "@/features/profile/ProfileAquarium";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -56,7 +57,7 @@ const App = () => {
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" />
           {/* 개인 수족관 */}
-          <Route path="/profile/:userId/aquarium" />
+          <Route path="/profile/:userId/aquarium" element={<Profile />} />
           {/* 개인 팔로우/팔로워 */}
           <Route path="/profile/:userId/follow" />
           {/* 게임 */}

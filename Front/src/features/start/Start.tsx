@@ -8,6 +8,7 @@ import Aquarium from "@/common/Aquarium/Aquarium";
 import useProvider from "@/hooks/useProvider";
 import { useMetaMask } from "metamask-react";
 import Web3 from "web3";
+import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 
 const Start = () => {
   const [loading, setLoading] = useState(true);
@@ -28,7 +29,7 @@ const Start = () => {
   // ];
 
   const clickNFTList = async () => {
-    const myNFTList = await fetchMyNFT('0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b');
+    const myNFTList = await fetchMyNFT(TEST_WALLET_ADDRESS);
     console.log(myNFTList);
     setFishImages(myNFTList);
     console.log(fishImages);

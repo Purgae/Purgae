@@ -6,6 +6,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
+
 contract Minting is ERC721URIStorage{
 
     using Counters for Counters.Counter;
@@ -13,6 +14,13 @@ contract Minting is ERC721URIStorage{
 
     address public owner;
     
+    ERC721 erc;
+
+    // Mapping from token ID to owner address
+    mapping(uint256 => address) private _owners;
+
+    // Mapping owner address to token count
+    mapping(address => uint256) private _balances;
 
     constructor() ERC721("PurgaeNFTs", "PNFT") {
         owner = msg.sender;
@@ -30,8 +38,17 @@ contract Minting is ERC721URIStorage{
     mapping (uint256 => NFT) NFTInfo;
     // mapping (address => uint256[]) userNFT;
     mapping (uint256 => uint256) todayDonation;
-    
+
     mapping (address => uint256) userDonation;
+
+    mapping (address => string[]) userNFT;
+
+    mapping (address => uint256[]) userNFTNum;
+
+    mapping (string => uint256) NFTtoken;
+
+    mapping (uint256 => string[]) todayNFT;
+
 
     function mintingNFT(string memory _input) public {
 
@@ -47,7 +64,10 @@ contract Minting is ERC721URIStorage{
         nft.firstPublisher = msg.sender;
         nft.dolphin = false;
         nft.updated_at = block.timestamp;
-        // userNFT[msg.sender][newItemId] = newItemId;
+        
+        
+        userNFT[msg.sender].push(_input);
+        userNFTNum[msg.sender].push(newItemId);
         _setTokenURI(newItemId, _input);    
         
         }
@@ -64,57 +84,44 @@ contract Minting is ERC721URIStorage{
         return (NFTInfo[key].metaHash, NFTInfo[key].owner, NFTInfo[key].firstPublisher, NFTInfo[key].dolphin, NFTInfo[key].updated_at);
     }
 
-    
-
     function transferNFT(uint256 _id, address _seller, address _buyer) public payable {
         require(ownerOf(_id)==_seller, "no Approval");
-        _transfer(ownerOf(_id), _buyer, _id);
-        // userNFT[_seller][_id] = 0;
-        // userNFT[_buyer][_id] = _id;
-        NFTInfo[_id].owner = _buyer;
-        NFTInfo[_id].updated_at = block.timestamp;
-        uint256 total = msg.value;
-        uint256 tmp = userDonation[_buyer];
-        uint256 nowTime = block.timestamp;
-        if(_seller == owner){
-            userDonation[_buyer] = tmp + total;
-            todayDonation[nowTime] = total;
-        }else{
-            userDonation[_buyer] = tmp + (total/10);
-            todayDonation[nowTime] = (total/10);
-        }
-        payable(_seller).transfer((total/10)*9);
-        payable(owner).transfer(total/10);
-    }
-
-    string[] todayNFT;
-    function viewTodayNFT() public returns(string[] memory) {
-        todayNFT = [""];
-        todayNFT.pop();
-        uint nowTime = block.timestamp;
-        
-        for(uint i=1; i<=_tokenIds.current(); i++){
-            if((nowTime - NFTInfo[i].updated_at) < 86400){
-                todayNFT.push(NFTInfo[i].metaHash);
+        ERC721._transfer(_seller, _buyer, _id);
+        for(uint i=0;i<userNFTNum[_seller].length;i++){
+            if(userNFTNum[_seller][i] == _id){
+                userNFTNum[_seller][i] = 0;
+                userNFT[_seller][i] = "";
+                break;
             }
         }
-        return (todayNFT);
+        userNFT[_buyer].push(NFTInfo[_id].metaHash);
+        userNFTNum[_buyer].push(_id);
+        
+        NFTInfo[_id].owner = _buyer;
+        NFTInfo[_id].updated_at = block.timestamp;
+        
+        todayNFT[block.timestamp/86400].push(NFTInfo[_id].metaHash);
+
+        userDonation[_buyer] += msg.value;
+        todayDonation[block.timestamp/86400] += msg.value;
+        
+        payable(_seller).transfer(msg.value);
+    }
+
+
+    function viewTodayNFT() public view returns(string[] memory) {
+        
+        return (todayNFT[block.timestamp/86400]);
     }
 
     function testTime(uint256 _id) public {
         NFTInfo[_id].updated_at = 123;
     }
 
-    string[] myNFT;
-    function myNFTView(address inputOwner) public returns(string[] memory){
-        myNFT = [""];
-        myNFT.pop();
-        for(uint i=1; i<=_tokenIds.current(); i++){
-            if(NFTInfo[i].owner == inputOwner){
-                myNFT.push(NFTInfo[i].metaHash);
-            }
-        }
-        return (myNFT);
+
+    function viewMyNFT(address inputOwner) public view returns(string[] memory){
+        
+        return (userNFT[inputOwner]);
     }
 
     function viewMyDonation(address user) public view returns (uint256) {
@@ -122,12 +129,20 @@ contract Minting is ERC721URIStorage{
     }
 
     function viewTodayDonation() public view returns (uint256) {
-        uint256 nowTime = block.timestamp;
-        uint256 total = 0;
-        for(uint i=(nowTime-86400); i< nowTime; i++){
-            total += todayDonation[i];
-        }
-        return (total);
+        uint256 time = block.timestamp/86400;
+        return (todayDonation[time]);
+    }
+
+    function _transfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal override{
+        transferNFT(tokenId, from, to);
+    }
+
+    function getTime() public view returns(uint256) {
+        return (block.timestamp/86400);
     }
 
     

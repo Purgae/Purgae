@@ -1,23 +1,36 @@
-import React, { useState, useCallback } from "react";
+import React, { useEffect } from "react";
 import { RootComponent } from "@/common/Common.styled";
+import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
+import { styled } from "@/styles/theme";
+import { FlexDiv, FontP } from "@/common/Common.styled";
+import { useAppSelector } from "@/hooks/storeHook";
 
 import Seal from "./components/seal/Seal";
-import FollowModal from "./components/FollowModal/FollowModal";
 
-type Props = {};
-
-const Profile = (props: Props) => {
-  const [isOpenModal, setOpenModal] = useState(false);
-  const onClickToggleModal = useCallback(() => {
-    setOpenModal(!isOpenModal);
-  }, [isOpenModal]);
+const Profile = () => {
+  const user = useAppSelector((state) => state.user.user);
+  /*
+    gameScore
+    id
+    nickname
+    profileImage
+    profilePublic
+    walletAddress
+   */
+  // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
+  // console.log("thisisuser", user);
   return (
-    <RootComponent>
-      <Seal />
-      <button onClick={onClickToggleModal}>팔로우팔로잉</button>
-      {isOpenModal && <FollowModal onClickToggleModal={onClickToggleModal} />}
-    </RootComponent>
+    <StyledRootComponent>
+      <FlexDiv direction="column" width="100%">
+        <ProfileHeader userId={user!.id} />
+        <Seal walletAds={user?.walletAddress} />
+      </FlexDiv>
+    </StyledRootComponent>
   );
 };
 
 export default Profile;
+
+const StyledRootComponent = styled(RootComponent)`
+  padding-top: 125px;
+`;

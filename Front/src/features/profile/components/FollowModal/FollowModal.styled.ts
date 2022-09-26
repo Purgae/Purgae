@@ -6,6 +6,7 @@ export const ModalContainer = styled.div`
   height: 100%;
   ${({ theme }) => theme.mixins.flexBox()};
   position: fixed;
+  top: 0rem;
 `;
 
 export const DialogBox = styled.dialog`
@@ -19,9 +20,10 @@ export const DialogBox = styled.dialog`
   background-color: ${({ theme }) => theme.colors.white};
   z-index: 10000;
   left: 50%;
-  top: 5%;
+  top: 10%;
   transform: translate(-50%, 0);
   padding: 0.5rem;
+  transition: 0.3s;
   @media ${({ theme }) => theme.sizes.tablet} {
     width: 40%;
     min-width: 40rem;
@@ -59,6 +61,9 @@ export const Username = styled.div`
 const Select = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
   font-size: 1.5rem;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const Follower = styled(Select)<{ status: boolean }>`

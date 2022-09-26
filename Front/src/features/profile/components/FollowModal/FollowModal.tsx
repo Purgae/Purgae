@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ModalContainer,
   DialogBox,
@@ -13,9 +13,10 @@ import FollowList from "./FollowList/FollowList";
 
 interface PropsType {
   onClickToggleModal: () => void;
+  status: boolean;
 }
 
-const FollowModal = ({ onClickToggleModal }: PropsType) => {
+const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
   const [isFollower, setIsFollower] = useState(true);
   const handleFollower = () => {
     setIsFollower(true);
@@ -23,6 +24,15 @@ const FollowModal = ({ onClickToggleModal }: PropsType) => {
   const handleFollowing = () => {
     setIsFollower(false);
   };
+  useEffect(() => {
+    setIsFollower(status);
+  }, [status]);
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  });
   return (
     <ModalContainer>
       {" "}

@@ -14,6 +14,7 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
+import { isEmpty } from "lodash";
 
 type Props = {};
 const Login = (props: Props) => {
@@ -34,14 +35,14 @@ const Login = (props: Props) => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await contract.methods?.myNFTView(connectAddress[0]).call();
+      const existHash = await contract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
         const newExistHash = existHash.map((element: string) => {
-          return element.split("://")[1];
+          return { hash: element.split("://")[1] };
         });
         return newExistHash;
       } else {
-        return [];
+        return false;
       }
     } else {
       return false;
@@ -56,7 +57,11 @@ const Login = (props: Props) => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            // login({ walletAddress: connectAddress[0], nft: hashData });
+            if (hashData) {
+              login({ walletAddress: connectAddress[0], nft: hashData });
+            } else {
+              login({ walletAddress: connectAddress[0] });
+            }
             navigateHome();
           }
         }
@@ -66,7 +71,11 @@ const Login = (props: Props) => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            // login({ walletAddress: connectAddress[0], nft: hashData });
+            if (hashData) {
+              login({ walletAddress: connectAddress[0], nft: hashData });
+            } else {
+              login({ walletAddress: connectAddress[0] });
+            }
             navigateHome();
           }
         }

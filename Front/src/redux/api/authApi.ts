@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserProfile } from "@/redux/types";
 import { setUser } from "@/redux/slices/userSlice";
+import API_URL from "@/redux/env";
 
 export interface Login {
   walletAddress: string;
@@ -11,7 +12,7 @@ export const authApi = createApi({
   reducerPath: "authApi",
 
   // * baseUrl
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   tagTypes: ["Auth"],
   endpoints: (build) => ({
     // * buld.mutation<요청 받는 데이터의 타입, 요청할 때 보내는 인자의 타입>({})

@@ -1,5 +1,6 @@
 import { styled } from "@/styles/theme";
 import { FontP } from "@/common/Common.styled";
+import littleproomy_pink_nomargin from "/assets/proomy/littleproomy_pink_nomargin.png";
 
 export const StyledGameTitle = styled(FontP)`
   font-family: "UhBeeSe_hyun";
@@ -37,9 +38,9 @@ export const StyledGameButton = styled.button`
 `;
 
 export const StyledCharacter = styled.div`
-  width: 40%;
-  aspect-ratio: 1 / 1;
-  background-image: url("https://raw.githubusercontent.com/JaeKP/image_repo/main/img/0033131d91a7226d.png");
+  width: 6rem;
+  aspect-ratio: 3 / 2;
+  background-image: url(${littleproomy_pink_nomargin});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;

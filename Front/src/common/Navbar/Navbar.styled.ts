@@ -6,11 +6,12 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
   position: fixed;
   flex-direction: row;
   align-items: center;
+  gap: 10.625rem;
   max-width: 100%;
   height: 4rem;
   width: ${({ theme }) => theme.sizes.pc};
+  z-index: 10;
   padding: 0rem 1.5rem;
-  gap: 10.625rem;
   background-image: linear-gradient(350deg, #666af6, #5f6bff, #5299ff, #1ec5ff);
   opacity: ${(props) => props.opacity};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};

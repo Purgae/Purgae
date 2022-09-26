@@ -13,7 +13,8 @@ const MainFaqBackground = styled.div`
   }
   background-image: url(/assets/MainPage/background_bottom.png);
   background-repeat: no-repeat;
-  background-size: 100vw;
+  background-size: cover;
+  background-position: center;
 `;
 
 const MainFaqBoxWrapper = styled.div`

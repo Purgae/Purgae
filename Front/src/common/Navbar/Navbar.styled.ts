@@ -6,8 +6,8 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
   position: fixed;
   flex-direction: row;
   align-items: center;
+  width: 100%;
   gap: 10.625rem;
-  max-width: 100%;
   height: 4rem;
   width: ${({ theme }) => theme.sizes.pc};
   z-index: 10;
@@ -23,7 +23,7 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
 
 export const NavbarItemWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 117rem;
+  width: 100%;
   padding: 0rem;
 `;
 

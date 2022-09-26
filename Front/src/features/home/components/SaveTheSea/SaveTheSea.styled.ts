@@ -12,11 +12,13 @@ export const MainTopBackground = styled.div`
   padding: 4rem 1rem 1rem;
   background-image: url(/assets/MainPage/background_top.png);
   background-repeat: no-repeat;
-  background-size: 100vw;
+  background-size: cover;
+  background-position: center;
 `;
 
 export const MainTopLetterButtonWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "start", "space-between")};
+  height: 20rem;
   & > * {
     margin-top: 1.25rem;
     margin-left: 8rem;
@@ -57,4 +59,14 @@ export const MainButtonWrapper = styled(FlexDiv)`
   & > * {
     margin-right: 0.8rem;
   }
+`;
+
+export const MainProomyImage = styled.img`
+  width: 36rem;
+  opacity: 0.7;
+`;
+
+export const MainContentProomyWrapper = styled.div`
+  ${({ theme }) => theme.mixins.flexBox("row", "none", "space-between")};
+  width: 84rem;
 `;

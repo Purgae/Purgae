@@ -18,11 +18,11 @@ const WaterSound = () => {
   const song = document.getElementById("song");
   useEffect(() => {
     console.log("실행", playing);
-    if (playing) {
-      (song as HTMLAudioElement).play();
-    } else {
-      (song as HTMLAudioElement).pause();
-    }
+    // if (playing) {
+    //   (song as HTMLAudioElement).play();
+    // } else {
+    //   (song as HTMLAudioElement).pause();
+    // }
   }, [playing]);
 
   return (

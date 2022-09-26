@@ -16,4 +16,7 @@ export const Button = styled(SolidButton)`
   z-index: 3;
   transform: translate(-50%);
   opacity: 0.7;
+  &:hover{
+    opacity:1;
+  }
 `;

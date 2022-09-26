@@ -8,6 +8,9 @@ const ProfileImage = ({
   width = "5.5rem",
   ...props
 }: React.PropsWithChildren<ProfileImageProps>) => {
+  if (url === null) {
+    url = imgUrl;
+  }
   if (size === "extraLarge") {
     return <ExtraLarge url={url}></ExtraLarge>;
   }

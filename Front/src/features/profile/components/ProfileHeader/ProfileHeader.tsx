@@ -9,13 +9,21 @@ import TrashCan from "/assets/icon/trashcan.png";
 import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 import { useNavigate } from "react-router-dom";
-type Props = {};
+import { useDispatch } from "react-redux";
+import { useGetProfileQuery } from "@/redux/api/userApi";
+type Props = {
+  userId: number;
+};
 
 const ProfileHeader = (props: Props) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { data: profileData } = useGetProfileQuery(props.userId);
+  console.log("profileData", profileData);
   const isprofile = false;
   const following = true;
-  const userId = 1;
+
+  // useEffect(() => {});
 
   return (
     <>

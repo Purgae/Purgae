@@ -10,6 +10,7 @@ import useProvider from "@/hooks/useProvider";
 
 type Props = {
   children?: React.ReactNode;
+  walletAds?: string;
 };
 
 const Seal = (props: Props) => {

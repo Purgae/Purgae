@@ -50,7 +50,7 @@ export const NavbarLoginWrapper = styled.div`
 `;
 
 export const NavbarPurgaeLink = styled(NavLink)`
-  ${({ theme }) => theme.mixins.font("2rem", "700")};
+  ${({ theme }) => theme.mixins.font("1.5rem", "700")};
   color: ${({ theme }) => theme.colors.white};
   text-decoration: none;
   @media screen and (max-width: 768px) {
@@ -106,5 +106,13 @@ export const NavbarHamburger = styled.button`
   color: ${({ theme }) => theme.colors.white};
   @media screen and (max-width: 768px) {
     display: flex;
+  }
+`;
+
+export const NavbarLogo = styled.img<{ width: string }>`
+  width: ${(props) => props.width};
+  transition: all 0.3s linear;
+  &:hover {
+    transform: scale(1.02);
   }
 `;

@@ -7,9 +7,11 @@ import {
   NavbarLoginWrapper,
   NavbarHamburger,
   NavbarLoginLink,
+  NavbarLogo,
 } from "./Navbar.styled";
 import { Outlet } from "react-router";
 import { useState, Fragment, useEffect } from "react";
+import { FlexDiv } from "../Common.styled";
 
 const Navbar = () => {
   const [ScrollY, setHeaderColor] = useState(0);
@@ -44,7 +46,12 @@ const Navbar = () => {
             <div className="material-icons">menu</div>
           </NavbarHamburger>
           <NavbarLinkWrappper display={!menuToggle ? "none" : "flex"}>
-            <NavbarPurgaeLink to="/main">푸르게</NavbarPurgaeLink>
+            <NavbarPurgaeLink to="/main">
+              <FlexDiv gap="0.5rem">
+                <NavbarLogo src={"/assets/proomy/logo.png"} width="3rem" />
+                푸르게
+              </FlexDiv>
+            </NavbarPurgaeLink>
             <NavbarLink to="/game">게임</NavbarLink>
             <NavbarLink to="/ranking">랭킹</NavbarLink>
             <NavbarLink to="/donate">기부</NavbarLink>

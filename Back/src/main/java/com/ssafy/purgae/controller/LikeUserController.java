@@ -57,7 +57,7 @@ public class LikeUserController {
         User user = userService.getUserInfoById(userId);
 
         List<FollowerInfo> likeUsers = likeUserService.getFollower(user, pageNum);
-        if(likeUsers != null){
+        if(!likeUsers.isEmpty()){
             result.put("message", SUCCESS);
             result.put("follower", likeUsers);
         }else {
@@ -73,7 +73,7 @@ public class LikeUserController {
         System.out.println(userId);
         User user = userService.getUserInfoById(userId);
         List<User> likeUsers = likeUserService.getFollowing(user, pageNum);
-        if(likeUsers != null){
+        if(!likeUsers.isEmpty()){
             result.put("message", SUCCESS);
             result.put("following", likeUsers);
         }else {

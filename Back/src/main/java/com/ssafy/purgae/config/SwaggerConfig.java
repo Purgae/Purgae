@@ -31,6 +31,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     @Bean
     public Docket swagger() {
         return new Docket(DocumentationType.SWAGGER_2)
+                .host("j7b107.p.ssafy.io")
                 .ignoredParameterTypes(java.sql.Date.class)
                 .forCodeGeneration(true)
                 .select()

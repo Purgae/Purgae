@@ -1,6 +1,7 @@
 import Bubble from "@/common/Aquarium/Bubble/Bubble";
 import { useState, useMemo, useEffect } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish } from "./Aquarium.styled";
+import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
 
 type Props = {
   fishImages: string[];
@@ -64,6 +65,7 @@ const Aquarium = (props: Props) => {
 
   return (
     <Scene onMouseMove={handleMouseMove}>
+      <WaterSound />
       <Cube rotationX={rotationX} rotationY={rotationY}>
         <div id="fishes">{generateFish}</div>
         <Bubble />

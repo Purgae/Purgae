@@ -104,25 +104,6 @@ const CONTRACT_ABI: AbiItem[] = [
     inputs: [
       {
         internalType: "address",
-        name: "inputOwner",
-        type: "address",
-      },
-    ],
-    name: "myNFTView",
-    outputs: [
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
         name: "from",
         type: "address",
       },
@@ -273,19 +254,6 @@ const CONTRACT_ABI: AbiItem[] = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "viewTodayNFT",
-    outputs: [
-      {
-        internalType: "string[]",
-        name: "",
-        type: "string[]",
-      },
-    ],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
     inputs: [
       {
         internalType: "address",
@@ -318,6 +286,19 @@ const CONTRACT_ABI: AbiItem[] = [
         internalType: "address",
         name: "",
         type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "getTime",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
       },
     ],
     stateMutability: "view",
@@ -465,6 +446,25 @@ const CONTRACT_ABI: AbiItem[] = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "inputOwner",
+        type: "address",
+      },
+    ],
+    name: "viewMyNFT",
+    outputs: [
+      {
+        internalType: "string[]",
+        name: "",
+        type: "string[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
         internalType: "uint256",
         name: "key",
         type: "uint256",
@@ -514,6 +514,18 @@ const CONTRACT_ABI: AbiItem[] = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "viewTodayNFT",
+    outputs: [
+      {
+        internalType: "string[]",
+        name: "",
+        type: "string[]",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
-
 export default CONTRACT_ABI;

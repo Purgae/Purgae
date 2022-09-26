@@ -5,7 +5,7 @@ import API_URL from "@/redux/env";
 
 export interface Login {
   walletAddress: string;
-  nft: string[];
+  nft?: { hash: string }[];
 }
 
 export const authApi = createApi({

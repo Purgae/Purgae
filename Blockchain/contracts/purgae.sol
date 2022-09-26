@@ -4,10 +4,9 @@ pragma solidity >=0.7.0 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/Counters.sol";
-import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
 
-contract Minting is ERC721URIStorage{
+contract Minting is ERC721{
 
     using Counters for Counters.Counter;
     Counters.Counter private _tokenIds;
@@ -57,7 +56,7 @@ contract Minting is ERC721URIStorage{
         uint256 newItemId = _tokenIds.current();
 
         _mint(msg.sender,newItemId);
-        
+
         NFT storage nft = NFTInfo[newItemId];
         nft.metaHash = _input;
         nft.owner = msg.sender;
@@ -71,6 +70,7 @@ contract Minting is ERC721URIStorage{
         _setTokenURI(newItemId, _input);    
         
         }
+
 
 
     function mintingManyNFT(string[] memory _input) public {

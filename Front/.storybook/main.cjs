@@ -6,7 +6,10 @@ module.exports = {
   "addons": [
     "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions"
+    "@storybook/addon-actions",
+    "@storybook/addon-controls",
+    "storybook-addon-styled-component-theme/dist/preset",
+    "@storybook/addon-interactions",
   ],
   "framework": "@storybook/react",
   "core": {

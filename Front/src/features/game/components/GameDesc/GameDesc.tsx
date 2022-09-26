@@ -7,7 +7,7 @@ import {
   StyledGameDescButton,
 } from "./GameDesc.styled";
 
-const GameDesc = ({ clickEvent }: GameType) => {
+const GameDesc = ({ setGamePage }: GameType) => {
   return (
     <StyleGameDescContainer direction="column" gap="2rem" padding="2rem 1rem 1rem 1rem">
       <StyledGameDescContent color="lightBlue800" fontSize="1rem">
@@ -30,7 +30,7 @@ const GameDesc = ({ clickEvent }: GameType) => {
       </StyledGameDescContent>
       <StyledGameDescButton
         onClick={() => {
-          clickEvent(1);
+          setGamePage(1);
         }}
       >
         START

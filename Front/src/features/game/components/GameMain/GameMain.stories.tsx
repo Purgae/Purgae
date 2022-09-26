@@ -9,8 +9,4 @@ export default {
   },
 } as Meta;
 
-// export const Default: Story = (args) => <GameMain {...args}></GameMain>;
-
-// Default.args = {
-//   clickEvent: (args: number) => console.log("click"),
-// };
+export const Default = () => <GameMain setGamePage={() => console.log("페이지 변경")}></GameMain>;

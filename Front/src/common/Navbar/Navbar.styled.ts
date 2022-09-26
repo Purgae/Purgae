@@ -6,11 +6,12 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
   position: fixed;
   flex-direction: row;
   align-items: center;
-  max-width: 100%;
+  width: 100%;
+  gap: 10.625rem;
   height: 4rem;
   width: ${({ theme }) => theme.sizes.pc};
+  z-index: 10;
   padding: 0rem 1.5rem;
-  gap: 10.625rem;
   background-image: linear-gradient(350deg, #666af6, #5f6bff, #5299ff, #1ec5ff);
   opacity: ${(props) => props.opacity};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
@@ -22,7 +23,7 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
 
 export const NavbarItemWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 117rem;
+  width: 100%;
   padding: 0rem;
 `;
 

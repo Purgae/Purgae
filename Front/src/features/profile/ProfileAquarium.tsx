@@ -3,6 +3,7 @@ import { Div } from "./ProfileAquarium.styled";
 
 import useFetchNFT from "@/hooks/useFetchNFT";
 import Aquarium from "@/common/Aquarium/Aquarium";
+import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 
 const ProfileAquarium = () => {
   const [loading, setLoading] = useState(true);
@@ -10,7 +11,7 @@ const ProfileAquarium = () => {
   const { fetchMyNFT } = useFetchNFT();
 
   const fetchNFTList = async () => {
-    const myNFTList = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
+    const myNFTList = await fetchMyNFT(TEST_WALLET_ADDRESS);
     setFishImages(myNFTList);
     setLoading(false);
   };

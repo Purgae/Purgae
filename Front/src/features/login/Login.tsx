@@ -34,7 +34,7 @@ const Login = (props: Props) => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await contract.methods?.myNFTView(connectAddress[0]).call();
+      const existHash = await contract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
         const newExistHash = existHash.map((element: string) => {
           return element.split("://")[1];
@@ -54,9 +54,10 @@ const Login = (props: Props) => {
         // *고릴일때
         if (chainId === networkChainId.goerli) {
           const connectAddress = await connect();
+          console.log(connectAddress);
           if (connectAddress) {
-            const hashData = await getHash(connectAddress);
-            login({ walletAddress: connectAddress[0], nft: hashData });
+            // const hashData = await getHash(connectAddress);
+            login({ walletAddress: connectAddress[0], nft: [{ hash: "asdf" }] });
             navigateHome();
           }
         }

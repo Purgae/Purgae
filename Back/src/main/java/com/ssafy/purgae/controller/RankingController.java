@@ -1,6 +1,5 @@
 package com.ssafy.purgae.controller;
 
-import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.entity.UserMapping;
 import com.ssafy.purgae.database.entity.rankingUser;
 import com.ssafy.purgae.service.RankingService;

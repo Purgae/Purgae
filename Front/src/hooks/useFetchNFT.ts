@@ -27,7 +27,7 @@ const useFetchNFT = () => {
   const fetchMyNFT = async (address: string): Promise<string[]> => {
     try {
       const data: string[] = await fetchContract.methods.viewMyNFT(address).call();
-      const NFTList = await changeNFTUrl(data);
+      const NFTList = await changeNFTUrl(data.filter((item) => item.length > 0));
       const myNFTList = await Promise.all(NFTList);
       console.log("이거심", myNFTList);
       return myNFTList;

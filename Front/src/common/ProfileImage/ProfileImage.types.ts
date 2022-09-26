@@ -4,7 +4,7 @@ export interface ProfileImageProps {
   size?: string;
 
   // 이미지 url (없을 경우 기본 이미지)
-  url?: string;
+  url?: string | null;
 
   // 크기값이 주어졌을 때
   width?: string;

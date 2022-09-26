@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import Seal from "./components/Seal/Seal";
 import { RootComponent } from "@/common/Common.styled";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import { styled } from "@/styles/theme";
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
+
+import Seal from "./components/seal/Seal";
 
 const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
@@ -18,7 +19,6 @@ const Profile = () => {
    */
   // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
   // console.log("thisisuser", user);
-
   return (
     <StyledRootComponent>
       <FlexDiv direction="column" width="100%">

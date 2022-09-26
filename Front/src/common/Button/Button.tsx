@@ -1,18 +1,44 @@
-import React from 'react'
-import './Button.css'
+import { ButtonProps } from "./Button.types";
+import { SolidButton, OutLineButton } from "./Button.styled";
 
-interface Props {
-  variant: string;
-  children: any;
-}
-
-const Button = (props: Props) => {
-  const {variant= "primary", children, ...rest} = props
+const Button = ({
+  type = "submit",
+  disabled = false,
+  styles = "solid",
+  width = "fit-content",
+  fontSize = "18px",
+  bgColor = "transparent",
+  fontColor = "mainButton",
+  ...props
+}: React.PropsWithChildren<ButtonProps>) => {
+  if (styles == "solid") {
+    return (
+      <SolidButton
+        type={type}
+        disabled={disabled}
+        width={width}
+        fontSize={fontSize}
+        bgColor={bgColor}
+        fontColor={fontColor}
+        onClick={props?.onClick}
+      >
+        {props.children}
+      </SolidButton>
+    );
+  }
   return (
-    <button className={`button ${variant}`} {...rest}>
-      {children}
-    </button>
-  )
-}
+    <OutLineButton
+      type={type}
+      disabled={disabled}
+      width={width}
+      fontSize={fontSize}
+      bgColor={bgColor}
+      fontColor={fontColor}
+      onClick={props?.onClick}
+    >
+      {props.children}
+    </OutLineButton>
+  );
+};
 
-export default Button
+export default Button;

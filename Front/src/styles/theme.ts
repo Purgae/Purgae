@@ -5,13 +5,19 @@ const sizes = {
   pc: "screen and (min-width: 1350px)",
 };
 
-const color = {
+const colors = {
+  // background-image
+  gradient: "linear-gradient(350deg, #5e30ff, #5f6bff, #5299ff, #1ec5ff)",
+
+  transparent: "transparent",
+
   // Main 컬러
   mainParagraph: "#2A2A2A",
   mainPrimary: "#40B6FF",
   mainDanger: "#FF697A",
   mainButton: "#323232",
   mainModalBg: "rgba(50, 50, 50, 0.3)",
+  mainWhite: "#FCFCFC",
 
   // 푸르게 Primary
   primary300: "#ABDCFF",
@@ -78,7 +84,7 @@ const color = {
   lightBlue300p: "#C5D6E3",
 };
 
-const fontWeight = {
+const fontWeights = {
   bold: 700,
   semiBold: 600,
   medium: 500,
@@ -92,11 +98,74 @@ const letterSpacing = {
   button: "1.2px",
 };
 
+//* 그림자
+const shadows = {
+  shadow700: `
+    0px 100px 80px rgba(0, 0, 0, 0.07), 
+    0px 41.78px 33.4px rgba(0, 0, 0, 0.0503), 
+    0px 22.34px 17.87px rgba(0, 0, 0, 0.0417), 
+    0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 
+    0px 6.65px 5.32px rgba(0, 0, 0, 0.0283), 
+    0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
+  `,
+
+  shadow600: `
+    0px 20px 80px rgba(0, 0, 0, 0.07), 0px 12.52px 10.02px rgba(0, 0, 0, 0.035), 0px 2.77px 2.21px rgba(0, 0, 0, 0.0197);
+  `,
+
+  shadow500: `
+    0px 0px 8px rgba(0, 0, 0, 0.1);
+  `,
+
+  shadow400: `
+    0px 0px 4px rgba(0, 0, 0, 0.1);
+  `,
+};
+
+const mixins = {
+  //* flex
+  flexBox: (direction = "row", align = "center", justify = "center") => `
+    display: flex;
+    flex-direction: ${direction};
+    align-items: ${align};
+    justify-content: ${justify}
+  `,
+
+  //* grid
+  grid: (columns = "25%", rows = "25%") => `
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(${columns}, auto));
+    grid-template-rows: repeat(auto-fill, minmax(${rows}, auto));
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+  `,
+
+  //* font
+  font: (size = "1rem", weight = "500") => `
+    font-size: ${size};
+    font-weight: ${weight};
+  `,
+
+  defaultLayOut: () => `
+  width: 100%;
+  min-height: 100vh;
+  padding: 4rem 1rem 1rem;
+
+  @media screen and (min-width: 1350px) {
+    padding: 4rem 6rem 1rem;
+  };
+  `,
+};
+
 const theme = {
   sizes,
-  color,
-  fontWeight,
+  colors,
+  fontWeights,
   letterSpacing,
+  mixins,
+  shadows,
 };
 
 export type Theme = typeof theme;

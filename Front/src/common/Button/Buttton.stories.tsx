@@ -1,40 +1,66 @@
-import React from "react";
+import { Meta, Story } from "@storybook/react";
+import { ColorsKey } from "@/styles/theme.type";
 import Button from "./Button";
-import { ComponentStory } from '@storybook/react';
+import { ButtonProps } from "./Button.types";
 
 export default {
-  title: 'Form/Button',
+  title: "Button/Button",
   component: Button,
-  argTypes: {
-    children: 'Button'
+  parameters: {
+    componentSubtitle: `Button 컴포넌트: 색상은 theme에 추가된 키워드로만 선택이 가능하다.`,
   },
-}
+  argTypes: {
+    styles: {
+      options: ["solid", "outline"],
+      control: "select",
+    },
+    bgColor: {
+      options: [...ColorsKey, "gradient"],
+      control: "select",
+    },
+    fontColor: {
+      options: ColorsKey,
+      control: "select",
+    },
+  },
+} as Meta;
 
-export const Primary = () => <Button variant='primary'>Primary</Button>
-export const Secondary = () => <Button variant='secondary'>Secondary</Button>
-export const Success = () => <Button variant='success'>Success</Button>
-export const Danger = () => <Button variant='danger'>Danger</Button>
+//* Default
+export const Default: Story<ButtonProps> = (args) => <Button {...args}>Button</Button>;
+export const Styles: Story<ButtonProps> = (args) => (
+  <div>
+    <Button {...args} styles="solid">
+      Button
+    </Button>
+    <div>&nbsp;</div>
+    <div>&nbsp;</div>
+    <Button {...args} styles="outline">
+      Button
+    </Button>
+  </div>
+);
 
+Default.args = {
+  type: "button",
+  disabled: false,
+  styles: "solid",
+  width: "fit-content",
+  fontSize: "18px",
+  bgColor: "transparent",
+  fontColor: "mainButton",
+  onClick: () => {
+    console.log("클릭!");
+  },
+};
 
-
-// https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
-
-
-export const PrimaryA = Template.bind({})
-PrimaryA.args = {
-  variant: 'primary',
-  // children: 'Primary Args',
-}
-
-export const SecondaryA = Template.bind({})
-SecondaryA.args = {
-  variant: 'secondary',
-  // children: 'Secondary Args',
-}
-
-export const LongPrimaryA = Template.bind({})
-LongPrimaryA.args = {
-  ...PrimaryA.args,
-  // children: 'Long Primary Args',
-}
+Styles.args = {
+  type: "button",
+  disabled: false,
+  width: "fit-content",
+  fontSize: "18px",
+  bgColor: "transparent",
+  fontColor: "mainButton",
+  onClick: () => {
+    console.log("클릭!");
+  },
+};

@@ -9,9 +9,14 @@ export default defineConfig(() => {
   return {
     plugins: [react()],
     resolve: {
-      // 절대 경로 설정
       alias: {
+        // 절대 경로 설정
         "@": path.resolve(__dirname, "src"),
+        process: "process/browser",
+        stream: "stream-browserify",
+        zlib: "browserify-zlib",
+        util: "util",
+        https: "agent-base",
       },
     },
   };

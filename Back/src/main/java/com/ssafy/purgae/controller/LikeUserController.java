@@ -1,14 +1,13 @@
 package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.FollowerInfo;
-import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.request.LikeReq;
 import com.ssafy.purgae.service.LikeUserService;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +32,10 @@ public class LikeUserController {
 
     @ApiOperation(value = "좋아요/좋아요 취소", notes = "fromUser, toUser 요청으로 좋아요(이미 있다면 취소)")
     @PostMapping("")
-    public ResponseEntity<Map<String,Object>> likeUser(@RequestBody Map<String, Object> reqData){
+    public ResponseEntity<Map<String,Object>> likeUser(@RequestBody LikeReq reqData){
         Map<String, Object> result = new HashMap<>();
-        long fromUserId = Long.valueOf((int)reqData.get("fromUser"));
-        long toUserId = Long.valueOf((int)reqData.get("toUser"));
+        long fromUserId = reqData.getFromUser();
+        long toUserId = reqData.getToUser();
 
         String tmp = likeUserService.likeUser(fromUserId, toUserId);
         if(tmp.equals("follow")){
@@ -69,7 +68,7 @@ public class LikeUserController {
 
     @ApiOperation(value = "팔로잉 목록", notes = "회원 Id 입력시 팔로잉 목록")
     @GetMapping("/following/{userId}/{pageNum}")
-    public ResponseEntity<Map<String,Object>> getFollowing(@PathVariable long userId, int pageNum){
+    public ResponseEntity<Map<String,Object>> getFollowing(@PathVariable long userId, @PathVariable int pageNum){
         Map<String, Object> result = new HashMap<>();
         System.out.println(userId);
         User user = userService.getUserInfoById(userId);

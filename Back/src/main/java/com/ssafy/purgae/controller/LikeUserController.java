@@ -68,7 +68,7 @@ public class LikeUserController {
 
     @ApiOperation(value = "팔로잉 목록", notes = "회원 Id 입력시 팔로잉 목록")
     @GetMapping("/following/{userId}/{pageNum}")
-    public ResponseEntity<Map<String,Object>> getFollowing(@PathVariable long userId, int pageNum){
+    public ResponseEntity<Map<String,Object>> getFollowing(@PathVariable long userId, @PathVariable int pageNum){
         Map<String, Object> result = new HashMap<>();
         System.out.println(userId);
         User user = userService.getUserInfoById(userId);

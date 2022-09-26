@@ -2,7 +2,9 @@ package com.ssafy.purgae.controller;
 
 
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.request.GameScoreReq;
 import com.ssafy.purgae.request.UserReq;
+import com.ssafy.purgae.request.UserUpdateReq;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -132,12 +134,12 @@ public class UserController {
 
     @ApiOperation(value = "회원정보 수정", notes = "닉네임, 프로필 이미지, 공개여부 수정")
     @PutMapping("{userId}")
-    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable long userId, @RequestBody Map<String, Object> reqData){
+    public ResponseEntity<Map<String, Object>> updateUser(@PathVariable long userId, @RequestBody UserUpdateReq reqData){
         Map<String, Object> result = new HashMap<>();
 
-        String nickname = (String) reqData.get("nickname");
-        String profileImage = (String) reqData.get("profileImage");
-        boolean profilePublic = (boolean) reqData.get("profilePublic");
+        String nickname = reqData.getNickname();
+        String profileImage = reqData.getProfileImage();
+        boolean profilePublic = reqData.isProfilePublic();
 
         userService.updateUserInfo(userId, nickname, profileImage, profilePublic);
         User newUser = userService.updateUserInfo(userId, nickname, profileImage, profilePublic);
@@ -155,11 +157,11 @@ public class UserController {
 
     @ApiOperation(value = "게임 점수 입력", notes = "회원 Id와 게임 점수 입력")
     @PutMapping("/score")
-    public ResponseEntity<Map<String, Object>> updateGameScore(@RequestBody Map<String, Object> reqData){
+    public ResponseEntity<Map<String, Object>> updateGameScore(@RequestBody GameScoreReq reqData){
         Map<String, Object> result = new HashMap<>();
-        System.out.println(reqData.get("userId"));
-        long userId = Long.valueOf((int)reqData.get("userId"));
-        long gameScore = Long.valueOf((int)reqData.get("gameScore"));
+        System.out.println(reqData.getUserId());
+        long userId = reqData.getUserId();
+        long gameScore = reqData.getGameScore();
         User newUser = userService.updateGameScore(userId, gameScore);
 
         if(newUser != null){

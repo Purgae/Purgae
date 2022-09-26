@@ -2,6 +2,7 @@ package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.FollowerInfo;
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.request.LikeReq;
 import com.ssafy.purgae.service.LikeUserService;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
@@ -31,10 +32,10 @@ public class LikeUserController {
 
     @ApiOperation(value = "좋아요/좋아요 취소", notes = "fromUser, toUser 요청으로 좋아요(이미 있다면 취소)")
     @PostMapping("")
-    public ResponseEntity<Map<String,Object>> likeUser(@RequestBody Map<String, Object> reqData){
+    public ResponseEntity<Map<String,Object>> likeUser(@RequestBody LikeReq reqData){
         Map<String, Object> result = new HashMap<>();
-        long fromUserId = Long.valueOf((int)reqData.get("fromUser"));
-        long toUserId = Long.valueOf((int)reqData.get("toUser"));
+        long fromUserId = reqData.getFromUser();
+        long toUserId = reqData.getToUser();
 
         String tmp = likeUserService.likeUser(fromUserId, toUserId);
         if(tmp.equals("follow")){

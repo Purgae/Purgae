@@ -1,4 +1,5 @@
 import React from "react";
+import PageNation from "../PageNation/PageNation";
 import { Background, Image, Group } from "./Card.styled";
 import { CardProps, CardGroupProps } from "./Card.types";
 

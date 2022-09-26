@@ -4,10 +4,14 @@ import sea from "/assets/game/sea.png";
 
 export const StyledGameContainer = styled(FlexDiv)`
   position: relative;
+  aspect-ratio: 3/2;
   max-width: 80rem;
   background-image: url(${sea});
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: calc(100vh - 10rem);
+  /* height: calc(100vh - 10rem); */
+  @media ${({ theme }) => theme.sizes.tablet} {
+    width: 80%;
+  }
 `;

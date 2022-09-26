@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserProfile, UserDetail } from "@/redux/types";
+import API_URL from "@/redux/env";
 
 export interface CheckNickname {
   message: string;
@@ -12,7 +13,7 @@ export interface GameScore {
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:8080/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   tagTypes: ["User"],
   endpoints: (build) => ({
     // * query

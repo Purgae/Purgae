@@ -1,5 +1,3 @@
-export const PURGAE_PORT = `${import.meta.env.VITE_PORT}`;
-
 // * PROVIDER KEY
 // export const ALCHEMY_API_KEY = `${import.meta.env.VITE_PURGAE_NET_ALCHEMY}`;
 export const Goeril_RPC_URL = `https://eth-goerli.alchemyapi.io/v2/${import.meta.env.VITE_PURGAE_NET_ALCHEMY}`;

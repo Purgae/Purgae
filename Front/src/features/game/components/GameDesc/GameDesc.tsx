@@ -30,7 +30,7 @@ const GameDesc = ({ setGamePage }: GameType) => {
       </StyledGameDescContent>
       <StyledGameDescButton
         onClick={() => {
-          setGamePage(1);
+          setGamePage(2);
         }}
       >
         START

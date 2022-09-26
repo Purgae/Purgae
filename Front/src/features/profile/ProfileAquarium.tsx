@@ -4,7 +4,7 @@ import { Div } from "./ProfileAquarium.styled";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import Aquarium from "@/common/Aquarium/Aquarium";
 
-const Start = () => {
+const ProfileAquarium = () => {
   const [loading, setLoading] = useState(true);
   const [fishImages, setFishImages] = useState<string[]>([]);
   const { fetchMyNFT } = useFetchNFT();
@@ -33,4 +33,4 @@ const Start = () => {
   );
 };
 
-export default Start;
+export default ProfileAquarium;

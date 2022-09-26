@@ -57,7 +57,8 @@ const App = () => {
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" />
           {/* 개인 수족관 */}
-          <Route path="/profile/:userId/aquarium" element={<Profile />} />
+          <Route path="/profile/aquarium" element={<ProfileAquarium />} />
+          {/* <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} /> */}
           {/* 개인 팔로우/팔로워 */}
           <Route path="/profile/:userId/follow" />
           {/* 게임 */}

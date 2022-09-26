@@ -56,7 +56,7 @@ const Login = (props: Props) => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            // login({ walletAddress: connectAddress[0], nft: hashData });
+            login({ walletAddress: connectAddress[0], nft: hashData });
             navigateHome();
           }
         }
@@ -66,7 +66,7 @@ const Login = (props: Props) => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            // login({ walletAddress: connectAddress[0], nft: hashData });
+            login({ walletAddress: connectAddress[0], nft: hashData });
             navigateHome();
           }
         }

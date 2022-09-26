@@ -3,7 +3,6 @@ import { FlexDiv, FontP } from "@/common/Common.styled";
 
 export const StyledDonateCost = styled(FlexDiv)`
   width: 100%;
-
   @media ${({ theme }) => theme.sizes.pc} {
     width: 50%;
   }

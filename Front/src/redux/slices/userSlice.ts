@@ -10,6 +10,16 @@ interface UserState {
 const initialState: UserState = {
   user: null,
 };
+/*
+  user: {
+    gameScore: 0,
+    id: null,
+    nickname: "",
+    profileImage: null,
+    profilePublic: true, //항상 트루인 값
+    walletAddress: "",
+  },
+*/
 
 const slice = createSlice({
   name: "user",

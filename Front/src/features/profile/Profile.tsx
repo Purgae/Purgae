@@ -16,8 +16,8 @@ const Profile = () => {
     profilePublic
     walletAddress
    */
-  console.log(user);
-  console.log("thisisuser", user);
+  // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
+  // console.log("thisisuser", user);
 
   return (
     <StyledRootComponent>

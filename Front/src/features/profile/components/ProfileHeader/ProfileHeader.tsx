@@ -19,7 +19,7 @@ const ProfileHeader = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data: profileData } = useGetProfileQuery(props.userId);
-  console.log("profileData", profileData);
+  // console.log("profileData", profileData);
   const isprofile = false;
   const following = true;
 

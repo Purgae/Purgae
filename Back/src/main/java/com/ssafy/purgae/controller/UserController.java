@@ -2,6 +2,7 @@ package com.ssafy.purgae.controller;
 
 
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.request.UserReq;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -29,13 +30,13 @@ public class UserController {
 
     @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
-    public ResponseEntity<Map<String,Object>> login(@RequestBody Map<String, Object> reqData){
-        System.out.println("wallet : " + reqData.get("walletAddress"));
-        System.out.println("nft : " + reqData.get("nft"));
+    public ResponseEntity<Map<String,Object>> login(@RequestBody UserReq reqData){
+//        System.out.println("wallet : " + reqData.getWalletAddress());
+//        System.out.println("nft : " + reqData.getNft();
         Map<String, Object> result = new HashMap<>();
-        List<Map<String,String>> NFTList = (List) reqData.get("nft");
+        List<Map<String,String>> NFTList = reqData.getNft();
 
-        String walletAddress = (String) reqData.get("walletAddress");
+        String walletAddress = reqData.getWalletAddress();
         System.out.println(walletAddress);
         User user = userService.getUserInfo(walletAddress);
         boolean hasProfileImg = false;

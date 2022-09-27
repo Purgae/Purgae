@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { RootComponent } from "@/common/Common.styled";
 import { StyledGameContainer } from "./Game.styled";
+import littleproomy_pink from "/assets/proomy/littleproomy_pink.png";
 
 import GameMain from "./components/GameMain/GameMain";
 import GameDesc from "./components/GameDesc/GameDesc";
@@ -11,13 +12,13 @@ const Game = () => {
   const [gamePage, setGamePage] = useState<number>(0);
 
   // 게임 캐릭터
-  const [gamaCharacter, setGamaCharacter] = useState<string>("url()");
+  const [gameCharacter, setGameCharacter] = useState<string>(littleproomy_pink);
 
   return (
     <RootComponent>
       <StyledGameContainer width="100%" height="calc(100vh - 5rem)">
         {gamePage === 0 && <GameMain setGamePage={setGamePage}></GameMain>}
-        {gamePage === 2 && <GamePlay setGamePage={setGamePage} gamaCharacter={gamaCharacter}></GamePlay>}
+        {gamePage === 2 && <GamePlay setGamePage={setGamePage} gameCharacter={gameCharacter}></GamePlay>}
         {gamePage === 4 && <GameDesc setGamePage={setGamePage}></GameDesc>}
       </StyledGameContainer>
     </RootComponent>

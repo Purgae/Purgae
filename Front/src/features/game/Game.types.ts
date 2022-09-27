@@ -3,5 +3,5 @@ export interface GameType {
 }
 
 export interface GameCharacterType extends GameType {
-  gamaCharacter: string;
+  gameCharacter: string;
 }

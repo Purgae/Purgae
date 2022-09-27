@@ -31,7 +31,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   useEffect(() => {
     if (!ctx) return;
     // console.log("ㅇㅇ");
-    // ctx.clearRect(0, 0, canvas!.width, canvas!.height);
+    ctx.clearRect(0, 0, canvas!.width, canvas!.height);
     renderFish();
     renderGarbage();
     // const fishReq = requestAnimationFrame(renderFish);

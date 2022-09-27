@@ -13,8 +13,8 @@ const Profile = () => {
   const user = useAppSelector((state) => state.user.user);
   console.log("useruser", user);
 
-  if (profileUserId === user?.id)
-    /*
+  // if (profileUserId === user?.id)
+  /*
     gameScore
     id
     nickname
@@ -22,10 +22,8 @@ const Profile = () => {
     profilePublic
     walletAddress
    */
-
-    // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
-    console.log("thisisuser", user);
-
+  // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
+  console.log("thisisuser", user);
   return (
     <StyledRootComponent>
       <FlexDiv direction="column" width="100%">

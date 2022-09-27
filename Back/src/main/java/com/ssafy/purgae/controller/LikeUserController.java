@@ -81,4 +81,24 @@ public class LikeUserController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
+
+    @ApiOperation(value = "팔로우 여부", notes = "해당 유저 팔로우 여부 확인")
+    @GetMapping("/{fromUserId}/{toUserId}")
+    public ResponseEntity<Map<String,Object>> getFollowCheck(@PathVariable long fromUserId, @PathVariable long toUserId){
+        Map<String, Object> result = new HashMap<>();
+
+        String tmp = likeUserService.checkLike(fromUserId, toUserId);
+
+        if(tmp.equals("true")){
+            result.put("message", SUCCESS);
+            result.put("following", true);
+        }else if(tmp.equals("false")){
+            result.put("message", SUCCESS);
+            result.put("following", false);
+        }else{
+            result.put("message", FAIL);
+        }
+
+        return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 }

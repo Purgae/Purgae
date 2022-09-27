@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface LikeUserService {
 
+    public String checkLike(long fromUserId, long toUserId);
+
     public String likeUser(long fromUserId, long toUserId);
 
     public List<FollowerInfo> getFollower(User user, int pageNum);

@@ -27,6 +27,24 @@ public class LikeUserServiceImpl implements LikeUserService{
     UserRepository userRepository;
 
     @Override
+    public String checkLike(long fromUserId, long toUserId) {
+        User fromUser = userRepository.findFirstById(fromUserId);
+        User toUser = userRepository.findFirstById(toUserId);
+
+        if(fromUser == null || toUser == null){
+            return "fail";
+        }
+
+        LikeUser user = likeRepository.findByFromUserAndToUser(fromUser, toUser);
+
+        if(user != null){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
+    @Override
     public String likeUser(long fromUserId, long toUserId) {
         User fromUser = userRepository.findFirstById(fromUserId);
         User toUser = userRepository.findFirstById(toUserId);

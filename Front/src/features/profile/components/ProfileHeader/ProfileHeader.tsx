@@ -19,7 +19,7 @@ const ProfileHeader = (props: Props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { data: profileData } = useGetProfileQuery(props.userId);
-  // console.log("profileData", profileData);
+  console.log("profileData", profileData);
   const isprofile = false;
   const following = true;
 
@@ -33,7 +33,7 @@ const ProfileHeader = (props: Props) => {
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">
-            김물고기 김물고기
+            {}
           </FontP>
           <FlexDiv>
             <Link to={`/profile/aquarium`}>

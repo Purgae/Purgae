@@ -1,6 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { styled } from "@/styles/theme";
@@ -14,21 +13,22 @@ import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 
 import FollowModal from "../FollowModal/FollowModal";
-import { truncate } from "lodash";
+import { User } from "@/redux/types";
+import { useGetFollowerListQuery, useGetFollowingListQuery } from "@/redux/api/followApi";
 
 type Props = {
-  userId: number;
+  data?: User;
+  isUser: boolean;
 };
 
 const ProfileHeader = (props: Props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { data: profileData } = useGetProfileQuery(props.userId);
-  console.log("profileData", profileData);
+  // ! 현재 유저면 true 방문한 유저면 false
+  const isUser = props.isUser;
+  const userData = props.data;
+
   const isprofile = false;
   const following = true;
 
-  // useEffect(() => {});
   const [isOpenModal, setOpenModal] = useState(false);
   const [isFollower, setIsFollower] = useState(true);
   const handleModalFollower = () => {
@@ -42,6 +42,14 @@ const ProfileHeader = (props: Props) => {
   const onClickToggleModal = () => {
     setOpenModal(!isOpenModal);
   };
+
+  const [amIFollowing, setAmIFollowing] = useState<boolean>(false);
+  const follower = { userId: 1, pageNum: 0 };
+  // const followerList = useGetFollowerListQuery(follower);
+  // console.log("followerList", followerList);
+  // const { data: followingList } = useGetFollowingListQuery(follower);
+  // console.log("followingList", followingList);
+
   return (
     <>
       <ProfileHeaderStyled>
@@ -50,11 +58,11 @@ const ProfileHeader = (props: Props) => {
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">
-            {}
+            {userData?.nickname || "유저"}
           </FontP>
           <FlexDiv>
-            <Link to={`/profile/aquarium`}>
-              {/* <Link to={`/profile/${userId}/aquarium`}> */}
+            {/* <Link to={`/profile/aquarium`}> */}
+            <Link to={`/profile/${userData?.id}/aquarium`}>
               <Button styles="solid" bgColor="primary500" fontColor="white100" width="7.5rem" onClick={() => {}}>
                 수족관 보기
               </Button>

@@ -16,8 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 import { isEmpty } from "lodash";
 
-type Props = {};
-const Login = (props: Props) => {
+const Login = () => {
   const { status, connect, switchChain, account, chainId, ethereum } = useMetaMask();
   const { networkChainId, contract } = useProvider();
   const navigate = useNavigate();

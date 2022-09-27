@@ -6,29 +6,31 @@ import { styled } from "@/styles/theme";
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
+import { useGetProfileQuery } from "@/redux/api/userApi";
 
 const Profile = () => {
+  // !현재 프로필이 본인 프로필인지 판별
   const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
-  const profileUserId = useParams().id;
-  const user = useAppSelector((state) => state.user.user);
-  console.log("useruser", user);
+  const profileUserId = Number(useParams().userId);
+  const currentUserId = useAppSelector((state) => state.user.user?.id);
 
-  // if (profileUserId === user?.id)
-  /*
-    gameScore
-    id
-    nickname
-    profileImage
-    profilePublic
-    walletAddress
-   */
-  // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
-  console.log("thisisuser", user);
+  const { data: profileData } = useGetProfileQuery(profileUserId);
+
+  console.log("profileData", profileData);
+
+  useEffect(() => {
+    if (profileUserId === currentUserId) {
+      setIsProfileUser(true);
+    } else {
+      setIsProfileUser(false);
+    }
+  }, [profileUserId]);
+
   return (
     <StyledRootComponent>
       <FlexDiv direction="column" width="100%">
-        <ProfileHeader userId={user!.id} />
-        <Seal walletAds={user?.walletAddress} />
+        <ProfileHeader data={profileData?.data} isUser={isProfileUser} />
+        <Seal walletAds={profileData?.data.walletAddress} />
       </FlexDiv>
     </StyledRootComponent>
   );

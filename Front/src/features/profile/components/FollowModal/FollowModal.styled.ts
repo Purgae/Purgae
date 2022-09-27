@@ -53,14 +53,14 @@ export const StyledAbsoluteIcon = styled.button`
 
 export const Username = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
-  font-size: 2rem;
+  font-size: 1rem;
   margin-top: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const Select = styled.div`
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
-  font-size: 1.5rem;
+  font-size: 1rem;
   &:hover {
     cursor: pointer;
   }
@@ -78,5 +78,6 @@ export const Following = styled(Select)<{ status: boolean }>`
 
 export const Title = styled(FlexDiv)`
   padding: 1rem;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid ${({ theme }) => theme.colors.mainParagraph};
+  margin-bottom: 0.5rem;
 `;

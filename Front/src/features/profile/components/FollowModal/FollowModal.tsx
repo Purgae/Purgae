@@ -49,7 +49,7 @@ const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
             100 팔로잉
           </Following>
         </Title>
-        <FollowList status={isFollower} />
+        <FollowList isFollower={isFollower} myFollow={true} />
       </DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {

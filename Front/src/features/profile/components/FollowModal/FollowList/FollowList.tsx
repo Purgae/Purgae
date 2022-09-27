@@ -1,17 +1,28 @@
-import { FlexDiv } from "@/common/Common.styled";
-
-import {} from "./FollowList.styled";
-import FollowItem from "./FollowItem/MyFollowItem";
+import FollowItem from "./FollowItem/FollowItem";
+import { ListDiv } from "./FollowList.styled";
 
 interface Props {
-  status: boolean;
+  isFollower: boolean;
+  myFollow: boolean;
 }
 
 const FollowList = (props: Props) => {
-  if (props.status) {
-    return <FollowItem />;
+  if (props.isFollower) {
+    // 팔로워
+    return (
+      <ListDiv>
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+        <FollowItem myFollow={props.myFollow} />
+      </ListDiv>
+    );
   } else {
-    return <FlexDiv>false</FlexDiv>;
+    // 팔로잉
+    return <FollowItem myFollow={props.myFollow} />;
   }
 };
 

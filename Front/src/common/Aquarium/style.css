@@ -1,0 +1,47 @@
+body {
+  overflow: hidden;
+}
+
+span {
+  position: absolute;
+  height: 1rem;
+  width: 1rem;
+  border-radius: 51% 49% 48% 52% / 62% 44% 56% 38%;
+  pointer-events: none;
+  background: #318cfe;
+  box-shadow: -10px 15px 8px #1b6cfb, -20px 30px 16px #1b6cfb, inset -6px 6px 10px #1b6cfb, inset 2px 6px 10px #1a74e5,
+    inset 20px -20px 22px white, inset 40px -40px 44px #a8ceff;
+  opacity: 0.2;
+  transform: translate(-50%, -50%);
+  animation: animate 5s linear infinite;
+  overflow: hidden;
+
+}
+
+span::after {
+  content: "";
+  position: absolute;
+  height: 0.4rem;
+  width: 0.4rem;
+  background: #e6fdfb;
+  border-radius: 44% 56% 46% 54% / 36% 50% 50% 64%;
+  left: 130px;
+  top: 40px;
+  box-shadow: 16px 40px 0 -10px white;
+  opacity: 0.8;
+  overflow: hidden;
+}
+
+@keyframes animate {
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  100% {
+    transform: translate(-50%, -1000%);
+    opacity: 0.2;
+  }
+}
+
+;

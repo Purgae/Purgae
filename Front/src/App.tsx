@@ -17,6 +17,7 @@ import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
 import Game from "@/features/game/Game";
 import ProfileAquarium from "@/features/profile/ProfileAquarium";
+import Faq from "./features/faq/Faq";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -68,8 +69,8 @@ const App = () => {
           {/* 기부 */}
           <Route path="/donate" element={<Donate />} />
           {/* 자주 묻는 질문 */}
-          <Route path="/faq" />
-          <Route path="/faq/detail" />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/faq/:id" element={<Faq />} />
           {/* Redux 테스트 페이지 */}
           <Route path="/counter" element={<Counter />} />
           {/* Theme 테스트 페이지 */}

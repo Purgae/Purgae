@@ -1,8 +1,4 @@
-/* body {
-  overflow: hidden;
-} */
-
-/* span {
+#bubble span {
   position: absolute;
   height: 1rem;
   width: 1rem;
@@ -18,7 +14,7 @@
 
 }
 
-span::after {
+#bubble span::after {
   content: "";
   position: absolute;
   height: 0.4rem;
@@ -42,4 +38,6 @@ span::after {
     transform: translate(-50%, -1000%);
     opacity: 0.2;
   }
-}; */
+}
+
+;

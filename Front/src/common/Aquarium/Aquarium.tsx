@@ -70,30 +70,31 @@ const Aquarium = (props: Props) => {
   }, []);
 
   // 버블 효과
-  // document.addEventListener("mousemove", function (e) {
-  //   let body = document.querySelector("body");
-  //   let bubble = document.createElement("span");
-  //   let x = e.offsetX;
-  //   let y = e.offsetY;
-  //   bubble.style.left = x + "px";
-  //   bubble.style.top = y + "px";
-  //   let size = Math.random() * 80;
-  //   bubble.style.width = 20 + size + "px";
-  //   bubble.style.height = 20 + size + "px";
-  //   if (body) {
-  //     body.appendChild(bubble);
-  //   }
-  //   setTimeout(function () {
-  //     bubble.remove();
-  //   }, 3000);
-  // });
+  let body = document.getElementById("bubble");
+  let bubble = document.createElement("span");
+  const handleMouseClick = (event: React.MouseEvent) => {
+    console.log(event);
+    let x = event.clientX;
+    let y = event.clientY;
+    bubble.style.left = x + "px";
+    bubble.style.top = y + "px";
+    let size = Math.random() * 80;
+    bubble.style.width = 20 + size + "px";
+    bubble.style.height = 20 + size + "px";
+    if (body) {
+      body.appendChild(bubble);
+    }
+    setTimeout(function () {
+      bubble.remove();
+    }, 3000);
+  };
 
   return (
-    <Scene onMouseMove={handleMouseMove}>
-      {/* <Scene> */}
+    <Scene onMouseMove={handleMouseMove} onClick={handleMouseClick}>
       <WaterSound />
       <Cube rotationX={rotationX} rotationY={rotationY}>
         <div id="fishes">{generateFish}</div>
+        <div id="bubble"></div>
         <Bubble />
         <Front />
         <Back />

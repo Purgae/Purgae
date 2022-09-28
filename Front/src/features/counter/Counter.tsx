@@ -82,8 +82,7 @@ const Counter = (props: TestProps) => {
         })}
       </section>
       <section className="counter-section">
-        <h1>ModalTest</h1>
-        <button onClick={clickModalToggle}>toggle모달</button>
+        <h1>ModalTest</h1>z<button onClick={clickModalToggle}>toggle모달</button>
         {editProfile && createPortal(<EditProfileModal />, el)}
       </section>
     </Fragment>

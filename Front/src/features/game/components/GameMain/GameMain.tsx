@@ -14,7 +14,7 @@ const GameMain = ({ setGamePage }: GameType) => {
       <FlexDiv direction="column" gap="0.5rem">
         <StyledGameButton
           onClick={() => {
-            setGamePage(1);
+            setGamePage(2);
           }}
         >
           게임 시작

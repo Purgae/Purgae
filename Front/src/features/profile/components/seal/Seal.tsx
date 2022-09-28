@@ -10,15 +10,13 @@ import useProvider from "@/hooks/useProvider";
 
 type Props = {
   children?: React.ReactNode;
+  walletAds?: string;
 };
 
 const Seal = (props: Props) => {
   const { fetchMyNFT } = useFetchNFT();
   const { account, status } = useMetaMask();
-  const [nfts, setNfts] = useState<string[]>([
-    "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/48.png",
-    "https://ipfs.io/ipfs/QmfTXUZPybuJfshZPYuQ9DvcU684vPoz6R6EzD7EPrtUr8/49.png",
-  ]);
+  const [nfts, setNfts] = useState<string[]>([]);
   const { fetchProvider } = useProvider();
   //  usecallback, usememo
   // const myNftArr = async (): string[] | void => {
@@ -46,7 +44,6 @@ const Seal = (props: Props) => {
       // if (account) {
       myNftArr();
       // }
-      console.log("asdf");
     } else {
       console.log("실행못해");
     }

@@ -7,6 +7,8 @@ import {
   MainTopSubhead,
   MainTopLetterButtonWrapper,
   MainButtonWrapper,
+  MainProomyImage,
+  MainContentProomyWrapper,
 } from "./SaveTheSea.styled";
 
 const SaveTheSea = () => {
@@ -15,7 +17,7 @@ const SaveTheSea = () => {
   return (
     <>
       <MainTopBackground>
-        <FlexDiv>
+        <MainContentProomyWrapper>
           <MainTopLetterButtonWrapper>
             <MainSaveTheSeaLetter>바다를 구해주세요.</MainSaveTheSeaLetter>
             <MainTopSubhead>
@@ -27,8 +29,8 @@ const SaveTheSea = () => {
             </MainTopSubhead>
             <MainButtonWrapper>
               <OutLineButton
-                fontSize="0.8rem"
-                width="9.6rem"
+                fontSize="1rem"
+                width="12rem"
                 bgColor="white"
                 fontColor="lightBlue500"
                 onClick={() => navigate("/faq")}
@@ -36,8 +38,8 @@ const SaveTheSea = () => {
                 푸르게가 뭔가요?
               </OutLineButton>
               <SolidButton
-                fontSize="0.8rem"
-                width="9.6rem"
+                fontSize="1rem"
+                width="12rem"
                 bgColor="lightBlue500"
                 fontColor="white"
                 onClick={() => navigate("/faq")}
@@ -46,8 +48,8 @@ const SaveTheSea = () => {
               </SolidButton>
             </MainButtonWrapper>
             <SolidButton
-              fontSize="0.8rem"
-              width="21rem"
+              fontSize="1rem"
+              width="25.8rem"
               bgColor="lightBlue500"
               fontColor="white"
               onClick={() => navigate("/donate")}
@@ -55,7 +57,8 @@ const SaveTheSea = () => {
               기부하고 NFT 받기
             </SolidButton>
           </MainTopLetterButtonWrapper>
-        </FlexDiv>
+          <MainProomyImage src="/assets/proomy/proomy_original.png" />
+        </MainContentProomyWrapper>
       </MainTopBackground>
     </>
   );

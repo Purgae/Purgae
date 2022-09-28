@@ -5,7 +5,7 @@ import API_URL from "@/redux/env";
 
 export interface Login {
   walletAddress: string;
-  nft: string[];
+  nft?: { hash: string }[];
 }
 
 export const authApi = createApi({
@@ -20,7 +20,7 @@ export const authApi = createApi({
     // * 공통으로 자주 쓰는 타입은 redux/types.ts 파일에서 관리한다.
     login: build.mutation<UserProfile, Login>({
       query: (data) => ({
-        url: `/user/login`,
+        url: "/user/login",
         method: "POST",
         body: data,
       }),
@@ -36,7 +36,7 @@ export const authApi = createApi({
           const { data } = await queryFulfilled;
           await dispatch(setUser(data.data));
         } catch (error) {
-          console.log("login error", error);
+          console.error("login error", error);
         }
       },
     }),

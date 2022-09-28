@@ -27,7 +27,7 @@ export const HowManyBackground = styled.div<{ animation: string; visibility: str
 
 export const HowManyCardWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 40rem;
+  width: 48rem;
 `;
 
 export const HowManyCard = styled.div<{ backgroundimg: string }>`

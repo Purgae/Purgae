@@ -10,7 +10,6 @@ export const StyledGameContainer = styled(FlexDiv)`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  /* height: calc(100vh - 10rem); */
   @media ${({ theme }) => theme.sizes.tablet} {
     width: 80%;
   }

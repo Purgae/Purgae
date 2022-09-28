@@ -18,13 +18,13 @@ const CardPage = (props: React.PropsWithChildren<CardPageProps>) => {
       setExist(false);
     }
   }, []);
-  console.log(selectNumber);
-  console.log(selectedList);
+  // console.log(selectNumber);
+  // console.log(selectedList);
 
   return (
     <div style={{ width: "100%" }}>
       {exist ? (
-        <div style={{ width: "100%", display: "flex", flexDirection: "row", gap: 3 }}>
+        <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
           <CardGroup lst={selectedList} selectCard={props?.gameSelectCard} onClick={props?.onClick} />
           <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={props.nftLst} />
         </div>

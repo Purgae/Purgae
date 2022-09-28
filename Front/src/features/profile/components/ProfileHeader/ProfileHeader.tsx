@@ -61,7 +61,7 @@ const ProfileHeader = (props: Props) => {
     //   }
     //   return;
   };
-  //anywhere:
+
   const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
   const { openAlertModal } = useAlertModal();
   const following = async () => {

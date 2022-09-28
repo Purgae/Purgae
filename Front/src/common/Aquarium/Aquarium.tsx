@@ -1,6 +1,6 @@
 import Bubble from "@/common/Aquarium/Bubble/Bubble";
 import { useState, useMemo, useEffect } from "react";
-import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, MouseBubble } from "./Aquarium.styled";
+import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
 import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
 import "./style.css";
 

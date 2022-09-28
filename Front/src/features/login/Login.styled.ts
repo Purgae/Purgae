@@ -5,7 +5,6 @@ export const LoginBox = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   gap: 5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
-  height: 100vh;
 `;
 
 export const LoginDescription = styled.div`

@@ -1,11 +1,9 @@
-import React, { useState, useCallback } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useState, useCallback, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { styled } from "@/styles/theme";
-import { useGetProfileQuery } from "@/redux/api/userApi";
-
+import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import Meta from "/assets/metamask.png";
 import ProfileImage from "@/common/ProfileImage/ProfileImage";
 import Button from "@/common/Button/Button";
@@ -14,21 +12,114 @@ import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 
 import FollowModal from "../FollowModal/FollowModal";
-import { truncate } from "lodash";
+import { User } from "@/redux/types";
+import {
+  isFetchBaseQueryErrorType,
+  useChangeFollowMutation,
+  useGetAmIFollowQuery,
+  useGetFollowerListQuery,
+  useGetFollowingListQuery,
+} from "@/redux/api/followApi";
+import { useAppSelector } from "@/hooks/storeHook";
 
 type Props = {
-  userId: number;
+  data?: User;
+  isUser: boolean;
 };
 
 const ProfileHeader = (props: Props) => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { data: profileData } = useGetProfileQuery(props.userId);
-  // console.log("profileData", profileData);
-  const isprofile = false;
-  const following = true;
+  // ! 현재 프로필 유저면 true 방문한 유저면 false
+  const isUser = props.isUser;
 
-  // useEffect(() => {});
+  // ! 현재 프로필 유저 데이터
+  const userData = props.data;
+  const profileImg = userData?.profileImage;
+
+  // * 현재 유저와, 프로필의 유저
+  const currentUserId = useAppSelector((state) => state.user.user?.id);
+  const profileUserId = userData?.id;
+  const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
+
+  // * follow버튼 활성화 여부
+  // * amIFollowing 내가 팔로우하는지 여부 (or) 내프로필이면 false
+  const [amIFollowing, setAmIFollowing] = useState(false);
+
+  // * follow하기 버튼
+  // TODO folow버튼 초기 실행시 안되는점, useAppselector로 못가져오는듯ㅡ 혹은 useEffect할때 가져오게 할것.
+  // const [follow] = useChangeFollowMutation();
+
+  const [follow, { data, error, isLoading }] = useChangeFollowMutation();
+  const ifollow = useAppSelector((state) => state.follow.followResult);
+
+  const followMsgFunc = () => {
+    //   if (ifollow?.message === "follow") {
+    //     setAmIFollowing(true);a
+    //     return "follow";
+    //   } else if (ifollow?.message === "unfollow") {
+    //     setAmIFollowing(false);
+    //     return "unfollow";
+    //   }
+    //   return;
+  };
+  //anywhere:
+  const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
+  const { openAlertModal } = useAlertModal();
+  const following = async () => {
+    if (isUser) {
+      return;
+    } else {
+      const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
+      const msg = await follow(wantFollow);
+      console.log("msg", msg);
+      console.log("isfollow", isfollow?.following);
+      const followMessage = followMsgFunc();
+      // console.log("asdfasdfasdf", followMessage);
+      // if (followMessage === "follow") {
+      //   const data: OpenAlertModalArg = {
+      //     content: "팔로우에 성공하였습니다.",
+      //     styles: "PRIMARY",
+      //   };
+      //   openAlertModal(data);
+      // } else if (followMessage === "unfollow") {
+      //   const data: OpenAlertModalArg = {
+      //     content: "팔로우를 해제하였습니다.",
+      //     styles: "PRIMARY",
+      //   };
+      //   openAlertModal(data);
+      // }
+      return;
+    }
+  };
+  console.log("isfollow", isfollow?.following);
+
+  // * follow 여부에 따른 state설정함수
+  // const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
+  const amIFollowingFunc = () => {
+    if (isUser) {
+      setAmIFollowing(false);
+      return;
+    } else {
+      if (isfollow?.following) {
+        //*true
+        setAmIFollowing(true);
+        return;
+      } else {
+        setAmIFollowing(false);
+        return;
+      }
+    }
+  };
+
+  // @KJY-start console 때문에 임시 주석, 코드 작성시 주석해제 및 Test
+  // * 프로필 주인의 팔로워
+  // const follower = { userId: profileUserId, pageNum: 0 }; //! pagenum설정해서 넘겨주면 됨
+  // const { data: followerList } = useGetFollowerListQuery(follower);
+  // console.log("followerList", followerList);
+  // * 프로필 주인이 팔로잉
+  // const { data: followingList } = useGetFollowingListQuery(follower);
+  // console.log("followingList", followingList);
+
+  // * 팔로우, 팔로잉 모달
   const [isOpenModal, setOpenModal] = useState(false);
   const [isFollower, setIsFollower] = useState(true);
   const handleModalFollower = () => {
@@ -42,31 +133,51 @@ const ProfileHeader = (props: Props) => {
   const onClickToggleModal = () => {
     setOpenModal(!isOpenModal);
   };
+  // @end
+
+  useEffect(() => {
+    amIFollowingFunc();
+  }, [isfollow]);
+
   return (
     <>
       <ProfileHeaderStyled>
         {/* 1 */}
-        {isprofile ? <ProfileImage size="large" url={Meta} /> : <ProfileImage size="large" />}
+        {profileImg ? <ProfileImage size="large" url={Meta} /> : <ProfileImage size="large" />}
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">
-            김물고기 김물고기
+            {userData?.nickname || "유저"}
           </FontP>
           <FlexDiv>
-            <Link to={`/profile/aquarium`}>
-              {/* <Link to={`/profile/${userId}/aquarium`}> */}
-              <Button styles="solid" bgColor="primary500" fontColor="white100" width="7.5rem" onClick={() => {}}>
+            {/* <Link to={`/profile/aquarium`}> */}
+            <Link to={`/profile/${userData?.id}/aquarium`}>
+              <Button
+                styles="solid"
+                bgColor="primary500"
+                fontColor="white100"
+                width={isUser ? "15rem" : "7.5rem"}
+                onClick={() => {}}
+              >
                 수족관 보기
               </Button>
             </Link>
-            {following ? (
-              <Button styles="solid" bgColor="primary500" fontColor="white100" width="7.5rem">
-                팔로우
-              </Button>
+            {isUser ? (
+              ""
             ) : (
-              <Button styles="solid" bgColor="white150" fontColor="white400" width="7.5rem">
-                팔로잉
-              </Button>
+              <>
+                <Button
+                  styles="solid"
+                  bgColor={amIFollowing ? "white150" : "primary500"}
+                  fontColor={amIFollowing ? "white400" : "white100"}
+                  width="7.5rem"
+                  onClick={() => {
+                    following();
+                  }}
+                >
+                  {amIFollowing ? "팔로잉" : "팔로우"}
+                </Button>
+              </>
             )}
           </FlexDiv>
         </FlexDiv>

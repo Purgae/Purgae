@@ -12,12 +12,12 @@ const Aquarium = (props: Props) => {
   // 수족관 회전
   const [rotationX, setRotationX] = useState(0.0);
   const [rotationY, setRotationY] = useState(0.0);
-  // const handleMouseMove = (event: React.MouseEvent) => {
-  //   const x = (event.pageX / document.body.clientWidth) * 2 - 1;
-  //   const y = (event.pageY / document.body.clientHeight) * 2 - 1;
-  //   setRotationX(x * 3);
-  //   setRotationY(-y * 3);
-  // };
+  const handleMouseMove = (event: React.MouseEvent) => {
+    const x = (event.pageX / document.body.clientWidth) * 2 - 1;
+    const y = (event.pageY / document.body.clientHeight) * 2 - 1;
+    setRotationX(x * 3);
+    setRotationY(-y * 3);
+  };
 
   // 물고기 생성
   const generateFish = useMemo(
@@ -70,27 +70,27 @@ const Aquarium = (props: Props) => {
   }, []);
 
   // 버블 효과
-  document.addEventListener("mousemove", function (e) {
-    let body = document.querySelector("body");
-    let bubble = document.createElement("span");
-    let x = e.offsetX;
-    let y = e.offsetY;
-    bubble.style.left = x + "px";
-    bubble.style.top = y + "px";
-    let size = Math.random() * 80;
-    bubble.style.width = 20 + size + "px";
-    bubble.style.height = 20 + size + "px";
-    if (body) {
-      body.appendChild(bubble);
-    }
-    setTimeout(function () {
-      bubble.remove();
-    }, 3000);
-  });
+  // document.addEventListener("mousemove", function (e) {
+  //   let body = document.querySelector("body");
+  //   let bubble = document.createElement("span");
+  //   let x = e.offsetX;
+  //   let y = e.offsetY;
+  //   bubble.style.left = x + "px";
+  //   bubble.style.top = y + "px";
+  //   let size = Math.random() * 80;
+  //   bubble.style.width = 20 + size + "px";
+  //   bubble.style.height = 20 + size + "px";
+  //   if (body) {
+  //     body.appendChild(bubble);
+  //   }
+  //   setTimeout(function () {
+  //     bubble.remove();
+  //   }, 3000);
+  // });
 
   return (
-    // <Scene onMouseMove={handleMouseMove}>
-    <Scene>
+    <Scene onMouseMove={handleMouseMove}>
+      {/* <Scene> */}
       <WaterSound />
       <Cube rotationX={rotationX} rotationY={rotationY}>
         <div id="fishes">{generateFish}</div>

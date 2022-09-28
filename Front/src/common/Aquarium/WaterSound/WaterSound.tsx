@@ -10,6 +10,9 @@ const useAudio = (url: string) => {
 
   useEffect(() => {
     playing ? audio.play() : audio.pause();
+    return () => {
+      audio.pause();
+    };
   }, [playing]);
 
   useEffect(() => {

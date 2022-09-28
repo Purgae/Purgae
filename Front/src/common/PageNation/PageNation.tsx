@@ -15,15 +15,25 @@ const PageNation = ({ selectPage, setSelectPage, lst, ...props }: React.PropsWit
       for (let i = 0; i < lst.length / 12; i++) {
         tmpNumLst.push(i);
       }
+      console.log(tmpNumLst);
       setNumList(tmpNumLst);
     } else {
       setMaxPage(0);
       setNumList([]);
     }
   }, [lst]);
+
+  useEffect(() => {
+    if (!isEmpty(lst)) {
+    } else {
+    }
+  }, [lst]);
+  console.log(numLst);
+
   useEffect(() => {
     setSelectNumList(numLst.slice(Math.floor(selectPage / 3) * 3, Math.floor(selectPage / 3) * 3 + 3)); // 0, 1, 2
-  }, [selectPage]);
+    console.log(numLst);
+  }, [lst]);
 
   return (
     <PageNationBg>

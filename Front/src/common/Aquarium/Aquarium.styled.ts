@@ -113,8 +113,10 @@ const animate = keyframes`
 
 export const ClickBubble = styled.span<{ left: number; top: number; size: number }>`
   position: absolute;
-  height: 3.125rem;
-  width: 3.125rem;
+  left: ${(props) => props.left}px;
+  top: ${(props) => props.top}px;
+  height: ${(props) => 20 + props.size}px;
+  width: ${(props) => 20 + props.size}px;
   background: #318cfe;
   border-radius: 51% 49% 48% 52% / 62% 44% 56% 38%;
   box-shadow: -20px 30px 16px #1b6cfb, -40px 60px 32px #1b6cfb, inset -6px 6px 10px #1b6cfb, inset 2px 6px 10px #1a74e5,
@@ -125,12 +127,12 @@ export const ClickBubble = styled.span<{ left: number; top: number; size: number
   &:after {
     content: "";
     position: absolute;
-    height: 3.125rem;
-    width: 3.125rem;
+    height: ${(props) => (20 + props.size) / 5}px;
+    width: ${(props) => (20 + props.size) / 5}px;
     background: #e6fdfb;
     border-radius: 44% 56% 46% 54% / 36% 50% 50% 64%;
-    left: 130px;
-    top: 40px;
+    left: ${(props) => (20 + props.size) / 2}px;
+    top: ${(props) => (20 + props.size) / 5}px;
     box-shadow: 16px 40px 0 -10px white;
     opacity: 0.8;
   }

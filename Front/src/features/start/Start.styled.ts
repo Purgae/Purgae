@@ -21,3 +21,5 @@ export const Button = styled(SolidButton)`
     transition: 0.5s;
   }
 `;
+
+export const Description = styled.div``;

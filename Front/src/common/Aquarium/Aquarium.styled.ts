@@ -6,17 +6,6 @@ import side from "/assets/aquarium/side1.png";
 import top from "/assets/aquarium/top.png";
 import bottom from "/assets/aquarium/bottom.png";
 
-const animate = keyframes`
-  0% {
-    transform: translate(-50%, -50%);
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-50%, -1000%);
-    opacity :1;
-  }
-`;
-
 export const Scene = styled.div`
   width: 100vw;
   height: 100vh;
@@ -111,7 +100,18 @@ export const Fish = styled.div<FishProps>`
   top: ${(props) => props.top}vh; // 0이상 80vh 이하의 랜덤 수
 `;
 
-export const MouseBubble = styled.span`
+const animate = keyframes`
+  0% {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, -1000%);
+    opacity :1;
+  }
+`;
+
+export const ClickBubble = styled.span<{ left: number; top: number; size: number }>`
   position: absolute;
   height: 3.125rem;
   width: 3.125rem;

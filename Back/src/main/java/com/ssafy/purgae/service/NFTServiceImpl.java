@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service("nftService")
@@ -37,5 +38,14 @@ public class NFTServiceImpl implements NFTService{
     public List<NFTInfo> getNFT() {
         List<NFTInfo> result = nftRepository.findAll();
         return result;
+    }
+
+    @Override
+    public boolean canDonate(long userId) {
+        List<NFTInfo> list = nftRepository.findByUserIdAndCreatedAt(userId, LocalDate.now());
+        if(list.size()<10){
+            return true;
+        }
+        return false;
     }
 }

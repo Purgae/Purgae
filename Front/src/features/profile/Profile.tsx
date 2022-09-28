@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Seal from "./components/Seal/Seal";
 import { RootComponent } from "@/common/Common.styled";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import { styled } from "@/styles/theme";
-import { FlexDiv, FontP } from "@/common/Common.styled";
+import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
+type Props = {};
 
-const Profile = () => {
+const Profile = (props: Props) => {
   // !현재 프로필이 본인 프로필인지 판별
   const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
   const profileUserId = Number(useParams().userId);
   const currentUserId = useAppSelector((state) => state.user.user?.id);
 
   const { data: profileData } = useGetProfileQuery(profileUserId);
-
-  console.log("profileData", profileData);
 
   useEffect(() => {
     if (profileUserId === currentUserId) {

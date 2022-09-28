@@ -18,8 +18,8 @@ const CardPage = (props: React.PropsWithChildren<CardPageProps>) => {
       setExist(false);
     }
   }, []);
-  console.log(selectNumber);
-  console.log(selectedList);
+  // console.log(selectNumber);
+  // console.log(selectedList);
 
   return (
     <div style={{ width: "100%" }}>

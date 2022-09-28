@@ -47,7 +47,7 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware, authApi.middleware, coinApi.middleware),
+    }).concat(userApi.middleware, authApi.middleware, coinApi.middleware, followApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

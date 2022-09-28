@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMetaMask } from "metamask-react";
 import useProvider from "@/hooks/useProvider";
 import {
@@ -14,7 +14,6 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
-import { isEmpty } from "lodash";
 
 const Login = () => {
   const { status, connect, switchChain, account, chainId, ethereum } = useMetaMask();

@@ -4,16 +4,9 @@ import API_URL from "@/redux/env";
 import { setFollowRes } from "@/redux/slices/followSlice";
 // export const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryError => "data" in error;
 
-interface IsMessage extends RequestInit {
+export interface IsMessage {
   message: string;
 }
-// export interface IsMessage {
-//   message: string;
-// }
-
-// export interface IsMessage {
-//   message: string;
-// }
 
 export interface FollowRequest {
   fromUser?: number;

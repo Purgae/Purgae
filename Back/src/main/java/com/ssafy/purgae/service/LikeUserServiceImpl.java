@@ -27,6 +27,24 @@ public class LikeUserServiceImpl implements LikeUserService{
     UserRepository userRepository;
 
     @Override
+    public String checkLike(long fromUserId, long toUserId) {
+        User fromUser = userRepository.findFirstById(fromUserId);
+        User toUser = userRepository.findFirstById(toUserId);
+
+        if(fromUser == null || toUser == null){
+            return "fail";
+        }
+
+        LikeUser user = likeRepository.findByFromUserAndToUser(fromUser, toUser);
+
+        if(user != null){
+            return "true";
+        }else {
+            return "false";
+        }
+    }
+
+    @Override
     public String likeUser(long fromUserId, long toUserId) {
         User fromUser = userRepository.findFirstById(fromUserId);
         User toUser = userRepository.findFirstById(toUserId);
@@ -53,12 +71,12 @@ public class LikeUserServiceImpl implements LikeUserService{
         List<LikeUser> likeUsers = likeRepository.findAllByToUser(user);
 //        System.out.println(likeUsers);
         List<FollowerInfo> result = new ArrayList<>();
-        int max = 5*pageNum+5;
+        int max = 7*pageNum+7;
         if(max>=likeUsers.size()){
             max = likeUsers.size();
         }
 
-        for(int i=5*pageNum;i<max;i++){
+        for(int i=7*pageNum;i<max;i++){
             User follower = userRepository.findFirstById(likeUsers.get(i).getFromUser().getId());
             boolean isFollowing = false;
             List<LikeUser> likeUser = likeRepository.findAllByToUser(follower);
@@ -82,12 +100,12 @@ public class LikeUserServiceImpl implements LikeUserService{
         List<LikeUser> likeUsers = likeRepository.findAllByFromUser(user);
 //        System.out.println(likeUsers);
         List<User> result = new ArrayList<>();
-        int max = 5*pageNum+5;
+        int max = 7*pageNum+7;
         if(max>=likeUsers.size()){
             max = likeUsers.size();
         }
 
-        for(int i=5*pageNum;i<max;i++){
+        for(int i=7*pageNum;i<max;i++){
             result.add(userRepository.findFirstById(likeUsers.get(i).getToUser().getId()));
         }
         return result;

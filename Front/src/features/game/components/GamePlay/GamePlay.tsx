@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef, useCallback, useMemo } from "react";
 import { GameCharacterType } from "../../Game.types";
-import { StyledFish, StyledCanvas } from "./GamePlay.styled";
+import { StyledCanvas } from "./GamePlay.styled";
 import useGameFish from "@/hooks/useGameFish";
-import { useGarbageBag } from "@/hooks/useGameEnemy";
+import { useGarbageBag, usePlasticBottle } from "@/hooks/useGameEnemy";
+import useGameCoin from "@/hooks/useGameCoin";
 import garbage_bag from "/assets/game/garbage_bag.png";
 import plastic_bottle from "/assets/game/plastic_bottle.png";
-import { render } from "react-dom";
+import money from "/assets/game/money.png";
 
 const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -21,26 +22,36 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     setCtx(ctx);
   }, [canvas]);
 
-  //* 내 물고기 로직
+  //* 내 물고기
   const { fishX, fishY, renderFish } = useGameFish({ gameCharacter, canvas, ctx });
 
-  //Todo 쓰레기 로직
-  const { garbageBagList, renderGarbage } = useGarbageBag({ garbageBag: garbage_bag, ctx, canvas });
+  //* 쓰레기 봉투
+  const { garbageBagList, renderGarbageBag } = useGarbageBag({ garbageBag: garbage_bag, ctx, canvas });
 
+  //* 플라스틱 보틀
+  const { plasticBottleList, renderPlasticBottle } = usePlasticBottle({ plasticBottle: plastic_bottle, ctx, canvas });
+
+  //* 게임 코인
+  const { coinList, renderCoin } = useGameCoin({ coin: money, ctx, canvas });
   //* 캔버스 그리기
   useEffect(() => {
     if (!ctx) return;
-    // console.log("ㅇㅇ");
     ctx.clearRect(0, 0, canvas!.width, canvas!.height);
     renderFish();
-    renderGarbage();
-    // const fishReq = requestAnimationFrame(renderFish);
-    // const garbageReq = requestAnimationFrame(renderGarbage);
+    renderGarbageBag();
+    renderPlasticBottle();
+    renderCoin;
+    const fishReq = requestAnimationFrame(renderFish);
+    const garbageReq = requestAnimationFrame(renderGarbageBag);
+    const plasticReq = requestAnimationFrame(renderPlasticBottle);
+    const coinReq = requestAnimationFrame(renderCoin);
     return () => {
-      // cancelAnimationFrame(fishReq);
-      // cancelAnimationFrame(garbageReq);
+      cancelAnimationFrame(fishReq);
+      cancelAnimationFrame(garbageReq);
+      cancelAnimationFrame(plasticReq);
+      cancelAnimationFrame(coinReq);
     };
-  }, [ctx, fishX, fishY, garbageBagList]);
+  }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList]);
 
   return <StyledCanvas ref={canvasRef} width="1920" height="1080"></StyledCanvas>;
 };

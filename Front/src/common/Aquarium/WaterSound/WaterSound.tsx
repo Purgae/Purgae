@@ -1,37 +1,35 @@
 import { useState, useEffect } from "react";
-import { Div, Button, VolumeInput } from "./WaterSound.styled";
+import { Div, Button } from "./WaterSound.styled";
 import waterSound from "/assets/sound/water.wav";
 
-const WaterSound = () => {
+const useAudio = (url: string) => {
+  const [audio] = useState(new Audio(url));
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
-  const [hover, setHover] = useState(false);
-  const handleSound = () => {
-    setPlaying(!playing);
-  };
-  const handleSetVolume = () => {
-    setHover(true);
-  };
-  const handleNotSetVolume = () => {
-    setHover(false);
-  };
-  const song = document.getElementById("song");
+
+  const toggle = () => setPlaying(!playing);
+
   useEffect(() => {
-    console.log("실행", playing);
-    // if (playing) {
-    //   (song as HTMLAudioElement).play();
-    // } else {
-    //   (song as HTMLAudioElement).pause();
-    // }
+    playing ? audio.play() : audio.pause();
+    return () => {
+      audio.pause();
+    };
   }, [playing]);
 
+  useEffect(() => {
+    audio.addEventListener("ended", () => setPlaying(false));
+    return () => {
+      audio.removeEventListener("ended", () => setPlaying(false));
+    };
+  }, []);
+
+  return { playing, toggle };
+};
+
+const WaterSound = () => {
+  const { playing, toggle } = useAudio(waterSound);
   return (
-    <Div onMouseEnter={handleSetVolume} onMouseLeave={handleNotSetVolume}>
-      <audio id="song" loop>
-        <source src={waterSound} />
-      </audio>
-      <Button status={playing} onClick={handleSound} />
-      <VolumeInput status={hover} />
+    <Div>
+      <Button status={playing} onClick={toggle} />
     </Div>
   );
 };

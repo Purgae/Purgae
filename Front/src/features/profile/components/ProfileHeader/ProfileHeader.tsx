@@ -14,7 +14,6 @@ import WaterDrop from "/assets/icon/water_drop.png";
 import FollowModal from "../FollowModal/FollowModal";
 import { User } from "@/redux/types";
 import {
-  isFetchBaseQueryErrorType,
   useChangeFollowMutation,
   useGetAmIFollowQuery,
   useGetFollowerListQuery,
@@ -72,6 +71,7 @@ const ProfileHeader = (props: Props) => {
       const msg = await follow(wantFollow);
       console.log("msg", msg);
       console.log("isfollow", isfollow?.following);
+      console.log("data?.message", data?.message);
       const followMessage = followMsgFunc();
       // console.log("asdfasdfasdf", followMessage);
       // if (followMessage === "follow") {

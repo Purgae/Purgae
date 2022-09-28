@@ -1,12 +1,11 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import CardGroup from "@/common/Card/Card";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useMetaMask } from "metamask-react";
-import { isEmpty } from "lodash";
 import { RootComponent } from "@/common/Common.styled";
 import CardPage from "@/common/CardPageNation/CardPage";
-import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 import useProvider from "@/hooks/useProvider";
+import { isEmpty } from "lodash";
 
 type Props = {
   children?: React.ReactNode;
@@ -15,52 +14,41 @@ type Props = {
 
 const Seal = (props: Props) => {
   const { fetchMyNFT } = useFetchNFT();
-  const { account, status } = useMetaMask();
+  const wallet = props.walletAds;
   const [nfts, setNfts] = useState<string[]>([]);
   const { fetchProvider } = useProvider();
-  //  usecallback, usememo
-  // const myNftArr = async (): string[] | void => {
-  //   // if (account) {
-  //   // const requestNftArr = fetchMyNFT(account);
-  //   const requestNftArr = await fetchMyNFT(TEST_WALLET_ADDRESS);
-  //   requestNftArr
-  //     setNfts(requestNftArr);
-  //     return requestNftArr;
-  //   };
-  //   // }
-  // };
+  const [exist, setExist] = useState<boolean>(false);
+
   const myNftArr = async () => {
-    if (account) {
-      const requestNftArr = await fetchMyNFT(account);
-      console.log(requestNftArr);
+    if (wallet) {
+      const requestNftArr = await fetchMyNFT(wallet);
       setNfts(requestNftArr);
-      console.log(nfts);
       return requestNftArr;
     }
   };
 
   useEffect(() => {
-    if (fetchProvider) {
-      // if (account) {
-      myNftArr();
-      // }
+    myNftArr();
+    if (!isEmpty(nfts) && nfts?.length > 0) {
+      //nftlist가 있으면서, 길이가 0이상일때
+      setExist(true);
     } else {
-      console.log("실행못해");
+      setExist(false);
     }
-    // if (status === "connected" || "initializing") {
-    //   if (account) {
-    //     myNftArr();
-    //   }
-    // } else {
-    //   myNftArr();
-    //   alert("연결해주세요, 로그아웃 등");
-    // }
-  }, []);
-  useEffect(() => {});
+  }, [wallet]);
+
+  useEffect(() => {
+    if (!isEmpty(nfts) && nfts?.length > 0) {
+      setExist(true);
+    } else {
+      setExist(false);
+    }
+  }, [nfts]);
+
   return (
     <RootComponent>
       <div style={{ paddingTop: 100, width: "100%" }}>
-        <CardPage nftLst={nfts}></CardPage>
+        <CardPage nftLst={nfts} nftexist={exist}></CardPage>
       </div>
     </RootComponent>
   );

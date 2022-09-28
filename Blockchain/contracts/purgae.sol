@@ -40,6 +40,10 @@ contract Minting is ERC721{
 
     mapping (address => uint256) userDonation;
 
+    uint256 totalDonation;
+
+    uint256 countDonation;
+
     mapping (address => string[]) userNFT;
 
     mapping (address => uint256[]) userNFTNum;
@@ -96,6 +100,9 @@ contract Minting is ERC721{
         }
         userNFT[_buyer].push(NFTInfo[_id].metaHash);
         userNFTNum[_buyer].push(_id);
+
+        countDonation++;
+        totalDonation += msg.value;
         
         NFTInfo[_id].owner = _buyer;
         NFTInfo[_id].updated_at = block.timestamp;
@@ -145,6 +152,13 @@ contract Minting is ERC721{
         return (block.timestamp/86400);
     }
 
-    
+    function viewTotalDonation() public view returns (uint256) {
+        return (totalDonation);
+    }
+
+    function viewCountDonation() public view returns (uint256) {
+        return (countDonation);
+    }
 
 }
+

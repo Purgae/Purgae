@@ -28,6 +28,7 @@ const PageNation = ({ selectPage, setSelectPage, lst, ...props }: React.PropsWit
     } else {
     }
   }, [lst]);
+
   console.log(numLst);
 
   useEffect(() => {

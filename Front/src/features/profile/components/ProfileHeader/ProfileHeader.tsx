@@ -249,7 +249,7 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
-  min-width: 76.6875rem;
+  width: 76.6875rem;
   background-color: white;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   justify-content: space-between;

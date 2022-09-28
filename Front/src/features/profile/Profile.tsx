@@ -27,16 +27,19 @@ const Profile = (props: Props) => {
 
   return (
     <StyledRootComponent>
-      <FlexDiv direction="column" width="100%">
-        <ProfileHeader data={profileData?.data} isUser={isProfileUser} />
-        <Seal walletAds={profileData?.data.walletAddress} />
-      </FlexDiv>
+      <ProfileHeader data={profileData?.data} isUser={isProfileUser} />
+      <Seal walletAds={profileData?.data.walletAddress} />
     </StyledRootComponent>
   );
 };
 
 export default Profile;
 
-const StyledRootComponent = styled(RootComponent)`
-  padding-top: 125px;
+const StyledRootComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 6rem;
 `;

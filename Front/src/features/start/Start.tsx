@@ -8,6 +8,7 @@ import Aquarium from "@/common/Aquarium/Aquarium";
 const Start = () => {
   const [loading, setLoading] = useState(true);
   const [fishImages, setFishImages] = useState<string[]>([]);
+  const [isDisplay, setIsDisplay] = useState(true);
   const { fetchTodayNFT } = useFetchNFT();
 
   const navigate = useNavigate();
@@ -30,6 +31,9 @@ const Start = () => {
 
   useEffect(() => {
     fetchNFTList();
+    setTimeout(() => {
+      setIsDisplay(false);
+    }, 5000);
   }, []);
 
   return (
@@ -39,7 +43,7 @@ const Start = () => {
         <div>로딩중...</div>
       ) : (
         <Div>
-          <Description>오늘 구조된 해양 생물은 {fishImages.length}마리 입니다.</Description>
+          <Description isDisplay={isDisplay}>오늘 구조된 해양 친구들이에요! є(･Θ･｡)э››~♡</Description>
           <Button fontSize="1.25rem" width="10rem" bgColor="white" fontColor="lightBlue600" onClick={navigateHome}>
             시작하기
           </Button>

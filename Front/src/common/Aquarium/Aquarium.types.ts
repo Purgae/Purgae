@@ -10,3 +10,11 @@ export interface FishProps {
   top?: number;
   size?: number;
 }
+
+export interface BubbleType {
+  top: number;
+  left: number;
+  size: number;
+  animatebubble: number;
+  sideway: number;
+}

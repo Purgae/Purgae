@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
@@ -12,101 +12,70 @@ import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 
 import FollowModal from "../FollowModal/FollowModal";
-import { User } from "@/redux/types";
+import { User, UserProfile } from "@/redux/types";
 import {
   useChangeFollowMutation,
   useGetAmIFollowQuery,
   useGetFollowerListQuery,
   useGetFollowingListQuery,
 } from "@/redux/api/followApi";
+
+import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 
 type Props = {
-  data?: User;
+  data?: UserProfile;
   isUser: boolean;
+  profileUserId: number;
 };
 
 const ProfileHeader = (props: Props) => {
   // ! 현재 프로필 유저면 true 방문한 유저면 false
   const isUser = props.isUser;
-
   // ! 현재 프로필 유저 데이터
-  const userData = props.data;
+  const userData = props.data?.data;
   const profileImg = userData?.profileImage;
+  // ! 현재 프로필 유저 팔로잉팔로워 수
+  const userFollowerCnt = props.data?.follower_cnt;
+  const userFollowingCnt = props.data?.following_cnt;
 
   // * 현재 유저와, 프로필의 유저
   const currentUserId = useAppSelector((state) => state.user.user?.id);
-  const profileUserId = userData?.id;
+  const profileUserId = props.profileUserId;
   const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
 
-  // * follow버튼 활성화 여부
-  // * amIFollowing 내가 팔로우하는지 여부 (or) 내프로필이면 false
-  const [amIFollowing, setAmIFollowing] = useState(false);
+  const [follow] = useChangeFollowMutation();
+  // *팔로우 여부
+  const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
+  // *소유 nft개수
+  const { data: myNftLen } = useGetDonateCountQuery(profileUserId);
 
-  // * follow하기 버튼
-  // TODO folow버튼 초기 실행시 안되는점, useAppselector로 못가져오는듯ㅡ 혹은 useEffect할때 가져오게 할것.
-  // const [follow] = useChangeFollowMutation();
-
-  const [follow, { data, error, isLoading }] = useChangeFollowMutation();
-  const ifollow = useAppSelector((state) => state.follow.followResult);
-
-  const followMsgFunc = () => {
-    //   if (ifollow?.message === "follow") {
-    //     setAmIFollowing(true);a
-    //     return "follow";
-    //   } else if (ifollow?.message === "unfollow") {
-    //     setAmIFollowing(false);
-    //     return "unfollow";
-    //   }
-    //   return;
+  const { openAlertModal } = useAlertModal();
+  // *추후 `!` 제외한 로직 고려할 것
+  const followingMsgFunc = () => {
+    if (isfollow?.following !== true) {
+      const data: OpenAlertModalArg = {
+        content: "팔로우에 성공하였습니다.",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+    } else {
+      const data: OpenAlertModalArg = {
+        content: "팔로우를 해제하였습니다.",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+    }
   };
 
-  const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  const { openAlertModal } = useAlertModal();
   const following = async () => {
     if (isUser) {
       return;
     } else {
       const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
-      const msg = await follow(wantFollow);
-      console.log("msg", msg);
-      console.log("isfollow", isfollow?.following);
-      console.log("data?.message", data?.message);
-      const followMessage = followMsgFunc();
-      // console.log("asdfasdfasdf", followMessage);
-      // if (followMessage === "follow") {
-      //   const data: OpenAlertModalArg = {
-      //     content: "팔로우에 성공하였습니다.",
-      //     styles: "PRIMARY",
-      //   };
-      //   openAlertModal(data);
-      // } else if (followMessage === "unfollow") {
-      //   const data: OpenAlertModalArg = {
-      //     content: "팔로우를 해제하였습니다.",
-      //     styles: "PRIMARY",
-      //   };
-      //   openAlertModal(data);
-      // }
+      await follow(wantFollow);
+      followingMsgFunc();
       return;
-    }
-  };
-  console.log("isfollow", isfollow?.following);
-
-  // * follow 여부에 따른 state설정함수
-  // const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  const amIFollowingFunc = () => {
-    if (isUser) {
-      setAmIFollowing(false);
-      return;
-    } else {
-      if (isfollow?.following) {
-        //*true
-        setAmIFollowing(true);
-        return;
-      } else {
-        setAmIFollowing(false);
-        return;
-      }
     }
   };
 
@@ -134,10 +103,6 @@ const ProfileHeader = (props: Props) => {
     setOpenModal(!isOpenModal);
   };
   // @end
-
-  useEffect(() => {
-    amIFollowingFunc();
-  }, [isfollow]);
 
   return (
     <>
@@ -168,14 +133,14 @@ const ProfileHeader = (props: Props) => {
               <>
                 <Button
                   styles="solid"
-                  bgColor={amIFollowing ? "white150" : "primary500"}
-                  fontColor={amIFollowing ? "white400" : "white100"}
+                  bgColor={isfollow?.following ? "white150" : "primary500"}
+                  fontColor={isfollow?.following ? "white400" : "white100"}
                   width="7.5rem"
                   onClick={() => {
                     following();
                   }}
                 >
-                  {amIFollowing ? "팔로잉" : "팔로우"}
+                  {isfollow?.following ? "팔로잉" : "팔로우"}
                 </Button>
               </>
             )}
@@ -208,7 +173,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 마리
+              {myNftLen?.NFTNum === 0 ? "아직 살린 물고기가 없어요 " : myNftLen?.NFTNum + "마리"}
             </FontP>
           </FlexDiv>
           {/* 3-3 */}
@@ -222,7 +187,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 명
+              {userFollowerCnt} 명
             </FontP>
           </FlexDivButton>
           {/* 3-4 */}
@@ -236,7 +201,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 명
+              {userFollowingCnt} 명
             </FontP>
           </FlexDivButton>
         </FlexDiv>
@@ -249,7 +214,7 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
-  min-width: 76.6875rem;
+  width: 76.6875rem;
   background-color: white;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   justify-content: space-between;

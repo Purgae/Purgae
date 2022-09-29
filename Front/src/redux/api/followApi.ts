@@ -1,8 +1,6 @@
-import { createApi, fetchBaseQuery, FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { FollowingList, FollowerList } from "@/redux/types";
 import API_URL from "@/redux/env";
-import { setFollowRes } from "@/redux/slices/followSlice";
-// export const isFetchBaseQueryErrorType = (error: any): error is FetchBaseQueryError => "data" in error;
 
 export interface IsMessage {
   message: string;
@@ -47,14 +45,6 @@ export const followApi = createApi({
         body: data,
       }),
       invalidatesTags: ["Follow"],
-      async onQueryStarted(args, { dispatch, queryFulfilled }) {
-        try {
-          const { data } = await queryFulfilled;
-          await dispatch(setFollowRes(data));
-        } catch (error) {
-          console.error("login error", error);
-        }
-      },
     }),
   }),
 });

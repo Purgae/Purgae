@@ -29,6 +29,7 @@ const App = () => {
   //* AlertModal Status
   const { status, content, styles } = useAppSelector(selectAlert);
 
+  // TODO user connect 됐을때 로그인 요청 보내서, state에 저장할것
   /* 
   TODO login check (server연결 후 test해볼것-addlistener)
   @이더리움이 없을때도 고려

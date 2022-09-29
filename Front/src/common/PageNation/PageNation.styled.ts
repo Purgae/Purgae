@@ -6,7 +6,6 @@ export const PageNationBg = styled.nav`
   justify-content: center;
   align-items: center;
   gap: 4px;
-  margin-top: 3.5rem;
   margin: 16px;
 `;
 
@@ -15,7 +14,7 @@ export const PageNationBtn = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
+  background: ${({ theme }) => theme.colors.primary500};
   color: white;
   font-size: 1rem;
 
@@ -26,14 +25,7 @@ export const PageNationBtn = styled.button`
   }
 
   &[disabled] {
-    background: grey;
-    cursor: revert;
-    transform: revert;
-  }
-
-  &[aria-current] {
-    background: deeppink;
-    font-weight: bold;
+    background: ${({ theme }) => theme.colors.white300};
     cursor: revert;
     transform: revert;
   }

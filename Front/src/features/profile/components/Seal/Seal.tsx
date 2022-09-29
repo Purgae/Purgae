@@ -2,10 +2,11 @@ import React, { Fragment, useEffect, useLayoutEffect, useRef, useState } from "r
 import CardGroup from "@/common/Card/Card";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useMetaMask } from "metamask-react";
-import { RootComponent } from "@/common/Common.styled";
+import { FlexDiv, RootComponent } from "@/common/Common.styled";
 import CardPage from "@/common/CardPageNation/CardPage";
 import useProvider from "@/hooks/useProvider";
 import { isEmpty } from "lodash";
+import styled from "@/styles/theme-components";
 
 type Props = {
   children?: React.ReactNode;
@@ -22,8 +23,8 @@ const Seal = (props: Props) => {
   const myNftArr = async () => {
     if (wallet) {
       const requestNftArr = await fetchMyNFT(wallet);
-      setNfts(requestNftArr);
-      return requestNftArr;
+      setNfts(requestNftArr.reverse());
+      return;
     }
   };
 
@@ -46,12 +47,20 @@ const Seal = (props: Props) => {
   }, [nfts]);
 
   return (
-    <RootComponent>
-      <div style={{ paddingTop: 100, width: "100%" }}>
-        <CardPage nftLst={nfts} nftexist={exist}></CardPage>
-      </div>
-    </RootComponent>
+    <FlexBox>
+      <CardPage nftLst={nfts} nftexist={exist}></CardPage>
+    </FlexBox>
   );
 };
 
 export default Seal;
+
+const FlexBox = styled(FlexDiv)`
+  width: 76.6875rem;
+  background-color: ${({ theme }) => theme.colors.white100};
+  box-shadow: ${({ theme }) => theme.shadows.shadow600};
+  justify-content: space-between;
+  margin-top: 10px;
+  padding: 2rem 2.5rem;
+  border-radius: 1rem;
+`;

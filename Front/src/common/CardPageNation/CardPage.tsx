@@ -1,6 +1,8 @@
+import styled from "@/styles/theme-components";
 import { isEmpty } from "lodash";
 import React, { useEffect, useState } from "react";
 import CardGroup from "../Card/Card";
+import { FlexDiv, FontP } from "../Common.styled";
 import PageNation from "../PageNation/PageNation";
 import { CardPageProps } from "./CardPage.types";
 
@@ -19,13 +21,29 @@ const CardPage = ({ nftLst, nftexist, onClick, gameSelectCard }: React.PropsWith
   }, [nftLst]);
 
   useEffect(() => {
-    console.log(selectNumber);
+    setSelectedList(nftLst?.slice(selectNumber * 12, selectNumber * 12 + 12));
   }, [selectNumber]);
+
   return (
     <div style={{ width: "100%" }}>
+      <FontP
+        fontSize="1.5rem"
+        fontWeight="semiBold"
+        style={{
+          textAlign: "center",
+          width: "4rem",
+          borderBottom: "1px solid black",
+          paddingBottom: "8px",
+          margin: "0px 0px 20px 8px",
+        }}
+      >
+        도감
+      </FontP>
       {nftexist ? (
         <div style={{ width: "100%", display: "flex", flexDirection: "column", gap: 3 }}>
-          <CardGroup lst={selectedList} selectCard={gameSelectCard} onClick={onClick} />
+          <div style={{ display: "flex" }}>
+            <CardGroup lst={selectedList} selectCard={gameSelectCard} onClick={onClick} />
+          </div>
           <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={nftLst} />
         </div>
       ) : (

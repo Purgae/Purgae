@@ -12,7 +12,7 @@ interface CheckCollideArgsType {
 export const checkCollide = ({ fishX, fishY, fishWidth, itemWidth, itemArray }: CheckCollideArgsType): boolean => {
   // * 용인 해주는 범위
   const WIDTH = 50;
-  const HEIGHT = 100;
+  const HEIGHT = 80;
 
   const res = itemArray.some(
     (item) =>

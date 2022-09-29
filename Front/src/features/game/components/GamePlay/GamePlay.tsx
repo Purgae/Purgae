@@ -48,6 +48,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     ctx,
     canvas,
     ...ITEM_ARGS,
+    addMS: 1700,
   });
 
   //* 플라스틱 보틀
@@ -57,6 +58,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     ctx,
     canvas,
     ...ITEM_ARGS,
+    addMS: 1500,
   });
 
   //* 게임 코인

@@ -46,6 +46,19 @@ public class NFTController {
         }
     }
 
+    @ApiOperation(value = "기부 실패시 삭제 요청", notes = "기부 실패시에 해당 랜덤수 삭제하는 API입니다.")
+    @DeleteMapping("/{userId}/{NFTId}")
+    public ResponseEntity<Map<String, Object>> deleteNFTInfo(@PathVariable Long userId, @PathVariable Long NFTId){
+        Map<String, Object> result = new HashMap<>();
+        if(nftService.deleteNFTInfo(NFTId)){
+            result.put("message", SUCCESS);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }else{
+            result.put("message", FAIL);
+            return new ResponseEntity<>(result, HttpStatus.OK);
+        }
+    }
+
 
     @ApiOperation(value = "NFT 랜덤 id 가져오기", notes = "중복되지 않은 NFT id 출력하는 API입니다.")
     @GetMapping("/randomnft/{userId}")

@@ -6,10 +6,10 @@ interface UseGameFishType {
   ctx: CanvasRenderingContext2D | undefined;
 }
 
-const fishWidth = 192;
-const fishHeight = 192;
-
 const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
+  const fishWidth = 192;
+  const fishHeight = 192;
+
   const [fishX, setFishX] = useState<number>(0);
   const [fishY, setFishY] = useState<number>(0);
 
@@ -76,7 +76,7 @@ const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
     };
   }, [canvas]);
 
-  return { ctx, canvas, fishX, fishY, renderFish };
+  return { fishX, fishY, fishWidth, renderFish };
 };
 
 export default useGameFish;

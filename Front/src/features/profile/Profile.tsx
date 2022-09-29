@@ -1,36 +1,46 @@
-import React, { useEffect } from "react";
-import { RootComponent } from "@/common/Common.styled";
+import { useEffect, useState } from "react";
+import Seal from "./components/Seal/Seal";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import { styled } from "@/styles/theme";
-import { FlexDiv, FontP } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
+import { useParams } from "react-router-dom";
+import { useGetProfileQuery } from "@/redux/api/userApi";
+type Props = {};
 
-import Seal from "./components/seal/Seal";
+const Profile = (props: Props) => {
+  // !현재 프로필이 본인 프로필인지 판별
+  const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
+  const profileUserId = Number(useParams().userId);
 
-const Profile = () => {
-  const user = useAppSelector((state) => state.user.user);
-  /*
-    gameScore
-    id
-    nickname
-    profileImage
-    profilePublic
-    walletAddress
-   */
-  // @ 로그인 후 콘솔 찍어서 값 나오는거 확인하기
-  // console.log("thisisuser", user);
+  const currentUserId = useAppSelector((state) => state.user.user?.id);
+
+  const { data: profileData } = useGetProfileQuery(profileUserId);
+  // console.log(profileData);
+  // console.log(profileData);
+
+  useEffect(() => {
+    if (profileUserId === currentUserId) {
+      setIsProfileUser(true);
+    } else {
+      setIsProfileUser(false);
+    }
+  }, [profileUserId]);
+
   return (
     <StyledRootComponent>
-      <FlexDiv direction="column" width="100%">
-        <ProfileHeader userId={user!.id} />
-        <Seal walletAds={user?.walletAddress} />
-      </FlexDiv>
+      <ProfileHeader data={profileData} isUser={isProfileUser} profileUserId={profileUserId} />
+      <Seal walletAds={profileData?.data.walletAddress} />
     </StyledRootComponent>
   );
 };
 
 export default Profile;
 
-const StyledRootComponent = styled(RootComponent)`
-  padding-top: 125px;
+const StyledRootComponent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 6rem;
 `;

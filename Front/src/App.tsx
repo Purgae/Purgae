@@ -17,6 +17,7 @@ import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
 import Game from "@/features/game/Game";
 import ProfileAquarium from "@/features/profile/ProfileAquarium";
+import Faq from "./features/faq/Faq";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -28,6 +29,7 @@ const App = () => {
   //* AlertModal Status
   const { status, content, styles } = useAppSelector(selectAlert);
 
+  // TODO user connect 됐을때 로그인 요청 보내서, state에 저장할것
   /* 
   TODO login check (server연결 후 test해볼것-addlistener)
   @이더리움이 없을때도 고려
@@ -52,8 +54,8 @@ const App = () => {
           {/* 로그인 */}
           <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
-          {/* <Route path="/profile/:userId" element={<Profile />} /> */}
-          <Route path="/profile" element={<Profile />} />
+          <Route path="/profile/:userId" element={<Profile />} />
+          {/* <Route path="/profile" element={<Profile />} /> */}
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" />
           {/* 개인 수족관 */}
@@ -68,8 +70,8 @@ const App = () => {
           {/* 기부 */}
           <Route path="/donate" element={<Donate />} />
           {/* 자주 묻는 질문 */}
-          <Route path="/faq" />
-          <Route path="/faq/detail" />
+          <Route path="/faq" element={<Faq />} />
+          <Route path="/faq/:id" element={<Faq />} />
           {/* Redux 테스트 페이지 */}
           <Route path="/counter" element={<Counter />} />
           {/* Theme 테스트 페이지 */}

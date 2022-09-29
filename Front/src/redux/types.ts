@@ -16,3 +16,24 @@ export interface UserProfile {
   follower_cnt?: number;
   following_cnt?: number;
 }
+
+// * following
+export interface Following {
+  id: number;
+  nickname: string;
+  profileImage: null | string;
+}
+
+export interface FollowingList {
+  message: string;
+  following?: Following;
+}
+
+export interface Follower {
+  toUser: User;
+  following: boolean;
+}
+export interface FollowerList {
+  message: string;
+  follower?: Follower;
+}

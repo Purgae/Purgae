@@ -1,14 +1,15 @@
 import { isEmpty } from "lodash";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { PageNationBg, PageNationBtn } from "./PageNation.styled";
 import { PageNationProps } from "./PageNation.types";
+import useInterval from "@/hooks/useInterval";
 
 const PageNation = ({ selectPage, setSelectPage, lst, ...props }: React.PropsWithChildren<PageNationProps>) => {
   const [numLst, setNumList] = useState<number[]>([]); //[0, 1, 2, 3, 4, 5]
   const [selectNumLst, setSelectNumList] = useState<number[]>([0, 1, 2]); //[0, 1, 2], [3, 4, 5]
   const [maxPage, setMaxPage] = useState<number>(0);
 
-  useEffect(() => {
+  const setPage = () => {
     if (lst && !isEmpty(lst)) {
       setMaxPage(Math.floor(lst.length / 12));
       let tmpNumLst: number[] = [];
@@ -20,9 +21,17 @@ const PageNation = ({ selectPage, setSelectPage, lst, ...props }: React.PropsWit
       setMaxPage(0);
       setNumList([]);
     }
-  }, [lst]);
-  useEffect(() => {
+  };
+  useInterval(() => {
+    setPage();
+  }, 10);
+
+  useInterval(() => {
     setSelectNumList(numLst.slice(Math.floor(selectPage / 3) * 3, Math.floor(selectPage / 3) * 3 + 3)); // 0, 1, 2
+  }, 10);
+
+  useEffect(() => {
+    setPage();
   }, [selectPage]);
 
   return (

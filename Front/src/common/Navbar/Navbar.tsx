@@ -12,10 +12,12 @@ import {
 import { Outlet } from "react-router";
 import { useState, Fragment, useEffect } from "react";
 import { FlexDiv } from "../Common.styled";
+import { useAppSelector } from "@/hooks/storeHook";
 
 const Navbar = () => {
   const [ScrollY, setHeaderColor] = useState(0);
   const [HeaderStatus, setHeaderStatus] = useState(false);
+  const userId = useAppSelector((state) => state.user.user?.id);
 
   const Navbar = document.getElementById("navbar");
   const NavbarHeight: any = Navbar?.getBoundingClientRect().height;
@@ -58,7 +60,11 @@ const Navbar = () => {
             <NavbarLink to="/faq">자주 묻는 질문</NavbarLink>
           </NavbarLinkWrappper>
           <NavbarLoginWrapper>
-            <NavbarLoginLink to="/login">로그인</NavbarLoginLink>
+            {userId ? (
+              <NavbarLoginLink to={`/profile/${userId}`}>프로필</NavbarLoginLink>
+            ) : (
+              <NavbarLoginLink to="/login">로그인</NavbarLoginLink>
+            )}
           </NavbarLoginWrapper>
         </NavbarItemWrapper>
       </NavbarBackground>

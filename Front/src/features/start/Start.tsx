@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Div, Button } from "./Start.styled";
+import { Div, Button, Description } from "./Start.styled";
 
 import useFetchNFT from "@/hooks/useFetchNFT";
 import Aquarium from "@/common/Aquarium/Aquarium";
@@ -8,7 +8,8 @@ import Aquarium from "@/common/Aquarium/Aquarium";
 const Start = () => {
   const [loading, setLoading] = useState(true);
   const [fishImages, setFishImages] = useState<string[]>([]);
-  const { fetchTodayNFT, fetchMyNFT } = useFetchNFT();
+  const [isDisplay, setIsDisplay] = useState(true);
+  const { fetchTodayNFT } = useFetchNFT();
 
   const navigate = useNavigate();
   const navigateHome = () => {
@@ -28,14 +29,11 @@ const Start = () => {
     setLoading(false);
   };
 
-  // const fetchNFTList = async () => {
-  //   const myNFTList = await fetchMyNFT("0x8B80F8d86a337b45D9a717D4CC8048c58fe2a69b");
-  //   setFishImages(myNFTList);
-  //   setLoading(false);
-  // };
-
   useEffect(() => {
     fetchNFTList();
+    setTimeout(() => {
+      setIsDisplay(false);
+    }, 5000);
   }, []);
 
   return (
@@ -45,6 +43,7 @@ const Start = () => {
         <div>로딩중...</div>
       ) : (
         <Div>
+          <Description isDisplay={isDisplay}>오늘 구조된 해양 친구들이에요! є(･Θ･｡)э››~♡</Description>
           <Button fontSize="1.25rem" width="10rem" bgColor="white" fontColor="lightBlue600" onClick={navigateHome}>
             시작하기
           </Button>

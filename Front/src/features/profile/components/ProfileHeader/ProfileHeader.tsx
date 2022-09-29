@@ -20,6 +20,7 @@ import {
   useGetFollowingListQuery,
 } from "@/redux/api/followApi";
 import { useAppSelector } from "@/hooks/storeHook";
+import useInterval from "@/hooks/useInterval";
 
 type Props = {
   data?: User;
@@ -39,30 +40,28 @@ const ProfileHeader = (props: Props) => {
   const profileUserId = userData?.id;
   const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
 
-  // * follow버튼 활성화 여부
-  // * amIFollowing 내가 팔로우하는지 여부 (or) 내프로필이면 false
-  const [amIFollowing, setAmIFollowing] = useState(false);
-
-  // * follow하기 버튼
-  // TODO folow버튼 초기 실행시 안되는점, useAppselector로 못가져오는듯ㅡ 혹은 useEffect할때 가져오게 할것.
-  // const [follow] = useChangeFollowMutation();
-
-  const [follow, { data, error, isLoading }] = useChangeFollowMutation();
-  const ifollow = useAppSelector((state) => state.follow.followResult);
-
-  const followMsgFunc = () => {
-    //   if (ifollow?.message === "follow") {
-    //     setAmIFollowing(true);a
-    //     return "follow";
-    //   } else if (ifollow?.message === "unfollow") {
-    //     setAmIFollowing(false);
-    //     return "unfollow";
-    //   }
-    //   return;
-  };
+  const [follow] = useChangeFollowMutation();
 
   const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
   const { openAlertModal } = useAlertModal();
+
+  // *추후 !제외한 로직 고려할 것
+  const followingMsgFunc = () => {
+    if (isfollow?.following !== true) {
+      const data: OpenAlertModalArg = {
+        content: "팔로우에 성공하였습니다.",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+    } else {
+      const data: OpenAlertModalArg = {
+        content: "팔로우를 해제하였습니다.",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+    }
+  };
+
   const following = async () => {
     if (isUser) {
       return;
@@ -70,43 +69,8 @@ const ProfileHeader = (props: Props) => {
       const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
       const msg = await follow(wantFollow);
       console.log("msg", msg);
-      console.log("isfollow", isfollow?.following);
-      console.log("data?.message", data?.message);
-      const followMessage = followMsgFunc();
-      // console.log("asdfasdfasdf", followMessage);
-      // if (followMessage === "follow") {
-      //   const data: OpenAlertModalArg = {
-      //     content: "팔로우에 성공하였습니다.",
-      //     styles: "PRIMARY",
-      //   };
-      //   openAlertModal(data);
-      // } else if (followMessage === "unfollow") {
-      //   const data: OpenAlertModalArg = {
-      //     content: "팔로우를 해제하였습니다.",
-      //     styles: "PRIMARY",
-      //   };
-      //   openAlertModal(data);
-      // }
+      followingMsgFunc();
       return;
-    }
-  };
-  console.log("isfollow", isfollow?.following);
-
-  // * follow 여부에 따른 state설정함수
-  // const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  const amIFollowingFunc = () => {
-    if (isUser) {
-      setAmIFollowing(false);
-      return;
-    } else {
-      if (isfollow?.following) {
-        //*true
-        setAmIFollowing(true);
-        return;
-      } else {
-        setAmIFollowing(false);
-        return;
-      }
     }
   };
 
@@ -134,10 +98,6 @@ const ProfileHeader = (props: Props) => {
     setOpenModal(!isOpenModal);
   };
   // @end
-
-  useEffect(() => {
-    amIFollowingFunc();
-  }, [isfollow]);
 
   return (
     <>
@@ -168,14 +128,14 @@ const ProfileHeader = (props: Props) => {
               <>
                 <Button
                   styles="solid"
-                  bgColor={amIFollowing ? "white150" : "primary500"}
-                  fontColor={amIFollowing ? "white400" : "white100"}
+                  bgColor={isfollow?.following ? "white150" : "primary500"}
+                  fontColor={isfollow?.following ? "white400" : "white100"}
                   width="7.5rem"
                   onClick={() => {
                     following();
                   }}
                 >
-                  {amIFollowing ? "팔로잉" : "팔로우"}
+                  {isfollow?.following ? "팔로잉" : "팔로우"}
                 </Button>
               </>
             )}

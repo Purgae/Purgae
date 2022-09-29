@@ -7,12 +7,14 @@ import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
+import { useMetaMask } from "metamask-react";
 type Props = {};
 
 const Profile = (props: Props) => {
   // !현재 프로필이 본인 프로필인지 판별
   const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
   const profileUserId = Number(useParams().userId);
+
   const currentUserId = useAppSelector((state) => state.user.user?.id);
 
   const { data: profileData } = useGetProfileQuery(profileUserId);

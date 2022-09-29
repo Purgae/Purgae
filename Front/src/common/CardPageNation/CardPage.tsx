@@ -20,7 +20,9 @@ const CardPage = ({ nftLst, nftexist, onClick, gameSelectCard }: React.PropsWith
     }
   }, [nftLst]);
 
-  // TODO callback해서 사용하기
+  useEffect(() => {
+    setSelectedList(nftLst?.slice(selectNumber * 12, selectNumber * 12 + 12));
+  }, [selectNumber]);
 
   return (
     <div style={{ width: "100%" }}>

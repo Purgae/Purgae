@@ -1,5 +1,5 @@
 import Bubble from "@/common/Aquarium/Bubble/Bubble";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useCallback, useRef } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
 import { BubbleType } from "./Aquarium.types";
 import useTimeout from "@/hooks/useTimeout";
@@ -72,19 +72,45 @@ const Aquarium = (props: Props) => {
 
   // 버블 효과
   const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
-  useTimeout(function () {
-    bubbleList.splice(0, 1);
-    setBubbleList(bubbleList);
-  }, 5000);
+  const bubbleRef = useRef(bubbleList);
 
-  const handleMouseClick = (event: React.MouseEvent) => {
+  const handleMouseClick = async (event: React.MouseEvent) => {
+    const id = Date.now();
     const x = event.clientX;
     const y = event.clientY;
     const size = Math.random() * 80;
     const animatebubble = Math.random() * 5 + 3;
     const sideway = Math.random() * 2 + 2;
-    setBubbleList([...bubbleList, { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway }]);
+    bubbleRef.current = [
+      ...bubbleRef.current,
+      { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway, id },
+    ];
+    setBubbleList(bubbleRef.current);
+    timeout(id);
   };
+
+  const timeout = (bubbleId: number) => {
+    if (bubbleRef.current.length === 0) return;
+    const len = bubbleRef.current.length;
+    const time = Math.floor(bubbleRef.current[len - 1].animatebubble) * 1000;
+
+    //* 버블 사라지게 하기...
+    setTimeout(() => {
+      bubbleRef.current = bubbleRef.current.filter((item) => item.id !== bubbleId);
+      setBubbleList(bubbleRef.current);
+    }, time);
+  };
+  // useEffect(() => {
+  //   if (bubbleRef.current.length === 0) return;
+  //   (async () => {
+  //     await wait(5000);
+  //     bubbleRef.current = bubbleRef.current.slice(1);
+  //     console.log("ref", bubbleRef.current);
+  //     console.log("ㅎㅎ");
+  //     setBubbleList(bubbleRef.current);
+  //   })();
+  // }, []);
+
   // const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
 
   // const sliceFunc = () => {
@@ -113,13 +139,13 @@ const Aquarium = (props: Props) => {
       <WaterSound />
       <Cube rotationX={rotationX} rotationY={rotationY}>
         <div id="fishes">{generateFish}</div>
-        {bubbleList.map((item, idx) => {
+        {bubbleList.map((item) => {
           return (
             <ClickBubble
+              key={item.id}
               left={item.left}
               top={item.top}
               size={item.size}
-              key={idx}
               animatebubble={item.animatebubble}
               sideway={item.sideway}
             />

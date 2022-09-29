@@ -8,8 +8,8 @@ export interface UserDonateCnt {
 
 export interface RandomNft {
   message: string;
-  NFTId?: number;
-  error?: string; // timeout : 제대로 된 id 가져오기 어려움, over : 기부횟수 10번 넘음
+  NFTId: number;
+  // error: string; // timeout : 제대로 된 id 가져오기 어려움, over : 기부횟수 10번 넘음
 }
 
 export const nftApi = createApi({
@@ -21,11 +21,18 @@ export const nftApi = createApi({
       query: (userId) => `/nft/${userId}`,
       providesTags: ["Nft"],
     }),
-    getRandomNft: build.query<RandomNft, { userId?: number }>({
-      query: ({ userId }) => `/nft/randomnft/${userId}`,
+    getRandomNft: build.query<RandomNft, number | undefined>({
+      query: (userId) => `/nft/randomnft/${userId}`,
       providesTags: ["Nft"],
+    }),
+    deleteRandomNft: build.mutation<{ message: string }, { userId: number; nftId: number }>({
+      query: ({ userId, nftId }) => ({
+        url: `/nft/${userId}/${nftId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Nft"],
     }),
   }),
 });
 
-export const { useGetDonateCountQuery, useGetRandomNftQuery } = nftApi;
+export const { useGetDonateCountQuery, useGetRandomNftQuery, useDeleteRandomNftMutation } = nftApi;

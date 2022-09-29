@@ -1,16 +1,31 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { useMetaMask } from "metamask-react";
 import { FlexDiv, StrongSpan } from "@/common/Common.styled";
+import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
-import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
+
+//* baseUrl
+import API_URL from "@/redux/env";
+
+//* 커스텀 훅
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
-import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
 import useDonate from "@/hooks/useDonate";
 
+//* redux
+import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
+import { selectUser } from "@/redux/slices/userSlice";
+import { useGetRandomNftQuery } from "@/redux/api/nftApi";
+
 const DonateForm = () => {
+  const dispatch = useAppDispatch();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
   const { donate } = useDonate();
-  const dispatch = useAppDispatch();
+  const { account } = useMetaMask();
+  const { user } = useAppSelector(selectUser);
+  const [arg, setArg] = useState<number>();
+  const { data, error } = useGetRandomNftQuery(arg);
+  // const [getRandomNft] = useGetRandomNftQuery();
 
   const submitButtonStyle = submitStatus ? "gradient" : "white250";
 
@@ -21,18 +36,43 @@ const DonateForm = () => {
   const changeInputValue = (value: string) => {
     dispatch(setInputValue(value));
   };
-  const submitDonateForm = (event: React.FormEvent<HTMLFormElement>) => {
+
+  const submitDonateForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = {
-      id: 10,
-      address: "0xf7A70bF5441A6b523d35F0002f3bd037BcbC2f62",
-      ether: inputValue,
-    };
-    donate(data);
+    setArg(user!.id);
+    console.log(data);
+    // try {
+    //   const response = await fetch(`${API_URL}/nft/randomnft/${user!.id}`);
+    //   const { NFTId } = await response.json();
+    //   const args = {
+    //     id: NFTId,
+    //     address: account!,
+    //     ether: inputValue,
+    //   };
+    //   donate(args);
+    // } catch (error) {
+    //   console.log(error);
+    // }
   };
 
   useEffect(() => {
-    // let debounce: ReturnType<typeof setTimeout>;
+    if (!data) return;
+    if (!arg) return;
+    const payload = {
+      uid: user!.id,
+      id: data?.NFTId,
+      address: account!,
+      ether: inputValue,
+    };
+    console.log(payload);
+    donate(payload);
+  }, [data]);
+
+  useEffect(() => {
+    console.log(error);
+  }, [error]);
+
+  useEffect(() => {
     const debounce = setTimeout(() => {
       dispatch(validInputValue());
     }, 500);

@@ -90,11 +90,14 @@ const Aquarium = (props: Props) => {
   };
 
   const timeout = (bubbleId: number) => {
+    //* 버블이 없으면 return
     if (bubbleRef.current.length === 0) return;
+
+    //* animatebuble 시간 가져오기
     const len = bubbleRef.current.length;
     const time = Math.floor(bubbleRef.current[len - 1].animatebubble) * 1000;
 
-    //* 버블 사라지게 하기...
+    //* animatebubble만큼 시간을 기다린 뒤 제거 한다. (id로 식별한다. )
     setTimeout(() => {
       bubbleRef.current = bubbleRef.current.filter((item) => item.id !== bubbleId);
       setBubbleList(bubbleRef.current);

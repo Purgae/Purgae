@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import FollowItem from "./FollowItem/FollowItem";
 import { ListDiv } from "./FollowList.styled";
 
@@ -7,6 +8,7 @@ interface Props {
 }
 
 const FollowList = (props: Props) => {
+  useEffect(() => {}, []);
   if (props.isFollower) {
     // 팔로워
     return (

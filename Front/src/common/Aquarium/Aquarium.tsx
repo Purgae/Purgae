@@ -1,8 +1,7 @@
 import Bubble from "@/common/Aquarium/Bubble/Bubble";
-import { useState, useMemo, useEffect, useCallback, useRef } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
 import { BubbleType } from "./Aquarium.types";
-import useTimeout from "@/hooks/useTimeout";
 import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
 
 type Props = {

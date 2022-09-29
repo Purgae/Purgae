@@ -33,22 +33,38 @@ const FadeInAnimation = keyframes`
     transform: translateY(-50%, 50%);
   }`;
 
-export const Description = styled.div<{ isDisplay: boolean }>`
+const Description = styled.div<{ isDisplay: boolean }>`
   visibility: ${(props) => (props.isDisplay ? "visible" : "hidden")};
   position: fixed;
-  left: 50%;
   transform: translate(-50%);
-  top: 3%;
   z-index: 3;
   font-size: 1.25rem;
   font-weight: ${({ theme }) => theme.fontWeights.semiBold};
   color: ${({ theme }) => theme.colors.white};
   cursor: default;
-  background-color: ${({ theme }) => theme.colors.lightBlue300};
-  padding: 0.5rem 1rem;
+  padding: 0.8rem 1rem;
   border-radius: 1rem;
   opacity: ${(props) => (props.isDisplay ? 1 : 0)};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   transition: visibility 0.5s linear 300ms, opacity 300ms;
   animation: ${FadeInAnimation} 1s;
+  width: fit-content;
+`;
+
+export const Description1 = styled(Description)`
+  left: 50%;
+  top: 3%;
+  /* background-color: ${({ theme }) => theme.colors.lightBlue300}; */
+`;
+
+export const Description2 = styled(Description)`
+  left: 80%;
+  top: 40%;
+  /* background-color: ${({ theme }) => theme.colors.primary600}; */
+`;
+
+export const Description3 = styled(Description)`
+  left: 4.5%;
+  top: 88.5%;
+  /* background-color: ${({ theme }) => theme.colors.primary700}; */
 `;

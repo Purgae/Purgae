@@ -1,6 +1,6 @@
 import { styled } from "@/styles/theme";
 import { keyframes } from "@/styles/theme-components";
-import { CubeProps, FishProps, BubbleType } from "./Aquarium.types";
+import { CubeProps, FishProps, BubbleType, StyledBubbleType } from "./Aquarium.types";
 import back from "/assets/aquarium/back.png";
 import side from "/assets/aquarium/side1.png";
 import top from "/assets/aquarium/top.png";
@@ -106,7 +106,7 @@ const AnimateBubble = keyframes`
   }
 
   100% {
-    transform: translate(-50%, -1000%);
+    transform: translate(-50%, -1000px);
   }
 `;
 
@@ -120,7 +120,7 @@ const SideWays = keyframes`
   }
 `;
 
-export const ClickBubble = styled.span<BubbleType>`
+export const ClickBubble = styled.span<StyledBubbleType>`
   position: absolute;
   left: ${(props) => props.left}px;
   top: ${(props) => props.top}px;

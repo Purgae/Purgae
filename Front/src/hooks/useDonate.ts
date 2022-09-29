@@ -2,13 +2,15 @@ import useProvider from "./useProvider";
 import { useMetaMask } from "metamask-react";
 import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 import { useAlertModal } from "./useAlertModal";
+import { useDeleteRandomNftMutation } from "@/redux/api/nftApi";
 
 const useDonate = () => {
   const { contract, changeEtherToWei, networkChainId } = useProvider();
   const { chainId, switchChain } = useMetaMask();
   const { openAlertModal } = useAlertModal();
+  const [deleteRandomNft] = useDeleteRandomNftMutation();
 
-  const donate = ({ id, ether, address }: { id: number; ether: string; address: string }) => {
+  const donate = ({ uid, id, ether, address }: { uid: number; id: number; ether: string; address: string }) => {
     const wei = changeEtherToWei(ether);
     const transactionObject = {
       from: address,
@@ -21,6 +23,7 @@ const useDonate = () => {
           await switchChain(networkChainId.goerli);
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
         } catch (error: any) {
+          deleteRandomNft({ userId: uid, nftId: id });
           console.log(error);
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";
@@ -33,6 +36,7 @@ const useDonate = () => {
         try {
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
         } catch (error: any) {
+          deleteRandomNft({ userId: uid, nftId: id });
           console.log(error);
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";

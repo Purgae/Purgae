@@ -13,4 +13,6 @@ public interface NFTService {
     public List<NFTInfo> getNFT();
 
     public boolean canDonate(long userId);
+
+    public boolean deleteNFTInfo(long NFTId);
 }

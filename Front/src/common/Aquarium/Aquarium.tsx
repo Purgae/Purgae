@@ -70,7 +70,7 @@ const Aquarium = (props: Props) => {
     }
   }, []);
 
-  // 버블 효과
+  //* 버블 효과
   const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
   const bubbleRef = useRef(bubbleList);
 
@@ -81,6 +81,8 @@ const Aquarium = (props: Props) => {
     const size = Math.random() * 80;
     const animatebubble = Math.random() * 5 + 3;
     const sideway = Math.random() * 2 + 2;
+
+    //* 버블을 리스트에 추가한다.
     bubbleRef.current = [
       ...bubbleRef.current,
       { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway, id },
@@ -90,52 +92,19 @@ const Aquarium = (props: Props) => {
   };
 
   const timeout = (bubbleId: number) => {
-    //* 버블이 없으면 return
+    //* 버블이 없으면 return한다.
     if (bubbleRef.current.length === 0) return;
 
-    //* animatebuble 시간 가져오기
+    //* animatebuble 시간 가져오기 (애니메이션 진행 시간)
     const len = bubbleRef.current.length;
     const time = Math.floor(bubbleRef.current[len - 1].animatebubble) * 1000;
 
-    //* animatebubble만큼 시간을 기다린 뒤 제거 한다. (id로 식별한다. )
+    //* animatebubble만큼 시간을 기다린 뒤 제거 한다. (id로 식별)
     setTimeout(() => {
       bubbleRef.current = bubbleRef.current.filter((item) => item.id !== bubbleId);
       setBubbleList(bubbleRef.current);
     }, time);
   };
-  // useEffect(() => {
-  //   if (bubbleRef.current.length === 0) return;
-  //   (async () => {
-  //     await wait(5000);
-  //     bubbleRef.current = bubbleRef.current.slice(1);
-  //     console.log("ref", bubbleRef.current);
-  //     console.log("ㅎㅎ");
-  //     setBubbleList(bubbleRef.current);
-  //   })();
-  // }, []);
-
-  // const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
-
-  // const sliceFunc = () => {
-  //   setBubbleList(bubbleList.splice(1, bubbleList.length + 1));
-  // };
-
-  // useEffect(() => {
-  //   setBubbleList([...bubbleList]);
-  // }, [bubbleList]);
-
-  // useTimeout(() => {
-  //   sliceFunc();
-  // }, 5000);
-
-  // const handleMouseClick = (event: React.MouseEvent) => {
-  //   const x = event.clientX;
-  //   const y = event.clientY;
-  //   const size = Math.random() * 80;
-  //   const animatebubble = Math.random() * 5 + 3;
-  //   const sideway = Math.random() * 2 + 2;
-  //   setBubbleList([...bubbleList, { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway }]);
-  // };
 
   return (
     <Scene onMouseMove={handleMouseMove} onClick={handleMouseClick}>

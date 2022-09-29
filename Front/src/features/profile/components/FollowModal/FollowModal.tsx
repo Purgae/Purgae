@@ -14,9 +14,11 @@ import FollowList from "./FollowList/FollowList";
 interface PropsType {
   onClickToggleModal: () => void;
   status: boolean;
+  userFollowerCnt: number | undefined;
+  userFollowingCnt: number | undefined;
 }
 
-const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
+const FollowModal = ({ onClickToggleModal, status, userFollowerCnt, userFollowingCnt }: PropsType) => {
   const [isFollower, setIsFollower] = useState(true);
   const handleFollower = () => {
     setIsFollower(true);
@@ -27,12 +29,7 @@ const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
   useEffect(() => {
     setIsFollower(status);
   }, [status]);
-  useEffect(() => {
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.body.style.overflow = "auto";
-    };
-  });
+
   return (
     <ModalContainer>
       {" "}
@@ -43,10 +40,10 @@ const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
         <Username>김물고기김물고기</Username>
         <Title justify="space-around" width="90%">
           <Follower status={isFollower} onClick={handleFollower}>
-            100 팔로워
+            {userFollowerCnt} 팔로워
           </Follower>
           <Following status={isFollower} onClick={handleFollowing}>
-            100 팔로잉
+            {userFollowingCnt} 팔로잉
           </Following>
         </Title>
         <FollowList isFollower={isFollower} myFollow={true} />

@@ -2,6 +2,7 @@ import Bubble from "@/common/Aquarium/Bubble/Bubble";
 import { useState, useMemo, useEffect } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
 import { BubbleType } from "./Aquarium.types";
+import useTimeout from "@/hooks/useTimeout";
 import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
 
 type Props = {
@@ -71,6 +72,11 @@ const Aquarium = (props: Props) => {
 
   // 버블 효과
   const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
+  useTimeout(function () {
+    bubbleList.splice(0, 1);
+    setBubbleList(bubbleList);
+  }, 5000);
+
   const handleMouseClick = (event: React.MouseEvent) => {
     const x = event.clientX;
     const y = event.clientY;
@@ -78,11 +84,29 @@ const Aquarium = (props: Props) => {
     const animatebubble = Math.random() * 5 + 3;
     const sideway = Math.random() * 2 + 2;
     setBubbleList([...bubbleList, { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway }]);
-    setTimeout(function () {
-      bubbleList.splice(0, 1);
-      setBubbleList([...bubbleList]);
-    }, 5000);
   };
+  // const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
+
+  // const sliceFunc = () => {
+  //   setBubbleList(bubbleList.splice(1, bubbleList.length + 1));
+  // };
+
+  // useEffect(() => {
+  //   setBubbleList([...bubbleList]);
+  // }, [bubbleList]);
+
+  // useTimeout(() => {
+  //   sliceFunc();
+  // }, 5000);
+
+  // const handleMouseClick = (event: React.MouseEvent) => {
+  //   const x = event.clientX;
+  //   const y = event.clientY;
+  //   const size = Math.random() * 80;
+  //   const animatebubble = Math.random() * 5 + 3;
+  //   const sideway = Math.random() * 2 + 2;
+  //   setBubbleList([...bubbleList, { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway }]);
+  // };
 
   return (
     <Scene onMouseMove={handleMouseMove} onClick={handleMouseClick}>

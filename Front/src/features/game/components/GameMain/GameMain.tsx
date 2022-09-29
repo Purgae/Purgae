@@ -1,3 +1,8 @@
+/*
+  게임 메인 컴포넌트
+  버튼 클릭을 통해 다른 컴포넌트로 이동한다. 
+*/
+
 import { GameType } from "../../Game.types";
 import { FlexDiv } from "@/common/Common.styled";
 import { StyledGameTitle, StyledGameButton, StyledCharacter } from "./GameMain.styled";
@@ -8,7 +13,7 @@ const GameMain = ({ setGamePage }: GameType) => {
       <FlexDiv width="100%" direction="column">
         <StyledCharacter></StyledCharacter>
         <StyledGameTitle color="lightBlue800" fontWeight="regular" fontSize="2rem">
-          푸름이의 바다탐험
+          푸레미의 바다탐험
         </StyledGameTitle>
       </FlexDiv>
       <FlexDiv direction="column" gap="0.5rem">

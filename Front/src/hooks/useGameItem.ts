@@ -1,3 +1,11 @@
+/*
+  게임 아이템
+  1. 게임 아이템은 랜덤의 속성을 가지고 있다. 
+  2. addMS마다 게임 아이템이 추가된다.
+  3. updateMS마다 게임아이템이 움직인다. 
+    (y축 , x축으로 이동)
+*/
+
 import { useState, useCallback } from "react";
 import { getRandomNum } from "@/utils/functions/random";
 import useInterval from "@/hooks/useInterval";
@@ -34,7 +42,7 @@ const useGameItem = ({ image, width, speed, addMS, updateMS, ctx, canvas }: UseG
   //* 랜덤 아이템 추가
   const addItem = () => {
     const max = canvas!.height - width;
-    const randomY = getRandomNum({ min: 0, max });
+    const randomY = getRandomNum({ min: 100, max });
     const randomSpeed = getRandomNum(speed);
     const item: GameItemType = {
       x: 0,
@@ -67,7 +75,7 @@ const useGameItem = ({ image, width, speed, addMS, updateMS, ctx, canvas }: UseG
     //* 이동, 범위 제한
     const ItemArray = deepCopyItemList.map((item) => {
       let randomY = getRandomNum({ min: -30, max: 30 });
-      if (randomY + item.y > 0 && randomY + item.y < maxY) {
+      if (randomY + item.y > 100 && randomY + item.y < maxY) {
         return { x: item.x + item.speed, y: item.y + randomY, speed: item.speed };
       } else {
         return { x: item.x + item.speed, y: item.y, speed: item.speed };
@@ -86,6 +94,6 @@ const useGameItem = ({ image, width, speed, addMS, updateMS, ctx, canvas }: UseG
     addItem();
   }, addMS);
 
-  return { itemList, renderItemList };
+  return { itemList, renderItemList, setItemList };
 };
 export default useGameItem;

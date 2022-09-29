@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import Seal from "./components/Seal/Seal";
-import { RootComponent } from "@/common/Common.styled";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import { styled } from "@/styles/theme";
-import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
-import { useMetaMask } from "metamask-react";
 type Props = {};
 
 const Profile = (props: Props) => {
@@ -18,6 +15,8 @@ const Profile = (props: Props) => {
   const currentUserId = useAppSelector((state) => state.user.user?.id);
 
   const { data: profileData } = useGetProfileQuery(profileUserId);
+  // console.log(profileData);
+  // console.log(profileData);
 
   useEffect(() => {
     if (profileUserId === currentUserId) {
@@ -29,7 +28,7 @@ const Profile = (props: Props) => {
 
   return (
     <StyledRootComponent>
-      <ProfileHeader data={profileData?.data} isUser={isProfileUser} />
+      <ProfileHeader data={profileData} isUser={isProfileUser} profileUserId={profileUserId} />
       <Seal walletAds={profileData?.data.walletAddress} />
     </StyledRootComponent>
   );

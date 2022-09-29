@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
@@ -12,40 +12,46 @@ import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 
 import FollowModal from "../FollowModal/FollowModal";
-import { User } from "@/redux/types";
+import { User, UserProfile } from "@/redux/types";
 import {
   useChangeFollowMutation,
   useGetAmIFollowQuery,
   useGetFollowerListQuery,
   useGetFollowingListQuery,
 } from "@/redux/api/followApi";
+
+import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
-import useInterval from "@/hooks/useInterval";
 
 type Props = {
-  data?: User;
+  data?: UserProfile;
   isUser: boolean;
+  profileUserId: number;
 };
 
 const ProfileHeader = (props: Props) => {
   // ! 현재 프로필 유저면 true 방문한 유저면 false
   const isUser = props.isUser;
-
   // ! 현재 프로필 유저 데이터
-  const userData = props.data;
+  const userData = props.data?.data;
   const profileImg = userData?.profileImage;
+  // ! 현재 프로필 유저 팔로잉팔로워 수
+  const userFollowerCnt = props.data?.follower_cnt;
+  const userFollowingCnt = props.data?.following_cnt;
 
   // * 현재 유저와, 프로필의 유저
   const currentUserId = useAppSelector((state) => state.user.user?.id);
-  const profileUserId = userData?.id;
+  const profileUserId = props.profileUserId;
   const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
 
   const [follow] = useChangeFollowMutation();
-
+  // *팔로우 여부
   const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  const { openAlertModal } = useAlertModal();
+  // *소유 nft개수
+  const { data: myNftLen } = useGetDonateCountQuery(profileUserId);
 
-  // *추후 !제외한 로직 고려할 것
+  const { openAlertModal } = useAlertModal();
+  // *추후 `!` 제외한 로직 고려할 것
   const followingMsgFunc = () => {
     if (isfollow?.following !== true) {
       const data: OpenAlertModalArg = {
@@ -67,8 +73,7 @@ const ProfileHeader = (props: Props) => {
       return;
     } else {
       const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
-      const msg = await follow(wantFollow);
-      console.log("msg", msg);
+      await follow(wantFollow);
       followingMsgFunc();
       return;
     }
@@ -168,7 +173,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 마리
+              {myNftLen?.NFTNum === 0 ? "아직 살린 물고기가 없어요 " : myNftLen?.NFTNum + "마리"}
             </FontP>
           </FlexDiv>
           {/* 3-3 */}
@@ -182,7 +187,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 명
+              {userFollowerCnt} 명
             </FontP>
           </FlexDivButton>
           {/* 3-4 */}
@@ -196,7 +201,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 명
+              {userFollowingCnt} 명
             </FontP>
           </FlexDivButton>
         </FlexDiv>

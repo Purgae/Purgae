@@ -17,6 +17,7 @@ import { useChangeFollowMutation, useGetAmIFollowQuery } from "@/redux/api/follo
 import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 import useFetchNFT from "@/hooks/useFetchNFT";
+import { useGetProfileQuery } from "@/redux/api/userApi";
 
 type Props = {
   data?: UserProfile;
@@ -33,6 +34,8 @@ const ProfileHeader = (props: Props) => {
   // ! 현재 프로필 유저 팔로잉팔로워 수
   const userFollowerCnt = props.data?.follower_cnt;
   const userFollowingCnt = props.data?.following_cnt;
+
+  const [follower, setFollower] = useState(userFollowerCnt);
 
   // * 현재 유저와, 프로필의 유저
   const currentUserId = useAppSelector((state) => state.user.user?.id);
@@ -80,6 +83,12 @@ const ProfileHeader = (props: Props) => {
       openAlertModal(data);
     }
   };
+  const { data: profileData } = useGetProfileQuery(profileUserId);
+  useEffect(() => {
+    console.log(userFollowerCnt);
+    setFollower(userFollowerCnt);
+    console.log(profileData);
+  }, [userFollowerCnt, isfollow?.following, profileData]);
 
   const following = async () => {
     if (isUser) {
@@ -214,7 +223,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              {userFollowerCnt} 명
+              {follower} 명
             </FontP>
           </FlexDivButton>
           {/* 3-4 */}

@@ -1,6 +1,6 @@
 import { styled } from "@/styles/theme";
 import { FontP } from "@/common/Common.styled";
-import littleproomy_pink_nomargin from "/assets/proomy/littleproomy_pink_nomargin.png";
+import littleproomy_pink from "/assets/proomy/littleproomy_pink.png";
 
 export const StyledGameTitle = styled(FontP)`
   font-family: "UhBeeSe_hyun";
@@ -19,17 +19,6 @@ export const StyledGameButton = styled.button`
 
   &:hover {
     transform: scale(1.1);
-
-    /* &::before {
-      width: 3rem;
-      height: 3rem;
-      background-image: url("https://raw.githubusercontent.com/JaeKP/image_repo/main/img/0033131d91a7226d.png");
-      background-position: center;
-      background-size: cover;
-      background-repeat: no-repeat;
-      content: "";
-      display: inline-block;
-    } */
   }
 
   @media ${({ theme }) => theme.sizes.pc} {
@@ -38,11 +27,10 @@ export const StyledGameButton = styled.button`
 `;
 
 export const StyledCharacter = styled.div`
-  width: 6rem;
-  aspect-ratio: 3 / 2;
-  background-image: url(${littleproomy_pink_nomargin});
+  width: 8rem;
+  aspect-ratio: 1 / 1;
+  background-image: url(${littleproomy_pink});
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
-  transform: scaleX(-1);
 `;

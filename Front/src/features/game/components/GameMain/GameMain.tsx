@@ -3,14 +3,14 @@
   버튼 클릭을 통해 다른 컴포넌트로 이동한다. 
 */
 
-import { GameType } from "../../Game.types";
+import { GameMainType } from "../../Game.types";
 import { FlexDiv } from "@/common/Common.styled";
 import { StyledGameTitle, StyledGameButton, StyledCharacter } from "./GameMain.styled";
 
-const GameMain = ({ setGamePage, toggleSound }: GameType) => {
+const GameMain = ({ setGamePage, toggleSound, turnOnGameBGM }: GameMainType) => {
   return (
     <FlexDiv direction="column" gap="4rem" width="100%" height="100%">
-      <FlexDiv width="100%" direction="column">
+      <FlexDiv width="100%" direction="column" gap="0rem">
         <StyledCharacter></StyledCharacter>
         <StyledGameTitle color="lightBlue800" fontWeight="regular" fontSize="2rem">
           푸레미의 바다탐험
@@ -19,6 +19,7 @@ const GameMain = ({ setGamePage, toggleSound }: GameType) => {
       <FlexDiv direction="column" gap="0.5rem">
         <StyledGameButton
           onClick={() => {
+            turnOnGameBGM();
             setGamePage(2);
           }}
           onMouseOver={toggleSound}
@@ -27,6 +28,7 @@ const GameMain = ({ setGamePage, toggleSound }: GameType) => {
         </StyledGameButton>
         <StyledGameButton
           onClick={() => {
+            turnOnGameBGM();
             setGamePage(4);
           }}
           onMouseOver={toggleSound}
@@ -35,6 +37,7 @@ const GameMain = ({ setGamePage, toggleSound }: GameType) => {
         </StyledGameButton>
         <StyledGameButton
           onClick={() => {
+            turnOnGameBGM();
             setGamePage(5);
           }}
           onMouseOver={toggleSound}

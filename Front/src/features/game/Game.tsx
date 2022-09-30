@@ -77,7 +77,9 @@ const Game = () => {
         </StyleGameSoundButton>
 
         {/* 게임 화면 */}
-        {gamePage === 0 && <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton}></GameMain>}
+        {gamePage === 0 && (
+          <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton} turnOnGameBGM={turnOnGameBGM}></GameMain>
+        )}
         {gamePage === 2 && (
           <GamePlay setGamePage={setGamePage} gameCharacter={gameCharacter} toggleSound={turnOnCoinSound}></GamePlay>
         )}

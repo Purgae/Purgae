@@ -3,7 +3,7 @@ import API_URL from "@/redux/env";
 
 export interface UserDonateCnt {
   message: string;
-  NFTNum?: number;
+  NFTNum: number;
 }
 
 export interface RandomNft {
@@ -28,15 +28,14 @@ export const nftApi = createApi({
   tagTypes: ["Nft"],
   endpoints: (build) => ({
     getDonateCount: build.query<UserDonateCnt, number>({
-      query: (userId) => ({
-        url: `/nft/${userId}`,
-        method: "POST",
-      }),
+      query: (userId) => `/nft/${userId}`,
       providesTags: ["Nft"],
     }),
     requestRandomNum: build.mutation<RandomNft, number>({
-      query: (userId) => `/nft/randomnft/${userId}`,
-      invalidatesTags: ["Nft"],
+      query: (userId) => ({
+        url: `/nft/randomNft/${userId}`,
+        method: "POST",
+      }),
     }),
     succeedToDonate: build.mutation<NFTType, { userId: number; nftId: number }>({
       query: ({ userId, nftId }) => ({
@@ -48,4 +47,9 @@ export const nftApi = createApi({
   }),
 });
 
-export const { useGetDonateCountQuery, useRequestRandomNumMutation, useSucceedToDonateMutation } = nftApi;
+export const {
+  useGetDonateCountQuery,
+  useRequestRandomNumMutation,
+  useSucceedToDonateMutation,
+  useLazyGetDonateCountQuery,
+} = nftApi;

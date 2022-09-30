@@ -16,6 +16,7 @@ export interface FlexDivProps {
 export interface StrongSpanProps {
   fontSize?: string; //* default : "transparent"
   fontWeight: FontWeightType; //* default: "medium"
+  color?: ColorType; //* default: "mainParagraph"
 }
 
 export interface ShadowDivProps {

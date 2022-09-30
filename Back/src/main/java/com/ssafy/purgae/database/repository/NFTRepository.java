@@ -1,7 +1,6 @@
 package com.ssafy.purgae.database.repository;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.database.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +17,7 @@ public interface NFTRepository extends JpaRepository<NFTInfo, Long> {
     public List<NFTInfo> findAll();
 
     public List<NFTInfo> findByUserIdAndCreatedAt(long userId, LocalDate createdAt);
+
+    public int deleteByNFTId(long NFTId);
 
 }

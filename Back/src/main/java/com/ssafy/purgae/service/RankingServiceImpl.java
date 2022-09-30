@@ -1,12 +1,10 @@
 package com.ssafy.purgae.service;
 
-import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.entity.UserMapping;
 import com.ssafy.purgae.database.entity.rankingUser;
 import com.ssafy.purgae.database.repository.LikeRepository;
 import com.ssafy.purgae.database.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

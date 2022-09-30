@@ -1,21 +1,15 @@
 package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.database.entity.User;
-import com.ssafy.purgae.request.GameScoreReq;
-import com.ssafy.purgae.request.NFTReq;
 import com.ssafy.purgae.service.NFTService;
-import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -94,6 +88,7 @@ public class NFTController {
         }
         NFTInfo newNFT = new NFTInfo();
         newNFT.setNFTId(randomNum);
+        newNFT.setUserId((long) -1);
         newNFT.setCreatedAt(LocalDate.now());
         nftService.saveNFTInfo(newNFT);
         result.put("message", SUCCESS);

@@ -1,6 +1,7 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
+import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.repository.NFTRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,12 +51,15 @@ public class NFTServiceImpl implements NFTService {
     }
 
     @Override
-    public boolean deleteNFTInfo(long NFTId) {
-        int tmp = nftRepository.deleteByNFTId(NFTId);
-        if (tmp == 1) {
-            return true;
+    public NFTInfo updateNFTInfo(long userId, long NFTId) {
+        NFTInfo nft = nftRepository.findFirstByNFTId(NFTId);
+        if(nft != null && nft.getUserId() == null){
+            nft.setUserId(userId);
+            nft.setCreatedAt(LocalDate.now());
+            nftRepository.save(nft);
+            return nft;
         }else{
-            return false;
+            return null;
         }
     }
 }

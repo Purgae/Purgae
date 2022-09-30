@@ -1,10 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { styled } from "@/styles/theme";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
-import Meta from "/assets/metamask.png";
 import ProfileImage from "@/common/ProfileImage/ProfileImage";
 import Button from "@/common/Button/Button";
 import TrashCan from "/assets/icon/trashcan.png";
@@ -22,6 +21,7 @@ import {
 
 import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
+import useFetchNFT from "@/hooks/useFetchNFT";
 
 type Props = {
   data?: UserProfile;
@@ -43,6 +43,24 @@ const ProfileHeader = (props: Props) => {
   const currentUserId = useAppSelector((state) => state.user.user?.id);
   const profileUserId = props.profileUserId;
   const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
+
+  // * 치운 쓰레기양 가져오기
+  const { fetchViewMyDonation } = useFetchNFT();
+  const [trashMount, setTrashMount] = useState(0);
+
+  const fetchData = async () => {
+    if (userData?.walletAddress !== undefined) {
+      const response = await fetchViewMyDonation(userData.walletAddress);
+      setTrashMount(response.trash);
+      return response;
+    } else {
+      return false;
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [profileUserId]);
 
   const [follow] = useChangeFollowMutation();
   // *팔로우 여부
@@ -108,7 +126,11 @@ const ProfileHeader = (props: Props) => {
     <>
       <ProfileHeaderStyled>
         {/* 1 */}
-        {profileImg ? <ProfileImage size="large" url={Meta} /> : <ProfileImage size="large" />}
+        {profileImg ? (
+          <ProfileImage size="large" url={"https://ipfs.io/ipfs/" + profileImg} />
+        ) : (
+          <ProfileImage size="large" />
+        )}
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">
@@ -159,7 +181,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              100 kg
+              {trashMount} kg
             </FontP>
           </FlexDiv>
           {/* 3-2 */}
@@ -173,7 +195,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              {myNftLen?.NFTNum === 0 ? "아직 살린 물고기가 없어요 " : myNftLen?.NFTNum + "마리"}
+              {myNftLen?.NFTNum} 마리
             </FontP>
           </FlexDiv>
           {/* 3-3 */}
@@ -214,9 +236,9 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
-  width: 76.6875rem;
-  background-color: white;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
+  width: 76.6875rem;
+  background-color: ${({ theme }) => theme.colors.white};
   justify-content: space-between;
   padding: 2rem 2.5rem;
   border-radius: 1rem;

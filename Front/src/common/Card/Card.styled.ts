@@ -16,6 +16,8 @@ export const Image = styled.div<{ url: string }>`
   background-image: url(${(props) => props.url});
   background-size: 100%;
   background-repeat: no-repeat;
+  border-radius: 1.3125rem;
+  box-shadow: ${({ theme }) => theme.shadows.shadow500};
 `;
 
 export const Group = styled.div`
@@ -24,7 +26,7 @@ export const Group = styled.div`
   row-gap: 6%;
   column-gap: 2%;
   width: 100%;
-  height: 25rem;
+  height: 26rem;
   @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(25%, auto));
   }

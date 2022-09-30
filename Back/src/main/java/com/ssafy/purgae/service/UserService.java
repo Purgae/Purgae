@@ -1,7 +1,6 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.User;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;

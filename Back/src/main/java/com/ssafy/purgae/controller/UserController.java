@@ -1,11 +1,8 @@
 package com.ssafy.purgae.controller;
 
-
-import com.ssafy.purgae.database.entity.FollowerInfo;
 import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.repository.LikeRepository;
-import com.ssafy.purgae.database.repository.UserRepository;
 import com.ssafy.purgae.request.GameScoreReq;
 import com.ssafy.purgae.request.UserReq;
 import com.ssafy.purgae.request.UserUpdateReq;

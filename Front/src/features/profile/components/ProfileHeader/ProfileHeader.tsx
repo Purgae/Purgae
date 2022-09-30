@@ -11,17 +11,13 @@ import Phishing from "/assets/icon/phishing.png";
 import WaterDrop from "/assets/icon/water_drop.png";
 
 import FollowModal from "../FollowModal/FollowModal";
-import { User, UserProfile } from "@/redux/types";
-import {
-  useChangeFollowMutation,
-  useGetAmIFollowQuery,
-  useGetFollowerListQuery,
-  useGetFollowingListQuery,
-} from "@/redux/api/followApi";
+import { UserProfile } from "@/redux/types";
+import { useChangeFollowMutation, useGetAmIFollowQuery } from "@/redux/api/followApi";
 
 import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 import useFetchNFT from "@/hooks/useFetchNFT";
+import { useGetProfileQuery } from "@/redux/api/userApi";
 
 type Props = {
   data?: UserProfile;
@@ -38,6 +34,8 @@ const ProfileHeader = (props: Props) => {
   // ! 현재 프로필 유저 팔로잉팔로워 수
   const userFollowerCnt = props.data?.follower_cnt;
   const userFollowingCnt = props.data?.following_cnt;
+
+  const [follower, setFollower] = useState(userFollowerCnt);
 
   // * 현재 유저와, 프로필의 유저
   const currentUserId = useAppSelector((state) => state.user.user?.id);
@@ -85,6 +83,12 @@ const ProfileHeader = (props: Props) => {
       openAlertModal(data);
     }
   };
+  const { data: profileData } = useGetProfileQuery(profileUserId);
+  useEffect(() => {
+    console.log(userFollowerCnt);
+    setFollower(userFollowerCnt);
+    console.log(profileData);
+  }, [userFollowerCnt, isfollow?.following, profileData]);
 
   const following = async () => {
     if (isUser) {
@@ -109,17 +113,28 @@ const ProfileHeader = (props: Props) => {
   // * 팔로우, 팔로잉 모달
   const [isOpenModal, setOpenModal] = useState(false);
   const [isFollower, setIsFollower] = useState(true);
+
+  // * 팔로워 리스트
   const handleModalFollower = () => {
     setOpenModal(!isOpenModal);
     setIsFollower(true);
   };
+
+  // * 팔로잉 리스트
   const handleModalFollowing = () => {
     setOpenModal(!isOpenModal);
     setIsFollower(false);
   };
+
+  // * 모달 배경 누르면 닫히는 함수
   const onClickToggleModal = () => {
     setOpenModal(!isOpenModal);
   };
+
+  // * 페이지 이동시 모달 닫히도록
+  useEffect(() => {
+    setOpenModal(false);
+  }, [userData]);
   // @end
 
   return (
@@ -137,7 +152,6 @@ const ProfileHeader = (props: Props) => {
             {userData?.nickname || "유저"}
           </FontP>
           <FlexDiv>
-            {/* <Link to={`/profile/aquarium`}> */}
             <Link to={`/profile/${userData?.id}/aquarium`}>
               <Button
                 styles="solid"
@@ -209,7 +223,7 @@ const ProfileHeader = (props: Props) => {
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              {userFollowerCnt} 명
+              {follower} 명
             </FontP>
           </FlexDivButton>
           {/* 3-4 */}
@@ -231,9 +245,12 @@ const ProfileHeader = (props: Props) => {
       {isOpenModal && (
         <FollowModal
           onClickToggleModal={onClickToggleModal}
+          nickname={userData?.nickname || "유저"}
+          userId={profileUserId}
           status={isFollower}
           userFollowerCnt={userFollowerCnt}
           userFollowingCnt={userFollowingCnt}
+          isUser={isUser}
         />
       )}
     </>

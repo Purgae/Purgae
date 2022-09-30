@@ -7,7 +7,7 @@ import { GameType } from "../../Game.types";
 import { FlexDiv } from "@/common/Common.styled";
 import { StyledGameTitle, StyledGameButton, StyledCharacter } from "./GameMain.styled";
 
-const GameMain = ({ setGamePage }: GameType) => {
+const GameMain = ({ setGamePage, toggleSound }: GameType) => {
   return (
     <FlexDiv direction="column" gap="4rem" width="100%" height="100%">
       <FlexDiv width="100%" direction="column">
@@ -21,6 +21,7 @@ const GameMain = ({ setGamePage }: GameType) => {
           onClick={() => {
             setGamePage(2);
           }}
+          onMouseOver={toggleSound}
         >
           게임 시작
         </StyledGameButton>
@@ -28,6 +29,7 @@ const GameMain = ({ setGamePage }: GameType) => {
           onClick={() => {
             setGamePage(4);
           }}
+          onMouseOver={toggleSound}
         >
           게임 방법
         </StyledGameButton>
@@ -35,6 +37,7 @@ const GameMain = ({ setGamePage }: GameType) => {
           onClick={() => {
             setGamePage(5);
           }}
+          onMouseOver={toggleSound}
         >
           랭킹 보기
         </StyledGameButton>

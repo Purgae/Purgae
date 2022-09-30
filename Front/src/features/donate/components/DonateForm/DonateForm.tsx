@@ -26,7 +26,7 @@ import {
 import { selectUser } from "@/redux/slices/userSlice";
 
 //* API
-import { useRequestRandomNumMutation, useGetDonateCountQuery, useLazyGetDonateCountQuery } from "@/redux/api/nftApi";
+import { useRequestRandomNumMutation, useLazyGetDonateCountQuery } from "@/redux/api/nftApi";
 
 const DonateForm = () => {
   const [donateCount, setDonateCount] = useState<number>();

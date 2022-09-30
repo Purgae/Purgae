@@ -26,6 +26,7 @@ const useDonate = () => {
           await switchChain(networkChainId.goerli);
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
           await succeedToDonate({ userId: uid, nftId: id });
+          dispatch(offModal());
         } catch (error: any) {
           dispatch(offModal());
           console.error(error);
@@ -40,6 +41,7 @@ const useDonate = () => {
         try {
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
           await succeedToDonate({ userId: uid, nftId: id });
+          dispatch(offModal());
         } catch (error: any) {
           dispatch(offModal());
           console.error(error);

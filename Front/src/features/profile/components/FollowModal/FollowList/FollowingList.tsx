@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import FollowItem from "./FollowItem/FollowItem";
 import { ListDiv } from "./FollowList.styled";
-import { useGetFollowingListQuery } from "@/redux/api/followApi";
+import { useGetFollowingListQuery } from "@/redux/api/userApi";
 import { Following } from "@/redux/types";
 
 interface Props {

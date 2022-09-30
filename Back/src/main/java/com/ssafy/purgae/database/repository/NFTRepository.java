@@ -20,7 +20,7 @@ public interface NFTRepository extends JpaRepository<NFTInfo, Long> {
 
     public List<NFTInfo> findByUserIdAndCreatedAt(long userId, LocalDate createdAt);
 
-    @Query("SELECT new com.ssafy.purgae.database.entity.rankingDonation(l.userId, COUNT(l.NFTId)) FROM NFTInfo as l GROUP BY l.userId ORDER BY COUNT(l.NFTId) DESC")
+    @Query("SELECT new com.ssafy.purgae.database.entity.rankingDonation(l.userId, COUNT(l.NFTId)) FROM NFTInfo as l WHERE l.userId > 0 GROUP BY l.userId ORDER BY COUNT(l.NFTId) DESC")
     public List<rankingDonation> findDonationUserWithJPQL();
 
     public int deleteByNFTId(long NFTId);

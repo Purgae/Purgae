@@ -88,6 +88,7 @@ public class NFTController {
         }
         NFTInfo newNFT = new NFTInfo();
         newNFT.setNFTId(randomNum);
+        newNFT.setUserId((long) -1);
         newNFT.setCreatedAt(LocalDate.now());
         nftService.saveNFTInfo(newNFT);
         result.put("message", SUCCESS);

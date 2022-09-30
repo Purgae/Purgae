@@ -52,13 +52,23 @@ public class NFTServiceImpl implements NFTService {
     @Override
     public NFTInfo updateNFTInfo(long userId, long NFTId) {
         NFTInfo nft = nftRepository.findFirstByNFTId(NFTId);
-        if(nft != null && nft.getUserId() == null){
+        if(nft != null && nft.getUserId() == -1){
             nft.setUserId(userId);
             nft.setCreatedAt(LocalDate.now());
             nftRepository.save(nft);
             return nft;
         }else{
             return null;
+        }
+    }
+
+    @Override
+    public boolean deleteNFTInfo(long NFTId) {
+        int tmp = nftRepository.deleteByNFTId(NFTId);
+        if(tmp == 1){
+            return true;
+        }else{
+            return false;
         }
     }
 }

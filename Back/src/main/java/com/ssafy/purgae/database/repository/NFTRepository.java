@@ -18,4 +18,6 @@ public interface NFTRepository extends JpaRepository<NFTInfo, Long> {
 
     public List<NFTInfo> findByUserIdAndCreatedAt(long userId, LocalDate createdAt);
 
+    public int deleteByNFTId(long NFTId);
+
 }

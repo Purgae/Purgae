@@ -11,12 +11,14 @@ interface Props {
   nickname: string;
   userId: number;
   following: boolean;
+  onClickToggleModal: () => void;
 }
 
 const FollowItem = (props: Props) => {
   // * 프로필 이동
   const navigate = useNavigate();
   const navigateProfile = () => {
+    props.onClickToggleModal();
     navigate(`/profile/${props.userId}`);
   };
 

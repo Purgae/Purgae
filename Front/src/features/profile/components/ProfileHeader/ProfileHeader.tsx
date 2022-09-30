@@ -46,7 +46,7 @@ const ProfileHeader = (props: Props) => {
 
   // * 치운 쓰레기양 가져오기
   const { fetchViewMyDonation } = useFetchNFT();
-  const [trashMount, setTrashMount] = useState(0);
+  const [trashMount, setTrashMount] = useState("0");
 
   const fetchData = async () => {
     if (userData?.walletAddress !== undefined) {

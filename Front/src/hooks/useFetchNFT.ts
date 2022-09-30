@@ -54,14 +54,14 @@ const useFetchNFT = () => {
   // *내 기부횟수 및 환전
   // won(문자열) ⇒ 한화
   // trash(문자열) ⇒ 쓰레기 양
-  const fetchViewMyDonation = async (address: string): Promise<{ won: string; trash: string } | boolean> => {
+  const fetchViewMyDonation = async (address: string): Promise<{ won: string; trash: string }> => {
     try {
       const data = await fetchContract.methods.viewMyDonation(address).call();
       const changeEth = await ethToTrash(data);
       return changeEth;
     } catch (error) {
       console.log(error);
-      return false;
+      return { won: "0", trash: "0" };
     }
   };
 

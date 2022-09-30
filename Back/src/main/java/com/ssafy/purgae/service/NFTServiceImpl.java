@@ -1,7 +1,6 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.repository.NFTRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,7 +1,6 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.database.entity.User;
 
 import java.util.List;
 

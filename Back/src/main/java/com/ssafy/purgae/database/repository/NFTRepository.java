@@ -1,7 +1,6 @@
 package com.ssafy.purgae.database.repository;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.database.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

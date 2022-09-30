@@ -42,7 +42,7 @@ public class RankingController {
         }
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
-
+    @ApiOperation(value = "좋아요 랭킹", notes = "요청시 탑10 좋아요 랭킹 조회")
     @GetMapping("/like")
     public ResponseEntity<Map<String, Object>> likeRanking(){
         Map<String, Object> result = new HashMap<>();

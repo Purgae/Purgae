@@ -1,19 +1,15 @@
 package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
-import com.ssafy.purgae.request.NFTReq;
 import com.ssafy.purgae.service.NFTService;
-import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +42,8 @@ public class NFTController {
         }
     }
 
-
     @ApiOperation(value = "NFT 랜덤 id 가져오기", notes = "중복되지 않은 NFT id 출력하는 API입니다.")
-    @GetMapping("/randomnft/{userId}")
+    @PostMapping("/randomNft/{userId}")
     public ResponseEntity<Map<String, Object>> insertNFTInfo(@PathVariable Long userId) {
         Map<String, Object> result = new HashMap<>();
         if (!nftService.canDonate(userId)) {
@@ -92,14 +87,29 @@ public class NFTController {
             }
         }
         NFTInfo newNFT = new NFTInfo();
-        newNFT.setUserId(userId);
         newNFT.setNFTId(randomNum);
+        newNFT.setUserId((long) -1);
         newNFT.setCreatedAt(LocalDate.now());
         nftService.saveNFTInfo(newNFT);
         result.put("message", SUCCESS);
         result.put("NFTId", randomNum);
         return new ResponseEntity<>(result, HttpStatus.OK);
+    }
 
+    @ApiOperation(value = "기부 후 발급 받은 NFT 정보 저장", notes = "회원이 발급받은 NFT 정보 DB에 저장")
+    @PutMapping("/{userId}/{nftId}")
+    public ResponseEntity<Map<String, Object>> updateNFTInfo(@PathVariable Long userId, @PathVariable Long nftId){
+        Map<String, Object> result = new HashMap<>();
+        NFTInfo nft = nftService.updateNFTInfo(userId, nftId);
+
+        if(nft != null){
+            result.put("message",SUCCESS);
+            result.put("data", nft);
+        }else{
+            result.put("message", FAIL);
+        }
+
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
 

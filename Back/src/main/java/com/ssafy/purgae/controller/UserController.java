@@ -1,7 +1,8 @@
 package com.ssafy.purgae.controller;
 
-
+import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.database.repository.LikeRepository;
 import com.ssafy.purgae.request.GameScoreReq;
 import com.ssafy.purgae.request.UserReq;
 import com.ssafy.purgae.request.UserUpdateReq;
@@ -29,6 +30,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    LikeRepository likeRepository;
 
     @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
@@ -83,11 +87,16 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserInfo(@PathVariable Long userId) {
         Map<String, Object> result = new HashMap<>();
         User user = userService.getUserWalletAddress(userId);
+        List<LikeUser> follower = likeRepository.findAllByToUser(user);
+        List<LikeUser> following = likeRepository.findAllByFromUser(user);
+
         if(user != null) {
             User userDto = userService.getUserInfo(user.getWalletAddress());
             if (userDto != null) {
                 result.put("message", SUCCESS);
                 result.put("data", userDto);
+                result.put("follower_cnt", follower.size());
+                result.put("following_cnt", following.size());
             } else {
                 result.put("message", FAIL);
             }

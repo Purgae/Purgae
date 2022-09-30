@@ -1,6 +1,5 @@
 package com.ssafy.purgae.database.entity;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 

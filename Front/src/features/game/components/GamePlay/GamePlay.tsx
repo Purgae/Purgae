@@ -20,9 +20,9 @@ import plastic_bottle from "/assets/game/plastic_bottle.png";
 import money from "/assets/game/money.png";
 
 //* 충돌 체크 알고리즘 (AABB)
-import { checkCollide, checkCollideAndReturnIndex } from "@/utils/functions/checkCollide";
+import { checkCollideGarbageBag, checkCollidePlasticBottle, checkCollideCoin } from "@/utils/functions/checkCollide";
 
-const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
+const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType) => {
   //* 캔버스 관련 State
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
@@ -34,7 +34,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   const [score, setScore] = useState<number>(0);
 
   //* 게임 아이템 정보
-  const ENEMY_WIDTH = 128;
+  const ENEMY_WIDTH = 112;
   const COIN_WIDTH = 80;
   const ITEM_ARGS = {
     speed: { min: 40, max: 60 },
@@ -64,7 +64,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     ctx,
     canvas,
     ...ITEM_ARGS,
-    addMS: 1700,
+    addMS: 1500,
   });
 
   //* 플라스틱 보틀
@@ -74,7 +74,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     ctx,
     canvas,
     ...ITEM_ARGS,
-    addMS: 1500,
+    addMS: 1300,
   });
 
   //* 게임 코인
@@ -107,7 +107,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     renderScore();
 
     //! 충돌 체크 (쓰레기 봉지) => boolean 반환
-    const collideGarbageBag = checkCollide({
+    const collideGarbageBag = checkCollideGarbageBag({
       fishX,
       fishY,
       fishWidth,
@@ -116,7 +116,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     });
 
     //! 충돌 체크 (플라스틱 병) => boolean 반환
-    const collidePlasticBottle = checkCollide({
+    const collidePlasticBottle = checkCollidePlasticBottle({
       fishX,
       fishY,
       fishWidth,
@@ -125,7 +125,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     });
 
     //! 충돌 체크 (코인) => 인덱스 반환
-    const collideCoin = checkCollideAndReturnIndex({
+    const collideCoin = checkCollideCoin({
       fishX,
       fishY,
       fishWidth,
@@ -134,12 +134,13 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     });
 
     //* 충돌
-    if (collideGarbageBag || collidePlasticBottle) {
+    if (collidePlasticBottle || collideGarbageBag) {
       setGamePage(4);
       return;
     }
     //* 충돌
     if (collideCoin !== -1) {
+      toggleSound();
       setScore((prev) => prev + 10);
       const deepCopyCoinList = [...coinList];
       deepCopyCoinList.splice(collideCoin, 1);
@@ -161,6 +162,27 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList, score]);
 
   useInterval(() => setScore((prev) => prev + 1), 1000);
+
+  //* resize Event Handler 디바운스
+  let debounce: ReturnType<typeof setTimeout>;
+
+  const resizeCanvas = () => {
+    clearTimeout(debounce);
+    if (!canvas) return;
+    const { width, height } = canvas.getBoundingClientRect();
+
+    debounce = setTimeout(() => {
+      console.log("조정");
+      setWidth(width * 1.2);
+      setHeight(height * 1.2);
+    }, 1000);
+  };
+
+  //* 리사이즈 이벤트 발생 시, 캔버스를 조정한다.
+  useEffect(() => {
+    window.addEventListener("resize", resizeCanvas);
+    return () => removeEventListener("resize", resizeCanvas);
+  }, []);
 
   return <StyledCanvas ref={canvasRef} width={width} height={height}></StyledCanvas>;
 };

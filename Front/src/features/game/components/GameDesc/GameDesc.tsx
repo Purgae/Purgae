@@ -13,7 +13,7 @@ import {
   StyledGameDescButton,
 } from "./GameDesc.styled";
 
-const GameDesc = ({ setGamePage }: GameType) => {
+const GameDesc = ({ setGamePage, toggleSound }: GameType) => {
   return (
     <StyleGameDescContainer direction="column" gap="2rem" padding="2rem 1rem 1rem 1rem">
       <StyledGameDescContent color="lightBlue800" fontSize="1rem">
@@ -38,6 +38,7 @@ const GameDesc = ({ setGamePage }: GameType) => {
         onClick={() => {
           setGamePage(2);
         }}
+        onMouseOver={toggleSound}
       >
         START
       </StyledGameDescButton>

@@ -5,9 +5,8 @@ import { styled } from "@/styles/theme";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
-type Props = {};
 
-const Profile = (props: Props) => {
+const Profile = () => {
   // !현재 프로필이 본인 프로필인지 판별
   const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
   const profileUserId = Number(useParams().userId);
@@ -15,8 +14,6 @@ const Profile = (props: Props) => {
   const currentUserId = useAppSelector((state) => state.user.user?.id);
 
   const { data: profileData } = useGetProfileQuery(profileUserId);
-  // console.log(profileData);
-  // console.log(profileData);
 
   useEffect(() => {
     if (profileUserId === currentUserId) {
@@ -43,4 +40,6 @@ const StyledRootComponent = styled.div`
   justify-content: center;
   width: 100%;
   padding-top: 6rem;
+  height: 100%;
+  padding-bottom: 3rem;
 `;

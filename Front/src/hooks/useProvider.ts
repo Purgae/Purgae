@@ -17,6 +17,7 @@ const useProvider = () => {
 
   // * FetchProvider  // window.ethereum(메타마스크가 없어도, 통신할수 있도록하는 프로바이더)
   const fetchProvider = new Web3(new Web3.providers.HttpProvider(Goeril_RPC_URL));
+
   // * FetchContract
   const fetchContract = new fetchProvider.eth.Contract(CONTRACT_ABI, CONTRACT_ADDRESS);
 
@@ -29,7 +30,6 @@ const useProvider = () => {
   const networkChainId = {
     mainnet: "0x1", // 1
     goerli: "0x5", // 5
-    rinkeby: "0x4", // 4
   };
 
   //* chainId 변경하는 함수

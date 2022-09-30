@@ -6,7 +6,6 @@ export const PageNationBg = styled.nav`
   justify-content: center;
   align-items: center;
   gap: 4px;
-  margin: 16px;
 `;
 
 export const PageNationBtn = styled.button`

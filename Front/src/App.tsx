@@ -17,7 +17,8 @@ import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
 import Game from "@/features/game/Game";
 import ProfileAquarium from "@/features/profile/ProfileAquarium";
-import Faq from "./features/faq/Faq";
+import Faq from "@/features/faq/Faq";
+import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -55,9 +56,11 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
           <Route path="/profile/:userId" element={<Profile />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
-          <Route path="/profile/:userId/:id" />
+          <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
+          {/* 개인 수족관 */}
+          <Route path="/profile/aquarium" element={<ProfileAquarium />} />
+          {/* <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} /> */}
           {/* 개인 팔로우/팔로워 */}
           <Route path="/profile/:userId/follow" />
           {/* 게임 */}

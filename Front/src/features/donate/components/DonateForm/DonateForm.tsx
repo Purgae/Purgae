@@ -15,7 +15,9 @@ import useDonate from "@/hooks/useDonate";
 //* redux
 import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
 import { selectUser } from "@/redux/slices/userSlice";
-import { useGetRandomNftQuery } from "@/redux/api/nftApi";
+
+//* API
+import { useRequestRandomNumMutation, useSucceedToDonateMutation } from "@/redux/api/nftApi";
 
 const DonateForm = () => {
   const dispatch = useAppDispatch();
@@ -23,9 +25,8 @@ const DonateForm = () => {
   const { donate } = useDonate();
   const { account } = useMetaMask();
   const { user } = useAppSelector(selectUser);
-  const [arg, setArg] = useState<number>();
-  const { data, error } = useGetRandomNftQuery(arg);
-  // const [getRandomNft] = useGetRandomNftQuery();
+  const [requestRandomNum] = useRequestRandomNumMutation();
+  const [succeedToDonate] = useSucceedToDonateMutation();
 
   const submitButtonStyle = submitStatus ? "gradient" : "white250";
 
@@ -38,9 +39,12 @@ const DonateForm = () => {
   };
 
   const submitDonateForm = async (event: React.FormEvent<HTMLFormElement>) => {
+    if (!account) {
+    }
     event.preventDefault();
-    setArg(user!.id);
-    console.log(data);
+    try {
+      const response = await requestRandomNum(user!.id);
+    } catch (error) {}
     // try {
     //   const response = await fetch(`${API_URL}/nft/randomnft/${user!.id}`);
     //   const { NFTId } = await response.json();
@@ -54,23 +58,6 @@ const DonateForm = () => {
     //   console.log(error);
     // }
   };
-
-  useEffect(() => {
-    if (!data) return;
-    if (!arg) return;
-    const payload = {
-      uid: user!.id,
-      id: data?.NFTId,
-      address: account!,
-      ether: inputValue,
-    };
-    console.log(payload);
-    donate(payload);
-  }, [data]);
-
-  useEffect(() => {
-    console.log(error);
-  }, [error]);
 
   useEffect(() => {
     const debounce = setTimeout(() => {

@@ -12,27 +12,40 @@ export interface RandomNft {
   // error: string; // timeout : 제대로 된 id 가져오기 어려움, over : 기부횟수 10번 넘음
 }
 
+export interface NFTType {
+  message: string;
+  data: {
+    infoId: number;
+    userId: number;
+    createdAt: string;
+    nftid: number;
+  };
+}
+
 export const nftApi = createApi({
   reducerPath: "nftApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
   tagTypes: ["Nft"],
   endpoints: (build) => ({
     getDonateCount: build.query<UserDonateCnt, number>({
-      query: (userId) => `/nft/${userId}`,
+      query: (userId) => ({
+        url: `/nft/${userId}`,
+        method: "POST",
+      }),
       providesTags: ["Nft"],
     }),
-    getRandomNft: build.query<RandomNft, number | undefined>({
+    requestRandomNum: build.mutation<RandomNft, number>({
       query: (userId) => `/nft/randomnft/${userId}`,
-      providesTags: ["Nft"],
+      invalidatesTags: ["Nft"],
     }),
-    deleteRandomNft: build.mutation<{ message: string }, { userId: number; nftId: number }>({
+    succeedToDonate: build.mutation<NFTType, { userId: number; nftId: number }>({
       query: ({ userId, nftId }) => ({
         url: `/nft/${userId}/${nftId}`,
-        method: "DELETE",
+        method: "PUT",
       }),
       invalidatesTags: ["Nft"],
     }),
   }),
 });
 
-export const { useGetDonateCountQuery, useGetRandomNftQuery, useDeleteRandomNftMutation } = nftApi;
+export const { useGetDonateCountQuery, useRequestRandomNumMutation, useSucceedToDonateMutation } = nftApi;

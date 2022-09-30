@@ -92,7 +92,7 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType
 
   //* score
   const renderScore = useCallback(() => {
-    ctx?.fillText(`SCORE: ${score}`, 20, 80);
+    ctx?.fillText(`탐험 점수: ${score}`, 20, 80);
     ctx!.font = "32px UhBeeSe_hyun";
   }, [ctx, score]);
 

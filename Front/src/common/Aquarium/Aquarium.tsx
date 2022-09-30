@@ -3,6 +3,8 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
 import { BubbleType } from "./Aquarium.types";
 import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
+import useAudio from "@/hooks/useAudio";
+import water_drop from "/assets/sound/water_drop.wav";
 
 type Props = {
   fishImages: string[];
@@ -19,10 +21,15 @@ const Aquarium = (props: Props) => {
     setRotationY(-y * 3);
   };
 
+  const [fishList, setFishList] = useState(props.fishImages);
+  if (props.fishImages.length > 20) {
+    setFishList(props.fishImages.splice(0, 20));
+  }
+
   //* 물고기 생성
   const generateFish = useMemo(
     () =>
-      props.fishImages.map((fish, idx) => (
+      fishList.map((fish, idx) => (
         <Fish
           fish={fish}
           key={idx}
@@ -72,6 +79,7 @@ const Aquarium = (props: Props) => {
   //* 버블 효과
   const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
   const bubbleRef = useRef(bubbleList);
+  const { turnOn } = useAudio(water_drop, false);
 
   const handleMouseClick = async (event: React.MouseEvent) => {
     const id = Date.now();
@@ -80,6 +88,7 @@ const Aquarium = (props: Props) => {
     const size = Math.random() * 80;
     const animatebubble = Math.random() * 5 + 3;
     const sideway = Math.random() * 2 + 2;
+    turnOn();
 
     //* 버블을 리스트에 추가한다.
     bubbleRef.current = [

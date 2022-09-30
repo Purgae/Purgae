@@ -1,7 +1,9 @@
 package com.ssafy.purgae.database.repository;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
+import com.ssafy.purgae.database.entity.rankingDonation;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
@@ -17,6 +19,9 @@ public interface NFTRepository extends JpaRepository<NFTInfo, Long> {
     public List<NFTInfo> findAll();
 
     public List<NFTInfo> findByUserIdAndCreatedAt(long userId, LocalDate createdAt);
+
+    @Query("SELECT new com.ssafy.purgae.database.entity.rankingDonation(l.userId, COUNT(l.NFTId)) FROM NFTInfo as l GROUP BY l.userId ORDER BY COUNT(l.NFTId) DESC")
+    public List<rankingDonation> findDonationUserWithJPQL();
 
     public int deleteByNFTId(long NFTId);
 

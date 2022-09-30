@@ -3,7 +3,7 @@ import ProfileImage from "@/common/ProfileImage/ProfileImage";
 import Button from "@/common/Button/Button";
 import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
-import { useChangeFollowMutation } from "@/redux/api/followApi";
+import { useChangeFollowMutation } from "@/redux/api/userApi";
 
 interface Props {
   myFollow: boolean;

@@ -1,6 +1,14 @@
-import { useEffect, useState, useRef } from "react";
+/*
+  게임을 플레이하는 컴포넌트 (캔버스 활용)
+  쓰레기를 피해 코인을 먹고 생존해야 한다. 
+  - 쓰레기, 코인, 캐릭터를 랜더링 하는 것은 훅으로 관리한다. 
+  - 게임 Score는 State로 관리한다. 
+*/
+
+import { useEffect, useState, useRef, useCallback } from "react";
 import { GameCharacterType } from "../../Game.types";
 import { StyledCanvas } from "./GamePlay.styled";
+import useInterval from "@/hooks/useInterval";
 
 //* 게임 아이템
 import useGameFish from "@/hooks/useGameFish";
@@ -12,13 +20,18 @@ import plastic_bottle from "/assets/game/plastic_bottle.png";
 import money from "/assets/game/money.png";
 
 //* 충돌 체크 알고리즘 (AABB)
-import { checkCollide } from "@/utils/functions/checkCollide";
+import { checkCollide, checkCollideAndReturnIndex } from "@/utils/functions/checkCollide";
 
 const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   //* 캔버스 관련 State
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
+  const [width, setWidth] = useState<number>();
+  const [height, setHeight] = useState<number>();
+
+  //* 게임관련 State
+  const [score, setScore] = useState<number>(0);
 
   //* 게임 아이템 정보
   const ENEMY_WIDTH = 128;
@@ -36,6 +49,9 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     const ctx = canvas.getContext("2d")! as CanvasRenderingContext2D;
     setCanvas(canvas);
     setCtx(ctx);
+    const { width, height } = canvas.getBoundingClientRect();
+    setWidth(width * 1.2);
+    setHeight(height * 1.2);
   }, [canvas]);
 
   //* 내 물고기
@@ -62,13 +78,23 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
   });
 
   //* 게임 코인
-  const { itemList: coinList, renderItemList: renderCoinList } = useGameItem({
+  const {
+    itemList: coinList,
+    renderItemList: renderCoinList,
+    setItemList: setCoinList,
+  } = useGameItem({
     image: money,
     width: COIN_WIDTH,
     ctx,
     canvas,
     ...ITEM_ARGS,
   });
+
+  //* score
+  const renderScore = useCallback(() => {
+    ctx?.fillText(`SCORE: ${score}`, 20, 80);
+    ctx!.font = "32px UhBeeSe_hyun";
+  }, [ctx, score]);
 
   //* 캔버스 그리기
   useEffect(() => {
@@ -78,8 +104,9 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
     renderGarbageBagList();
     renderPlasticBottleList();
     renderCoinList();
+    renderScore();
 
-    //! 충돌 체크
+    //! 충돌 체크 (쓰레기 봉지) => boolean 반환
     const collideGarbageBag = checkCollide({
       fishX,
       fishY,
@@ -88,7 +115,7 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
       itemArray: garbageBagList,
     });
 
-    //! 충돌 체크
+    //! 충돌 체크 (플라스틱 병) => boolean 반환
     const collidePlasticBottle = checkCollide({
       fishX,
       fishY,
@@ -97,24 +124,45 @@ const GamePlay = ({ setGamePage, gameCharacter }: GameCharacterType) => {
       itemArray: plasticBottleList,
     });
 
+    //! 충돌 체크 (코인) => 인덱스 반환
+    const collideCoin = checkCollideAndReturnIndex({
+      fishX,
+      fishY,
+      fishWidth,
+      itemWidth: COIN_WIDTH,
+      itemArray: coinList,
+    });
+
+    //* 충돌
     if (collideGarbageBag || collidePlasticBottle) {
       setGamePage(4);
       return;
     }
+    //* 충돌
+    if (collideCoin !== -1) {
+      setScore((prev) => prev + 10);
+      const deepCopyCoinList = [...coinList];
+      deepCopyCoinList.splice(collideCoin, 1);
+      setCoinList(deepCopyCoinList);
+    }
 
-    const fishReq = requestAnimationFrame(renderFish);
-    const garbageBagListReq = requestAnimationFrame(renderGarbageBagList);
-    const plasticBottleListReq = requestAnimationFrame(renderPlasticBottleList);
-    const coinListReq = requestAnimationFrame(renderCoinList);
-    return () => {
-      cancelAnimationFrame(fishReq);
-      cancelAnimationFrame(garbageBagListReq);
-      cancelAnimationFrame(plasticBottleListReq);
-      cancelAnimationFrame(coinListReq);
-    };
-  }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList]);
+    // const fishReq = requestAnimationFrame(renderFish);
+    // const garbageBagListReq = requestAnimationFrame(renderGarbageBagList);
+    // const plasticBottleListReq = requestAnimationFrame(renderPlasticBottleList);
+    // const coinListReq = requestAnimationFrame(renderCoinList);
+    // const scoreReq = requestAnimationFrame(renderScore);
+    // return () => {
+    //   cancelAnimationFrame(fishReq);
+    //   cancelAnimationFrame(garbageBagListReq);
+    //   cancelAnimationFrame(plasticBottleListReq);
+    //   cancelAnimationFrame(coinListReq);
+    //   cancelAnimationFrame(scoreReq);
+    // };
+  }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList, score]);
 
-  return <StyledCanvas ref={canvasRef} width="1920" height="1080"></StyledCanvas>;
+  useInterval(() => setScore((prev) => prev + 1), 1000);
+
+  return <StyledCanvas ref={canvasRef} width={width} height={height}></StyledCanvas>;
 };
 
 export default GamePlay;

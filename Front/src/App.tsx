@@ -17,7 +17,8 @@ import Profile from "@/features/profile/Profile";
 import Ranking from "@/features/ranking/Ranking";
 import Game from "@/features/game/Game";
 import ProfileAquarium from "@/features/profile/ProfileAquarium";
-import Faq from "./features/faq/Faq";
+import Faq from "@/features/faq/Faq";
+import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -29,6 +30,7 @@ const App = () => {
   //* AlertModal Status
   const { status, content, styles } = useAppSelector(selectAlert);
 
+  // TODO user connect 됐을때 로그인 요청 보내서, state에 저장할것
   /* 
   TODO login check (server연결 후 test해볼것-addlistener)
   @이더리움이 없을때도 고려
@@ -54,9 +56,8 @@ const App = () => {
           <Route path="/login" element={<Login />} />
           {/* 개인 프로필 페이지 */}
           <Route path="/profile/:userId" element={<Profile />} />
-          {/* <Route path="/profile" element={<Profile />} /> */}
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
-          <Route path="/profile/:userId/:id" />
+          <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
           {/* 개인 수족관 */}
           <Route path="/profile/aquarium" element={<ProfileAquarium />} />
           {/* <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} /> */}
@@ -78,6 +79,8 @@ const App = () => {
         </Route>
         {/* 메인 페이지 입장하기 전 수족관 */}
         <Route path="/" element={<Start />} />
+        {/* 개인 수족관 */}
+        <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
       {status && (
         <AlertModal top="4rem" right="50%" styles={styles}>

@@ -3,4 +3,5 @@ export interface CardPageProps {
   gameSelectCard?: number;
   onClick?: React.MouseEventHandler;
   nftexist: boolean;
+  isProfile?: boolean;
 }

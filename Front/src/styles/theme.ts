@@ -9,6 +9,8 @@ const colors = {
   // background-image
   gradient: "linear-gradient(350deg, #5e30ff, #5f6bff, #5299ff, #1ec5ff)",
 
+  butgradient: "linear-gradient(350deg, #5299ff, #1ec5ff, #abdcff, #F6FBFF)",
+
   transparent: "transparent",
 
   // Main 컬러

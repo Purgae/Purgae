@@ -9,14 +9,29 @@ import {
   Following,
   Title,
 } from "./FollowModal.styled";
-import FollowList from "./FollowList/FollowList";
+import FollowerList from "./FollowList/FollowerList";
+import FollowingList from "./FollowList/FollowingList";
 
 interface PropsType {
   onClickToggleModal: () => void;
   status: boolean;
+  userFollowerCnt: number | undefined;
+  userFollowingCnt: number | undefined;
+  nickname: string;
+  userId: number;
+  isUser: boolean;
 }
 
-const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
+const FollowModal = ({
+  onClickToggleModal,
+  status,
+  userFollowerCnt,
+  userFollowingCnt,
+  nickname,
+  userId,
+  isUser,
+}: PropsType) => {
+  // * 팔로워 리스트인지 팔로우 리스트인지
   const [isFollower, setIsFollower] = useState(true);
   const handleFollower = () => {
     setIsFollower(true);
@@ -27,12 +42,21 @@ const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
   useEffect(() => {
     setIsFollower(status);
   }, [status]);
+
+  // * 뒷배경 스크롤 방지
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
     return () => {
-      document.body.style.overflow = "auto";
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
-  });
+  }, []);
+
   return (
     <ModalContainer>
       {" "}
@@ -40,16 +64,17 @@ const FollowModal = ({ onClickToggleModal, status }: PropsType) => {
         <StyledAbsoluteIcon className="material-icons" onClick={onClickToggleModal}>
           close
         </StyledAbsoluteIcon>
-        <Username>김물고기김물고기</Username>
+        <Username>{nickname}</Username>
         <Title justify="space-around" width="90%">
           <Follower status={isFollower} onClick={handleFollower}>
-            100 팔로워
+            {userFollowerCnt} 팔로워
           </Follower>
           <Following status={isFollower} onClick={handleFollowing}>
-            100 팔로잉
+            {userFollowingCnt} 팔로잉
           </Following>
         </Title>
-        <FollowList isFollower={isFollower} myFollow={true} />
+        {isFollower && <FollowerList myFollow={isUser} userId={userId} />}
+        {!isFollower && <FollowingList myFollow={isUser} userId={userId} />}
       </DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {

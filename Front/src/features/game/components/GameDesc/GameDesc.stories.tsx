@@ -1,5 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import GameDesc from "./GameDesc";
+import { GameType } from "../../Game.types";
 
 export default {
   title: "Game/GameDesc",
@@ -9,4 +10,6 @@ export default {
   },
 } as Meta;
 
-export const Default: Story = () => <GameDesc setGamePage={() => console.log("페이지 변경")}></GameDesc>;
+export const Default: Story<GameType> = () => (
+  <GameDesc setGamePage={() => console.log("페이지 변경")} toggleSound={() => console.log("사운드")}></GameDesc>
+);

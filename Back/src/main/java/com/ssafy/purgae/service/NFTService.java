@@ -1,6 +1,7 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
+import com.ssafy.purgae.database.entity.User;
 
 import java.util.List;
 
@@ -14,5 +15,6 @@ public interface NFTService {
 
     public boolean canDonate(long userId);
 
-    public boolean deleteNFTInfo(long NFTId);
+    public NFTInfo updateNFTInfo(long userId, long NFTId);
+
 }

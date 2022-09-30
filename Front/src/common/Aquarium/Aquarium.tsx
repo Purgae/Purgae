@@ -1,8 +1,8 @@
 import Bubble from "@/common/Aquarium/Bubble/Bubble";
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { Scene, Cube, Front, Back, Right, Left, Top, Bottom, Fish, ClickBubble } from "./Aquarium.styled";
+import { BubbleType } from "./Aquarium.types";
 import WaterSound from "@/common/Aquarium/WaterSound/WaterSound";
-import "./style.css";
 
 type Props = {
   fishImages: string[];
@@ -69,24 +69,40 @@ const Aquarium = (props: Props) => {
     }
   }, []);
 
-  // 버블 효과
-  let body = document.getElementById("bubble");
-  let bubble = document.createElement("span");
-  const handleMouseClick = (event: React.MouseEvent) => {
-    console.log(event);
-    let x = event.clientX;
-    let y = event.clientY;
-    bubble.style.left = x + "px";
-    bubble.style.top = y + "px";
-    let size = Math.random() * 80;
-    bubble.style.width = 20 + size + "px";
-    bubble.style.height = 20 + size + "px";
-    if (body) {
-      body.appendChild(bubble);
-    }
-    setTimeout(function () {
-      bubble.remove();
-    }, 3000);
+  //* 버블 효과
+  const [bubbleList, setBubbleList] = useState<BubbleType[]>([]);
+  const bubbleRef = useRef(bubbleList);
+
+  const handleMouseClick = async (event: React.MouseEvent) => {
+    const id = Date.now();
+    const x = event.clientX;
+    const y = event.clientY;
+    const size = Math.random() * 80;
+    const animatebubble = Math.random() * 5 + 3;
+    const sideway = Math.random() * 2 + 2;
+
+    //* 버블을 리스트에 추가한다.
+    bubbleRef.current = [
+      ...bubbleRef.current,
+      { left: x, top: y, size, animatebubble: animatebubble, sideway: sideway, id },
+    ];
+    setBubbleList(bubbleRef.current);
+    timeout(id);
+  };
+
+  const timeout = (bubbleId: number) => {
+    //* 버블이 없으면 return한다.
+    if (bubbleRef.current.length === 0) return;
+
+    //* animatebuble 시간 가져오기 (애니메이션 진행 시간)
+    const len = bubbleRef.current.length;
+    const time = Math.floor(bubbleRef.current[len - 1].animatebubble) * 1000;
+
+    //* animatebubble만큼 시간을 기다린 뒤 제거 한다. (id로 식별)
+    setTimeout(() => {
+      bubbleRef.current = bubbleRef.current.filter((item) => item.id !== bubbleId);
+      setBubbleList(bubbleRef.current);
+    }, time);
   };
 
   return (
@@ -94,7 +110,18 @@ const Aquarium = (props: Props) => {
       <WaterSound />
       <Cube rotationX={rotationX} rotationY={rotationY}>
         <div id="fishes">{generateFish}</div>
-        <div id="bubble"></div>
+        {bubbleList.map((item) => {
+          return (
+            <ClickBubble
+              key={item.id}
+              left={item.left}
+              top={item.top}
+              size={item.size}
+              animatebubble={item.animatebubble}
+              sideway={item.sideway}
+            />
+          );
+        })}
         <Bubble />
         <Front />
         <Back />

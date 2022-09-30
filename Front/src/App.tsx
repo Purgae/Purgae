@@ -79,6 +79,8 @@ const App = () => {
         </Route>
         {/* 메인 페이지 입장하기 전 수족관 */}
         <Route path="/" element={<Start />} />
+        {/* 개인 수족관 */}
+        <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
       {status && (
         <AlertModal top="4rem" right="50%" styles={styles}>

@@ -204,7 +204,7 @@ const ProfileHeader = (props: Props) => {
             <FlexDiv>
               <Icon url={WaterDrop} />
               <FontP fontSize="1.125rem" fontWeight="semiBold">
-                팔로우
+                팔로워
               </FontP>
             </FlexDiv>
             {/* 하 */}
@@ -228,7 +228,14 @@ const ProfileHeader = (props: Props) => {
           </FlexDivButton>
         </FlexDiv>
       </ProfileHeaderStyled>
-      {isOpenModal && <FollowModal onClickToggleModal={onClickToggleModal} status={isFollower} />}
+      {isOpenModal && (
+        <FollowModal
+          onClickToggleModal={onClickToggleModal}
+          status={isFollower}
+          userFollowerCnt={userFollowerCnt}
+          userFollowingCnt={userFollowingCnt}
+        />
+      )}
     </>
   );
 };

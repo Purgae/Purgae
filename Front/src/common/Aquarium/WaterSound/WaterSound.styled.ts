@@ -5,7 +5,7 @@ import pause from "/assets/aquarium/pause.png";
 export const Div = styled.div`
   position: fixed;
   left: 1%;
-  bottom: 1%;
+  bottom: 1.5%;
   z-index: 3;
   display: flex;
 `;

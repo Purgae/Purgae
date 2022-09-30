@@ -26,14 +26,15 @@ export interface Following {
 
 export interface FollowingList {
   message: string;
-  following?: Following;
+  following?: Following[];
 }
 
 export interface Follower {
   toUser: User;
   following: boolean;
 }
+
 export interface FollowerList {
   message: string;
-  follower?: Follower;
+  follower?: Follower[];
 }

@@ -1,3 +1,9 @@
+/* 
+  게임 캐릭터 
+  1. 키보드 keydown 이벤트에 따라 캐릭터가 움직인다.
+  2. renderFish를 통해 외부에서 캐릭터를 랜더한다. 
+*/
+
 import { useEffect, useState, useCallback } from "react";
 
 interface UseGameFishType {
@@ -6,10 +12,10 @@ interface UseGameFishType {
   ctx: CanvasRenderingContext2D | undefined;
 }
 
-const fishWidth = 192;
-const fishHeight = 192;
-
 const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
+  const fishWidth = 192;
+  const fishHeight = 192;
+
   const [fishX, setFishX] = useState<number>(0);
   const [fishY, setFishY] = useState<number>(0);
 
@@ -47,7 +53,7 @@ const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
     //* 상
     else if (event.keyCode == 38) {
       setFishY((prev: number) => {
-        if (prev > 0) {
+        if (prev > 100) {
           return prev - step;
         } else {
           return prev;
@@ -76,7 +82,7 @@ const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
     };
   }, [canvas]);
 
-  return { ctx, canvas, fishX, fishY, renderFish };
+  return { fishX, fishY, fishWidth, renderFish };
 };
 
 export default useGameFish;

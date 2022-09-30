@@ -1,4 +1,5 @@
 import useProvider from "./useProvider";
+import { ethToTrash } from "@/utils/functions/ethChange";
 
 const useFetchNFT = () => {
   const { fetchContract } = useProvider();
@@ -29,7 +30,7 @@ const useFetchNFT = () => {
       const data: string[] = await fetchContract.methods.viewMyNFT(address).call();
       const NFTList = await changeNFTUrl(data.filter((item) => item.length > 0));
       const myNFTList = await Promise.all(NFTList);
-      console.log("이거심", myNFTList);
+      // console.log("이거심", myNFTList);
       return myNFTList;
     } catch (error) {
       console.log(error);
@@ -50,11 +51,26 @@ const useFetchNFT = () => {
     }
   };
 
+  // *내 기부횟수 및 환전
+  // won(문자열) ⇒ 한화
+  // trash(문자열) ⇒ 쓰레기 양
+  const fetchViewMyDonation = async (address: string): Promise<{ won: string; trash: string }> => {
+    try {
+      const data = await fetchContract.methods.viewMyDonation(address).call();
+      const changeEth = await ethToTrash(data);
+      return changeEth;
+    } catch (error) {
+      console.log(error);
+      return { won: "0", trash: "0" };
+    }
+  };
+
   return {
     changeMetaToLink,
     changeNFTUrl,
     fetchMyNFT,
     fetchTodayNFT,
+    fetchViewMyDonation,
   };
 };
 

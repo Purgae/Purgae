@@ -8,7 +8,7 @@ const useDonate = () => {
   const { chainId, switchChain } = useMetaMask();
   const { openAlertModal } = useAlertModal();
 
-  const donate = ({ id, ether, address }: { id: number; ether: string; address: string }) => {
+  const donate = ({ uid, id, ether, address }: { uid: number; id: number; ether: string; address: string }) => {
     const wei = changeEtherToWei(ether);
     const transactionObject = {
       from: address,

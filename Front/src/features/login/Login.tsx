@@ -48,7 +48,7 @@ const Login = () => {
   };
 
   const LoginFunction = async () => {
-    if (ethereum) {
+    if (window.ethereum) {
       if (status === "notConnected") {
         // *고릴일때
         if (chainId === networkChainId.goerli) {

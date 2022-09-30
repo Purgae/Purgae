@@ -9,16 +9,29 @@ import {
   Following,
   Title,
 } from "./FollowModal.styled";
-import FollowList from "./FollowList/FollowList";
+import FollowerList from "./FollowList/FollowerList";
+import FollowingList from "./FollowList/FollowingList";
 
 interface PropsType {
   onClickToggleModal: () => void;
   status: boolean;
   userFollowerCnt: number | undefined;
   userFollowingCnt: number | undefined;
+  nickname: string;
+  userId: number;
+  isUser: boolean;
 }
 
-const FollowModal = ({ onClickToggleModal, status, userFollowerCnt, userFollowingCnt }: PropsType) => {
+const FollowModal = ({
+  onClickToggleModal,
+  status,
+  userFollowerCnt,
+  userFollowingCnt,
+  nickname,
+  userId,
+  isUser,
+}: PropsType) => {
+  // * 팔로워 리스트인지 팔로우 리스트인지
   const [isFollower, setIsFollower] = useState(true);
   const handleFollower = () => {
     setIsFollower(true);
@@ -37,7 +50,7 @@ const FollowModal = ({ onClickToggleModal, status, userFollowerCnt, userFollowin
         <StyledAbsoluteIcon className="material-icons" onClick={onClickToggleModal}>
           close
         </StyledAbsoluteIcon>
-        <Username>김물고기김물고기</Username>
+        <Username>{nickname}</Username>
         <Title justify="space-around" width="90%">
           <Follower status={isFollower} onClick={handleFollower}>
             {userFollowerCnt} 팔로워
@@ -46,7 +59,8 @@ const FollowModal = ({ onClickToggleModal, status, userFollowerCnt, userFollowin
             {userFollowingCnt} 팔로잉
           </Following>
         </Title>
-        <FollowList isFollower={isFollower} myFollow={true} />
+        {isFollower && <FollowerList myFollow={isUser} userId={userId} />}
+        {!isFollower && <FollowingList myFollow={isUser} userId={userId} />}
       </DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {

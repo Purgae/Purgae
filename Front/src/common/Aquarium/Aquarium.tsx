@@ -9,7 +9,7 @@ type Props = {
 };
 
 const Aquarium = (props: Props) => {
-  // 수족관 회전
+  //* 수족관 회전
   const [rotationX, setRotationX] = useState(0.0);
   const [rotationY, setRotationY] = useState(0.0);
   const handleMouseMove = (event: React.MouseEvent) => {
@@ -19,7 +19,7 @@ const Aquarium = (props: Props) => {
     setRotationY(-y * 3);
   };
 
-  // 물고기 생성
+  //* 물고기 생성
   const generateFish = useMemo(
     () =>
       props.fishImages.map((fish, idx) => (
@@ -34,7 +34,7 @@ const Aquarium = (props: Props) => {
     []
   );
 
-  // 물고기 이동
+  //* 물고기 이동
   useEffect(() => {
     const fishCollection = document.getElementById("fishes")?.children;
     if (fishCollection) {

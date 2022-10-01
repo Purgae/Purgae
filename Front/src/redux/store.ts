@@ -15,7 +15,7 @@ import { authApi } from "@/redux/api/authApi";
 import { coinApi } from "@/redux/api/coinApi";
 import { nftApi } from "@/redux/api/nftApi";
 import { gameRankingApi } from "@/redux/api/gameRankingApi";
-import { rankingApi } from "@/redux/api/RankingApi";
+import { rankingApi } from "@/redux/api/rankingApi";
 
 // * 리듀서
 const reducers = combineReducers({

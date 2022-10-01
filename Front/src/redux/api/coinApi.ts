@@ -17,4 +17,4 @@ export const coinApi = createApi({
   }),
 });
 
-export const { useFetchCoinPriceQuery } = coinApi;
+export const { useFetchCoinPriceQuery, useLazyFetchCoinPriceQuery } = coinApi;

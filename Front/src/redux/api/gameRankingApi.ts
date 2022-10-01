@@ -6,8 +6,8 @@ export interface GetGameRanking {
   top10: {
     id: number;
     nickname: string;
-    ProfileImage: string | null;
-    gameScore: number;
+    profileImage: string | null;
+    gameScore: string;
   }[];
 }
 

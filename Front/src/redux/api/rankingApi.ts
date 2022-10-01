@@ -4,30 +4,30 @@ import API_URL from "@/redux/env";
 export interface GetLikeRanking {
   message: string;
   top10: {
-    toUser: {
-      id: number;
-      walletAddress: string;
-      nickname: string;
-      ProfileImage: string | null;
-      gameScore: number;
-      profilePublic: boolean;
-    };
     countLike: number;
+    toUser: {
+      gameScore: number;
+      id: number;
+      nickname: string;
+      profileImage: string | null;
+      profilePublic: boolean;
+      walletAddress: string;
+    };
   }[];
 }
 
 export interface GetDonationRanking {
   message: string;
   top10: {
-    toUser: {
-      id: number;
-      walletAddress: string;
-      nickname: string;
-      ProfileImage: string | null;
+    countDonation: number;
+    user: {
       gameScore: number;
+      id: number;
+      nickname: string;
+      profileImage: string | null;
       profilePublic: boolean;
+      walletAddress: string;
     };
-    countLike: number;
   }[];
 }
 

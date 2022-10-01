@@ -34,7 +34,7 @@ export const gameRankingApi = createApi({
       providesTags: ["Game"],
     }),
 
-    updateGameScore: build.mutation<UpdateGameRankingType, { userId: number; gameScore: 1234 }>({
+    updateGameScore: build.mutation<UpdateGameRankingType, { userId: number; gameScore: number }>({
       query: (data) => ({
         url: "/user/score",
         method: "PUT",
@@ -45,4 +45,4 @@ export const gameRankingApi = createApi({
   }),
 });
 
-export const { useLazyGetGameRankingQuery, useGetGameRankingQuery } = gameRankingApi;
+export const { useLazyGetGameRankingQuery, useGetGameRankingQuery, useUpdateGameScoreMutation } = gameRankingApi;

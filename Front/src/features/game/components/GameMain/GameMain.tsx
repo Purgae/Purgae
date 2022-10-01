@@ -3,7 +3,7 @@
   버튼 클릭을 통해 다른 컴포넌트로 이동한다. 
 */
 
-import { GameMainType } from "../../Game.types";
+import { GameMainType } from "./GameMain.types";
 import { FlexDiv } from "@/common/Common.styled";
 import { StyledGameTitle, StyledGameButton, StyledCharacter } from "./GameMain.styled";
 

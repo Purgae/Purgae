@@ -4,7 +4,7 @@
   하단에 위치한 시작버튼을 클릭하면 게임 플레이 컴포넌트로 이동한다.
 */
 
-import { GameType } from "../../Game.types";
+import { GameDescType } from "./GameDesc.types";
 import { FlexDiv } from "@/common/Common.styled";
 import {
   StyleGameDescContainer,
@@ -13,7 +13,7 @@ import {
   StyledGameDescButton,
 } from "./GameDesc.styled";
 
-const GameDesc = ({ setGamePage, toggleSound }: GameType) => {
+const GameDesc = ({ setGamePage, toggleSound }: GameDescType) => {
   return (
     <StyleGameDescContainer direction="column" gap="2rem" padding="2rem 1rem 1rem 1rem">
       <StyledGameDescContent color="lightBlue800" fontSize="1rem">

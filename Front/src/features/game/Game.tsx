@@ -23,6 +23,7 @@ import useAudio from "@/hooks/useAudio";
 import GameMain from "./components/GameMain/GameMain";
 import GameDesc from "./components/GameDesc/GameDesc";
 import GamePlay from "./components/GamePlay/GamePlay";
+import GameResult from "./components/GameResult/GameResult";
 
 const Game = () => {
   //* 0: 메인, 1: 게임 캐릭터 선택,  2: 게임 플레이,  3:  플레이 결과, 4: 게임 설명 ,5: 게임 랭킹
@@ -30,6 +31,9 @@ const Game = () => {
 
   //* 게임 캐릭터
   const [gameCharacter, setGameCharacter] = useState<string>(fish);
+
+  //* 게임 스코어
+  const [gameScore, setGameScore] = useState<number>(0);
 
   //* BGM
   const { playing: playingGameBGM, turnOn: turnOnGameBGM, turnOff: turnOffGameBGM } = useAudio(game_bgm, true);
@@ -78,12 +82,21 @@ const Game = () => {
 
         {/* 게임 화면 */}
         {gamePage === 0 && (
-          <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton} turnOnGameBGM={turnOnGameBGM}></GameMain>
+          <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton} turnOnGameBGM={turnOnGameBGM} />
         )}
         {gamePage === 2 && (
-          <GamePlay setGamePage={setGamePage} gameCharacter={gameCharacter} toggleSound={turnOnCoinSound}></GamePlay>
+          <GamePlay
+            setGamePage={setGamePage}
+            gameCharacter={gameCharacter}
+            toggleSound={turnOnCoinSound}
+            gameScore={gameScore}
+            setGameScore={setGameScore}
+          />
         )}
-        {gamePage === 4 && <GameDesc setGamePage={setGamePage} toggleSound={toggleGameButton}></GameDesc>}
+        {gamePage === 3 && (
+          <GameResult setGamePage={setGamePage} gameScore={gameScore} toggleSound={toggleGameButton} />
+        )}
+        {gamePage === 4 && <GameDesc setGamePage={setGamePage} toggleSound={toggleGameButton} />}
       </StyledGameContainer>
     </RootComponent>
   );

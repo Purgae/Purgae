@@ -6,25 +6,25 @@ import "./counter.css";
 import Card from "@/common/Card/Card";
 import EditProfileModal from "@/features/profile/components/EditProfileModal/EditProfileModal";
 
+// const [fetchCoinPrice] = useLazyFetchCoinPriceQuery();
 // * action creator, selector를 import한다.
 
 import { selectCounter, increment, decrement } from "@/redux/slices/counterSlice";
 import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";
 import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
 import useFetchNFT from "@/hooks/useFetchNFT";
+import { useGetGameRankingQuery } from "@/redux/api/gameRankingApi";
+
+import useEtherToTrash from "@/hooks/useEtherToTrash";
 
 // * props를 넘긴다면 props 타입을 지정한다.
 interface TestProps {}
 
 // * 함수형 컴포넌트
 const Counter = (props: TestProps) => {
-  //* hooks에 정의한 useAppSelector함수를 이용하여 State를 가져온다.
-  //* useSelector()함수 대신에 사용한다.
-  const { counter } = useAppSelector(selectCounter);
-
-  // * hooks에 정의한 useAppDispatch()함수를 재 정의 한다.
-  // * useDispatch()함수 대신에 사용한다.
   const dispatch = useAppDispatch();
+  const { won, trash } = useEtherToTrash(0.0025);
+  console.log(won, trash);
 
   const [NFTList, setNFTList] = useState<string[]>([]);
   const [modalState, toggleModal] = useState<boolean>(false);
@@ -55,16 +55,13 @@ const Counter = (props: TestProps) => {
     dispatch(openEditProfile());
   };
 
+  const fetchCoin = () => {
+    console.log(won, trash);
+  };
+
   const el = document.getElementById("modal")!;
   return (
     <Fragment>
-      <section className="counter-section">
-        <h1>Redux TEST</h1>
-        <div> {counter} </div>
-        {/* acion 크리에이터를 활용하여 action을 dispatch한다! */}
-        <button onClick={() => dispatch(increment(5))}>+5</button>
-        <button onClick={() => dispatch(decrement(5))}>-5</button>
-      </section>
       <section className="counter-section">
         <h1>API TEST</h1>
         <button onClick={clickHandler}>API TEST</button>
@@ -84,6 +81,10 @@ const Counter = (props: TestProps) => {
       <section className="counter-section">
         <h1>ModalTest</h1>z<button onClick={clickModalToggle}>toggle모달</button>
         {editProfile && createPortal(<EditProfileModal />, el)}
+      </section>
+      <section className="counter-section">
+        <h1>함수 체크</h1>
+        <button onClick={fetchCoin}>toggle모달</button>
       </section>
     </Fragment>
   );

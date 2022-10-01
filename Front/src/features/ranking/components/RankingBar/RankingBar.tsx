@@ -8,7 +8,7 @@ const RankingBarWrapper = styled.div`
 const RankingBarBackground = styled.div`
   display: grid;
   align-items: center;
-  grid-template-columns: 0.5fr 1.5fr 0.7fr;
+  grid-template-columns: 0.5fr 1.5fr 0.8fr;
   width: 35rem;
   padding: 0.5rem 2rem;
   background-image: ${({ theme }) => theme.colors.gradient};
@@ -23,18 +23,22 @@ const RankingBarContent = styled.p`
   color: ${({ theme }) => theme.colors.white};
 `;
 
-const RankingBar = () => {
+type Title = {
+  title: string;
+};
+
+const RankingBar = (title: Title) => {
   return (
     <RankingBarWrapper>
       <RankingBarBackground>
         <RankingBarContent>순위</RankingBarContent>
         <RankingBarContent>프로필</RankingBarContent>
-        <RankingBarContent>총 금액 및 쓰레기량</RankingBarContent>
+        <RankingBarContent>{title.title}</RankingBarContent>
       </RankingBarBackground>
       <RankingBarBackground>
         <RankingBarContent>순위</RankingBarContent>
         <RankingBarContent>프로필</RankingBarContent>
-        <RankingBarContent>총 금액 및 쓰레기량</RankingBarContent>
+        <RankingBarContent>{title.title}</RankingBarContent>
       </RankingBarBackground>
     </RankingBarWrapper>
   );

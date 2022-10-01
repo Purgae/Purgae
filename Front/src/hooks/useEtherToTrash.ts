@@ -1,11 +1,9 @@
 import { useFetchCoinPriceQuery } from "@/redux/api/coinApi";
-import { useEffect, useState } from "react";
 
-const useEtherToTrash = (ether: number) => {
-  const [result, setResult] = useState<{ won: string; trash: string }>({ won: "0", trash: "0" });
+const useEtherToTrash = () => {
   const { data } = useFetchCoinPriceQuery("ETH");
 
-  useEffect(() => {
+  const changeEtherToTrash = (ether: number) => {
     if (!data) return;
     const { trade_price: currency } = data[0];
     let won: number | string = ether * currency;
@@ -17,10 +15,10 @@ const useEtherToTrash = (ether: number) => {
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 
-    setResult({ won, trash });
-  }, [data]);
+    return { won, trash };
+  };
 
-  return result;
+  return { changeEtherToTrash };
 };
 
 export default useEtherToTrash;

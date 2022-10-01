@@ -23,8 +23,7 @@ interface TestProps {}
 // * 함수형 컴포넌트
 const Counter = (props: TestProps) => {
   const dispatch = useAppDispatch();
-  const { won, trash } = useEtherToTrash(0.0025);
-  console.log(won, trash);
+  const { changeEtherToTrash } = useEtherToTrash();
 
   const [NFTList, setNFTList] = useState<string[]>([]);
   const [modalState, toggleModal] = useState<boolean>(false);
@@ -56,7 +55,7 @@ const Counter = (props: TestProps) => {
   };
 
   const fetchCoin = () => {
-    console.log(won, trash);
+    console.log(changeEtherToTrash(0.0025));
   };
 
   const el = document.getElementById("modal")!;

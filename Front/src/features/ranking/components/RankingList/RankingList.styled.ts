@@ -8,10 +8,11 @@ export const RankingTitleListWrapper = styled.div`
 
 export const RankingTitle = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "start")};
-  ${({ theme }) => theme.mixins.font("2rem", "700")};
-  color: ${({ theme }) => theme.colors.gray300};
+  ${({ theme }) => theme.mixins.font("1.8rem", "600")};
+  color: ${({ theme }) => theme.colors.gray200};
   width: 99%;
   text-align: left;
+  padding-bottom: 1rem;
 `;
 
 export const RankingListWrapper = styled.div`
@@ -24,13 +25,4 @@ export const RankingContentWrapper = styled.div`
   grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
   column-gap: 4rem;
   padding-bottom: 6rem;
-`;
-
-export const RankingListIcon = styled.div<{ background: string; size: string }>`
-  font-size: ${(props) => props.size};
-  margin-right: 0.8rem;
-  background: ${(props) => props.background};
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: -0.2rem;
 `;

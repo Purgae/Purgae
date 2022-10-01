@@ -11,5 +11,9 @@ export default {
 } as Meta;
 
 export const Default: Story<GameType> = () => (
-  <GameMain setGamePage={() => console.log("페이지 변경")} toggleSound={() => console.log("사운드")}></GameMain>
+  <GameMain
+    setGamePage={() => console.log("페이지 변경")}
+    toggleSound={() => console.log("사운드")}
+    turnOnGameBGM={() => console.log("BGM")}
+  ></GameMain>
 );

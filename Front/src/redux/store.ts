@@ -15,6 +15,8 @@ import { authApi } from "@/redux/api/authApi";
 import { coinApi } from "@/redux/api/coinApi";
 import { nftApi } from "@/redux/api/nftApi";
 import { gameRankingApi } from "@/redux/api/gameRankingApi";
+import { rankingApi } from "@/redux/api/rankingApi";
+
 // * 리듀서
 const reducers = combineReducers({
   counter,
@@ -28,6 +30,7 @@ const reducers = combineReducers({
   [coinApi.reducerPath]: coinApi.reducer,
   [nftApi.reducerPath]: nftApi.reducer,
   [gameRankingApi.reducerPath]: gameRankingApi.reducer,
+  [rankingApi.reducerPath]: rankingApi.reducer,
 });
 
 // * session storage
@@ -48,7 +51,14 @@ const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }).concat(userApi.middleware, authApi.middleware, coinApi.middleware, nftApi.middleware, gameRankingApi.middleware),
+    }).concat(
+      userApi.middleware,
+      authApi.middleware,
+      coinApi.middleware,
+      nftApi.middleware,
+      gameRankingApi.middleware,
+      rankingApi.middleware
+    ),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

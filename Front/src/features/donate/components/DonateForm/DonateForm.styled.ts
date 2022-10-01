@@ -5,11 +5,11 @@ export const StyleDonateForm = styled.form`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "flex-start")};
   gap: 3.5rem;
   flex-shrink: 0;
-  min-height: 29rem;
+  min-height: 30rem;
 
   @media ${({ theme }) => theme.sizes.tablet} {
     min-width: 80%;
-    min-height: 23rem;
+    min-height: 24rem;
   }
 
   @media ${({ theme }) => theme.sizes.pc} {

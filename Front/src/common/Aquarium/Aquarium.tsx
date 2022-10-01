@@ -19,10 +19,15 @@ const Aquarium = (props: Props) => {
     setRotationY(-y * 3);
   };
 
+  const [fishList, setFishList] = useState(props.fishImages);
+  if (props.fishImages.length > 20) {
+    setFishList(props.fishImages.splice(0, 20));
+  }
+
   //* 물고기 생성
   const generateFish = useMemo(
     () =>
-      props.fishImages.map((fish, idx) => (
+      fishList.map((fish, idx) => (
         <Fish
           fish={fish}
           key={idx}
@@ -31,7 +36,7 @@ const Aquarium = (props: Props) => {
           size={Math.floor(Math.random() * 12) + 8}
         />
       )),
-    []
+    [fishList]
   );
 
   //* 물고기 이동

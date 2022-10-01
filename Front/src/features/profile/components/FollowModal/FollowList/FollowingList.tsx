@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import FollowItem from "./FollowItem/FollowItem";
 import { ListDiv } from "./FollowList.styled";
-import { useGetFollowingListQuery } from "@/redux/api/followApi";
+import { useGetFollowingListQuery } from "@/redux/api/userApi";
 import { Following } from "@/redux/types";
 
 interface Props {
   myFollow: boolean;
   userId: number;
+  onClickToggleModal: () => void;
 }
 
 const FollowingList = (props: Props) => {
@@ -30,6 +31,7 @@ const FollowingList = (props: Props) => {
             key={idx}
             userId={item.id}
             following={true}
+            onClickToggleModal={props.onClickToggleModal}
           />
         );
       })}

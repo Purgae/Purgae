@@ -13,7 +13,6 @@ const Profile = () => {
 
   const currentUserId = useAppSelector((state) => state.user.user?.id);
   const { data: profileData } = useGetProfileQuery(profileUserId);
-  // const [pData, setPData] = useState(profileData);
   console.log(profileData?.follower_cnt);
   useEffect(() => {
     if (profileUserId === currentUserId) {
@@ -22,12 +21,6 @@ const Profile = () => {
       setIsProfileUser(false);
     }
   }, [profileUserId]);
-
-  // useEffect(() => {
-  //   console.log(profileData?.follower_cnt);
-  //   setPData(profileData);
-  //   console.log(profileData?.follower_cnt);
-  // }, [profileData]);
 
   return (
     <StyledRootComponent>

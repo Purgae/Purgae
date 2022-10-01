@@ -37,14 +37,14 @@ const Start = () => {
     setTimeout(() => {
       setIsDisplay1(false);
       setIsDisplay2(true);
-    }, 5000);
+    }, 3000);
     setTimeout(() => {
       setIsDisplay2(false);
       setIsDisplay3(true);
-    }, 10000);
+    }, 6000);
     setTimeout(() => {
       setIsDisplay3(false);
-    }, 15000);
+    }, 9000);
   }, []);
 
   return (

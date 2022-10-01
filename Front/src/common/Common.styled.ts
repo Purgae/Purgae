@@ -32,6 +32,7 @@ export const FlexShadowDiv = styled(FlexDiv)<ShadowDivProps>`
 export const StrongSpan = styled.span<StrongSpanProps>`
   font-size: ${({ fontSize }) => (fontSize !== undefined ? fontSize : "transparent")};
   font-weight: ${({ fontWeight, theme }) => (fontWeight !== undefined ? theme.fontWeights[fontWeight] : "medium")};
+  color: ${({ color, theme }) => (color !== undefined ? theme.colors[color] : "mainParagraph")};
 `;
 
 export const FontP = styled.p<FontPProps>`

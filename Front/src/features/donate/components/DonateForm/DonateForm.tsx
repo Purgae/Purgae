@@ -1,32 +1,46 @@
 import { useEffect, useState } from "react";
 import { useMetaMask } from "metamask-react";
+import { useNavigate } from "react-router-dom";
+
+//* 컴포넌트
 import { FlexDiv, StrongSpan } from "@/common/Common.styled";
 import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
 
-//* baseUrl
-import API_URL from "@/redux/env";
-
 //* 커스텀 훅
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
+import { useAlertModal } from "@/hooks/useAlertModal";
 import useDonate from "@/hooks/useDonate";
 
 //* redux
-import { setInputValue, selectDonate, addInputValue, validInputValue } from "@/redux/slices/donateSlice";
+import {
+  setInputValue,
+  selectDonate,
+  addInputValue,
+  validInputValue,
+  resetInputValue,
+  onModal,
+  offModal,
+} from "@/redux/slices/donateSlice";
 import { selectUser } from "@/redux/slices/userSlice";
 
 //* API
-import { useRequestRandomNumMutation, useSucceedToDonateMutation } from "@/redux/api/nftApi";
+import { useRequestRandomNumMutation, useLazyGetDonateCountQuery } from "@/redux/api/nftApi";
 
 const DonateForm = () => {
+  const [donateCount, setDonateCount] = useState<number>();
   const dispatch = useAppDispatch();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
-  const { donate } = useDonate();
-  const { account } = useMetaMask();
   const { user } = useAppSelector(selectUser);
   const [requestRandomNum] = useRequestRandomNumMutation();
-  const [succeedToDonate] = useSucceedToDonateMutation();
+  const [getDonateCount] = useLazyGetDonateCountQuery();
+
+  //* 훅
+  const navigate = useNavigate();
+  const donate = useDonate();
+  const { account } = useMetaMask();
+  const { openAlertModal } = useAlertModal();
 
   const submitButtonStyle = submitStatus ? "gradient" : "white250";
 
@@ -38,27 +52,39 @@ const DonateForm = () => {
     dispatch(setInputValue(value));
   };
 
+  //* 제출 하기
+  /* 
+    1. 백엔드 POST 요청하여 랜덤 NFTId 배부
+    2. 랜덤 NFTId를 담아 컨트랙트 ABI 호출
+    3. 컨트랙트가 성공하면 PUT 요청
+  */
   const submitDonateForm = async (event: React.FormEvent<HTMLFormElement>) => {
     if (!account) {
+      navigate("/login");
+      const content = "지갑이 연결되어야 기부가 가능합니다.";
+      openAlertModal({ content, styles: "DANGER" });
     }
     event.preventDefault();
+    dispatch(resetInputValue());
     try {
-      const response = await requestRandomNum(user!.id);
-    } catch (error) {}
-    // try {
-    //   const response = await fetch(`${API_URL}/nft/randomnft/${user!.id}`);
-    //   const { NFTId } = await response.json();
-    //   const args = {
-    //     id: NFTId,
-    //     address: account!,
-    //     ether: inputValue,
-    //   };
-    //   donate(args);
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      const { NFTId } = await requestRandomNum(user!.id).unwrap();
+      const payload = {
+        uid: user!.id,
+        id: NFTId,
+        address: account!,
+        ether: inputValue,
+      };
+      dispatch(onModal());
+      donate(payload);
+    } catch (error) {
+      dispatch(offModal());
+
+      //TODO: 백엔드에게 요청해서 에러 처리 잡기
+      console.error(error);
+    }
   };
 
+  //* input 유효성 검사 (디바운스)
   useEffect(() => {
     const debounce = setTimeout(() => {
       dispatch(validInputValue());
@@ -68,6 +94,17 @@ const DonateForm = () => {
       clearTimeout(debounce);
     };
   }, [inputValue]);
+
+  //* 기부 횟수 받아오는 함수
+  useEffect(() => {
+    if (!account || !user) return;
+    (async () => {
+      try {
+        const { NFTNum } = await getDonateCount(user!.id).unwrap();
+        setDonateCount(NFTNum);
+      } catch (error) {}
+    })();
+  }, [account, user]);
 
   return (
     <StyleDonateForm onSubmit={submitDonateForm}>
@@ -82,15 +119,23 @@ const DonateForm = () => {
           status={inputStatus}
           errorMessage={errorMessage}
         >
-          <FlexDiv align="flex-start">
-            <p>기부 금액(단위: ETH) </p>
-            <span className="material-icons-outlined">error_outline</span>
-          </FlexDiv>
+          <p>기부 금액(단위: ETH) </p>
         </CommonInput>
         <p>
-          하루에 최대 <StrongSpan fontWeight="bold">15회</StrongSpan> 기부가 가능하고, 최소 기부 금액은
+          하루에 최대 <StrongSpan fontWeight="bold">10회</StrongSpan> 기부가 가능하고, 최소 기부 금액은
           <StrongSpan fontWeight="bold">0.0025ETH</StrongSpan>입니다.
         </p>
+        {donateCount ? (
+          <p style={{ marginTop: "-0.2rem" }}>
+            {" "}
+            <StrongSpan fontWeight="bold" color="primary500p">
+              {10 - (donateCount % 10)}{" "}
+            </StrongSpan>
+            번 더 기부하면 돌고래 NFT를 받을 수 있어요!
+          </p>
+        ) : (
+          ""
+        )}
       </FlexDiv>
       <DonateGridDiv>
         <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0005)}>

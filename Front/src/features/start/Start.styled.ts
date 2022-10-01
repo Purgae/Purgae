@@ -64,7 +64,7 @@ export const Description2 = styled(Description)`
 `;
 
 export const Description3 = styled(Description)`
-  left: 4.5%;
+  left: 3.25rem;
   top: 88.5%;
   /* background-color: ${({ theme }) => theme.colors.primary700}; */
 `;

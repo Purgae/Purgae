@@ -10,6 +10,7 @@ interface DonateState {
   errorMessage: string;
   won: string;
   trash: string;
+  modalStatus: boolean;
 }
 
 //* state의 초기값을 지정한다..
@@ -20,6 +21,7 @@ const initialState: DonateState = {
   errorMessage: "",
   won: "0",
   trash: "0",
+  modalStatus: false,
 };
 
 const slice = createSlice({
@@ -99,6 +101,13 @@ const slice = createSlice({
     setTrash: (state, action: PayloadAction<string>) => {
       state.trash = action.payload;
     },
+
+    onModal: (state) => {
+      state.modalStatus = true;
+    },
+    offModal: (state) => {
+      state.modalStatus = false;
+    },
   },
 });
 
@@ -117,5 +126,7 @@ export const {
   validInputValue,
   setWon,
   setTrash,
+  onModal,
+  offModal,
 } = slice.actions;
 export default slice.reducer;

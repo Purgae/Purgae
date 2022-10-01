@@ -7,6 +7,7 @@ import { Follower } from "@/redux/types";
 interface Props {
   myFollow: boolean;
   userId: number;
+  onClickToggleModal: () => void;
 }
 
 const FollowerList = (props: Props) => {
@@ -33,6 +34,7 @@ const FollowerList = (props: Props) => {
             key={idx}
             userId={item.toUser.id}
             following={item.following}
+            onClickToggleModal={props.onClickToggleModal}
           />
         );
       })}

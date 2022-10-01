@@ -73,8 +73,8 @@ const FollowModal = ({
             {userFollowingCnt} 팔로잉
           </Following>
         </Title>
-        {isFollower && <FollowerList myFollow={isUser} userId={userId} />}
-        {!isFollower && <FollowingList myFollow={isUser} userId={userId} />}
+        {isFollower && <FollowerList myFollow={isUser} userId={userId} onClickToggleModal={onClickToggleModal} />}
+        {!isFollower && <FollowingList myFollow={isUser} userId={userId} onClickToggleModal={onClickToggleModal} />}
       </DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {

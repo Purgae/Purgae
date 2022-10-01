@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import useInterval from "@/hooks/useInterval";
 import { FlexDiv } from "@/common/Common.styled";
 import { GameResultType } from "./GameResult.types";
 import {
@@ -9,10 +8,22 @@ import {
   StyledGameResultContainer,
 } from "./GameResult.styled";
 
+import { useMetaMask } from "metamask-react";
+import { selectUser } from "@/redux/slices/userSlice";
+import { useAppSelector } from "@/hooks/storeHook";
+import { useUpdateGameScoreMutation } from "@/redux/api/gameRankingApi";
+import useKakao from "@/hooks/useKaKao";
+
 const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => {
+  const { account } = useMetaMask();
+  const { user } = useAppSelector(selectUser);
+  const [updateGameScore] = useUpdateGameScoreMutation();
+  const { kakaoShare } = useKakao();
+
   const [result, setResult] = useState<number>();
   const score = useRef<number>(0);
 
+  //* 게임 점수가 0부터 점점 증가한다.
   useEffect(() => {
     const interval = setInterval(() => {
       if (score.current >= gameScore) return;
@@ -21,6 +32,21 @@ const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => 
     }, 10);
     return () => clearInterval(interval);
   }, []);
+
+  //* 서버에 게임 점수를 반영한다.
+  useEffect(() => {
+    if (!user) return;
+    const payload = {
+      userId: user!.id,
+      gameScore,
+    };
+    updateGameScore(payload);
+  }, [user]);
+
+  //* 공유하기
+  const shareGameScore = () => {
+    kakaoShare(gameScore);
+  };
 
   return (
     <FlexDiv direction="column" width="100%" height="100%">
@@ -32,12 +58,15 @@ const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => 
           {result}
         </StyledGameResultScore>
 
-        <FlexDiv gap="4rem">
+        <FlexDiv gap="3rem">
           <StyledGameResultButton onClick={() => setGamePage(2)} onMouseOver={toggleSound}>
             다시하기
           </StyledGameResultButton>
           <StyledGameResultButton onClick={() => setGamePage(0)} onMouseOver={toggleSound}>
             홈으로
+          </StyledGameResultButton>
+          <StyledGameResultButton onClick={shareGameScore} onMouseOver={toggleSound}>
+            공유하기
           </StyledGameResultButton>
         </FlexDiv>
       </StyledGameResultContainer>

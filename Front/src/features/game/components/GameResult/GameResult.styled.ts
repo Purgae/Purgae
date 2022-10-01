@@ -30,10 +30,13 @@ export const StyledGameResultScore = styled(FontP)`
 
 export const StyledGameResultButton = styled.button`
   font-family: "UhBeeSe_hyun";
-  font-size: 1.5rem;
+  font-size: 1rem;
   padding: 0.5rem 0rem;
   color: ${({ theme }) => theme.colors.white100};
 
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 1.5rem;
+  }
   &:hover {
     color: ${({ theme }) => theme.colors.white350};
   }

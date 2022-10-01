@@ -11,6 +11,18 @@ export interface GetGameRanking {
   }[];
 }
 
+export interface UpdateGameRankingType {
+  message: string;
+  data: {
+    id: number;
+    walletAddress: string;
+    nickname: string;
+    profileImage: string | null;
+    gameScore: number;
+    profilePublic: boolean;
+  }[];
+}
+
 export const gameRankingApi = createApi({
   reducerPath: "gameRankingApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),
@@ -18,8 +30,17 @@ export const gameRankingApi = createApi({
   endpoints: (build) => ({
     // * query
     getGameRanking: build.query<GetGameRanking, void>({
-      query: () => `/ranking/game`,
+      query: () => "/ranking/game",
       providesTags: ["Game"],
+    }),
+
+    updateGameScore: build.mutation<UpdateGameRankingType, { userId: number; gameScore: 1234 }>({
+      query: (data) => ({
+        url: "/user/score",
+        method: "PUT",
+        body: data,
+      }),
+      invalidatesTags: ["Game"],
     }),
   }),
 });

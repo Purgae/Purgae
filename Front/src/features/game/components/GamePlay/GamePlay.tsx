@@ -6,7 +6,7 @@
 */
 
 import { useEffect, useState, useRef, useCallback } from "react";
-import { GameCharacterType } from "../../Game.types";
+import { GamePlayType } from "./GamePlay.types";
 import { StyledCanvas } from "./GamePlay.styled";
 import useInterval from "@/hooks/useInterval";
 
@@ -22,16 +22,13 @@ import money from "/assets/game/money.png";
 //* 충돌 체크 알고리즘 (AABB)
 import { checkCollideGarbageBag, checkCollidePlasticBottle, checkCollideCoin } from "@/utils/functions/checkCollide";
 
-const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType) => {
+const GamePlay = ({ setGamePage, gameCharacter, toggleSound, gameScore, setGameScore }: GamePlayType) => {
   //* 캔버스 관련 State
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [ctx, setCtx] = useState<CanvasRenderingContext2D>();
   const [canvas, setCanvas] = useState<HTMLCanvasElement>();
   const [width, setWidth] = useState<number>();
   const [height, setHeight] = useState<number>();
-
-  //* 게임관련 State
-  const [score, setScore] = useState<number>(0);
 
   //* 게임 아이템 정보
   const ENEMY_WIDTH = 112;
@@ -92,9 +89,9 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType
 
   //* score
   const renderScore = useCallback(() => {
-    ctx?.fillText(`탐험 점수: ${score}`, 20, 80);
+    ctx?.fillText(`탐험 점수: ${gameScore}`, 20, 80);
     ctx!.font = "32px UhBeeSe_hyun";
-  }, [ctx, score]);
+  }, [ctx, gameScore]);
 
   //* 캔버스 그리기
   useEffect(() => {
@@ -135,33 +132,20 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType
 
     //* 충돌
     if (collidePlasticBottle || collideGarbageBag) {
-      setGamePage(4);
+      setGamePage(3);
       return;
     }
     //* 충돌
     if (collideCoin !== -1) {
       toggleSound();
-      setScore((prev) => prev + 10);
+      setGameScore((prev) => prev + 10);
       const deepCopyCoinList = [...coinList];
       deepCopyCoinList.splice(collideCoin, 1);
       setCoinList(deepCopyCoinList);
     }
+  }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList, gameScore]);
 
-    // const fishReq = requestAnimationFrame(renderFish);
-    // const garbageBagListReq = requestAnimationFrame(renderGarbageBagList);
-    // const plasticBottleListReq = requestAnimationFrame(renderPlasticBottleList);
-    // const coinListReq = requestAnimationFrame(renderCoinList);
-    // const scoreReq = requestAnimationFrame(renderScore);
-    // return () => {
-    //   cancelAnimationFrame(fishReq);
-    //   cancelAnimationFrame(garbageBagListReq);
-    //   cancelAnimationFrame(plasticBottleListReq);
-    //   cancelAnimationFrame(coinListReq);
-    //   cancelAnimationFrame(scoreReq);
-    // };
-  }, [ctx, fishX, fishY, garbageBagList, plasticBottleList, coinList, score]);
-
-  useInterval(() => setScore((prev) => prev + 1), 1000);
+  useInterval(() => setGameScore((prev) => prev + 1), 1000);
 
   //* resize Event Handler 디바운스
   let debounce: ReturnType<typeof setTimeout>;
@@ -179,7 +163,9 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound }: GameCharacterType
   };
 
   //* 리사이즈 이벤트 발생 시, 캔버스를 조정한다.
+  //* mount시 게임 score 리셋
   useEffect(() => {
+    setGameScore(0);
     window.addEventListener("resize", resizeCanvas);
     return () => removeEventListener("resize", resizeCanvas);
   }, []);

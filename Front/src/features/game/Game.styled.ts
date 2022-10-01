@@ -8,6 +8,8 @@ export const StyledGameContainer = styled(FlexDiv)`
   position: relative;
   aspect-ratio: 3/2;
   max-width: 80rem;
+  box-shadow: ${({ theme }) => theme.shadows.shadow700};
+  border-radius: 0.5rem;
   background-image: url(${sea});
   background-size: cover;
   background-position: center;

@@ -7,7 +7,14 @@ import { FlexDiv, FontP } from "../Common.styled";
 import PageNation from "../PageNation/PageNation";
 import { CardPageProps } from "./CardPage.types";
 
-const CardPage = ({ nftLst, nftexist, onClick, gameSelectCard, isProfile }: React.PropsWithChildren<CardPageProps>) => {
+const CardPage = ({
+  nftLst,
+  nftexist,
+  onClick,
+  gameSelectCard,
+  isProfile,
+  selectCardFunc,
+}: React.PropsWithChildren<CardPageProps>) => {
   // * 부모 컴포넌트에서, nft존재하는지 여부 함께 내려주기
   // const [exist, setExist] = useState<boolean>(false);
 
@@ -42,7 +49,13 @@ const CardPage = ({ nftLst, nftexist, onClick, gameSelectCard, isProfile }: Reac
       </FontP>
       {nftexist ? (
         <NftDiv>
-          <CardGroup lst={selectedList} selectCard={gameSelectCard} onClick={onClick} isProfile={isProfile} />
+          <CardGroup
+            lst={selectedList}
+            selectCard={gameSelectCard}
+            onClick={onClick}
+            isProfile={isProfile}
+            selectCardFunc={selectCardFunc}
+          />
           <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={nftLst} />
         </NftDiv>
       ) : (

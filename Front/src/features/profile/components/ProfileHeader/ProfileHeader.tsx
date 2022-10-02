@@ -229,9 +229,13 @@ const ProfileHeader = (props: Props) => {
             </FontP>
           </FlexDivButton>
         </FlexDiv>
-        <StyledAbsoluteIcon className="material-icons" onClick={clickModalToggle}>
-          settings
-        </StyledAbsoluteIcon>
+        {isUser ? (
+          <StyledAbsoluteIcon className="material-icons" onClick={clickModalToggle}>
+            settings
+          </StyledAbsoluteIcon>
+        ) : (
+          ""
+        )}
         {editProfile && createPortal(<EditProfileModal />, el)}
       </ProfileHeaderStyled>
       {isOpenModal && (

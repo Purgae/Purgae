@@ -48,15 +48,19 @@ declare global {
 const App = () => {
   //* AlertModal Status
   const { status: alertState, content, styles } = useAppSelector(selectAlert);
-  const { chainId, switchChain } = useMetaMask();
-  const { networkChainId } = useProvider();
+  const { openAlertModal } = useAlertModal();
+  const el = document.getElementById("modal")!;
+
+  // * react
   const dispatch = useDispatch();
+  const location = useLocation();
   const currentUser = useSelector(selectUser);
   const [login] = useLoginMutation();
+
+  // * web3
+  const { chainId, switchChain } = useMetaMask();
+  const { networkChainId } = useProvider();
   const { getHash } = useFetchNFT();
-  const { openAlertModal } = useAlertModal();
-  const location = useLocation();
-  const el = document.getElementById("modal")!;
 
   const updateUserModal = () => {
     const data: OpenAlertModalArg = {
@@ -125,7 +129,6 @@ const App = () => {
         }
         // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
       }
-
       // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
       else if (typeof window.ethereum === "undefined") {
         if (currentUser.user?.walletAddress) {

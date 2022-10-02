@@ -37,7 +37,6 @@ const GameMain = ({ setGamePage, toggleSound, turnOnGameBGM }: GameMainType) => 
         </StyledGameButton>
         <StyledGameButton
           onClick={() => {
-            turnOnGameBGM();
             setGamePage(5);
           }}
           onMouseOver={toggleSound}

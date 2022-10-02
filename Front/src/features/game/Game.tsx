@@ -24,6 +24,7 @@ import GameMain from "./components/GameMain/GameMain";
 import GameDesc from "./components/GameDesc/GameDesc";
 import GamePlay from "./components/GamePlay/GamePlay";
 import GameResult from "./components/GameResult/GameResult";
+import GameRanking from "./components/GameRanking/GameRanking";
 
 const Game = () => {
   //* 0: 메인, 1: 게임 캐릭터 선택,  2: 게임 플레이,  3:  플레이 결과, 4: 게임 설명 ,5: 게임 랭킹
@@ -97,6 +98,7 @@ const Game = () => {
           <GameResult setGamePage={setGamePage} gameScore={gameScore} toggleSound={toggleGameButton} />
         )}
         {gamePage === 4 && <GameDesc setGamePage={setGamePage} toggleSound={toggleGameButton} />}
+        {gamePage === 5 && <GameRanking setGamePage={setGamePage} toggleSound={toggleGameButton} />}
       </StyledGameContainer>
     </RootComponent>
   );

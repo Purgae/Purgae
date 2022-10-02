@@ -1,4 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { setUser } from "@/redux/slices/userSlice";
+
 import API_URL from "@/redux/env";
 
 export interface GetGameRanking {
@@ -7,7 +9,7 @@ export interface GetGameRanking {
     id: number;
     nickname: string;
     profileImage: string | null;
-    gameScore: string;
+    gameScore: number;
   }[];
 }
 
@@ -20,7 +22,7 @@ export interface UpdateGameRankingType {
     profileImage: string | null;
     gameScore: number;
     profilePublic: boolean;
-  }[];
+  };
 }
 
 export const gameRankingApi = createApi({
@@ -41,6 +43,15 @@ export const gameRankingApi = createApi({
         body: data,
       }),
       invalidatesTags: ["Game"],
+
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          await dispatch(setUser(data.data));
+        } catch (error) {
+          console.error("login error", error);
+        }
+      },
     }),
   }),
 });

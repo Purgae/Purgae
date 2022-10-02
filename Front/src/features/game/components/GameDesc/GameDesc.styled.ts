@@ -49,3 +49,11 @@ export const StyledGameDescButton = styled.button`
     color: ${({ theme }) => theme.colors.mainWhite};
   }
 `;
+
+export const StyledGameDescBackIcon = styled.button`
+  position: absolute;
+  top: 1.5rem;
+  left: 1rem;
+  color: ${({ theme }) => theme.colors.gray300};
+  font-size: 3rem;
+`;

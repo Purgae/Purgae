@@ -1,5 +1,6 @@
 import { StyledSelectNFTProfileModal, StyledAbsoluteIcon } from "./SelectNFTProfileModal.styled";
 import CardGroup from "@/common/Card/Card";
+import CardPage from "@/common/CardPageNation/CardPage";
 import { useState, useEffect } from "react";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useAppSelector, useAppDispatch } from "@/hooks/storeHook";
@@ -69,7 +70,8 @@ function SelectNFTProfileModal({ selectImage }: Props) {
       <StyledAbsoluteIcon className="material-icons" onClick={clickClose}>
         close
       </StyledAbsoluteIcon>
-      <CardGroup lst={myNFTList} selectCardFunc={selectCard}></CardGroup>
+      {/* <CardGroup lst={myNFTList} selectCardFunc={selectCard}></CardGroup> */}
+      <CardPage nftLst={myNFTList} nftexist={myNFTList.length > 0 ? true : false} selectCardFunc={selectCard} />
       <Button styles="solid" bgColor="primary500" fontColor="white" onClick={settingProfileImage}>
         설정하기
       </Button>

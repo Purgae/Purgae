@@ -1,9 +1,10 @@
 // * StyledComponent
 import { styled } from "../../styles/theme";
+import imgUrl from "/assets/profile.png";
 
 const Round = styled.div<{ url: string }>`
   border-radius: 50%;
-  background-image: url(${(props) => props.url});
+  background-image: ${(props) => (props.url === imgUrl ? `url(${imgUrl})` : `url(https://ipfs.io/ipfs/${props.url})`)};
   background-size: cover;
   background-repeat: no-repeat;
 `;

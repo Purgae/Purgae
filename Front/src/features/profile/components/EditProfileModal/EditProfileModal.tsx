@@ -33,7 +33,8 @@ const EditProfileModal = () => {
   const currentUserprofileImage = useAppSelector((state) => state.user.user?.profileImage);
   const [profileImage, setProfileImage] = useState(currentUserprofileImage);
   const selectImage = (url: string) => {
-    setProfileImage(url);
+    setProfileImage(url.split("ipfs/")[1]);
+    console.log(url.split("ipfs/")[1]);
   };
 
   const el = document.getElementById("modal")!;

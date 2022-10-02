@@ -13,3 +13,12 @@ export const ListDiv = styled.div`
     border-radius: 6px;
   }
 `;
+
+export const Div = styled.div`
+  height: 1rem;
+`;
+
+export const NoFollow = styled.div`
+  margin-top: 1rem;
+  text-align: center;
+`;

@@ -3,7 +3,7 @@ import { FlexShadowDiv } from "@/common/Common.styled";
 
 export const StyledSelectNFTProfileModal = styled(FlexShadowDiv)`
   position: absolute;
-  top: 50%;
+  top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
   min-height: 40rem;

@@ -35,7 +35,6 @@ const Start = () => {
     fetchNFTList();
     setIsDisplay1(true);
     setTimeout(() => {
-      setIsDisplay1(false);
       setIsDisplay2(true);
     }, 3000);
     setTimeout(() => {
@@ -44,6 +43,7 @@ const Start = () => {
     }, 6000);
     setTimeout(() => {
       setIsDisplay3(false);
+      setIsDisplay1(false);
     }, 9000);
   }, []);
 

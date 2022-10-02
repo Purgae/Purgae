@@ -1,12 +1,13 @@
 import { StyledSelectNFTProfileModal, StyledAbsoluteIcon } from "./SelectNFTProfileModal.styled";
 import CardGroup from "@/common/Card/Card";
-import CardPage from "@/common/CardPageNation/CardPage";
+import PageNation from "@/common/PageNation/PageNation";
 import { useState, useEffect } from "react";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useAppSelector, useAppDispatch } from "@/hooks/storeHook";
 import Button from "@/common/Button/Button";
 import { closeSelectNFTProfile } from "@/redux/slices/modalSlice";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
+import { isEmpty } from "lodash";
 
 type Props = {
   selectImage: (url: string) => void;
@@ -27,7 +28,7 @@ function SelectNFTProfileModal({ selectImage }: Props) {
   const fetchMyNFTList = async () => {
     if (currentUserwalletAddress) {
       const NFTlist = await fetchMyNFT(currentUserwalletAddress);
-      setMyNFTList(NFTlist);
+      setMyNFTList(["null", ...NFTlist]);
     }
   };
 
@@ -65,13 +66,28 @@ function SelectNFTProfileModal({ selectImage }: Props) {
     }
   };
 
+  // * 페이지네이션
+  const [selectNumber, setSelectNumber] = useState<number>(0);
+  const [selectedList, setSelectedList] = useState<string[]>(myNFTList?.slice(0, 12));
+
+  useEffect(() => {
+    if (!isEmpty(myNFTList)) {
+      setSelectedList(myNFTList?.slice(selectNumber * 12, selectNumber * 12 + 12));
+    } else {
+    }
+  }, [myNFTList]);
+
+  useEffect(() => {
+    setSelectedList(myNFTList?.slice(selectNumber * 12, selectNumber * 12 + 12));
+  }, [selectNumber]);
+
   return (
     <StyledSelectNFTProfileModal shadow="shadow700" width="100%" direction="column">
       <StyledAbsoluteIcon className="material-icons" onClick={clickClose}>
         close
       </StyledAbsoluteIcon>
-      {/* <CardGroup lst={myNFTList} selectCardFunc={selectCard}></CardGroup> */}
-      <CardPage nftLst={myNFTList} nftexist={myNFTList.length > 0 ? true : false} selectCardFunc={selectCard} />
+      <CardGroup lst={myNFTList} selectCardFunc={selectCard}></CardGroup>
+      <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={selectedList} />
       <Button styles="solid" bgColor="primary500" fontColor="white" onClick={settingProfileImage}>
         설정하기
       </Button>

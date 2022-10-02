@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { createPortal } from "react-dom";
 
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import { styled } from "@/styles/theme";
@@ -13,10 +14,12 @@ import WaterDrop from "/assets/icon/water_drop.png";
 import FollowModal from "../FollowModal/FollowModal";
 import { UserProfile } from "@/redux/types";
 import { useChangeFollowMutation, useGetAmIFollowQuery } from "@/redux/api/userApi";
-
 import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 import useFetchNFT from "@/hooks/useFetchNFT";
+import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";
+import { useAppDispatch } from "@/hooks/storeHook";
+import EditProfileModal from "@/features/profile/components/EditProfileModal/EditProfileModal";
 
 type Props = {
   data?: UserProfile;
@@ -92,15 +95,6 @@ const ProfileHeader = (props: Props) => {
     }
   };
 
-  // @KJY-start console 때문에 임시 주석, 코드 작성시 주석해제 및 Test
-  // * 프로필 주인의 팔로워
-  // const follower = { userId: profileUserId, pageNum: 0 }; //! pagenum설정해서 넘겨주면 됨
-  // const { data: followerList } = useGetFollowerListQuery(follower);
-  // console.log("followerList", followerList);
-  // * 프로필 주인이 팔로잉
-  // const { data: followingList } = useGetFollowingListQuery(follower);
-  // console.log("followingList", followingList);
-
   // * 팔로우, 팔로잉 모달
   const [isOpenModal, setOpenModal] = useState(false);
   const [isFollower, setIsFollower] = useState(true);
@@ -126,7 +120,14 @@ const ProfileHeader = (props: Props) => {
   useEffect(() => {
     setOpenModal(false);
   }, [userData]);
-  // @end
+
+  // * 개인정보 수정 모달
+  const { editProfile } = useAppSelector(selectModal);
+  const dispatch = useAppDispatch();
+  const clickModalToggle = () => {
+    dispatch(openEditProfile());
+  };
+  const el = document.getElementById("modal")!;
 
   return (
     <>
@@ -232,6 +233,10 @@ const ProfileHeader = (props: Props) => {
             </FontP>
           </FlexDivButton>
         </FlexDiv>
+        <StyledAbsoluteIcon className="material-icons" onClick={clickModalToggle}>
+          settings
+        </StyledAbsoluteIcon>
+        {editProfile && createPortal(<EditProfileModal />, el)}
       </ProfileHeaderStyled>
       {isOpenModal && (
         <FollowModal
@@ -251,6 +256,7 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
+  position: relative;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   width: 76.6875rem;
   background-color: ${({ theme }) => theme.colors.white};
@@ -272,4 +278,12 @@ const FlexDivButton = styled(FlexDiv)`
   &:hover {
     cursor: pointer;
   }
+`;
+
+const StyledAbsoluteIcon = styled.button`
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  color: ${({ theme }) => theme.colors.mainParagraph};
+  padding: 0.5rem;
 `;

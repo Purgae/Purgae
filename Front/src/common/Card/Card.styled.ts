@@ -4,7 +4,7 @@ import { styled } from "../../styles/theme";
 export const Background = styled.div<{ selected: boolean }>`
   width: 100%;
   aspect-ratio: 152/170;
-  border: ${({ selected, theme }) => (selected ? `0.1876rem solid ${theme.colors.white}` : "0")};
+  border: ${({ selected, theme }) => (selected ? `0.25rem solid ${theme.colors.primary300}` : "0")};
   border-radius: 1.3125rem;
   background-color: ${({ theme }) => theme.colors.lightBlue300};
   ${({ theme }) => theme.mixins.flexBox()}

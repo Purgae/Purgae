@@ -7,6 +7,8 @@ const Round = styled.div<{ url: string }>`
   background-image: ${(props) => (props.url === imgUrl ? `url(${imgUrl})` : `url(https://ipfs.io/ipfs/${props.url})`)};
   background-size: cover;
   background-repeat: no-repeat;
+  background-position: center;
+  background-color: ${({ theme }) => theme.colors.primary300};
 `;
 export const ExtraLarge = styled(Round)`
   height: 8.5rem;

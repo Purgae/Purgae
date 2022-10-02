@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Fragment, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 // * Alert
 import AlertModal from "@/common/AlertModal/AlertModal";
@@ -55,6 +56,7 @@ const App = () => {
   const { getHash } = useFetchNFT();
   const { openAlertModal } = useAlertModal();
   const location = useLocation();
+  const el = document.getElementById("modal")!;
 
   const updateUserModal = () => {
     const data: OpenAlertModalArg = {
@@ -168,11 +170,14 @@ const App = () => {
         {/* 개인 수족관 */}
         <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
-      {alertState && (
-        <AlertModal top="4rem" right="50%" styles={styles}>
-          {content}
-        </AlertModal>
-      )}
+      //* 알럿 모달
+      {alertState &&
+        createPortal(
+          <AlertModal top="4rem" right="50%" styles={styles}>
+            {content}
+          </AlertModal>,
+          el
+        )}
     </Fragment>
   );
 };

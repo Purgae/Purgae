@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 
 const Login = () => {
-  const { status, connect, switchChain, account, chainId, ethereum } = useMetaMask();
+  const { status, connect, switchChain, account, chainId } = useMetaMask();
   const { networkChainId, contract } = useProvider();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
@@ -56,9 +56,9 @@ const Login = () => {
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
             if (hashData) {
-              login({ walletAddress: connectAddress[0], nft: hashData });
+              await login({ walletAddress: connectAddress[0], nft: hashData });
             } else {
-              login({ walletAddress: connectAddress[0] });
+              await login({ walletAddress: connectAddress[0] });
             }
             navigateHome();
           }
@@ -70,9 +70,9 @@ const Login = () => {
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
             if (hashData) {
-              login({ walletAddress: connectAddress[0], nft: hashData });
+              await login({ walletAddress: connectAddress[0], nft: hashData });
             } else {
-              login({ walletAddress: connectAddress[0] });
+              await login({ walletAddress: connectAddress[0] });
             }
             navigateHome();
           }
@@ -83,10 +83,24 @@ const Login = () => {
           styles: "RED",
         };
         openAlertModal(data);
+      } else if (status === "initializing") {
+        const data: OpenAlertModalArg = {
+          content: "현재 메타마스크에 연결중에 있습니다.",
+          styles: "PRIMARY",
+        };
+        openAlertModal(data);
+      } else if (status === "unavailable") {
+        const data: OpenAlertModalArg = {
+          content: "메타마스크를 사용할 수 없는 상태입니다. 새로고침 후 다시 시도해 주세요.",
+          styles: "RED",
+        };
+        openAlertModal(data);
+      } else if (status === "connected") {
+        console.log("연결되어있음");
       }
     } else {
       const data: OpenAlertModalArg = {
-        content: "메타마스크 설치 후 이용해주세요",
+        content: "메타마스크 설치 후 이용해주세요. (크롬, 파이어폭스 지원)",
         styles: "PRIMARY",
       };
       openAlertModal(data);

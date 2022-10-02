@@ -13,7 +13,7 @@ const Profile = () => {
 
   const currentUserId = useAppSelector((state) => state.user.user?.id);
   const { data: profileData } = useGetProfileQuery(profileUserId);
-  console.log(profileData?.follower_cnt);
+
   useEffect(() => {
     if (profileUserId === currentUserId) {
       setIsProfileUser(true);

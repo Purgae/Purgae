@@ -89,4 +89,5 @@ const FlexBox = styled(FlexDiv)`
   width: 100%;
   flex-direction: column;
   margin-top: 6rem;
+  gap: 2rem;
 `;

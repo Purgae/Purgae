@@ -14,6 +14,9 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
+import { useSelector } from "react-redux";
+import { selectUser } from "@/redux/slices/userSlice";
+import useInterval from "@/hooks/useInterval";
 
 const Login = () => {
   const { status, connect, switchChain, chainId } = useMetaMask();
@@ -21,6 +24,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
+  const currentUser = useSelector(selectUser);
 
   // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
   // const config = {
@@ -123,12 +127,15 @@ const Login = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    const metamaskAccount = window.ethereum.selectedAddress;
-    if (metamaskAccount) {
-      navigateHome();
+  useInterval(() => {
+    if (window.ethereum) {
+      if (currentUser.user?.walletAddress !== undefined) {
+        if (status === "connected" && window.ethereum.selectedAddress) {
+          navigateHome();
+        }
+      }
     }
-  }, []);
+  }, 100);
 
   return (
     <RootComponent>

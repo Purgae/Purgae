@@ -1,28 +1,55 @@
 import { RankingTitleListWrapper, RankingTitle, RankingListWrapper, RankingContentWrapper } from "./RankingList.styled";
-import RankingListItem from "../RankingListItem/RankingListItem";
+import DonationRankingListItem from "../RankingListItem/DonationRankingListItem";
+import LikeRankingListItem from "../RankingListItem/LikeRankingListItem";
+import GameRankingListItem from "../RankingListItem/GameRankingListItem";
 import RankingBar from "../RankingBar/RankingBar";
 import { useGetGameRankingQuery } from "@/redux/api/gameRankingApi";
-import { useGetLikeRankingQuery, useGetDonationRankingQuery, rankingApi } from "@/redux/api/rankingApi";
+import { useGetLikeRankingQuery, useGetDonationRankingQuery } from "@/redux/api/rankingApi";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useEffect, useState } from "react";
+import { DonationDataType, LikeDataType, GameDataType } from "../../Ranking.types";
 
 const RankingList = () => {
   //* 기부 랭킹 api 요청
   const { data: donationRankingData } = useGetDonationRankingQuery();
-  const donationRankingList = donationRankingData?.top10.slice(0, 10);
+  const [donationData, setDonationData] = useState<DonationDataType[]>();
+
+  useEffect(() => {
+    if (!donationRankingData) return;
+    else {
+      const data = donationRankingData!.top10.slice(0, 10);
+      setDonationData(data);
+    }
+  }, [donationRankingData]);
 
   //* 좋아요 랭킹 api 요청
   const { data: likeRankingData } = useGetLikeRankingQuery();
-  const likeRankingList = likeRankingData?.top10.slice(0, 10);
+  const [likeData, setLikeData] = useState<LikeDataType[]>();
+
+  useEffect(() => {
+    if (!likeRankingData) return;
+    else {
+      const data = likeRankingData!.top10.slice(0, 10);
+      setLikeData(data);
+    }
+  }, [likeRankingData]);
 
   //* 게임 랭킹 api 요청
   const { data: gameRankingData } = useGetGameRankingQuery();
-  const gameRankingList = gameRankingData?.top10.slice(0, 10);
+  const [gameData, setGameData] = useState<GameDataType[]>();
+
+  useEffect(() => {
+    if (!gameRankingData) return;
+    else {
+      const data = gameRankingData!.top10.slice(0, 10);
+      setGameData(data);
+    }
+  }, [gameRankingData]);
 
   const { fetchViewMyDonation } = useFetchNFT();
   const make = async () => {
     const result = await fetchViewMyDonation("0xb1eAdD806b2EBC64F6Eed68ee6e38e8d27fE76eA");
-    // console.log(result);
+    console.log(result);
   };
   make();
 
@@ -32,17 +59,8 @@ const RankingList = () => {
       <RankingListWrapper>
         <RankingBar title="총 기부횟수 및 기부량" />
         <RankingContentWrapper>
-          {donationRankingList?.map((content, index) => (
-            <RankingListItem
-              id={1}
-              key={index}
-              countDonation={content.countDonation}
-              profileImage={content.user.profileImage}
-              nickname={content.user.nickname}
-              walletAddress={content.user.walletAddress}
-              countLike={null}
-              gameScore={null}
-            />
+          {donationData?.map((content, index) => (
+            <DonationRankingListItem {...content} key={index} idx={index} />
           ))}
         </RankingContentWrapper>
       </RankingListWrapper>
@@ -50,17 +68,8 @@ const RankingList = () => {
       <RankingListWrapper>
         <RankingBar title="팔로워 수" />
         <RankingContentWrapper>
-          {likeRankingList?.map((content, index) => (
-            <RankingListItem
-              id={2}
-              key={index}
-              countDonation={null}
-              countLike={content.countLike}
-              profileImage={content.toUser.profileImage}
-              nickname={content.toUser.nickname}
-              walletAddress={null}
-              gameScore={null}
-            />
+          {likeData?.map((content, index) => (
+            <LikeRankingListItem {...content} key={index} idx={index} />
           ))}
         </RankingContentWrapper>
       </RankingListWrapper>
@@ -68,17 +77,8 @@ const RankingList = () => {
       <RankingListWrapper>
         <RankingBar title="게임 점수" />
         <RankingContentWrapper>
-          {gameRankingList?.map((content, index) => (
-            <RankingListItem
-              id={3}
-              key={index}
-              countDonation={null}
-              countLike={null}
-              profileImage={content.profileImage}
-              nickname={content.nickname}
-              walletAddress={null}
-              gameScore={content.gameScore}
-            />
+          {gameData?.map((content, index) => (
+            <GameRankingListItem {...content} key={index} idx={index} />
           ))}
         </RankingContentWrapper>
       </RankingListWrapper>

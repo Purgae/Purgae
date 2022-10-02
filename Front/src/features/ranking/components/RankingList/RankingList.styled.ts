@@ -17,12 +17,13 @@ export const RankingTitle = styled.div`
 
 export const RankingListWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
+  padding-bottom: 5rem;
 `;
 
 export const RankingContentWrapper = styled.div`
   display: grid;
   grid-template-columns: 35rem 35rem;
-  grid-template-rows: 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr;
   column-gap: 4rem;
   padding-bottom: 6rem;
 `;

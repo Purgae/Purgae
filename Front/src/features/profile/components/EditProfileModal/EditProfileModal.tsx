@@ -24,7 +24,7 @@ const EditProfileModal = () => {
   const currentUserprofileImage = user!.profileImage;
   const [profileImage, setProfileImage] = useState(currentUserprofileImage);
   const selectImage = (url: string) => {
-    setProfileImage(url);
+    setProfileImage(url.split("ipfs/")[1]);
   };
   const el = document.getElementById("modal")!;
 
@@ -79,16 +79,6 @@ const EditProfileModal = () => {
   const keepModalWindow = (event: React.MouseEvent) => {
     event.stopPropagation();
   };
-
-  // * 초기 프로필 이미지
-  const currentUserprofileImage = useAppSelector((state) => state.user.user?.profileImage);
-  const [profileImage, setProfileImage] = useState(currentUserprofileImage);
-  const selectImage = (url: string) => {
-    setProfileImage(url.split("ipfs/")[1]);
-    console.log(url.split("ipfs/")[1]);
-  };
-
-  const el = document.getElementById("modal")!;
 
   return (
     <RootComponent width="100%" height="100vh" bgColor="mainModalBg" onClick={clickContainer}>

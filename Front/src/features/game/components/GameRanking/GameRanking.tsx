@@ -40,13 +40,14 @@ const GameRanking = ({ setGamePage, toggleSound }: GameRankingType) => {
 
       {/* 로그인 유저 시, 본인의 최고 점수를 확인할 수 있다.  */}
       <StyledGameRankingContainer direction="column" gap="2rem" padding="2rem 0.5rem 2rem 0.5rem">
-        {user && (
+        {user && user.gameScore ? (
           <FlexDiv direction="column" gap="2rem" padding="1rem">
             <StyledGameRankingTitle fontSize="1.25rem">{user!.nickname}님의 최고 점수</StyledGameRankingTitle>
             <StyledGameRankingMyScore fontSize="1.5rem"> {user!.gameScore}</StyledGameRankingMyScore>
           </FlexDiv>
+        ) : (
+          <StyledGameRankingTitle>탐험 점수 순위</StyledGameRankingTitle>
         )}
-        {!user && <StyledGameRankingTitle>탐험 점수 순위</StyledGameRankingTitle>}
 
         {/* 순위 */}
         <FlexDiv direction="column" gap="2rem">

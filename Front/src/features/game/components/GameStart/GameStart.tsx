@@ -67,8 +67,8 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
           <StyledGameStartTitle color="gray300" fontSize="1rem">
             플레이할 NFT를 선택해주세요
           </StyledGameStartTitle>
-          <FontP fontWeight="semiBold" fontSize="1.025rem" color="gray250">
-            선택하지 않을 시, 기본 캐릭터로 플레이하게 됩니다.
+          <FontP fontWeight="semiBold" fontSize="1.25rem" color="gray250">
+            선택하지 않을 시, 우리의 고래 친구 푸레미로 탐험을 하게됩니다.
           </FontP>
         </FlexDiv>
         <StyledGameStartButton

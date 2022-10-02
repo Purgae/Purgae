@@ -17,6 +17,7 @@ import { RootComponent } from "@/common/Common.styled";
 import { selectUser } from "@/redux/slices/userSlice";
 import useInterval from "@/hooks/useInterval";
 import { useAppSelector } from "@/hooks/storeHook";
+import { isEmpty } from "lodash";
 
 const Login = () => {
   const { status, connect, switchChain, chainId } = useMetaMask();
@@ -39,8 +40,13 @@ const Login = () => {
     if (connectAddress) {
       const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
-        const newExistHash = existHash.map((element: string) => {
-          return { hash: element.split("://")[1] };
+        const newExistHash = existHash.map(async (element: string) => {
+          if (!isEmpty(element)) {
+            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
+            return { hash: data };
+          } else {
+            return;
+          }
         });
         return newExistHash;
       } else {

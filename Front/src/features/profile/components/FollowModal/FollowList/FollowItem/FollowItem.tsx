@@ -26,7 +26,7 @@ const FollowItem = (props: Props) => {
   // * 프로필 이미지 로직
   let profileImage = null;
   if (props.profileImage) {
-    profileImage = `https://ipfs.io/ipfs/${props.profileImage}`;
+    profileImage = props.profileImage;
   }
 
   // * 팔로우/언팔로우 로직

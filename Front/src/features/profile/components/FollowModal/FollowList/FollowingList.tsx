@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react";
 import FollowItem from "./FollowItem/FollowItem";
-import { ListDiv } from "./FollowList.styled";
+import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import { useGetFollowingListQuery } from "@/redux/api/userApi";
 import { Following } from "@/redux/types";
-import useIntersectionObserver from "@/hooks/useIO";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
   myFollow: boolean;
   userId: number;
+  username: string;
   onClickToggleModal: () => void;
 }
 
@@ -17,50 +18,37 @@ const FollowingList = (props: Props) => {
   const [followingList, setFollowingList] = useState<Following[]>([]);
 
   // * 초기 데이터
-  const following0 = { userId: props.userId, pageNum: 0 };
-  const { data: followingData0 } = useGetFollowingListQuery(following0);
+  const { data: followingData0 } = useGetFollowingListQuery({ userId: props.userId, pageNum: 0 });
+  const { data: followingData1 } = useGetFollowingListQuery({ userId: props.userId, pageNum: 1 });
   useEffect(() => {
     if (followingData0?.following) {
       setFollowingList(followingData0?.following);
+      if (followingData1?.following) {
+        setFollowingList([...followingData0?.following, ...followingData1?.following]);
+      }
     }
     setIsLoading(false);
-  }, [followingData0]);
+  }, [followingData0, followingData1]);
 
-  const following = { userId: props.userId, pageNum: page };
-  const { data: followingData } = useGetFollowingListQuery(following);
-  useEffect(() => {
-    if (followingData?.following) {
-      setFollowingList([...followingData0?.following, ...followingData?.following]);
-    }
-
-    setIsLoading(false);
-  }, [followingData0, followingData]);
-
-  const getMoreItem = async () => {
-    setIsLoading(true);
-    await setPage((i) => i + 1);
-    console.log(page);
-    setIsLoading(false);
-  };
-
-  const onIntersect: IntersectionObserverCallback = async ([entry], observer) => {
-    if (entry.isIntersecting) {
-      console.log("겹침");
-      observer.unobserve(entry.target);
-      await getMoreItem();
-      // observer.observe(entry.target);
+  // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
+  const { data: followingData } = useGetFollowingListQuery({ userId: props.userId, pageNum: page });
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      setIsLoading(true);
+      setPage((i) => i + 1);
+      if (followingData?.following) {
+        console.log("hi");
+        setFollowingList([...followingList, ...followingData?.following]);
+      }
+      setIsLoading(false);
     }
   };
 
-  const { setTarget } = useIntersectionObserver({
-    root: null,
-    rootMargin: "0px",
-    threshold: 0.5,
-    onIntersect,
-  });
+  const { setTarget } = useIntersectionObserver({ onIntersect });
 
   return (
     <ListDiv>
+      {followingList.length === 0 ? <NoFollow>현재 {props.username}님을 팔로우하고 있는 사람이 없어요.</NoFollow> : ""}
       {followingList.map((item, idx) => {
         return (
           <FollowItem
@@ -74,7 +62,7 @@ const FollowingList = (props: Props) => {
           />
         );
       })}
-      <div ref={setTarget}>{isLoading && <div>로딩중...</div>}</div>
+      <Div ref={setTarget}>{isLoading && <NoFollow>로딩중...</NoFollow>}</Div>
     </ListDiv>
   );
 };

@@ -1,25 +1,25 @@
 import { useEffect, useState, useCallback } from "react";
 import { useGetFollowerListQuery } from "@/redux/api/userApi";
 import { Follower } from "@/redux/types";
-import { ListDiv } from "./FollowList.styled";
+import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import FollowItem from "./FollowItem/FollowItem";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
   myFollow: boolean;
   userId: number;
+  username: string;
   onClickToggleModal: () => void;
 }
 
 const FollowerList = (props: Props) => {
-  // * 팔로워 리스트
+  const [isLoading, setIsLoading] = useState(true);
+  const [page, setPage] = useState(1);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
-  const [page, setPage] = useState(0);
 
-  // * api 요청(기본값)
-  const follower1 = { userId: props.userId, pageNum: 0 };
-  const { data: followerData0 } = useGetFollowerListQuery(follower1);
-  const follower2 = { userId: props.userId, pageNum: 1 };
-  const { data: followerData1 } = useGetFollowerListQuery(follower2);
+  // * 초기 데이터
+  const { data: followerData0 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 0 });
+  const { data: followerData1 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 1 });
   useEffect(() => {
     if (followerData0?.follower) {
       setFollowerList(followerData0?.follower);
@@ -27,10 +27,28 @@ const FollowerList = (props: Props) => {
         setFollowerList([...followerData0?.follower, ...followerData1?.follower]);
       }
     }
+    setIsLoading(false);
   }, [followerData0, followerData1]);
+
+  // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
+  const { data: followerData } = useGetFollowerListQuery({ userId: props.userId, pageNum: page });
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      setIsLoading(true);
+      setPage((i) => i + 1);
+      if (followerData?.follower) {
+        console.log("hi");
+        setFollowerList([...followerList, ...followerData?.follower]);
+      }
+      setIsLoading(false);
+    }
+  };
+
+  const { setTarget } = useIntersectionObserver({ onIntersect });
 
   return (
     <ListDiv>
+      {followerList.length === 0 ? <NoFollow>현재 {props.username}님이 팔로우하고 있는 사람이 없어요.</NoFollow> : ""}
       {followerList.map((item, idx) => {
         return (
           <FollowItem
@@ -44,6 +62,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
+      <Div ref={setTarget}>{isLoading && <NoFollow>로딩중...</NoFollow>}</Div>
     </ListDiv>
   );
 };

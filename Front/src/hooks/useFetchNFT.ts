@@ -65,12 +65,29 @@ const useFetchNFT = () => {
     }
   };
 
+  const getHash = async (connectAddress: string[]) => {
+    if (connectAddress) {
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
+      if (existHash.length > 0) {
+        const newExistHash = existHash.map((element: string) => {
+          return { hash: element.split("://")[1] };
+        });
+        return newExistHash;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   return {
     changeMetaToLink,
     changeNFTUrl,
     fetchMyNFT,
     fetchTodayNFT,
     fetchViewMyDonation,
+    getHash,
   };
 };
 

@@ -22,29 +22,115 @@ import DetailProfileCard from "@/features/profile/components/DetailProfileCard/D
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
-import { useMetaMask } from "metamask-react";
-import { selectUser } from "./redux/slices/userSlice";
-import { useSelector } from "react-redux";
 
+// * useHook
+import { useDispatch, useSelector } from "react-redux";
+import useInterval from "@/hooks/useInterval";
+
+// * web3
+import { useMetaMask } from "metamask-react";
+import useProvider from "@/hooks/useProvider";
+import Web3 from "web3";
+import useFetchNFT from "@/hooks/useFetchNFT";
+
+// * slice
+import { resetUser, selectUser } from "@/redux/slices/userSlice";
+import { useLoginMutation } from "@/redux/api/authApi";
+import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
+
+declare global {
+  interface Window {
+    web3?: any;
+  }
+}
 const App = () => {
   //* AlertModal Status
-  const { status, content, styles } = useAppSelector(selectAlert);
+  const { status: alertState, content, styles } = useAppSelector(selectAlert);
+  const { status, chainId, switchChain } = useMetaMask();
+  const { networkChainId } = useProvider();
+  const dispatch = useDispatch();
+  const currentUser = useSelector(selectUser);
+  const [login] = useLoginMutation();
+  const { getHash } = useFetchNFT();
+  const { openAlertModal } = useAlertModal();
 
-  // TODO user connect 됐을때 로그인 요청 보내서, state에 저장할것
-  /* 
-  TODO login check (server연결 후 test해볼것-addlistener)
-  @이더리움이 없을때도 고려
-  로그인한 유저와, 저장된 유저가 다르면서 연결 안 된 유저일시 - store reset
-  로그인한 유저와, 저장된 유저가 다르면서 연결 된 유저일시 -  로그인 요청
-  로그인 하지 않았으나, 접속 시 연결된 유저일시 - 로그인 요청
-  로그인 하지 않았으나, 접속 시 연결안된 유저일시 - store reset
-  const currentUser = useSelector(state => selectUser(user))
-  const { account, ethereum, connect, status: accountStatus } = useMetaMask();
-  console.log(account);
-  useEffect(() => {
-    if (accountStatus === "connected") {
+  const updateUserModal = () => {
+    const data: OpenAlertModalArg = {
+      content: "현재 연결된 유저로 자동 로그인 되었습니다. ε(˙o˙ з )з=≡=-･∴ 페이지가 새로고침 됩니다.",
+      styles: "PRIMARY",
+    };
+    openAlertModal(data);
+    return;
+  };
+
+  const updateUser = async (metamaskAccount: string) => {
+    // *고릴일때
+    if (chainId === networkChainId.goerli) {
+      if (metamaskAccount) {
+        const hashData = await getHash([metamaskAccount]);
+        if (hashData) {
+          await login({ walletAddress: metamaskAccount, nft: hashData });
+        } else {
+          await login({ walletAddress: metamaskAccount });
+        }
+      }
     }
-  }, [account]); */
+    // *고릴아닐때
+    else {
+      const metamaskAccount = window.ethereum.selectedAddress;
+      await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
+      if (metamaskAccount) {
+        const hashData = await getHash([metamaskAccount]);
+        if (hashData) {
+          await login({ walletAddress: metamaskAccount, nft: hashData });
+        } else {
+          await login({ walletAddress: metamaskAccount });
+        }
+      }
+    }
+    updateUserModal();
+    return;
+  };
+
+  // *1초에 한번씩 계정 확인
+  useInterval(() => {
+    const check = async () => {
+      // *useMetamask로 account가 잡히지 않아, window.ethereum.selectedAddress사용함
+      const metamaskAccount = window.ethereum.selectedAddress;
+      // *메타마스크 환경일때
+      if (typeof window.ethereum !== "undefined") {
+        window.web3 = new Web3(window.ethereum);
+        // !notconnectied인 상태에서, account를 발견했을시
+        // @접속된 유저
+        if (metamaskAccount) {
+          if (currentUser.user?.walletAddress !== metamaskAccount) {
+            // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
+            // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
+            await updateUser(metamaskAccount);
+            console.log("유저 불일치, 다시 로그인 요청하기");
+            setTimeout(() => {
+              window.location.reload();
+            }, 2000);
+          } else if (currentUser.user?.walletAddress === metamaskAccount) {
+            // * 접속된 유저와, 저장된 유저가 같을경우
+            console.log("유저 일치");
+          }
+        }
+        // @접속안된 유저면서 store에 저장되있을때-> 무조건 스토어 reset
+        else if (status === "notConnected" && currentUser.user?.walletAddress) {
+          dispatch(resetUser());
+        }
+        // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
+      }
+      // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
+      else {
+        if (currentUser.user?.walletAddress) {
+          dispatch(resetUser());
+        }
+      }
+    };
+    check();
+  }, 1000);
 
   return (
     <Fragment>
@@ -58,9 +144,6 @@ const App = () => {
           <Route path="/profile/:userId" element={<Profile />} />
           {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
           <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
-          {/* 개인 수족관 */}
-          <Route path="/profile/aquarium" element={<ProfileAquarium />} />
-          {/* <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} /> */}
           {/* 개인 팔로우/팔로워 */}
           <Route path="/profile/:userId/follow" />
           {/* 게임 */}
@@ -82,7 +165,7 @@ const App = () => {
         {/* 개인 수족관 */}
         <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
-      {status && (
+      {alertState && (
         <AlertModal top="4rem" right="50%" styles={styles}>
           {content}
         </AlertModal>

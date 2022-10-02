@@ -30,6 +30,9 @@ const slice = createSlice({
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload;
     },
+    resetUser: (state) => {
+      state.user = null;
+    },
   },
 });
 
@@ -38,5 +41,5 @@ export const selectUser = createSelector(
   (user) => user
 );
 
-export const { setUser } = slice.actions;
+export const { setUser, resetUser } = slice.actions;
 export default slice.reducer;

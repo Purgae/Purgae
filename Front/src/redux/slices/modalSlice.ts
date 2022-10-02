@@ -36,7 +36,6 @@ const slice = createSlice({
 
 export const selectModal = createSelector(
   (state: RootState) => state.modal,
-
   (modal) => modal
 );
 

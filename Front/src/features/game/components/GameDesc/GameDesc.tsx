@@ -20,7 +20,7 @@ const GameDesc = ({ setGamePage, toggleSound }: GameDescType) => {
       <StyledGameDescBackIcon className="material-icons" onClick={() => setGamePage(0)} onMouseOver={toggleSound}>
         arrow_back
       </StyledGameDescBackIcon>
-      <StyleGameDescContainer direction="column" gap="2rem" padding="2rem 1rem 1rem 1rem">
+      <StyleGameDescContainer direction="column" gap="2rem" padding="4rem 1rem 1rem 1rem">
         <StyledGameDescContent color="lightBlue800" fontSize="1rem">
           아기 물고기 푸레미가 혼자서 여행을 떠났어요. ('-' э )Э
         </StyledGameDescContent>

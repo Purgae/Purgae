@@ -54,20 +54,20 @@ const Game = () => {
           {playingGameBGM ? (
             // BGM Off
             <>
-              <FontP fontSize="3rem" className="material-icons">
+              <FontP fontSize="4em" className="material-icons">
                 headset_off
               </FontP>
-              <FontP fontSize="1.5rem" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
+              <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
                 OFF
               </FontP>
             </>
           ) : (
             // BGM On
             <>
-              <FontP fontSize="3rem" className="material-icons">
+              <FontP fontSize="4em" className="material-icons">
                 headset
               </FontP>
-              <FontP fontSize="1.5rem" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
+              <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
                 ON
               </FontP>
             </>

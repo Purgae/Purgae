@@ -5,6 +5,8 @@ import logo from "/assets/proomy/logo.png";
 
 export const StyledGameStartContainer = styled(FlexDiv)`
   @media ${({ theme }) => theme.sizes.tablet} {
+    flex-direction: center;
+    gap: 4rem;
     width: 85%;
     height: 95%;
   }
@@ -15,21 +17,30 @@ export const StyledGameStartBackIcon = styled.button`
   top: 1.5rem;
   left: 1rem;
   color: ${({ theme }) => theme.colors.gray300};
-  font-size: 3rem;
+  font-size: 2rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 3rem;
+  }
 `;
 
 export const StyledGameStartTitle = styled(FontP)`
   font-family: "UhBeeSe_hyun";
 
   @media ${({ theme }) => theme.sizes.tablet} {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
 `;
 
 export const StyledGameStartButton = styled(SolidButton)`
   font-family: "UhBeeSe_hyun";
   font-weight: 500;
+  margin-top: -2rem;
   transition: 0.5s;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 1.5rem;
+  }
 
   &:hover {
     background-color: ${({ theme }) => theme.colors.white300};

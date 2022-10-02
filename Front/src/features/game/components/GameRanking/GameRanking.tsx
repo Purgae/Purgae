@@ -39,7 +39,7 @@ const GameRanking = ({ setGamePage, toggleSound }: GameRankingType) => {
       </StyledGameRankingIcon>
 
       {/* 로그인 유저 시, 본인의 최고 점수를 확인할 수 있다.  */}
-      <StyledGameRankingContainer direction="column" gap="2rem">
+      <StyledGameRankingContainer direction="column" gap="2rem" padding="2rem 0.5rem 2rem 0.5rem">
         {user && (
           <FlexDiv direction="column" gap="2rem" padding="1rem">
             <StyledGameRankingTitle fontSize="1.25rem">{user!.nickname}님의 최고 점수</StyledGameRankingTitle>

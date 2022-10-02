@@ -23,18 +23,18 @@ export const Image = styled.div<{ url: string }>`
 
 export const Group = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(40%, auto));
+  grid-template-columns: repeat(auto-fill, minmax(20%, auto));
   row-gap: 6%;
   column-gap: 2%;
   width: 100%;
-  margin-bottom: 80rem;
-  min-height: 21rem;
+  /* margin-bottom: 80rem; */
   @media ${({ theme }) => theme.sizes.tablet} {
-    grid-template-columns: repeat(auto-fill, minmax(20%, auto));
-    margin-bottom: 10rem;
+    grid-template-columns: repeat(auto-fill, minmax(13%, auto));
+    aspect-ratio: 2.5/1;
+    /* margin-bottom: 10rem; */
   }
   @media ${({ theme }) => theme.sizes.pc} {
     grid-template-columns: repeat(auto-fill, minmax(13%, auto));
-    margin-bottom: 3rem;
+    /* margin-bottom: 3rem; */
   }
 `;

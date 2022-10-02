@@ -100,6 +100,23 @@ export const NavbarLoginLink = styled(NavLink)`
   }
 `;
 
+export const NavbarProfileLink = styled(NavLink)`
+  ${({ theme }) => theme.mixins.font("1.25rem", "500")};
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+  color: ${({ theme }) => theme.colors.white};
+  letter-spacing: 0.075rem;
+  gap: 1rem;
+  text-decoration: none;
+  &.active {
+    color: ${({ theme }) => theme.colors.white};
+    ${({ theme }) => theme.mixins.font("1.25rem", "700")};
+  }
+  &:hover {
+    color: ${({ theme }) => theme.colors.white};
+    ${({ theme }) => theme.mixins.font("1.25rem", "700")};
+  }
+`;
+
 export const NavbarHamburger = styled.button`
   display: none;
   width: 1.5rem;

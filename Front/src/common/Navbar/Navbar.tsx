@@ -8,16 +8,23 @@ import {
   NavbarHamburger,
   NavbarLoginLink,
   NavbarLogo,
+  NavbarProfileLink,
 } from "./Navbar.styled";
 import { Outlet } from "react-router";
 import { useState, Fragment, useEffect } from "react";
 import { FlexDiv } from "../Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
+import { useGetProfileQuery } from "@/redux/api/userApi";
+import ProfileImage from "@/common/ProfileImage/ProfileImage";
 
 const Navbar = () => {
   const [ScrollY, setHeaderColor] = useState(0);
   const [HeaderStatus, setHeaderStatus] = useState(false);
   const userId = useAppSelector((state) => state.user.user?.id);
+
+  const { data: userData } = useGetProfileQuery(userId);
+  const userImg = userData?.data.profileImage;
+  const userNickName = userData?.data.nickname;
 
   const Navbar = document.getElementById("navbar");
   const NavbarHeight: any = Navbar?.getBoundingClientRect().height;
@@ -61,7 +68,12 @@ const Navbar = () => {
           </NavbarLinkWrappper>
           <NavbarLoginWrapper>
             {userId ? (
-              <NavbarLoginLink to={`/profile/${userId}`}>프로필</NavbarLoginLink>
+              <>
+                <NavbarProfileLink to={`/profile/${userId}`}>
+                  <span>{userNickName}</span>
+                  <ProfileImage size="navBar" url={userImg} />
+                </NavbarProfileLink>
+              </>
             ) : (
               <NavbarLoginLink to="/login">로그인</NavbarLoginLink>
             )}

@@ -27,11 +27,14 @@ export const Group = styled.div`
   row-gap: 6%;
   column-gap: 2%;
   width: 100%;
-  height: 26rem;
+  margin-bottom: 80rem;
+  min-height: 21rem;
   @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+    margin-bottom: 10rem;
   }
   @media ${({ theme }) => theme.sizes.pc} {
     grid-template-columns: repeat(auto-fill, minmax(13%, auto));
+    margin-bottom: 3rem;
   }
 `;

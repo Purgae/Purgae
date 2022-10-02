@@ -6,6 +6,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Background, Image, Group } from "./Card.styled";
 import { CardProps, CardGroupProps } from "./Card.types";
+import profile from "/assets/profile.png";
 
 const Card = ({ url, selected = false, isProfile, id, onClick }: React.PropsWithChildren<CardProps>) => {
   return (
@@ -72,6 +73,9 @@ const CardGroup = ({
         <Group>
           {/* 프로필 외 - ex)게임: selected 속성 사용*/}
           {lst.map((item, idx) => {
+            if (item === "null") {
+              return <Card url={profile} selected={isSelected[idx]} key={idx} onClick={clickCard} id={idx} />;
+            }
             return <Card url={item} selected={isSelected[idx]} key={idx} onClick={clickCard} id={idx} />;
           })}
         </Group>

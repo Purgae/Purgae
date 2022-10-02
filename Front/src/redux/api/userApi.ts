@@ -39,7 +39,7 @@ export const userApi = createApi({
       providesTags: ["User"],
     }),
 
-    getProfile: build.query<UserProfile, number>({
+    getProfile: build.query<UserProfile, number | undefined>({
       query: (userId) => `/user/${userId}`,
       providesTags: ["User", "Follow"],
     }),

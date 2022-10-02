@@ -15,14 +15,14 @@ const Ranking = (props: Props) => {
     <>
       <RankingBackground>
         <RankingBackgroundImage>
-          <RankingRootComponent>
-            <RankingTitleWrapper>
-              <RankingProomy src={"/assets/proomy/logo.png"} />
-              <RankingSpeechBubble>여러분의 기부 덕분에 해양 쓰레기가 줄고 있어요!</RankingSpeechBubble>
-            </RankingTitleWrapper>
-            <RankingList />
-          </RankingRootComponent>
+          <RankingTitleWrapper>
+            <RankingProomy src={"/assets/proomy/logo.png"} />
+            <RankingSpeechBubble>여러분의 기부 덕분에 해양 쓰레기가 줄고 있어요!</RankingSpeechBubble>
+          </RankingTitleWrapper>
         </RankingBackgroundImage>
+        <RankingRootComponent>
+          <RankingList />
+        </RankingRootComponent>
       </RankingBackground>
     </>
   );

@@ -1,5 +1,6 @@
 import { Route, Routes, useLocation } from "react-router-dom";
 import { Fragment, useEffect } from "react";
+import { createPortal } from "react-dom";
 
 // * Alert
 import AlertModal from "@/common/AlertModal/AlertModal";
@@ -48,11 +49,14 @@ const App = () => {
   //* AlertModal Status
   const { status: alertState, content, styles } = useAppSelector(selectAlert);
   const { openAlertModal } = useAlertModal();
+  const el = document.getElementById("modal")!;
+
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
   const currentUser = useSelector(selectUser);
   const [login] = useLoginMutation();
+
   // * web3
   const { chainId, switchChain } = useMetaMask();
   const { networkChainId } = useProvider();
@@ -169,11 +173,14 @@ const App = () => {
         {/* 개인 수족관 */}
         <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
-      {alertState && (
-        <AlertModal top="4rem" right="50%" styles={styles}>
-          {content}
-        </AlertModal>
-      )}
+      //* 알럿 모달
+      {alertState &&
+        createPortal(
+          <AlertModal top="4rem" right="50%" styles={styles}>
+            {content}
+          </AlertModal>,
+          el
+        )}
     </Fragment>
   );
 };

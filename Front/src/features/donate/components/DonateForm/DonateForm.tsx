@@ -79,7 +79,7 @@ const DonateForm = () => {
     } catch (error) {
       dispatch(offModal());
 
-      //TODO: 백엔드에게 요청해서 에러 처리 잡기
+      //TODO_PJK: 백엔드에게 요청해서 에러 처리 잡기
       console.error(error);
     }
   };

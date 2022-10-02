@@ -40,7 +40,6 @@ const Login = () => {
       const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
         const newExistHash = existHash.map((element: string) => {
-          console.log(element);
           return { hash: element.split("://")[1] };
         });
         return newExistHash;

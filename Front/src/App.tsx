@@ -47,7 +47,7 @@ declare global {
 const App = () => {
   //* AlertModal Status
   const { status: alertState, content, styles } = useAppSelector(selectAlert);
-  const { status, chainId, switchChain } = useMetaMask();
+  const { chainId, switchChain } = useMetaMask();
   const { networkChainId } = useProvider();
   const dispatch = useDispatch();
   const currentUser = useSelector(selectUser);
@@ -98,9 +98,9 @@ const App = () => {
   useInterval(() => {
     const check = async () => {
       // *useMetamask로 account가 잡히지 않아, window.ethereum.selectedAddress사용함
-      const metamaskAccount = window.ethereum.selectedAddress;
       // *메타마스크 환경일때
-      if (typeof window.ethereum !== "undefined" && location.pathname !== "/") {
+      if (typeof window.ethereum !== "undefined" && location.pathname !== "/" && location.pathname !== "/login") {
+        const metamaskAccount = window.ethereum.selectedAddress;
         window.web3 = new Web3(window.ethereum);
         // @접속된 유저
         if (metamaskAccount) {
@@ -123,15 +123,17 @@ const App = () => {
         }
         // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
       }
+
       // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
-      else {
+      else if (typeof window.ethereum === "undefined") {
         if (currentUser.user?.walletAddress) {
+          console.log("notmetamask");
           dispatch(resetUser());
         }
       }
     };
     check();
-  }, 2000);
+  }, 1000);
 
   return (
     <Fragment>

@@ -2,7 +2,7 @@ import useProvider from "./useProvider";
 import { ethToTrash } from "@/utils/functions/ethChange";
 
 const useFetchNFT = () => {
-  const { fetchContract, contract } = useProvider();
+  const { fetchContract } = useProvider();
 
   const changeMetaToLink = (meta: string): string => {
     const url = "https://ipfs.io/ipfs/" + meta.split("://")[1];
@@ -67,7 +67,7 @@ const useFetchNFT = () => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await contract.methods?.viewMyNFT(connectAddress[0]).call();
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
         const newExistHash = existHash.map((element: string) => {
           return { hash: element.split("://")[1] };

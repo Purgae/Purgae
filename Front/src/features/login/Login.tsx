@@ -16,8 +16,8 @@ import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 
 const Login = () => {
-  const { status, connect, switchChain, account, chainId } = useMetaMask();
-  const { networkChainId, contract } = useProvider();
+  const { status, connect, switchChain, chainId } = useMetaMask();
+  const { networkChainId, fetchContract } = useProvider();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
@@ -33,7 +33,7 @@ const Login = () => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await contract.methods?.viewMyNFT(connectAddress[0]).call();
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
         const newExistHash = existHash.map((element: string) => {
           return { hash: element.split("://")[1] };
@@ -57,10 +57,11 @@ const Login = () => {
             const hashData = await getHash(connectAddress);
             if (hashData) {
               await login({ walletAddress: connectAddress[0], nft: hashData });
+              navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
+              navigateHome();
             }
-            navigateHome();
           }
         }
         // *고릴아닐때
@@ -71,10 +72,11 @@ const Login = () => {
             const hashData = await getHash(connectAddress);
             if (hashData) {
               await login({ walletAddress: connectAddress[0], nft: hashData });
+              navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
+              navigateHome();
             }
-            navigateHome();
           }
         }
       } else if (status === "connecting") {
@@ -122,9 +124,9 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (account) {
+    const metamaskAccount = window.ethereum.selectedAddress;
+    if (metamaskAccount) {
       navigateHome();
-      return;
     }
   }, []);
 

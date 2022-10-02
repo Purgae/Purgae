@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import { Fragment, useEffect } from "react";
 
 // * Alert
@@ -37,6 +37,7 @@ import useFetchNFT from "@/hooks/useFetchNFT";
 import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
+import { isNull } from "lodash";
 
 declare global {
   interface Window {
@@ -53,11 +54,12 @@ const App = () => {
   const [login] = useLoginMutation();
   const { getHash } = useFetchNFT();
   const { openAlertModal } = useAlertModal();
+  const location = useLocation();
 
   const updateUserModal = () => {
     const data: OpenAlertModalArg = {
-      content: "현재 연결된 유저로 자동 로그인 되었습니다. ε(˙o˙ з )з=≡=-･∴ 페이지가 새로고침 됩니다.",
-      styles: "PRIMARY",
+      content: "현재 연결된 유저로 자동 로그인 되었습니다. 페이지가 새로고침 됩니다.",
+      styles: "RED",
     };
     openAlertModal(data);
     return;
@@ -98,9 +100,8 @@ const App = () => {
       // *useMetamask로 account가 잡히지 않아, window.ethereum.selectedAddress사용함
       const metamaskAccount = window.ethereum.selectedAddress;
       // *메타마스크 환경일때
-      if (typeof window.ethereum !== "undefined") {
+      if (typeof window.ethereum !== "undefined" && location.pathname !== "/") {
         window.web3 = new Web3(window.ethereum);
-        // !notconnectied인 상태에서, account를 발견했을시
         // @접속된 유저
         if (metamaskAccount) {
           if (currentUser.user?.walletAddress !== metamaskAccount) {
@@ -117,7 +118,7 @@ const App = () => {
           }
         }
         // @접속안된 유저면서 store에 저장되있을때-> 무조건 스토어 reset
-        else if (status === "notConnected" && currentUser.user?.walletAddress) {
+        else if (isNull(metamaskAccount) && currentUser.user?.walletAddress !== undefined) {
           dispatch(resetUser());
         }
         // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
@@ -130,7 +131,7 @@ const App = () => {
       }
     };
     check();
-  }, 1000);
+  }, 2000);
 
   return (
     <Fragment>

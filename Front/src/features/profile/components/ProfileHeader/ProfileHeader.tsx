@@ -133,11 +133,7 @@ const ProfileHeader = (props: Props) => {
     <>
       <ProfileHeaderStyled>
         {/* 1 */}
-        {profileImg ? (
-          <ProfileImage size="large" url={"https://ipfs.io/ipfs/" + profileImg} />
-        ) : (
-          <ProfileImage size="large" />
-        )}
+        {profileImg ? <ProfileImage size="large" url={profileImg} /> : <ProfileImage size="large" />}
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">

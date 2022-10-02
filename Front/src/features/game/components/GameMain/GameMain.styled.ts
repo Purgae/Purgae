@@ -4,7 +4,7 @@ import littleproomy_pink from "/assets/proomy/littleproomy_pink.png";
 
 export const StyledGameTitle = styled(FontP)`
   font-family: "UhBeeSe_hyun";
-  @media ${({ theme }) => theme.sizes.pc} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     font-size: 4rem;
   }
 `;
@@ -21,7 +21,7 @@ export const StyledGameButton = styled.button`
     transform: scale(1.1);
   }
 
-  @media ${({ theme }) => theme.sizes.pc} {
+  @media ${({ theme }) => theme.sizes.tablet} {
     font-size: 1.5rem;
   }
 `;

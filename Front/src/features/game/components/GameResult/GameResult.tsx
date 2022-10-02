@@ -36,11 +36,15 @@ const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => 
   //* 서버에 게임 점수를 반영한다.
   useEffect(() => {
     if (!user) return;
-    const payload = {
-      userId: user!.id,
-      gameScore,
-    };
-    updateGameScore(payload);
+
+    //* 저장된 점수가 없거나, 기존 점수보다 크면 서버에 저장한다.
+    if (user!.gameScore === null || user!.gameScore < gameScore) {
+      const payload = {
+        userId: user!.id,
+        gameScore,
+      };
+      updateGameScore(payload);
+    }
   }, [user]);
 
   //* 공유하기

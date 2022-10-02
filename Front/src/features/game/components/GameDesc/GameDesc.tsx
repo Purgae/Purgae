@@ -41,7 +41,7 @@ const GameDesc = ({ setGamePage, toggleSound }: GameDescType) => {
         </StyledGameDescContent>
         <StyledGameDescButton
           onClick={() => {
-            setGamePage(2);
+            setGamePage(1);
           }}
           onMouseOver={toggleSound}
         >

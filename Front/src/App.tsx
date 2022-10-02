@@ -170,7 +170,7 @@ const App = () => {
         {/* 개인 수족관 */}
         <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
       </Routes>
-      //* 알럿 모달
+      {/* 알럿 모달 */}
       {alertState &&
         createPortal(
           <AlertModal top="4rem" right="50%" styles={styles}>

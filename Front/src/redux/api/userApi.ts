@@ -1,6 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserProfile, UserDetail } from "@/redux/types";
 import API_URL from "@/redux/env";
+import { setUser } from "@/redux/slices/userSlice";
 
 import { FollowingList, FollowerList } from "@/redux/types";
 
@@ -34,7 +35,7 @@ export const userApi = createApi({
   endpoints: (build) => ({
     // * query
     checkNickname: build.query<CheckNickname, string>({
-      query: (nickname) => `/user/modify/${nickname}`,
+      query: (nickname) => `/user/modify/${decodeURIComponent(decodeURIComponent(nickname))}`,
       providesTags: ["User"],
     }),
 
@@ -66,6 +67,14 @@ export const userApi = createApi({
         body: data,
       }),
       invalidatesTags: ["User"],
+      async onQueryStarted(args, { dispatch, queryFulfilled }) {
+        try {
+          const { data } = await queryFulfilled;
+          await dispatch(setUser(data.data));
+        } catch (error) {
+          console.error(error);
+        }
+      },
     }),
 
     changeScore: build.mutation<UserProfile, GameScore>({
@@ -97,4 +106,5 @@ export const {
   useGetFollowerListQuery,
   useGetAmIFollowQuery,
   useChangeFollowMutation,
+  useLazyCheckNicknameQuery,
 } = userApi;

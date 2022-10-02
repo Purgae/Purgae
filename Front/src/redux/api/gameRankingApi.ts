@@ -49,7 +49,7 @@ export const gameRankingApi = createApi({
           const { data } = await queryFulfilled;
           await dispatch(setUser(data.data));
         } catch (error) {
-          console.error("login error", error);
+          console.error(error);
         }
       },
     }),

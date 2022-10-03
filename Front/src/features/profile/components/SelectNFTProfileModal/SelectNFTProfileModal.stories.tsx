@@ -9,4 +9,7 @@ export default {
   },
 } as Meta;
 
-export const Default: Story = (args) => <SelectNFTProfileModal></SelectNFTProfileModal>;
+export const Default: Story = (args) => {
+  const selectImage = (url: string) => {};
+  return <SelectNFTProfileModal selectImage={selectImage}></SelectNFTProfileModal>;
+};

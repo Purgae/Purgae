@@ -14,38 +14,31 @@ interface Props {
 
 const FollowingList = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [followingList, setFollowingList] = useState<Following[]>([]);
 
   // * 초기 데이터
-  const { data: followingData0 } = useGetFollowingListQuery({ userId: props.userId, pageNum: 0 });
-  const { data: followingData1 } = useGetFollowingListQuery({ userId: props.userId, pageNum: 1 });
+  const following = { userId: props.userId, pageNum: page };
+  const { data: followingData } = useGetFollowingListQuery(following);
   useEffect(() => {
-    if (followingData0?.following) {
-      setFollowingList(followingData0?.following);
-      if (followingData1?.following) {
-        setFollowingList([...followingData0?.following, ...followingData1?.following]);
-      }
+    console.log(followingData, following);
+    if (followingData?.following) {
+      setFollowingList([...followingList, ...followingData?.following]);
     }
     setIsLoading(false);
-  }, [followingData0, followingData1]);
+  }, [followingData]);
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
-  const { data: followingData } = useGetFollowingListQuery({ userId: props.userId, pageNum: page });
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
+      console.log(isIntersecting);
       setIsLoading(true);
       setPage((i) => i + 1);
-      if (followingData?.following) {
-        console.log("hi");
-        setFollowingList([...followingList, ...followingData?.following]);
-      }
       setIsLoading(false);
     }
   };
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
-
   return (
     <ListDiv>
       {followingList.length === 0 ? <NoFollow>현재 {props.username}님을 팔로우하고 있는 사람이 없어요.</NoFollow> : ""}

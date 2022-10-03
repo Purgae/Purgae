@@ -68,17 +68,15 @@ function SelectNFTProfileModal({ selectImage }: Props) {
 
   // * 페이지네이션
   const [selectNumber, setSelectNumber] = useState<number>(0);
-  const [selectedList, setSelectedList] = useState<string[]>(myNFTList?.slice(0, 12));
+  const [selectedList, setSelectedList] = useState<string[]>(myNFTList.slice(0, 12));
 
   useEffect(() => {
-    if (!isEmpty(myNFTList)) {
-      setSelectedList(myNFTList?.slice(selectNumber * 12, selectNumber * 12 + 12));
-    } else {
-    }
+    if (isEmpty(myNFTList)) return;
+    setSelectedList(myNFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
   }, [myNFTList]);
 
   useEffect(() => {
-    setSelectedList(myNFTList?.slice(selectNumber * 12, selectNumber * 12 + 12));
+    setSelectedList(myNFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
   }, [selectNumber]);
 
   return (
@@ -86,8 +84,8 @@ function SelectNFTProfileModal({ selectImage }: Props) {
       <StyledAbsoluteIcon className="material-icons" onClick={clickClose}>
         close
       </StyledAbsoluteIcon>
-      <CardGroup lst={myNFTList} selectCardFunc={selectCard}></CardGroup>
-      <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={selectedList} />
+      <CardGroup lst={selectedList} selectCardFunc={selectCard}></CardGroup>
+      <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={myNFTList} />
       <Button styles="solid" bgColor="primary500" fontColor="white" onClick={settingProfileImage}>
         설정하기
       </Button>

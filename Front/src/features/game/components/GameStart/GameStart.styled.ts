@@ -7,6 +7,7 @@ export const StyledGameStartContainer = styled(FlexDiv)`
   @media ${({ theme }) => theme.sizes.tablet} {
     flex-direction: center;
     gap: 4rem;
+    padding: 5rem 3rem 2rem 3rem;
     width: 85%;
     height: 95%;
   }

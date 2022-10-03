@@ -29,9 +29,11 @@ const useDonate = () => {
           dispatch(offModal());
         } catch (error: any) {
           dispatch(offModal());
-          console.error(error);
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";
+            openAlertModal({ content, styles: "DANGER" });
+          } else {
+            const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
             openAlertModal({ content, styles: "DANGER" });
           }
         }
@@ -44,14 +46,15 @@ const useDonate = () => {
           dispatch(offModal());
         } catch (error: any) {
           dispatch(offModal());
-          console.error(error);
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";
             openAlertModal({ content, styles: "DANGER" });
-          }
-          if (error.message === "MetaMask Tx Signature: User denied transaction signature.") {
+          } else if (error.message === "MetaMask Tx Signature: User denied transaction signature.") {
             const content = "기부를 마무리하려면 거래를 완료해주세요.";
             openAlertModal({ content, styles: "RED" });
+          } else {
+            const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
+            openAlertModal({ content, styles: "DANGER" });
           }
         }
       })();

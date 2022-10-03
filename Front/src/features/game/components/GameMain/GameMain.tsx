@@ -7,7 +7,7 @@ import { GameMainType } from "./GameMain.types";
 import { FlexDiv } from "@/common/Common.styled";
 import { StyledGameTitle, StyledGameButton, StyledCharacter } from "./GameMain.styled";
 
-const GameMain = ({ setGamePage, toggleSound, turnOnGameBGM }: GameMainType) => {
+const GameMain = ({ setGamePage, toggleSound }: GameMainType) => {
   return (
     <FlexDiv direction="column" gap="4rem" width="100%" height="100%">
       <FlexDiv width="100%" direction="column" gap="0rem">
@@ -19,8 +19,7 @@ const GameMain = ({ setGamePage, toggleSound, turnOnGameBGM }: GameMainType) => 
       <FlexDiv direction="column" gap="0.5rem">
         <StyledGameButton
           onClick={() => {
-            turnOnGameBGM();
-            setGamePage(2);
+            setGamePage(1);
           }}
           onMouseOver={toggleSound}
         >
@@ -28,7 +27,6 @@ const GameMain = ({ setGamePage, toggleSound, turnOnGameBGM }: GameMainType) => 
         </StyledGameButton>
         <StyledGameButton
           onClick={() => {
-            turnOnGameBGM();
             setGamePage(4);
           }}
           onMouseOver={toggleSound}

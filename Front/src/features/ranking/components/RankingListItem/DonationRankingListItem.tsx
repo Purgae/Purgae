@@ -33,7 +33,7 @@ const DonationRankingListItem = (props: DonationDataProps) => {
           <RankingContentIcon className="material-icons-outlined" color="#6b6b6b" size="1.4rem">
             delete
           </RankingContentIcon>
-          1.1234t
+          1.1234kg
         </RankingListItemContent>
       </RankingContentDeatilWrapper>
     </RankingListItemWrapper>

@@ -4,8 +4,8 @@ const ScrollToAppear = (id: string, location: number) => {
   const [scrollY, setScrollY] = useState(0);
   const [animation, setAnimation] = useState(false);
 
-  const moneygoElement = document.getElementById(id);
-  const elementHeight: any = moneygoElement?.getBoundingClientRect().height;
+  const scrollToElement = document.getElementById(id);
+  const elementHeight: any = scrollToElement?.getBoundingClientRect().top;
 
   const handleAnimation = () => {
     setScrollY(window.pageYOffset);

@@ -16,13 +16,13 @@ const WalletAndNft = (id: Id) => {
       {WalletAndNftContent[contentNum].map((content, index) =>
         index % 2 !== 1 ? (
           <FaqTextProomyWrapper key={index} justify="start">
-            <FaqProomy src="/assets/proomy/littleproomy.png" />
+            <FaqProomy src="/assets/proomy/littleproomy_nomargin_reverse.png" />
             <FaqTextBox>{content}</FaqTextBox>
           </FaqTextProomyWrapper>
         ) : (
           <FaqTextProomyWrapper key={index} justify="end">
             <FaqTextBox>{content}</FaqTextBox>
-            <FaqProomy src="/assets/plasticbag.png" />
+            <FaqProomy src="/assets/proomy/littleproomy_pink_nomargin.png" />
           </FaqTextProomyWrapper>
         )
       )}

@@ -23,19 +23,31 @@ export const WhatIsPurgaeBackground = styled.div<{ animation: string; visibility
         transform: translateZ(0);
       }
     }
+    @media screen and (max-width: 768px) {
+      visibility: visible;
+      animation: none;
+    }
   }
 `;
 
 export const WhatIsPurgaeIconTextWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+  gap: 6rem;
+  @media screen and (max-width: 1350px) {
+    gap: 2rem;
+  }
   & > * {
-    margin-right: 3rem;
-    margin-left: 3rem;
     position: relative;
+  }
+  & > img {
+    @media screen and (max-width: 768px) {
+      display: none;
+    }
   }
 `;
 
 export const WhatIsPurgaeTextBox = styled(FlexDiv)`
+  flex-direction: column;
   width: 30rem;
   padding: 1.25rem;
   border-radius: 0.8rem;
@@ -44,5 +56,22 @@ export const WhatIsPurgaeTextBox = styled(FlexDiv)`
   transition: all 0.3s linear;
   &:hover {
     transform: scale(1.02);
+  }
+  @media screen and (max-width: 768px) {
+    margin: 3rem 0rem 0rem 0rem;
+    padding: 1.25rem 0rem 1.25rem 0rem;
+    width: 20rem;
+    &:hover {
+      transform: none;
+    }
+    & > p {
+      font-size: 0.6rem;
+    }
+  }
+  & > img {
+    display: none;
+    @media screen and (max-width: 768px) {
+      display: flex;
+    }
   }
 `;

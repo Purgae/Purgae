@@ -42,20 +42,22 @@ const SaveTheSea = () => {
                 width="12rem"
                 bgColor="lightBlue500"
                 fontColor="white"
-                onClick={() => navigate("/faq")}
+                onClick={() => navigate("/faq/0")}
               >
                 어떻게 기부하나요?
               </SolidButton>
             </MainButtonWrapper>
-            <SolidButton
-              fontSize="1rem"
-              width="25.8rem"
-              bgColor="lightBlue500"
-              fontColor="white"
-              onClick={() => navigate("/donate")}
-            >
-              기부하고 NFT 받기
-            </SolidButton>
+            <MainButtonWrapper>
+              <SolidButton
+                fontSize="1rem"
+                width="25.8rem"
+                bgColor="lightBlue500"
+                fontColor="white"
+                onClick={() => navigate("/donate")}
+              >
+                기부하고 NFT 받기
+              </SolidButton>
+            </MainButtonWrapper>
           </MainTopLetterButtonWrapper>
           <MainProomyImage src="/assets/proomy/proomy_original.png" />
         </MainContentProomyWrapper>

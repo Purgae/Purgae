@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState, lazy, Suspense  } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -7,19 +7,8 @@ import AlertModal from "@/common/AlertModal/AlertModal";
 import { useAppSelector } from "@/hooks/storeHook";
 import { selectAlert } from "@/redux/slices/alertSlice";
 
-//* 최상위 컴포넌트 :  최상위에 코드 추가
-import Login from "@/features/login/Login";
-import Home from "@/features/home/Home";
-import Counter from "@/features/counter/Counter";
-import ThemeTest from "@/features/counter/ThemeTest";
-import Start from "@/features/start/Start";
-import Donate from "@/features/donate/Donate";
-import Profile from "@/features/profile/Profile";
-import Ranking from "@/features/ranking/Ranking";
-import Game from "@/features/game/Game";
-import ProfileAquarium from "@/features/profile/ProfileAquarium";
-import Faq from "@/features/faq/Faq";
-import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
+//* Loading Modal
+import LoadingModal from "@/common/LoadingModal/LoadingModal";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -32,13 +21,24 @@ import useInterval from "@/hooks/useInterval";
 import { useMetaMask } from "metamask-react";
 import useProvider from "@/hooks/useProvider";
 import Web3 from "web3";
-import useFetchNFT from "@/hooks/useFetchNFT";
 
 // * slice
 import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
-import { isNull } from "lodash";
+import { isEmpty, isNull } from "lodash";
+
+//* 컴포넌트
+const Login = lazy(() => import("@/features/login/Login"));
+const Home = lazy(() => import("@/features/home/Home"));
+const Start = lazy(() => import("@/features/start/Start"));
+const Donate = lazy(() => import("@/features/donate/Donate"));
+const Profile = lazy(() => import("@/features/profile/Profile"));
+const Ranking = lazy(() => import("@/features/ranking/Ranking"));
+const Game = lazy(() => import("@/features/game/Game"));
+const ProfileAquarium = lazy(() => import("@/features/profile/ProfileAquarium"));
+const Faq = lazy(() => import("@/features/faq/Faq"));
+const DetailProfileCard = lazy(() => import("@/features/profile/components/DetailProfileCard/DetailProfileCard"));
 
 declare global {
   interface Window {
@@ -54,13 +54,12 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  const currentUser = useSelector(selectUser);
+  // const storeWalletAddress = useAppSelector((state) => state.user.user?.walletAddress);
   const [login] = useLoginMutation();
 
   // * web3
   const { chainId, switchChain } = useMetaMask();
-  const { networkChainId } = useProvider();
-  const { getHash } = useFetchNFT();
+  const { networkChainId, fetchContract } = useProvider();
 
   const updateUserModal = () => {
     const data: OpenAlertModalArg = {
@@ -71,13 +70,36 @@ const App = () => {
     return;
   };
 
+  const getHash = async (connectAddress: string[]) => {
+    if (connectAddress) {
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
+      if (existHash.length > 0) {
+        const newExistHash = existHash.map(async (element: string) => {
+          if (!isEmpty(element)) {
+            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
+            return { hash: data };
+          } else {
+            return;
+          }
+        });
+        return newExistHash;
+      } else {
+        return [];
+      }
+    } else {
+      return [];
+    }
+  };
+
   const updateUser = async (metamaskAccount: string) => {
     // *고릴일때
     if (chainId === networkChainId.goerli) {
       if (metamaskAccount) {
         const hashData = await getHash([metamaskAccount]);
-        if (hashData) {
-          await login({ walletAddress: metamaskAccount, nft: hashData });
+        const allHashdata = await Promise.all(hashData);
+        console.log(allHashdata);
+        if (allHashdata) {
+          await login({ walletAddress: metamaskAccount, nft: allHashdata });
         } else {
           await login({ walletAddress: metamaskAccount });
         }
@@ -89,8 +111,9 @@ const App = () => {
       await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
       if (metamaskAccount) {
         const hashData = await getHash([metamaskAccount]);
-        if (hashData) {
-          await login({ walletAddress: metamaskAccount, nft: hashData });
+        const allHashdata = await Promise.all(hashData);
+        if (allHashdata) {
+          await login({ walletAddress: metamaskAccount, nft: allHashdata });
         } else {
           await login({ walletAddress: metamaskAccount });
         }
@@ -100,80 +123,86 @@ const App = () => {
     return;
   };
 
+  const [accounts, setAccounts] = useState([]);
+  const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
+
+  interface ConnectInfo {
+    chainId: string;
+  }
+
+  // For now, 'eth_accounts' will continue to always return an array
+  function handleAccountsChanged(accounts: any) {
+    if (accounts.length === 0) {
+      // MetaMask is locked or the user has not connected any accounts
+      console.log("Please connect to MetaMask.");
+      dispatch(resetUser());
+    } else if (accounts[0] !== currentAccount) {
+      console.log("accountchange");
+      console.log(accounts);
+      // currentAccount = accounts[0];
+      // Do any other work!
+    }
+  }
+
   // *1초에 한번씩 계정 확인
-  useInterval(() => {
-    const check = async () => {
-      // *useMetamask로 account가 잡히지 않아, window.ethereum.selectedAddress사용함
-      // *메타마스크 환경일때
-      if (typeof window.ethereum !== "undefined" && location.pathname !== "/" && location.pathname !== "/login") {
-        const metamaskAccount = window.ethereum.selectedAddress;
-        window.web3 = new Web3(window.ethereum);
-        // @접속된 유저
-        if (metamaskAccount) {
-          if (currentUser.user?.walletAddress !== metamaskAccount) {
-            // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
-            // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
-            await updateUser(metamaskAccount);
-            console.log("유저 불일치, 다시 로그인 요청하기");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
-          } else if (currentUser.user?.walletAddress === metamaskAccount) {
-            // * 접속된 유저와, 저장된 유저가 같을경우
-            console.log("유저 일치");
-          }
+  useEffect(() => {
+    if (window.ethereum) {
+      // *메타마스크 연결되있을때
+      // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
+      // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
+      // * 접속된 유저와, 저장된 유저가 같을경우
+      if (window.ethereum.isConnected()) {
+        // *현재 연결된 주소 있으면 ?
+        if (window.ethereum.selectedAddress) {
+          console.log("now", window.ethereum.selectedAddress);
+          setAccounts(window.ethereum.selectedAddress);
         }
-        // @접속안된 유저면서 store에 저장되있을때-> 무조건 스토어 reset
-        else if (isNull(metamaskAccount) && currentUser.user?.walletAddress !== undefined) {
-          dispatch(resetUser());
-        }
-        // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
+        // *주소 변경되면 ?
+        window.ethereum.on("accountsChanged", (acc: any) => {
+          handleAccountsChanged(acc);
+          // updateUser(acc[0]);
+        });
+
+        // ethereum.on('connect', handler: (connectInfo: ConnectInfo) => void);
+        // ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
       }
-      // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
-      else if (typeof window.ethereum === "undefined") {
-        if (currentUser.user?.walletAddress) {
-          console.log("notmetamask");
-          dispatch(resetUser());
-        }
-      }
+    }
+
+    return () => {
+      window.ethereum.removeListener("accountsChanged", updateUser);
     };
-    check();
-  }, 1000);
+  }, []);
 
   return (
     <Fragment>
-      <Routes>
-        <Route element={<Navbar />}>
-          {/* 메인 페이지 */}
-          <Route path="/main" element={<Home />} />
-          {/* 로그인 */}
-          <Route path="/login" element={<Login />} />
-          {/* 개인 프로필 페이지 */}
-          <Route path="/profile/:userId" element={<Profile />} />
-          {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
-          <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
-          {/* 개인 팔로우/팔로워 */}
-          <Route path="/profile/:userId/follow" />
-          {/* 게임 */}
-          <Route path="/game" element={<Game />} />
-          {/* 랭킹 */}
-          <Route path="/ranking" element={<Ranking />} />
-          {/* 기부 */}
-          <Route path="/donate" element={<Donate />} />
-          {/* 자주 묻는 질문 */}
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/faq/:id" element={<Faq />} />
-          {/* Redux 테스트 페이지 */}
-          <Route path="/counter" element={<Counter />} />
-          {/* Theme 테스트 페이지 */}
-          <Route path="/theme" element={<ThemeTest />} />
-        </Route>
-        {/* 메인 페이지 입장하기 전 수족관 */}
-        <Route path="/" element={<Start />} />
-        {/* 개인 수족관 */}
-        <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
-      </Routes>
-      //* 알럿 모달
+      <Suspense fallback={<LoadingModal />}>
+        <Routes>
+          <Route element={<Navbar />}>
+            {/* 메인 페이지 */}
+            <Route path="/main" element={<Home />} />
+            {/* 로그인 */}
+            <Route path="/login" element={<Login />} />
+            {/* 개인 프로필 페이지 */}
+            <Route path="/profile/:userId" element={<Profile />} />
+            {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
+            <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
+            {/* 게임 */}
+            <Route path="/game" element={<Game />} />
+            {/* 랭킹 */}
+            <Route path="/ranking" element={<Ranking />} />
+            {/* 기부 */}
+            <Route path="/donate" element={<Donate />} />
+            {/* 자주 묻는 질문 */}
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/faq/:id" element={<Faq />} />
+          </Route>
+          {/* 메인 페이지 입장하기 전 수족관 */}
+          <Route path="/" element={<Start />} />
+          {/* 개인 수족관 */}
+          <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
+        </Routes>
+      </Suspense>
+      {/* 알럿 모달 */}
       {alertState &&
         createPortal(
           <AlertModal top="4rem" right="50%" styles={styles}>

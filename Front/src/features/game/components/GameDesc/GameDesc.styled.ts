@@ -55,5 +55,9 @@ export const StyledGameDescBackIcon = styled.button`
   top: 1.5rem;
   left: 1rem;
   color: ${({ theme }) => theme.colors.gray300};
-  font-size: 3rem;
+  font-size: 2rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 3rem;
+  }
 `;

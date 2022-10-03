@@ -18,6 +18,10 @@ export const FaqTextProomyWrapper = styled.div<{ justify: string }>`
       }
     }
   }
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+    width: 22rem;
+  }
 `;
 
 export const FaqTextBox = styled(FlexDiv)`
@@ -35,10 +39,24 @@ export const FaqTextBox = styled(FlexDiv)`
   &:hover {
     transform: scale(1.02);
   }
+  @media screen and (max-width: 768px) {
+    min-height: 0rem;
+    font-size: 0.6rem;
+    width: 16rem;
+    padding: 0.5rem;
+    line-height: 1rem;
+  }
 `;
 
 export const FaqProomy = styled.img`
   width: 6rem;
-  transform: scaleX(-1);
+  padding: 0.5rem;
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  transition: all 0.3s linear;
+  &:hover {
+    transform: scale(1.02);
+  }
+  @media screen and (max-width: 768px) {
+    width: 3rem;
+  }
 `;

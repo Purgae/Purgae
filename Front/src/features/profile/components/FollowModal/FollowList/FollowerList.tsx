@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
+import FollowItem from "./FollowItem/FollowItem";
+import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import { useGetFollowerListQuery } from "@/redux/api/userApi";
 import { Follower } from "@/redux/types";
-import { ListDiv, Div, NoFollow } from "./FollowList.styled";
-import FollowItem from "./FollowItem/FollowItem";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
@@ -13,34 +13,34 @@ interface Props {
 }
 
 const FollowerList = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [end, setEnd] = useState<boolean>(true);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
+  const num = useRef(0);
+  const list = useRef<Follower[]>([]);
 
-  // * 초기 데이터
-  const { data: followerData0 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 0 });
-  const { data: followerData1 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 1 });
+  const follower = { userId: props.userId, pageNum: page };
+  const { data: followerData, isFetching } = useGetFollowerListQuery(follower);
+
   useEffect(() => {
-    if (followerData0?.follower) {
-      setFollowerList(followerData0?.follower);
-      if (followerData1?.follower) {
-        setFollowerList([...followerData0?.follower, ...followerData1?.follower]);
-      }
+    if (followerData === undefined) return;
+    if (isFetching) return;
+    if (followerData?.message === "FAIL") {
+      setEnd(false);
+      return;
     }
-    setIsLoading(false);
-  }, [followerData0, followerData1]);
+    if (followerData?.follower) {
+      list.current = [...list.current, ...followerData.follower];
+      setFollowerList(list.current);
+    }
+  }, [isFetching]);
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
-  const { data: followerData } = useGetFollowerListQuery({ userId: props.userId, pageNum: page });
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (!end) return;
     if (isIntersecting) {
-      setIsLoading(true);
-      setPage((i) => i + 1);
-      if (followerData?.follower) {
-        console.log("hi");
-        setFollowerList([...followerList, ...followerData?.follower]);
-      }
-      setIsLoading(false);
+      num.current += 1;
+      setPage(num.current);
     }
   };
 
@@ -62,7 +62,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
-      <Div ref={setTarget}>{isLoading && <NoFollow>로딩중...</NoFollow>}</Div>
+      {end && !isFetching && <Div ref={setTarget}>로딩중...</Div>}
     </ListDiv>
   );
 };

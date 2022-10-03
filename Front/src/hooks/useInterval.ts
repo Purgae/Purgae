@@ -23,7 +23,6 @@ const useInterval = (callback: () => void, delay: number): void => {
     //* unmount될 때 clearInterval을 해준다.
     return () => {
       clearInterval(id);
-      window.removeEventListener;
     };
   }, [delay]);
 };

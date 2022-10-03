@@ -16,6 +16,12 @@ const MainFaqTextBox = styled.div`
     color: ${({ theme }) => theme.colors.gray300};
     line-height: 1.2rem;
   }
+  @media screen and (max-width: 768px) {
+    width: 20rem;
+    & > div {
+      font-size: 0.6rem;
+    }
+  }
 `;
 
 const Header = styled.div`

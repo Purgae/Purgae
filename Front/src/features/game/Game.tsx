@@ -2,16 +2,8 @@ import { useState } from "react";
 import { RootComponent, FontP } from "@/common/Common.styled";
 import { StyledGameContainer, StyleGameSoundButton } from "./Game.styled";
 
-//* 게임 캐릭터 예시
+//* 기본 게임 캐릭터
 import littleproomy_pink from "/assets/proomy/littleproomy_pink.png";
-import dol from "/assets/exam/dol.png";
-import fish from "/assets/exam/fish.png";
-import jelly from "/assets/exam/jelly.png";
-import jelly2 from "/assets/exam/jelly2.png";
-import trash1 from "/assets/exam/trash1.png";
-import trash2 from "/assets/exam/trash2.png";
-import trash3 from "/assets/exam/trash3.png";
-import turtle from "/assets/exam/turtle.png";
 
 //* BGM
 import game_bgm from "/assets/sound/game_bgm.mp3";
@@ -25,13 +17,14 @@ import GameDesc from "./components/GameDesc/GameDesc";
 import GamePlay from "./components/GamePlay/GamePlay";
 import GameResult from "./components/GameResult/GameResult";
 import GameRanking from "./components/GameRanking/GameRanking";
+import GameStart from "./components/GameStart/GameStart";
 
 const Game = () => {
   //* 0: 메인, 1: 게임 캐릭터 선택,  2: 게임 플레이,  3:  플레이 결과, 4: 게임 설명 ,5: 게임 랭킹
   const [gamePage, setGamePage] = useState<number>(0);
 
   //* 게임 캐릭터
-  const [gameCharacter, setGameCharacter] = useState<string>(fish);
+  const [gameCharacter, setGameCharacter] = useState<string>(littleproomy_pink);
 
   //* 게임 스코어
   const [gameScore, setGameScore] = useState<number>(0);
@@ -61,20 +54,20 @@ const Game = () => {
           {playingGameBGM ? (
             // BGM Off
             <>
-              <FontP fontSize="3rem" className="material-icons">
+              <FontP fontSize="4em" className="material-icons">
                 headset_off
               </FontP>
-              <FontP fontSize="1.5rem" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
+              <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
                 OFF
               </FontP>
             </>
           ) : (
             // BGM On
             <>
-              <FontP fontSize="3rem" className="material-icons">
+              <FontP fontSize="4em" className="material-icons">
                 headset
               </FontP>
-              <FontP fontSize="1.5rem" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
+              <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
                 ON
               </FontP>
             </>
@@ -82,8 +75,14 @@ const Game = () => {
         </StyleGameSoundButton>
 
         {/* 게임 화면 */}
-        {gamePage === 0 && (
-          <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton} turnOnGameBGM={turnOnGameBGM} />
+        {gamePage === 0 && <GameMain setGamePage={setGamePage} toggleSound={toggleGameButton} />}
+        {gamePage === 1 && (
+          <GameStart
+            setGamePage={setGamePage}
+            toggleSound={toggleGameButton}
+            turnOnGameBGM={turnOnGameBGM}
+            setGameCharacter={setGameCharacter}
+          />
         )}
         {gamePage === 2 && (
           <GamePlay

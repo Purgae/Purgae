@@ -10,6 +10,9 @@ export const FaqMenuTitle = styled.p`
   padding: 0rem 0rem 1rem 0.5rem;
   text-align: left;
   color: ${({ theme }) => theme.colors.gray300};
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const FaqMenuGrid = styled.div`
@@ -17,6 +20,14 @@ export const FaqMenuGrid = styled.div`
   grid-template-columns: 20rem 20rem 20rem;
   grid-template-rows: 6rem 6rem;
   gap: 1.1rem;
+  @media screen and (max-width: 1350px) {
+    grid-template-columns: 20rem 20rem;
+    grid-template-rows: 6rem 6rem 6rem;
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 20rem;
+    grid-template-rows: 6rem;
+  }
 `;
 
 export const FaqMenuItem = styled.div`

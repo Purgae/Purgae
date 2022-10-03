@@ -20,11 +20,12 @@ import ProfileImage from "@/common/ProfileImage/ProfileImage";
 const Navbar = () => {
   const [ScrollY, setHeaderColor] = useState(0);
   const [HeaderStatus, setHeaderStatus] = useState(false);
-  const userId = useAppSelector((state) => state.user.user?.id);
+  // const { data: userData } = useGetProfileQuery(userId);
 
-  const { data: userData } = useGetProfileQuery(userId);
-  const userImg = userData?.data.profileImage;
-  const userNickName = userData?.data.nickname;
+  const userData = useAppSelector((state) => state.user.user);
+  const userId = userData?.id;
+  const userImg = userData?.profileImage;
+  const userNickName = userData?.nickname;
 
   const Navbar = document.getElementById("navbar");
   const NavbarHeight: any = Navbar?.getBoundingClientRect().height;
@@ -71,7 +72,7 @@ const Navbar = () => {
               <>
                 <NavbarProfileLink to={`/profile/${userId}`}>
                   <span>{userNickName}</span>
-                  <ProfileImage size="navBar" url={userImg} />
+                  {userImg ? <ProfileImage size="navBar" url={userImg} /> : <ProfileImage size="navBar" />}
                 </NavbarProfileLink>
               </>
             ) : (

@@ -8,6 +8,15 @@ export const RankingListItemWrapper = styled.div<{ order: number | undefined }>`
   border-bottom: 1px solid ${({ theme }) => theme.colors.white400};
   min-height: 4.5rem;
   order: ${(props) => props.order};
+  @media screen and (max-width: 1350px) {
+    order: 1;
+  }
+  @media screen and (max-width: 768px) {
+    width: 20rem;
+    padding: 0.5rem 1rem;
+    grid-template-columns: 0.5fr 1.1fr 1fr;
+    min-height: 3.5rem;
+  }
 `;
 
 export const RankingListItemNickname = styled.p`
@@ -25,7 +34,17 @@ export const RankingContentDeatilWrapper = styled.div`
 export const RankingProfileWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "start")};
   gap: 1rem;
-  width: 10rem;
+  width: 16rem;
+  @media screen and (max-width: 768px) {
+    width: 8rem;
+    & > p {
+      ${({ theme }) => theme.mixins.font("0.6rem", "500")};
+    }
+    & > div {
+      width: 1.8rem;
+      height: 1.8rem;
+    }
+  }
 `;
 
 export const RankingListItemContent = styled.p`
@@ -35,6 +54,14 @@ export const RankingListItemContent = styled.p`
   line-height: 1rem;
   width: 100%;
   text-align: left;
+  @media screen and (max-width: 768px) {
+    ${({ theme }) => theme.mixins.font("0.6rem", "500")};
+  }
+  & > span {
+    @media screen and (max-width: 768px) {
+      font-size: 1rem;
+    }
+  }
 `;
 
 export const RankingListItemNumber = styled.p`
@@ -42,6 +69,9 @@ export const RankingListItemNumber = styled.p`
   color: ${({ theme }) => theme.colors.mainParagraph};
   line-height: 1rem;
   padding: 0.5rem;
+  @media screen and (max-width: 768px) {
+    ${({ theme }) => theme.mixins.font("0.8rem", "700")};
+  }
 `;
 
 export const RankingContentIcon = styled.span<{ color: string; size: string }>`

@@ -26,6 +26,13 @@ const TopButtonStyled = styled.button`
   &:active {
     outline: 0 none;
   }
+  @media screen and (max-width: 768px) {
+    width: 3rem;
+    height: 3rem;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    ${({ theme }) => theme.mixins.font("0.6rem", "700")};
+  }
 `;
 const TopButton = () => {
   const [scrollY, setScrollY] = useState(0);

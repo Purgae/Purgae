@@ -22,7 +22,7 @@ const WalletAndNft = (id: Id) => {
         ) : (
           <FaqTextProomyWrapper key={index} justify="end">
             <FaqTextBox>{content}</FaqTextBox>
-            <FaqProomy src="/assets/proomy/littleproomy_pink_nomargin.png" />
+            <FaqProomy src="/assets/plasticbag.png" />
           </FaqTextProomyWrapper>
         )
       )}

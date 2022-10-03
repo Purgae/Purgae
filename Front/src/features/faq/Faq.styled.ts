@@ -30,14 +30,23 @@ export const TitleWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   padding: 4rem;
   gap: 1rem;
+  @media screen and (max-width: 768px) {
+    padding: 4rem 1rem 1rem 1rem;
+  }
 `;
 
 export const FaqTitle = styled.p`
   ${({ theme }) => theme.mixins.font("2.4rem", "700")};
   color: ${({ theme }) => theme.colors.mainParagraph};
+  @media screen and (max-width: 768px) {
+    font-size: 1.8rem;
+  }
 `;
 
 export const FaqSubTitle = styled.p`
   ${({ theme }) => theme.mixins.font("1.5rem", "500")};
   color: ${({ theme }) => theme.colors.gray250};
+  @media screen and (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;

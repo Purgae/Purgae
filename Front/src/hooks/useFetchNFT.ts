@@ -1,8 +1,9 @@
 import useProvider from "./useProvider";
-import { ethToTrash } from "@/utils/functions/ethChange";
+import useWeiToTrash from "@/hooks/useWeiToTrash";
 
 const useFetchNFT = () => {
   const { fetchContract } = useProvider();
+  const { changeWeiToTrash } = useWeiToTrash();
 
   const changeMetaToLink = (meta: string): string => {
     const url = "https://ipfs.io/ipfs/" + meta.split("://")[1];
@@ -49,13 +50,11 @@ const useFetchNFT = () => {
     }
   };
 
-  // *내 기부횟수 및 환전
-  // won(문자열) ⇒ 한화
-  // trash(문자열) ⇒ 쓰레기 양
-  const fetchViewMyDonation = async (address: string): Promise<{ won: string; trash: string }> => {
+  // ! wei -> eth -> 원, kg
+  const fetchViewMyDonation = async (address: string) => {
     try {
       const data = await fetchContract.methods.viewMyDonation(address).call();
-      const changeEth = await ethToTrash(data);
+      const changeEth = await changeWeiToTrash(data);
       return changeEth;
     } catch (error) {
       console.log(error);

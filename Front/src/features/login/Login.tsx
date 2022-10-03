@@ -76,7 +76,11 @@ const Login = () => {
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
             if (hashData) {
-              await login({ walletAddress: connectAddress[0], nft: hashData });
+              const allHashdata = await Promise.all(hashData);
+              const resHashData = allHashdata.filter((item) => item !== undefined);
+              if (resHashData) {
+                await login({ walletAddress: connectAddress[0], nft: resHashData });
+              }
               navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
@@ -90,8 +94,9 @@ const Login = () => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            if (hashData) {
-              await login({ walletAddress: connectAddress[0], nft: hashData });
+            const allHashdata = await Promise.all(hashData);
+            if (allHashdata) {
+              await login({ walletAddress: connectAddress[0], nft: allHashdata });
               navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });

@@ -131,14 +131,16 @@ const App = () => {
         window.web3 = new Web3(window.ethereum);
         // @접속된 유저
         if (metamaskAccount) {
-          if (storeWalletAddress !== metamaskAccount) {
+          if (storeWalletAddress !== undefined && metamaskAccount) {
             // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
             // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
-            await updateUser(metamaskAccount);
-            console.log("유저 불일치, 다시 로그인 요청하기");
-            setTimeout(() => {
-              window.location.reload();
-            }, 2000);
+            if (storeWalletAddress !== metamaskAccount) {
+              await updateUser(metamaskAccount);
+              console.log("유저 불일치, 다시 로그인 요청하기");
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
+            }
           } else if (storeWalletAddress === metamaskAccount) {
             // * 접속된 유저와, 저장된 유저가 같을경우
             console.log("유저 일치");

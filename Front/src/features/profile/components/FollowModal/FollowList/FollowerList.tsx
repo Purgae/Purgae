@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { useGetFollowerListQuery } from "@/redux/api/userApi";
+import { useGetFollowerListQuery, useLazyGetFollowerListQuery } from "@/redux/api/userApi";
 import { Follower } from "@/redux/types";
 import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import FollowItem from "./FollowItem/FollowItem";
@@ -16,23 +16,35 @@ const FollowerList = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
+  const [getFollowerList] = useLazyGetFollowerListQuery();
 
   // * 초기 데이터
-  const follower = { userId: props.userId, pageNum: page };
-  const { data: followerData } = useGetFollowerListQuery(follower);
-  useEffect(() => {
-    if (followerData?.follower) {
-      setFollowerList([...followerList, ...followerData?.follower]);
+  // const follower = { userId: props.userId, pageNum: page };
+  // const { data: followerData } = useGetFollowerListQuery(follower);
+  // useEffect(() => {
+  //   if (followerData?.follower) {
+  //     setFollowerList([...followerList, ...followerData?.follower]);
+  //   }
+  //   setIsLoading(false);
+  // }, []);
+
+  //* fetchData
+  const fetchFollowerList = async () => {
+    setIsLoading(true);
+    setPage((i) => i + 1);
+    const data = await getFollowerList({ userId: props.userId, pageNum: page }).unwrap();
+    if (data?.follower) {
+      setFollowerList([...followerList, ...data?.follower]);
     }
     setIsLoading(false);
-  }, [followerData]);
+  };
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
-      setIsLoading(true);
-      setPage((i) => i + 1);
-      setIsLoading(false);
+      console.log("스크롤 내림");
+      console.log(page);
+      fetchFollowerList();
     }
   };
 
@@ -54,7 +66,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
-      <Div ref={setTarget}>{isLoading && <NoFollow>로딩중...</NoFollow>}</Div>
+      {/* {isLoading && <Div ref={setTarget}></Div>} */}
     </ListDiv>
   );
 };

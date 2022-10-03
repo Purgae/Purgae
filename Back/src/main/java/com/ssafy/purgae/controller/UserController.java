@@ -111,9 +111,11 @@ public class UserController {
     }
 
     @ApiOperation(value = "닉네임 확인", notes = "닉네임 중복, 길이, 욕설, 공백 검사")
-    @GetMapping ("/modify/{nickname}")
-    public ResponseEntity<Map<String, Object>> checkNickname(@PathVariable String nickname){
+    @PostMapping ("/modify")
+    public ResponseEntity<Map<String, Object>> checkNickname(@RequestBody Map<String, String> nicknameReq){
         Map<String, Object> result = new HashMap<>();
+
+        String nickname = nicknameReq.get("nickname");
 
         if(userService.checkDuplicate(nickname)){
             result.put("errMsg","duplicate error");

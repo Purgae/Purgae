@@ -50,15 +50,15 @@ const Login = () => {
         });
         return newExistHash;
       } else {
-        return false;
+        return [];
       }
     } else {
-      return false;
+      return [];
     }
   };
 
   const isLogined = () => {
-    if (currentUser.user?.walletAddress !== undefined) {
+    if (currentUser.user?.walletAddress !== undefined && chainId === networkChainId.goerli) {
       if (status === "connected" && window.ethereum.selectedAddress) {
         navigateHome();
       }
@@ -67,7 +67,6 @@ const Login = () => {
   };
 
   const LoginFunction = async () => {
-    console.log(status);
     if (window.ethereum) {
       if (status === "notConnected") {
         // *고릴일때
@@ -75,13 +74,13 @@ const Login = () => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            if (hashData) {
-              const allHashdata = await Promise.all(hashData);
-              const resHashData = allHashdata.filter((item) => item !== undefined);
+            const allHashdata = await Promise.all(hashData);
+            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            if (!isEmpty(resHashData)) {
               if (resHashData) {
                 await login({ walletAddress: connectAddress[0], nft: resHashData });
+                navigateHome();
               }
-              navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
               navigateHome();
@@ -95,9 +94,12 @@ const Login = () => {
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
             const allHashdata = await Promise.all(hashData);
-            if (allHashdata) {
-              await login({ walletAddress: connectAddress[0], nft: allHashdata });
-              navigateHome();
+            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            if (!isEmpty(resHashData)) {
+              if (resHashData) {
+                await login({ walletAddress: connectAddress[0], nft: resHashData });
+                navigateHome();
+              }
             } else {
               await login({ walletAddress: connectAddress[0] });
               navigateHome();

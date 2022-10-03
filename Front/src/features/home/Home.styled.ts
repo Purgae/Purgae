@@ -12,6 +12,9 @@ export const MainTitle = styled.div<{ mt: string }>`
   ${({ theme }) => theme.mixins.font("2.4rem", "700")};
   margin-top: ${(props) => props.mt};
   color: ${({ theme }) => theme.colors.mainParagraph};
+  @media screen and (max-width: 768px) {
+    font-size: 1.5rem;
+  }
 `;
 
 export const MainText = styled.p<{ textalign: string }>`
@@ -19,6 +22,10 @@ export const MainText = styled.p<{ textalign: string }>`
   text-align: ${(props) => props.textalign};
   color: ${({ theme }) => theme.colors.gray300};
   line-height: 1.2rem;
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+    line-height: 1rem;
+  }
 `;
 
 export const MainTextPrimary = styled.span`

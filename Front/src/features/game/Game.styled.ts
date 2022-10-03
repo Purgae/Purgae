@@ -27,5 +27,10 @@ export const StyleGameSoundButton = styled.button`
   right: 1rem;
   padding: 0.5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
+  font-size: 0.5rem;
   z-index: 5;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 0.75rem;
+  }
 `;

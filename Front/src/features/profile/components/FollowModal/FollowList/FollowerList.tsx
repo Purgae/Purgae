@@ -14,32 +14,24 @@ interface Props {
 
 const FollowerList = (props: Props) => {
   const [isLoading, setIsLoading] = useState(true);
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
 
   // * 초기 데이터
-  const { data: followerData0 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 0 });
-  const { data: followerData1 } = useGetFollowerListQuery({ userId: props.userId, pageNum: 1 });
+  const follower = { userId: props.userId, pageNum: page };
+  const { data: followerData } = useGetFollowerListQuery(follower);
   useEffect(() => {
-    if (followerData0?.follower) {
-      setFollowerList(followerData0?.follower);
-      if (followerData1?.follower) {
-        setFollowerList([...followerData0?.follower, ...followerData1?.follower]);
-      }
+    if (followerData?.follower) {
+      setFollowerList([...followerList, ...followerData?.follower]);
     }
     setIsLoading(false);
-  }, [followerData0, followerData1]);
+  }, [followerData]);
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
-  const { data: followerData } = useGetFollowerListQuery({ userId: props.userId, pageNum: page });
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (isIntersecting) {
       setIsLoading(true);
       setPage((i) => i + 1);
-      if (followerData?.follower) {
-        console.log("hi");
-        setFollowerList([...followerList, ...followerData?.follower]);
-      }
       setIsLoading(false);
     }
   };

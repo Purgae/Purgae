@@ -1,8 +1,8 @@
-import { useEffect, useState, useCallback } from "react";
-import { useGetFollowerListQuery, useLazyGetFollowerListQuery } from "@/redux/api/userApi";
-import { Follower } from "@/redux/types";
-import { ListDiv, Div, NoFollow } from "./FollowList.styled";
+import { useEffect, useState, useRef } from "react";
 import FollowItem from "./FollowItem/FollowItem";
+import { ListDiv, Div, NoFollow } from "./FollowList.styled";
+import { useGetFollowerListQuery } from "@/redux/api/userApi";
+import { Follower } from "@/redux/types";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
@@ -13,38 +13,34 @@ interface Props {
 }
 
 const FollowerList = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
+  const [end, setEnd] = useState<boolean>(true);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
-  const [getFollowerList] = useLazyGetFollowerListQuery();
+  const num = useRef(0);
+  const list = useRef<Follower[]>([]);
 
-  // * 초기 데이터
-  // const follower = { userId: props.userId, pageNum: page };
-  // const { data: followerData } = useGetFollowerListQuery(follower);
-  // useEffect(() => {
-  //   if (followerData?.follower) {
-  //     setFollowerList([...followerList, ...followerData?.follower]);
-  //   }
-  //   setIsLoading(false);
-  // }, []);
+  const follower = { userId: props.userId, pageNum: page };
+  const { data: followerData, isFetching } = useGetFollowerListQuery(follower);
 
-  //* fetchData
-  const fetchFollowerList = async () => {
-    setIsLoading(true);
-    setPage((i) => i + 1);
-    const data = await getFollowerList({ userId: props.userId, pageNum: page }).unwrap();
-    if (data?.follower) {
-      setFollowerList([...followerList, ...data?.follower]);
+  useEffect(() => {
+    if (followerData === undefined) return;
+    if (isFetching) return;
+    if (followerData?.message === "FAIL") {
+      setEnd(false);
+      return;
     }
-    setIsLoading(false);
-  };
+    if (followerData?.follower) {
+      list.current = [...list.current, ...followerData.follower];
+      setFollowerList(list.current);
+    }
+  }, [isFetching]);
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (!end) return;
     if (isIntersecting) {
-      console.log("스크롤 내림");
-      console.log(page);
-      fetchFollowerList();
+      num.current += 1;
+      setPage(num.current);
     }
   };
 
@@ -66,7 +62,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
-      {/* {isLoading && <Div ref={setTarget}></Div>} */}
+      {end && !isFetching && <Div ref={setTarget}>로딩중...</Div>}
     </ListDiv>
   );
 };

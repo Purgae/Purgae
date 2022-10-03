@@ -25,8 +25,6 @@ const FollowingList = (props: Props) => {
   useEffect(() => {
     if (followingData === undefined) return;
     if (isFetching) return;
-    console.log(page);
-    console.log(followingData);
     if (followingData?.message === "FAIL") {
       setEnd(false);
       return;

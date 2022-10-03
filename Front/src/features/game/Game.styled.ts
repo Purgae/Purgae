@@ -8,6 +8,8 @@ export const StyledGameContainer = styled(FlexDiv)`
   position: relative;
   aspect-ratio: 3/2;
   max-width: 80rem;
+  box-shadow: ${({ theme }) => theme.shadows.shadow700};
+  border-radius: 0.5rem;
   background-image: url(${sea});
   background-size: cover;
   background-position: center;
@@ -25,5 +27,10 @@ export const StyleGameSoundButton = styled.button`
   right: 1rem;
   padding: 0.5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
+  font-size: 0.5rem;
   z-index: 5;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 0.75rem;
+  }
 `;

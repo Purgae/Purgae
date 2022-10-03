@@ -1,6 +1,6 @@
 import { Meta, Story } from "@storybook/react";
 import GamePlay from "./GamePlay";
-import { GameCharacterType } from "../../Game.types";
+import { GamePlayType } from "./GamePlay.types";
 import fish from "/assets/exam/fish.png";
 
 export default {
@@ -19,7 +19,7 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<GameCharacterType> = (args) => (
+export const Default: Story<GamePlayType> = (args) => (
   <GamePlay
     {...args}
     setGamePage={() => console.log("페이지 변경")}

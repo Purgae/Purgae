@@ -2,6 +2,7 @@ import styled from "@/styles/theme-components";
 import { MainTitle, MainIcon, MainText, MainTextPrimary } from "../../Home.styled";
 import { OutLineButton } from "@/common/Button/Button.styled";
 import ScrollToAppear from "@/utils/animations/ScorllToAppear";
+import { useNavigate } from "react-router-dom";
 
 const MainHowDonateBackground = styled.div<{ animation: string; visibility: string }>`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
@@ -23,27 +24,58 @@ const MainHowDonateBackground = styled.div<{ animation: string; visibility: stri
         opacity: 1;
       }
     }
+    @media screen and (max-width: 768px) {
+      visibility: visible;
+      animation: none;
+    }
   }
 `;
 
 const MainHowDonateContentWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 64%;
+  gap: 6rem;
+  @media screen and (max-width: 1350px) {
+    gap: 2rem;
+  }
+  @media screen and (max-width: 768px) {
+    ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
+    & > div {
+      margin-top: 1rem;
+    }
+  }
 `;
 
 const MainHowDonateIconTextButtonWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   height: 20rem;
+  @media screen and (max-width: 768px) {
+    height: 17rem;
+    & > button {
+      font-size: 0.6rem;
+      width: 8rem;
+    }
+  }
+  & > p {
+    @media screen and (max-width: 1350px) {
+      font-size: 0.8rem;
+    }
+  }
 `;
 
 export const MainHowDonate = () => {
-  const Animation = ScrollToAppear("moneygo_animation", 60);
+  const navigate = useNavigate();
+  const Animation = ScrollToAppear("howdonate_animation", 3);
+  // 클릭하면 스크롤이 위로 올라가는 함수
+  const onHandleTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    return;
+  };
   return (
-    <MainHowDonateBackground
-      animation={Animation ? "fadein 2.5s" : "none"}
-      visibility={Animation ? "visible" : "hidden"}
-    >
-      <MainTitle mt="8rem" id="moneygo_animation">
+    <MainHowDonateBackground animation={Animation ? "fadein 3s" : "none"} visibility={Animation ? "visible" : "hidden"}>
+      <MainTitle mt="8rem" id="howdonate_animation">
         그럼 어떻게 기부할 수 있나요?
       </MainTitle>
       <MainHowDonateContentWrapper>
@@ -58,7 +90,16 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton
+            fontSize="0.9rem"
+            width="9.6rem"
+            bgColor="white"
+            fontColor="lightBlue600"
+            onClick={() => {
+              onHandleTop();
+              navigate(`/faq/9`);
+            }}
+          >
             블록체인이 뭔가요?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
@@ -74,7 +115,16 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton
+            fontSize="0.9rem"
+            width="9.6rem"
+            bgColor="white"
+            fontColor="lightBlue600"
+            onClick={() => {
+              onHandleTop();
+              navigate(`/faq/1`);
+            }}
+          >
             암호화폐 지갑이란?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>
@@ -91,7 +141,16 @@ export const MainHowDonate = () => {
             <br />
             아래의 버튼을 클릭해보세요!
           </MainText>
-          <OutLineButton fontSize="0.9rem" width="9.6rem" bgColor="white" fontColor="lightBlue600">
+          <OutLineButton
+            fontSize="0.9rem"
+            width="9.6rem"
+            bgColor="white"
+            fontColor="lightBlue600"
+            onClick={() => {
+              onHandleTop();
+              navigate(`/faq/6`);
+            }}
+          >
             NFT가 뭔가요?
           </OutLineButton>
         </MainHowDonateIconTextButtonWrapper>

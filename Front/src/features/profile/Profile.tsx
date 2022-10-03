@@ -2,18 +2,20 @@ import { useEffect, useState } from "react";
 import Seal from "./components/Seal/Seal";
 import ProfileHeader from "./components/ProfileHeader/ProfileHeader";
 import { styled } from "@/styles/theme";
-import { useAppSelector } from "@/hooks/storeHook";
+import { useAppSelector, useAppDispatch } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
+import { closeSelectNFTProfile, closeEditProfile } from "@/redux/slices/modalSlice";
 
 const Profile = () => {
+  const dispatch = useAppDispatch();
   // !현재 프로필이 본인 프로필인지 판별
   const [isProfileUser, setIsProfileUser] = useState<boolean>(false);
   const profileUserId = Number(useParams().userId);
 
   const currentUserId = useAppSelector((state) => state.user.user?.id);
   const { data: profileData } = useGetProfileQuery(profileUserId);
-  console.log(profileData?.follower_cnt);
+
   useEffect(() => {
     if (profileUserId === currentUserId) {
       setIsProfileUser(true);
@@ -21,6 +23,14 @@ const Profile = () => {
       setIsProfileUser(false);
     }
   }, [profileUserId]);
+
+  //* unmount시, 개인 정보 수정 modal을 off
+  useEffect(() => {
+    return () => {
+      dispatch(closeSelectNFTProfile());
+      dispatch(closeEditProfile());
+    };
+  }, []);
 
   return (
     <StyledRootComponent>

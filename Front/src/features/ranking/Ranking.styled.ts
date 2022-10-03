@@ -4,8 +4,7 @@ import { FlexDiv } from "@/common/Common.styled";
 export const RankingBackground = styled.div`
   display: flex;
   flex-direction: column;
-  padding-top: 4rem;
-  padding-bottom: 10rem;
+  padding: 4rem 0rem 10rem 0rem;
   background-color: ${({ theme }) => theme.colors.white100};
   min-height: 100vh;
 `;
@@ -25,11 +24,12 @@ export const RankingRootComponent = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  padding: 0rem 1rem 1rem;
+  padding: 10rem 1rem 1rem;
   gap: 8rem;
+  background-color: ${({ theme }) => theme.colors.white100};
 
   @media screen and (min-width: 1350px) {
-    padding: 0rem 6rem 1rem;
+    padding: 10rem 6rem 1rem;
   } ;
 `;
 
@@ -50,6 +50,10 @@ export const RankingTitleWrapper = styled.div`
       }
     }
   }
+  @media screen and (max-width: 1350px) {
+    ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
+    gap: 0rem;
+  }
 `;
 
 export const RankingProomy = styled.img`
@@ -58,6 +62,9 @@ export const RankingProomy = styled.img`
   filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
   &:hover {
     transform: scale(1.02);
+  }
+  @media screen and (max-width: 1350px) {
+    width: 10rem;
   }
 `;
 
@@ -76,5 +83,12 @@ export const RankingSpeechBubble = styled(FlexDiv)`
   line-height: 1.5rem;
   &:hover {
     transform: scale(1.02);
+  }
+  @media screen and (max-width: 1350px) {
+    width: 20rem;
+    min-height: 2rem;
+    padding: 0.5rem;
+    border-radius: 0rem 4rem 4rem 4rem;
+    ${({ theme }) => theme.mixins.font("0.8rem", "500")};
   }
 `;

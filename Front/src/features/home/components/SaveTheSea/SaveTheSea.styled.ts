@@ -14,14 +14,22 @@ export const MainTopBackground = styled.div`
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
+  @media screen and (max-width: 768px) {
+    ${({ theme }) => theme.mixins.flexBox("row", "start", "center")};
+  }
 `;
 
 export const MainTopLetterButtonWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "start", "space-between")};
   height: 20rem;
   & > * {
-    margin-top: 1.25rem;
-    margin-left: 8rem;
+    padding-top: 1.25rem;
+    @media screen and (max-width: 1350px) {
+      padding-left: 1rem;
+    }
+    @media screen and (max-width: 768px) {
+      width: 21rem;
+    }
   }
 `;
 
@@ -58,15 +66,25 @@ export const MainTopSubhead = styled.div`
 export const MainButtonWrapper = styled(FlexDiv)`
   & > * {
     margin-right: 0.8rem;
+    @media screen and (max-width: 768px) {
+      font-size: 0.6rem;
+    }
   }
 `;
 
 export const MainProomyImage = styled.img`
   width: 36rem;
   opacity: 0.7;
+  @media screen and (max-width: 1350px) {
+    margin-top: 10rem;
+    width: 19rem;
+  }
+  @media screen and (max-width: 768px) {
+    display: none;
+  }
 `;
 
 export const MainContentProomyWrapper = styled.div`
-  ${({ theme }) => theme.mixins.flexBox("row", "none", "space-between")};
-  width: 84rem;
+  ${({ theme }) => theme.mixins.flexBox("row", "none", "space-around")};
+  width: 100%;
 `;

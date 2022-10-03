@@ -4,4 +4,5 @@ export interface CardPageProps {
   onClick?: React.MouseEventHandler;
   nftexist: boolean;
   isProfile?: boolean;
+  selectCardFunc?: (idx: string) => void;
 }

@@ -46,7 +46,7 @@ const FollowModal = ({
   // * 뒷배경 스크롤 방지
   useEffect(() => {
     document.body.style.cssText = `
-      position: fixed; 
+      position: fixed;
       top: -${window.scrollY}px;
       overflow-y: scroll;
       width: 100%;`;
@@ -73,8 +73,17 @@ const FollowModal = ({
             {userFollowingCnt} 팔로잉
           </Following>
         </Title>
-        {isFollower && <FollowerList myFollow={isUser} userId={userId} onClickToggleModal={onClickToggleModal} />}
-        {!isFollower && <FollowingList myFollow={isUser} userId={userId} onClickToggleModal={onClickToggleModal} />}
+        {isFollower && (
+          <FollowerList myFollow={isUser} userId={userId} username={nickname} onClickToggleModal={onClickToggleModal} />
+        )}
+        {!isFollower && (
+          <FollowingList
+            myFollow={isUser}
+            userId={userId}
+            username={nickname}
+            onClickToggleModal={onClickToggleModal}
+          />
+        )}
       </DialogBox>
       <Backdrop
         onClick={(e: React.MouseEvent) => {

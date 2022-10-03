@@ -4,6 +4,7 @@ import Button from "@/common/Button/Button";
 import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useChangeFollowMutation } from "@/redux/api/userApi";
+import { styled } from "@/styles/theme";
 
 interface Props {
   myFollow: boolean;
@@ -25,7 +26,7 @@ const FollowItem = (props: Props) => {
   // * 프로필 이미지 로직
   let profileImage = null;
   if (props.profileImage) {
-    profileImage = `https://ipfs.io/ipfs/${props.profileImage}`;
+    profileImage = props.profileImage;
   }
 
   // * 팔로우/언팔로우 로직
@@ -41,10 +42,10 @@ const FollowItem = (props: Props) => {
     // * 나의 팔로우, 팔로워 목록(팔로우 버튼 표시)
     return (
       <FlexDiv justify="space-between" width="90%" margin="1rem auto">
-        <FlexDiv onClick={navigateProfile}>
+        <FlexCursor onClick={navigateProfile}>
           <ProfileImage size="extraSmall" url={profileImage} />
           {props.nickname}
-        </FlexDiv>
+        </FlexCursor>
         {props.following ? (
           <Button styles="solid" bgColor="white250" fontColor="gray150" onClick={following}>
             팔로잉
@@ -60,10 +61,10 @@ const FollowItem = (props: Props) => {
     // * 다른 유저의 팔로우, 팔로워 목록(팔로우 버튼 대신 프로필 버튼)
     return (
       <FlexDiv justify="space-between" width="90%" margin="1rem auto">
-        <FlexDiv onClick={navigateProfile}>
+        <FlexCursor onClick={navigateProfile}>
           <ProfileImage size="extraSmall" url={profileImage} />
           {props.nickname}
-        </FlexDiv>
+        </FlexCursor>
         <Button styles="solid" bgColor="primary500" fontColor="white100" onClick={navigateProfile}>
           프로필
         </Button>
@@ -73,3 +74,7 @@ const FollowItem = (props: Props) => {
 };
 
 export default FollowItem;
+
+const FlexCursor = styled(FlexDiv)`
+  cursor: pointer;
+`;

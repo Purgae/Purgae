@@ -6,8 +6,9 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Background, Image, Group } from "./Card.styled";
 import { CardProps, CardGroupProps } from "./Card.types";
+import profile from "/assets/profile.png";
 
-const Card = ({ url, selected = false, isProfile }: React.PropsWithChildren<CardProps>) => {
+const Card = ({ url, selected = false, isProfile, id, onClick }: React.PropsWithChildren<CardProps>) => {
   return (
     <>
       {isProfile ? (
@@ -16,21 +17,41 @@ const Card = ({ url, selected = false, isProfile }: React.PropsWithChildren<Card
         </Background>
       ) : (
         <Background selected={selected}>
-          <Image url={url}></Image>
+          <Image url={url} id={`${id}`} onClick={onClick}></Image>
         </Background>
       )}
     </>
   );
 };
 
-const CardGroup = ({ lst, selectCard, isProfile, ...props }: React.PropsWithChildren<CardGroupProps>) => {
+const CardGroup = ({
+  lst,
+  selectCard,
+  isProfile,
+  selectCardFunc,
+  ...props
+}: React.PropsWithChildren<CardGroupProps>) => {
   const { changeMetaToLink } = useFetchNFT();
   const profileUserId = Number(useParams().userId);
 
+  const newArr = Array(lst.length).fill(false);
+  const [isSelected, setIsSelected] = useState(newArr);
+
+  const clickCard = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (event.target instanceof HTMLDivElement) {
+      const cardList = Array(lst.length).fill(false);
+      cardList[Number(event.target.id)] = true;
+      setIsSelected(cardList);
+      if (selectCardFunc) {
+        selectCardFunc(event.target.id);
+      }
+    }
+  };
+
   return (
-    <Group>
+    <>
       {isProfile ? (
-        <>
+        <Group>
           {/* 프로필에서 사용 */}
           {lst?.map((item: any, idx) => {
             if (idx === selectCard) {
@@ -47,20 +68,19 @@ const CardGroup = ({ lst, selectCard, isProfile, ...props }: React.PropsWithChil
               );
             }
           })}
-        </>
+        </Group>
       ) : (
-        <>
+        <Group>
           {/* 프로필 외 - ex)게임: selected 속성 사용*/}
           {lst.map((item, idx) => {
-            if (idx === selectCard) {
-              return <Card url={item} key={idx} selected={true} />;
-            } else {
-              return <Card url={item} key={idx} />;
+            if (item === "null") {
+              return <Card url={profile} selected={isSelected[idx]} key={idx} onClick={clickCard} id={idx} />;
             }
+            return <Card url={item} selected={isSelected[idx]} key={idx} onClick={clickCard} id={idx} />;
           })}
-        </>
+        </Group>
       )}
-    </Group>
+    </>
   );
 };
 

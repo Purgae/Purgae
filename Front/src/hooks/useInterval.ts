@@ -21,7 +21,9 @@ const useInterval = (callback: () => void, delay: number): void => {
     let id = setInterval(tick, delay);
 
     //* unmount될 때 clearInterval을 해준다.
-    return () => clearInterval(id);
+    return () => {
+      clearInterval(id);
+    };
   }, [delay]);
 };
 

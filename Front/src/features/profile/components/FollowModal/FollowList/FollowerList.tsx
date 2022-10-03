@@ -1,30 +1,54 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import FollowItem from "./FollowItem/FollowItem";
-import { ListDiv } from "./FollowList.styled";
+import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import { useGetFollowerListQuery } from "@/redux/api/userApi";
 import { Follower } from "@/redux/types";
+import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 
 interface Props {
   myFollow: boolean;
   userId: number;
+  username: string;
   onClickToggleModal: () => void;
 }
 
 const FollowerList = (props: Props) => {
-  // * 팔로워 리스트
+  const [page, setPage] = useState(0);
+  const [end, setEnd] = useState<boolean>(true);
   const [followerList, setFollowerList] = useState<Follower[]>([]);
+  const num = useRef(0);
+  const list = useRef<Follower[]>([]);
 
-  // * api 요청
-  const follower = { userId: props.userId, pageNum: 0 };
-  const { data: followerData } = useGetFollowerListQuery(follower);
+  const follower = { userId: props.userId, pageNum: page };
+  const { data: followerData, isFetching } = useGetFollowerListQuery(follower);
+
   useEffect(() => {
-    if (followerData?.follower) {
-      setFollowerList(followerData?.follower);
+    if (followerData === undefined) return;
+    if (isFetching) return;
+    if (followerData?.message === "FAIL") {
+      setEnd(false);
+      return;
     }
-  }, [followerData]);
+    if (followerData?.follower) {
+      list.current = [...list.current, ...followerData.follower];
+      setFollowerList(list.current);
+    }
+  }, [isFetching]);
+
+  // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
+  const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (!end) return;
+    if (isIntersecting) {
+      num.current += 1;
+      setPage(num.current);
+    }
+  };
+
+  const { setTarget } = useIntersectionObserver({ onIntersect });
 
   return (
     <ListDiv>
+      {followerList.length === 0 ? <NoFollow>현재 {props.username}님이 팔로우하고 있는 사람이 없어요.</NoFollow> : ""}
       {followerList.map((item, idx) => {
         return (
           <FollowItem
@@ -38,6 +62,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
+      {end && !isFetching && <Div ref={setTarget}>로딩중...</Div>}
     </ListDiv>
   );
 };

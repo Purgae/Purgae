@@ -14,13 +14,18 @@ import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
+import { selectUser } from "@/redux/slices/userSlice";
+import useInterval from "@/hooks/useInterval";
+import { useAppSelector } from "@/hooks/storeHook";
+import { isEmpty } from "lodash";
 
 const Login = () => {
-  const { status, connect, switchChain, account, chainId, ethereum } = useMetaMask();
-  const { networkChainId, contract } = useProvider();
+  const { status, connect, switchChain, chainId } = useMetaMask();
+  const { networkChainId, fetchContract } = useProvider();
   const navigate = useNavigate();
   const [login] = useLoginMutation();
   const { openAlertModal } = useAlertModal();
+  const currentUser = useAppSelector(selectUser);
 
   // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
   // const config = {
@@ -33,17 +38,31 @@ const Login = () => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await contract.methods?.viewMyNFT(connectAddress[0]).call();
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
       if (existHash.length > 0) {
-        const newExistHash = existHash.map((element: string) => {
-          return { hash: element.split("://")[1] };
+        const newExistHash = existHash.map(async (element: string) => {
+          if (!isEmpty(element)) {
+            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
+            return { hash: data };
+          } else {
+            return;
+          }
         });
         return newExistHash;
       } else {
-        return false;
+        return [];
       }
     } else {
-      return false;
+      return [];
+    }
+  };
+
+  const isLogined = () => {
+    if (currentUser.user?.walletAddress !== undefined && chainId === networkChainId.goerli) {
+      if (status === "connected" && window.ethereum.selectedAddress) {
+        navigateHome();
+      }
+    } else {
     }
   };
 
@@ -55,12 +74,17 @@ const Login = () => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            if (hashData) {
-              login({ walletAddress: connectAddress[0], nft: hashData });
+            const allHashdata = await Promise.all(hashData);
+            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            if (!isEmpty(resHashData)) {
+              if (resHashData) {
+                await login({ walletAddress: connectAddress[0], nft: resHashData });
+                navigateHome();
+              }
             } else {
-              login({ walletAddress: connectAddress[0] });
+              await login({ walletAddress: connectAddress[0] });
+              navigateHome();
             }
-            navigateHome();
           }
         }
         // *고릴아닐때
@@ -69,12 +93,17 @@ const Login = () => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            if (hashData) {
-              login({ walletAddress: connectAddress[0], nft: hashData });
+            const allHashdata = await Promise.all(hashData);
+            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            if (!isEmpty(resHashData)) {
+              if (resHashData) {
+                await login({ walletAddress: connectAddress[0], nft: resHashData });
+                navigateHome();
+              }
             } else {
-              login({ walletAddress: connectAddress[0] });
+              await login({ walletAddress: connectAddress[0] });
+              navigateHome();
             }
-            navigateHome();
           }
         }
       } else if (status === "connecting") {
@@ -83,10 +112,27 @@ const Login = () => {
           styles: "RED",
         };
         openAlertModal(data);
+      } else if (status === "initializing") {
+        const data: OpenAlertModalArg = {
+          content: "현재 메타마스크에 연결중에 있습니다. 페이지가 새로고침 됩니다.",
+          styles: "PRIMARY",
+        };
+        openAlertModal(data);
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      } else if (status === "unavailable") {
+        const data: OpenAlertModalArg = {
+          content: "메타마스크를 사용할 수 없는 상태입니다.",
+          styles: "RED",
+        };
+        openAlertModal(data);
+      } else if (status === "connected") {
+        isLogined();
       }
     } else {
       const data: OpenAlertModalArg = {
-        content: "메타마스크 설치 후 이용해주세요",
+        content: "메타마스크 설치 후 이용해주세요. (크롬, 파이어폭스 지원)",
         styles: "PRIMARY",
       };
       openAlertModal(data);
@@ -107,12 +153,11 @@ const Login = () => {
     }, 2000);
   };
 
-  useEffect(() => {
-    if (account) {
-      navigateHome();
-      return;
+  useInterval(() => {
+    if (window.ethereum) {
+      isLogined();
     }
-  }, []);
+  }, 100);
 
   return (
     <RootComponent>
@@ -121,7 +166,7 @@ const Login = () => {
         <LoginDescription>
           <LoginDescription1>지갑 연결 하기</LoginDescription1>
           <LoginDescription2>
-            <span className="asdf">
+            <span>
               로그인을 위해서 <LoginDescription2blue>지갑</LoginDescription2blue>을 연결해야해요
             </span>
             <span>지갑은 간단하게 생성할 수 있어요.</span>

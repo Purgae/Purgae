@@ -3,7 +3,7 @@ import { MainTitle, MainText, MainTextPrimary, MainIcon } from "../../Home.style
 import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
 const WhatIsPurgae = () => {
-  const animation = ScrollToAppear("whatispurgae_animation", 10);
+  const animation = ScrollToAppear("whatispurgae_animation", 1);
   return (
     <>
       <WhatIsPurgaeBackground
@@ -16,6 +16,7 @@ const WhatIsPurgae = () => {
         <WhatIsPurgaeIconTextWrapper>
           <MainIcon src={"/assets/MainPage/Icon/1.png"} width="13rem" />
           <WhatIsPurgaeTextBox>
+            <MainIcon src={"/assets/MainPage/Icon/1.png"} width="8rem" />
             <MainText textalign="none">
               <MainTextPrimary>푸르게</MainTextPrimary>는 현재 심각한 환경문제 중 하나인
               <br />
@@ -25,6 +26,7 @@ const WhatIsPurgae = () => {
         </WhatIsPurgaeIconTextWrapper>
         <WhatIsPurgaeIconTextWrapper>
           <WhatIsPurgaeTextBox>
+            <MainIcon src={"/assets/MainPage/Icon/2.png"} width="8rem" />
             <MainText textalign="none">
               기존에 단순히 성금 모금과 전달에 머물렀던 기부 서비스를 NFT와 결합하여
               <br />
@@ -36,6 +38,7 @@ const WhatIsPurgae = () => {
         <WhatIsPurgaeIconTextWrapper>
           <MainIcon src={"/assets/MainPage/Icon/3.png"} width="13rem" />
           <WhatIsPurgaeTextBox>
+            <MainIcon src={"/assets/MainPage/Icon/3.png"} width="8rem" />
             <MainText textalign="none">
               <MainTextPrimary>푸르게</MainTextPrimary>에 일정 금액 이상 기부하면 해양생물 NFT를 얻을 수 있습니다.
               <br />
@@ -50,6 +53,7 @@ const WhatIsPurgae = () => {
         </WhatIsPurgaeIconTextWrapper>
         <WhatIsPurgaeIconTextWrapper>
           <WhatIsPurgaeTextBox>
+            <MainIcon src={"/assets/MainPage/Icon/4.png"} width="8rem" />
             <MainText textalign="none">
               함께<MainTextPrimary>海</MainTextPrimary>요 팀의
               <MainTextPrimary>푸르게</MainTextPrimary>와 함께 지속 가능한 바다를 만들어가요.

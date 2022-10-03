@@ -29,7 +29,7 @@ import { selectUser } from "@/redux/slices/userSlice";
 import { useRequestRandomNumMutation, useLazyGetDonateCountQuery } from "@/redux/api/nftApi";
 
 const DonateForm = () => {
-  const [donateCount, setDonateCount] = useState<number>();
+  const [donateCount, setDonateCount] = useState<number>(0);
   const dispatch = useAppDispatch();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
   const { user } = useAppSelector(selectUser);
@@ -67,20 +67,28 @@ const DonateForm = () => {
     event.preventDefault();
     dispatch(resetInputValue());
     try {
-      const { NFTId } = await requestRandomNum(user!.id).unwrap();
+      const data = await requestRandomNum(user!.id).unwrap();
+      if (data.message === "FAIL" || data.NFTId === undefined) {
+        if (data.error === "over") {
+          const content = "일일 기부 횟수가 초과되었습니다.";
+          openAlertModal({ content, styles: "DANGER" });
+        } else {
+          const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
+          openAlertModal({ content, styles: "DANGER" });
+        }
+        return;
+      }
       const payload = {
         uid: user!.id,
-        id: NFTId,
+        id: data.NFTId,
         address: account!,
         ether: inputValue,
       };
       dispatch(onModal());
       donate(payload);
     } catch (error) {
-      dispatch(offModal());
-
-      //TODO: 백엔드에게 요청해서 에러 처리 잡기
-      console.error(error);
+      const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
+      openAlertModal({ content, styles: "DANGER" });
     }
   };
 
@@ -101,6 +109,7 @@ const DonateForm = () => {
     (async () => {
       try {
         const { NFTNum } = await getDonateCount(user!.id).unwrap();
+        if (NFTNum === undefined) return;
         setDonateCount(NFTNum);
       } catch (error) {}
     })();

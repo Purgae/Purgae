@@ -22,23 +22,39 @@ const MoneyGoBackground = styled.div<{ animation: string; visibility: string }>`
         opacity: 1;
       }
     }
+    @media screen and (max-width: 768px) {
+      visibility: visible;
+      animation: none;
+    }
   }
 `;
 
 const MoneyGoIconWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
   width: 38rem;
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+  & > img {
+    @media screen and (max-width: 768px) {
+      width: 10rem;
+    }
+  }
 `;
 
-const MoneyGoText = styled.p`
+const MoneyGoText = styled.span`
   ${({ theme }) => theme.mixins.font("1rem", "500")};
   color: ${({ theme }) => theme.colors.gray300};
   line-height: 1.6rem;
   text-align: center;
+  @media screen and (max-width: 768px) {
+    font-size: 0.6rem;
+    line-height: 1.2rem;
+  }
 `;
 
 const MoneyGo = () => {
-  const animation = ScrollToAppear("moneygo_animation", 35);
+  const animation = ScrollToAppear("moneygo_animation", 2);
 
   return (
     <MoneyGoBackground animation={animation ? "fadein 2.5s" : "none"} visibility={animation ? "visible" : "hidden"}>

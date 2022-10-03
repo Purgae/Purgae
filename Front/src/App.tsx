@@ -32,13 +32,12 @@ import useInterval from "@/hooks/useInterval";
 import { useMetaMask } from "metamask-react";
 import useProvider from "@/hooks/useProvider";
 import Web3 from "web3";
-import useFetchNFT from "@/hooks/useFetchNFT";
 
 // * slice
 import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
-import { isNull } from "lodash";
+import { isEmpty, isNull } from "lodash";
 
 declare global {
   interface Window {
@@ -54,13 +53,12 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  const currentUser = useSelector(selectUser);
+  const storeWalletAddress = useAppSelector((state) => state.user.user?.walletAddress);
   const [login] = useLoginMutation();
 
   // * web3
   const { chainId, switchChain } = useMetaMask();
-  const { networkChainId } = useProvider();
-  const { getHash } = useFetchNFT();
+  const { networkChainId, fetchContract } = useProvider();
 
   const updateUserModal = () => {
     const data: OpenAlertModalArg = {
@@ -71,13 +69,35 @@ const App = () => {
     return;
   };
 
+  const getHash = async (connectAddress: string[]) => {
+    if (connectAddress) {
+      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
+      if (existHash.length > 0) {
+        const newExistHash = existHash.map(async (element: string) => {
+          if (!isEmpty(element)) {
+            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
+            return { hash: data };
+          } else {
+            return;
+          }
+        });
+        return newExistHash;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  };
+
   const updateUser = async (metamaskAccount: string) => {
     // *고릴일때
     if (chainId === networkChainId.goerli) {
       if (metamaskAccount) {
         const hashData = await getHash([metamaskAccount]);
-        if (hashData) {
-          await login({ walletAddress: metamaskAccount, nft: hashData });
+        const allHashdata = await Promise.all(hashData);
+        if (allHashdata) {
+          await login({ walletAddress: metamaskAccount, nft: allHashdata });
         } else {
           await login({ walletAddress: metamaskAccount });
         }
@@ -89,8 +109,9 @@ const App = () => {
       await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
       if (metamaskAccount) {
         const hashData = await getHash([metamaskAccount]);
-        if (hashData) {
-          await login({ walletAddress: metamaskAccount, nft: hashData });
+        const allHashdata = await Promise.all(hashData);
+        if (allHashdata) {
+          await login({ walletAddress: metamaskAccount, nft: allHashdata });
         } else {
           await login({ walletAddress: metamaskAccount });
         }
@@ -110,7 +131,7 @@ const App = () => {
         window.web3 = new Web3(window.ethereum);
         // @접속된 유저
         if (metamaskAccount) {
-          if (currentUser.user?.walletAddress !== metamaskAccount) {
+          if (storeWalletAddress !== metamaskAccount) {
             // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
             // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
             await updateUser(metamaskAccount);
@@ -118,20 +139,21 @@ const App = () => {
             setTimeout(() => {
               window.location.reload();
             }, 2000);
-          } else if (currentUser.user?.walletAddress === metamaskAccount) {
+          } else if (storeWalletAddress === metamaskAccount) {
             // * 접속된 유저와, 저장된 유저가 같을경우
             console.log("유저 일치");
           }
         }
         // @접속안된 유저면서 store에 저장되있을때-> 무조건 스토어 reset
-        else if (isNull(metamaskAccount) && currentUser.user?.walletAddress !== undefined) {
+        else if (isNull(metamaskAccount) && storeWalletAddress !== undefined) {
           dispatch(resetUser());
         }
         // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
       }
+
       // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
       else if (typeof window.ethereum === "undefined") {
-        if (currentUser.user?.walletAddress) {
+        if (storeWalletAddress) {
           console.log("notmetamask");
           dispatch(resetUser());
         }

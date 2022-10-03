@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -53,7 +53,7 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  const storeWalletAddress = useAppSelector((state) => state.user.user?.walletAddress);
+  // const storeWalletAddress = useAppSelector((state) => state.user.user?.walletAddress);
   const [login] = useLoginMutation();
 
   // * web3
@@ -83,10 +83,10 @@ const App = () => {
         });
         return newExistHash;
       } else {
-        return false;
+        return [];
       }
     } else {
-      return false;
+      return [];
     }
   };
 
@@ -96,6 +96,7 @@ const App = () => {
       if (metamaskAccount) {
         const hashData = await getHash([metamaskAccount]);
         const allHashdata = await Promise.all(hashData);
+        console.log(allHashdata);
         if (allHashdata) {
           await login({ walletAddress: metamaskAccount, nft: allHashdata });
         } else {
@@ -121,48 +122,55 @@ const App = () => {
     return;
   };
 
-  // *1초에 한번씩 계정 확인
-  useInterval(() => {
-    const check = async () => {
-      // *useMetamask로 account가 잡히지 않아, window.ethereum.selectedAddress사용함
-      // *메타마스크 환경일때
-      if (typeof window.ethereum !== "undefined" && location.pathname !== "/" && location.pathname !== "/login") {
-        const metamaskAccount = window.ethereum.selectedAddress;
-        window.web3 = new Web3(window.ethereum);
-        // @접속된 유저
-        if (metamaskAccount) {
-          if (storeWalletAddress !== undefined && metamaskAccount) {
-            // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
-            // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
-            if (storeWalletAddress !== metamaskAccount) {
-              await updateUser(metamaskAccount);
-              console.log("유저 불일치, 다시 로그인 요청하기");
-              setTimeout(() => {
-                window.location.reload();
-              }, 2000);
-            }
-          } else if (storeWalletAddress === metamaskAccount) {
-            // * 접속된 유저와, 저장된 유저가 같을경우
-            console.log("유저 일치");
-          }
-        }
-        // @접속안된 유저면서 store에 저장되있을때-> 무조건 스토어 reset
-        else if (isNull(metamaskAccount) && storeWalletAddress !== undefined) {
-          dispatch(resetUser());
-        }
-        // *연결안된 유저는 catch할 수 없으므로 고려하지 않음 -> 로그인 시 고려됨
-      }
+  const [accounts, setAccounts] = useState([]);
+  const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
 
-      // *메타마스크 환경이 아닐때 -> 로그인 시 고려됨
-      else if (typeof window.ethereum === "undefined") {
-        if (storeWalletAddress) {
-          console.log("notmetamask");
-          dispatch(resetUser());
+  interface ConnectInfo {
+    chainId: string;
+  }
+
+  // For now, 'eth_accounts' will continue to always return an array
+  function handleAccountsChanged(accounts: any) {
+    if (accounts.length === 0) {
+      // MetaMask is locked or the user has not connected any accounts
+      console.log("Please connect to MetaMask.");
+      dispatch(resetUser());
+    } else if (accounts[0] !== currentAccount) {
+      console.log("accountchange");
+      console.log(accounts);
+      // currentAccount = accounts[0];
+      // Do any other work!
+    }
+  }
+
+  // *1초에 한번씩 계정 확인
+  useEffect(() => {
+    if (window.ethereum) {
+      // *메타마스크 연결되있을때
+      // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
+      // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
+      // * 접속된 유저와, 저장된 유저가 같을경우
+      if (window.ethereum.isConnected()) {
+        // *현재 연결된 주소 있으면 ?
+        if (window.ethereum.selectedAddress) {
+          console.log("now", window.ethereum.selectedAddress);
+          setAccounts(window.ethereum.selectedAddress);
         }
+        // *주소 변경되면 ?
+        window.ethereum.on("accountsChanged", (acc: any) => {
+          handleAccountsChanged(acc);
+          // updateUser(acc[0]);
+        });
+
+        // ethereum.on('connect', handler: (connectInfo: ConnectInfo) => void);
+        // ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
       }
+    }
+
+    return () => {
+      window.ethereum.removeListener("accountsChanged", updateUser);
     };
-    check();
-  }, 1000);
+  }, []);
 
   return (
     <Fragment>

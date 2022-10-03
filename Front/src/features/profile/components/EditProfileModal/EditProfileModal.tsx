@@ -14,11 +14,14 @@ import { selectUser } from "@/redux/slices/userSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import useInput from "@/hooks/useInput";
 import { useChangeProfileMutation } from "@/redux/api/userApi";
+import { useAlertModal } from "@/hooks/useAlertModal";
+import { OpenAlertModalArg } from "@/hooks/useAlertModal";
 
 const EditProfileModal = () => {
   const dispatch = useAppDispatch();
   const { user } = useAppSelector(selectUser);
   const [changeProfile] = useChangeProfileMutation();
+  const { openAlertModal } = useAlertModal();
 
   //* 프로필 이미지 input
   const currentUserprofileImage = user!.profileImage;
@@ -60,7 +63,11 @@ const EditProfileModal = () => {
       await changeProfile(payload);
       dispatch(closeEditProfile());
     } catch (error) {
-      console.error(error);
+      const payload: OpenAlertModalArg = {
+        content: "에러가 발생했습니다. 잠시 후에 시도해주세요.",
+        styles: "DANGER",
+      };
+      openAlertModal(payload);
     }
   };
 

@@ -49,6 +49,7 @@ const ProfileHeader = (props: Props) => {
   const fetchData = async () => {
     if (userData?.walletAddress !== undefined) {
       const response = await fetchViewMyDonation(userData.walletAddress);
+      if (response === undefined) return;
       setTrashMount(response.trash);
       return response;
     } else {

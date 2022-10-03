@@ -9,7 +9,7 @@ import {
 import ScrollToAppear from "@/utils/animations/ScorllToAppear";
 
 const HowMany = () => {
-  const animation = ScrollToAppear("howmany_animation", 48);
+  const animation = ScrollToAppear("howmany_animation", 4);
   return (
     <HowManyBackground animation={animation ? "fadeInDown 2.5s" : "none"} visibility={animation ? "visible" : "hidden"}>
       <MainTitle mt="8rem" id="howmany_animation">

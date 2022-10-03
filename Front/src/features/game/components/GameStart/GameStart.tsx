@@ -13,7 +13,7 @@ import {
   StyledGameStartContainer,
   StyledGameStartImg,
   StyledGameStartContent,
-} from "./GaneStart.styled";
+} from "./GameStart.styled";
 import { FlexDiv, FontP } from "@/common/Common.styled";
 import PageNation from "@/common/PageNation/PageNation";
 import CardGroup from "@/common/Card/Card";

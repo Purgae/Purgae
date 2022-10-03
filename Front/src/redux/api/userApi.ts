@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserProfile, UserDetail } from "@/redux/types";
 import API_URL from "@/redux/env";
 import { setUser } from "@/redux/slices/userSlice";
-
 import { FollowingList, FollowerList } from "@/redux/types";
 
 export interface CheckNickname {
@@ -34,11 +33,6 @@ export const userApi = createApi({
   tagTypes: ["User", "Follow"],
   endpoints: (build) => ({
     // * query
-    checkNickname: build.query<CheckNickname, string>({
-      query: (nickname) => `/user/modify/${decodeURIComponent(decodeURIComponent(nickname))}`,
-      providesTags: ["User"],
-    }),
-
     getProfile: build.query<UserProfile, number | undefined>({
       query: (userId) => `/user/${userId}`,
       providesTags: ["User", "Follow"],
@@ -70,6 +64,7 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          if (data.message === "FAIL") return;
           await dispatch(setUser(data.data));
         } catch (error) {
           console.error(error);
@@ -94,11 +89,21 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["Follow"],
     }),
+
+    checkNickname: build.mutation<CheckNickname, string>({
+      query: (nickname) => ({
+        url: "/user/modify",
+        method: "POST",
+        body: {
+          nickname,
+        },
+      }),
+      invalidatesTags: ["User"],
+    }),
   }),
 });
 
 export const {
-  useCheckNicknameQuery,
   useGetProfileQuery,
   useChangeProfileMutation,
   useChangeScoreMutation,
@@ -106,5 +111,7 @@ export const {
   useGetFollowerListQuery,
   useGetAmIFollowQuery,
   useChangeFollowMutation,
-  useLazyCheckNicknameQuery,
+  useCheckNicknameMutation,
+  useLazyGetFollowerListQuery,
+  useLazyGetFollowingListQuery,
 } = userApi;

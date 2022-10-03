@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Div, Button, Description1, Description2, Description3 } from "./Start.styled";
+import LoadingModal from "@/common/LoadingModal/LoadingModal";
 
 import useFetchNFT from "@/hooks/useFetchNFT";
 import Aquarium from "@/common/Aquarium/Aquarium";
@@ -51,7 +52,7 @@ const Start = () => {
     <>
       {" "}
       {loading ? (
-        <div>로딩중...</div>
+        <LoadingModal />
       ) : (
         <Div>
           <Description1 isDisplay={isDisplay1}>오늘 구조된 해양 친구들이에요! є(･Θ･｡)э››~♡</Description1>

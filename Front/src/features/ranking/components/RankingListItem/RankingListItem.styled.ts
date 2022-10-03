@@ -25,7 +25,7 @@ export const RankingContentDeatilWrapper = styled.div`
 export const RankingProfileWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "start")};
   gap: 1rem;
-  width: 10rem;
+  width: 16rem;
 `;
 
 export const RankingListItemContent = styled.p`

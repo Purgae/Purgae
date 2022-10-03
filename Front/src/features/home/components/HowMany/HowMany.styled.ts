@@ -22,12 +22,35 @@ export const HowManyBackground = styled.div<{ animation: string; visibility: str
         transform: translateZ(0);
       }
     }
+    @media screen and (max-width: 768px) {
+      visibility: visible;
+      animation: none;
+    }
   }
 `;
 
 export const HowManyCardWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
-  width: 48rem;
+  gap: 8rem;
+  @media screen and (max-width: 1350px) {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "space-around")};
+    gap: 4rem;
+    & > div {
+      width: 10rem;
+      height: 15rem;
+    }
+  }
+  @media screen and (max-width: 768px) {
+    gap: 0rem;
+    width: 50%;
+    ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
+    & > div {
+      width: 12rem;
+      height: 9rem;
+      padding-top: 4rem;
+      margin-top: 1rem;
+    }
+  }
 `;
 
 export const HowManyCard = styled.div<{ backgroundimg: string }>`

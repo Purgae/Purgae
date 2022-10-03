@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLazyCheckNicknameQuery } from "@/redux/api/userApi";
+import { useCheckNicknameMutation } from "@/redux/api/userApi";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
 
@@ -10,7 +10,7 @@ const useInput = () => {
   const [inputValue, setInputValue] = useState<string>(user!.nickname);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [inputStatus, setInputStatus] = useState<boolean>(true);
-  const [checkNickname] = useLazyCheckNicknameQuery();
+  const [checkNickname] = useCheckNicknameMutation();
 
   //* 유효성 검사
   const checkValueLength = () => {
@@ -24,7 +24,7 @@ const useInput = () => {
     return !check;
   };
 
-  //* 500ms 동안 입력이 발생하지 않으면 유효성 검사 실행
+  //* 200ms 동안 입력이 발생하지 않으면 유효성 검사 실행
   useEffect(() => {
     const debounce = setTimeout(async () => {
       setInputStatus(true);
@@ -51,15 +51,18 @@ const useInput = () => {
         setErrorMessage("비속어가 포함되어 있습니다.");
       }
 
-      //TODO_PJK: API 수정 후, 중복 글자 체크 처리
       //* 중복 글자 체크
       try {
-        // const params = encodeURIComponent(encodeURIComponent(inputValue));
-        // await checkNickname(params);
+        const res = await checkNickname(inputValue).unwrap();
+        if (res.message === "FAIL") {
+          setInputStatus(false);
+          setErrorMessage("사용 중인 닉네임입니다.");
+        }
       } catch (error) {
-        console.error(error);
+        setInputStatus(false);
+        setErrorMessage("잠시 후에 시도해 주세요.");
       }
-    }, 500);
+    }, 200);
 
     return () => {
       clearTimeout(debounce);

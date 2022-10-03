@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import FollowItem from "./FollowItem/FollowItem";
 import { ListDiv, Div, NoFollow } from "./FollowList.styled";
 import { useGetFollowingListQuery } from "@/redux/api/userApi";
@@ -13,28 +13,35 @@ interface Props {
 }
 
 const FollowingList = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(true);
   const [page, setPage] = useState(0);
+  const [end, setEnd] = useState<boolean>(true);
   const [followingList, setFollowingList] = useState<Following[]>([]);
+  const num = useRef(0);
+  const list = useRef<Following[]>([]);
 
-  // * 초기 데이터
   const following = { userId: props.userId, pageNum: page };
-  const { data: followingData } = useGetFollowingListQuery(following);
-  useEffect(() => {
-    console.log(followingData, following);
-    if (followingData?.following) {
-      setFollowingList([...followingList, ...followingData?.following]);
-    }
-    setIsLoading(false);
-  }, [followingData]);
+  const { data: followingData, isFetching } = useGetFollowingListQuery(following);
 
-  // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
+  useEffect(() => {
+    if (followingData === undefined) return;
+    if (isFetching) return;
+    console.log(page);
+    console.log(followingData);
+    if (followingData?.message === "FAIL") {
+      setEnd(false);
+      return;
+    }
+    if (followingData?.following) {
+      list.current = [...list.current, ...followingData.following];
+      setFollowingList(list.current);
+    }
+  }, [isFetching]);
+
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
+    if (!end) return;
     if (isIntersecting) {
-      console.log(isIntersecting);
-      setIsLoading(true);
-      setPage((i) => i + 1);
-      setIsLoading(false);
+      num.current += 1;
+      setPage(num.current);
     }
   };
 
@@ -55,7 +62,7 @@ const FollowingList = (props: Props) => {
           />
         );
       })}
-      <Div ref={setTarget}>{isLoading && <NoFollow>로딩중...</NoFollow>}</Div>
+      {end && !isFetching && <Div ref={setTarget}>로딩중...</Div>}
     </ListDiv>
   );
 };

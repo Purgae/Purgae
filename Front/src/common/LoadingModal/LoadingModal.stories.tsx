@@ -1,5 +1,5 @@
 import { Meta, Story } from "@storybook/react";
-import LoadingModal from "./LaodingModal";
+import LoadingModal from "./LoadingModal";
 
 export default {
   title: "Modal/LoadingModal",

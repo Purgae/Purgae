@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect } from "react";
+import { Fragment, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -7,19 +7,8 @@ import AlertModal from "@/common/AlertModal/AlertModal";
 import { useAppSelector } from "@/hooks/storeHook";
 import { selectAlert } from "@/redux/slices/alertSlice";
 
-//* 최상위 컴포넌트 :  최상위에 코드 추가
-import Login from "@/features/login/Login";
-import Home from "@/features/home/Home";
-import Counter from "@/features/counter/Counter";
-import ThemeTest from "@/features/counter/ThemeTest";
-import Start from "@/features/start/Start";
-import Donate from "@/features/donate/Donate";
-import Profile from "@/features/profile/Profile";
-import Ranking from "@/features/ranking/Ranking";
-import Game from "@/features/game/Game";
-import ProfileAquarium from "@/features/profile/ProfileAquarium";
-import Faq from "@/features/faq/Faq";
-import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
+//* Loading Modal
+import LoadingModal from "@/common/LoadingModal/LoadingModal";
 
 // * Navbar
 import Navbar from "@/common/Navbar/Navbar";
@@ -38,6 +27,18 @@ import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { isEmpty, isNull } from "lodash";
+
+//* 컴포넌트
+const Login = lazy(() => import("@/features/login/Login"));
+const Home = lazy(() => import("@/features/home/Home"));
+const Start = lazy(() => import("@/features/start/Start"));
+const Donate = lazy(() => import("@/features/donate/Donate"));
+const Profile = lazy(() => import("@/features/profile/Profile"));
+const Ranking = lazy(() => import("@/features/ranking/Ranking"));
+const Game = lazy(() => import("@/features/game/Game"));
+const ProfileAquarium = lazy(() => import("@/features/profile/ProfileAquarium"));
+const Faq = lazy(() => import("@/features/faq/Faq"));
+const DetailProfileCard = lazy(() => import("@/features/profile/components/DetailProfileCard/DetailProfileCard"));
 
 declare global {
   interface Window {
@@ -164,37 +165,33 @@ const App = () => {
 
   return (
     <Fragment>
-      <Routes>
-        <Route element={<Navbar />}>
-          {/* 메인 페이지 */}
-          <Route path="/main" element={<Home />} />
-          {/* 로그인 */}
-          <Route path="/login" element={<Login />} />
-          {/* 개인 프로필 페이지 */}
-          <Route path="/profile/:userId" element={<Profile />} />
-          {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
-          <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
-          {/* 개인 팔로우/팔로워 */}
-          <Route path="/profile/:userId/follow" />
-          {/* 게임 */}
-          <Route path="/game" element={<Game />} />
-          {/* 랭킹 */}
-          <Route path="/ranking" element={<Ranking />} />
-          {/* 기부 */}
-          <Route path="/donate" element={<Donate />} />
-          {/* 자주 묻는 질문 */}
-          <Route path="/faq" element={<Faq />} />
-          <Route path="/faq/:id" element={<Faq />} />
-          {/* Redux 테스트 페이지 */}
-          <Route path="/counter" element={<Counter />} />
-          {/* Theme 테스트 페이지 */}
-          <Route path="/theme" element={<ThemeTest />} />
-        </Route>
-        {/* 메인 페이지 입장하기 전 수족관 */}
-        <Route path="/" element={<Start />} />
-        {/* 개인 수족관 */}
-        <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
-      </Routes>
+      <Suspense fallback={<LoadingModal />}>
+        <Routes>
+          <Route element={<Navbar />}>
+            {/* 메인 페이지 */}
+            <Route path="/main" element={<Home />} />
+            {/* 로그인 */}
+            <Route path="/login" element={<Login />} />
+            {/* 개인 프로필 페이지 */}
+            <Route path="/profile/:userId" element={<Profile />} />
+            {/* 프로필 페이지 - 도감 상세 (id값으로 확인) */}
+            <Route path="/profile/:userId/:id" element={<DetailProfileCard />} />
+            {/* 게임 */}
+            <Route path="/game" element={<Game />} />
+            {/* 랭킹 */}
+            <Route path="/ranking" element={<Ranking />} />
+            {/* 기부 */}
+            <Route path="/donate" element={<Donate />} />
+            {/* 자주 묻는 질문 */}
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/faq/:id" element={<Faq />} />
+          </Route>
+          {/* 메인 페이지 입장하기 전 수족관 */}
+          <Route path="/" element={<Start />} />
+          {/* 개인 수족관 */}
+          <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
+        </Routes>
+      </Suspense>
       {/* 알럿 모달 */}
       {alertState &&
         createPortal(

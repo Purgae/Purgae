@@ -2,7 +2,6 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { UserProfile, UserDetail } from "@/redux/types";
 import API_URL from "@/redux/env";
 import { setUser } from "@/redux/slices/userSlice";
-
 import { FollowingList, FollowerList } from "@/redux/types";
 
 export interface CheckNickname {
@@ -65,6 +64,7 @@ export const userApi = createApi({
       async onQueryStarted(args, { dispatch, queryFulfilled }) {
         try {
           const { data } = await queryFulfilled;
+          if (data.message === "FAIL") return;
           await dispatch(setUser(data.data));
         } catch (error) {
           console.error(error);

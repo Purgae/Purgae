@@ -3,18 +3,18 @@ import API_URL from "@/redux/env";
 
 export interface UserDonateCnt {
   message: string;
-  NFTNum: number;
+  NFTNum?: number;
 }
 
 export interface RandomNft {
   message: string;
-  NFTId: number;
-  // error: string; // timeout : 제대로 된 id 가져오기 어려움, over : 기부횟수 10번 넘음
+  NFTId?: number;
+  error?: string; // timeout : 제대로 된 id 가져오기 어려움, over : 기부횟수 10번 넘음
 }
 
 export interface NFTType {
   message: string;
-  data: {
+  data?: {
     infoId: number;
     userId: number;
     createdAt: string;

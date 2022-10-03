@@ -13,18 +13,18 @@ export const PageNationBtn = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: ${({ theme }) => theme.colors.primary500};
+  background: ${({ theme }) => theme.colors.white300};
   color: white;
   font-size: 1rem;
 
   &:hover {
-    background: tomato;
+    background: ${({ theme }) => theme.colors.red400};
     cursor: pointer;
     transform: translateY(-2px);
   }
 
   &[disabled] {
-    background: ${({ theme }) => theme.colors.white300};
+    background: ${({ theme }) => theme.colors.primary500};
     cursor: revert;
     transform: revert;
   }

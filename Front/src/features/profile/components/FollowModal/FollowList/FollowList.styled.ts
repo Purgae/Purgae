@@ -16,6 +16,7 @@ export const ListDiv = styled.div`
 
 export const Div = styled.div`
   height: 1rem;
+  width: 1rem;
 `;
 
 export const NoFollow = styled.div`

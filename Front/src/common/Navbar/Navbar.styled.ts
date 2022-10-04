@@ -72,6 +72,10 @@ export const NavbarLink = styled(NavLink)`
   &.active {
     color: ${({ theme }) => theme.colors.white};
     ${({ theme }) => theme.mixins.font("1.25rem", "700")};
+
+    @media screen and (max-width: 768px) {
+      color: ${({ theme }) => theme.colors.primary500p};
+    }
   }
   &:hover {
     color: ${({ theme }) => theme.colors.white};

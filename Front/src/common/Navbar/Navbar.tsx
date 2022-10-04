@@ -62,9 +62,9 @@ const Navbar = () => {
                 푸르게
               </FlexDiv>
             </NavbarPurgaeLink>
+            <NavbarLink to="/donate">기부</NavbarLink>
             <NavbarLink to="/game">게임</NavbarLink>
             <NavbarLink to="/ranking">랭킹</NavbarLink>
-            <NavbarLink to="/donate">기부</NavbarLink>
             <NavbarLink to="/faq">자주 묻는 질문</NavbarLink>
           </NavbarLinkWrappper>
           <NavbarLoginWrapper>

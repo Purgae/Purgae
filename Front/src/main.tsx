@@ -7,12 +7,16 @@ import { persistStore } from "redux-persist";
 import { GlobalStyle } from "@/styles/global-styles";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
+import ReactGA from "react-ga4";
+import { GA_KEY } from "./redux/env";
 
 import store from "@/redux/store";
 
 import { MetaMaskProvider } from "metamask-react";
 
 let persistor = persistStore(store);
+ReactGA.initialize(GA_KEY);
+ReactGA.send("pageview");
 
 // *web3객체를 인스턴스화 함
 

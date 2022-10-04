@@ -42,10 +42,6 @@ public class UserController {
         Map<String, Object> result = new HashMap<>();
         String[] NFTList = reqData.getNft();
 
-        for(int i = 0; i<NFTList.length; i++){
-            System.out.println(NFTList[i]);
-        }
-
         String walletAddress = reqData.getWalletAddress();
         User user = userService.getUserInfo(walletAddress);
         boolean hasProfileImg = false;

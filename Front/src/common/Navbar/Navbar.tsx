@@ -72,7 +72,7 @@ const Navbar = () => {
               <>
                 <NavbarProfileLink to={`/profile/${userId}`}>
                   <span>{userNickName}</span>
-                  {userImg ? <ProfileImage size="navBar" url={userImg} /> : <ProfileImage size="navBar" />}
+                  <ProfileImage size="navBar" url={userImg} />
                 </NavbarProfileLink>
               </>
             ) : (

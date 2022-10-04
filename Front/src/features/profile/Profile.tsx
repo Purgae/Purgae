@@ -51,21 +51,4 @@ const StyledRootComponent = styled.div`
   padding-top: 6rem;
   height: 100%;
   padding-bottom: 3rem;
-
-  aspect-ratio: 3/2;
-  max-width: 80rem;
-  @media ${({ theme }) => theme.sizes.tablet} {
-    width: 80%;
-  }
 `;
-
-// const StyledRootComponent = styled.div`
-//   display: flex;
-//   flex-direction: column;
-//   align-items: center;
-//   justify-content: center;
-//   width: 100%;
-//   padding-top: 6rem;
-//   height: 100%;
-//   padding-bottom: 3rem;
-// `;

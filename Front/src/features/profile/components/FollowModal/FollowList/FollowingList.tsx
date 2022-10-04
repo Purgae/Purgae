@@ -33,7 +33,7 @@ const FollowingList = (props: Props) => {
       list.current = [...list.current, ...followingData.following];
       setFollowingList(list.current);
     }
-  }, [isFetching]);
+  }, [isFetching, num.current]);
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (!end) return;
@@ -66,7 +66,7 @@ const FollowingList = (props: Props) => {
           />
         );
       })}
-      {end && !isFetching && <Div ref={setTarget}> &nbsp;</Div>}
+      {end && !isFetching && <Div ref={setTarget}>&ensp;</Div>}
     </ListDiv>
   );
 };

@@ -33,7 +33,7 @@ const FollowerList = (props: Props) => {
       list.current = [...list.current, ...followerData.follower];
       setFollowerList(list.current);
     }
-  }, [isFetching]);
+  }, [isFetching, num.current]);
 
   // * 스크롤 내렸을 때 실행될 함수(무한스크롤)
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
@@ -62,7 +62,7 @@ const FollowerList = (props: Props) => {
           />
         );
       })}
-      {end && !isFetching && <Div ref={setTarget}></Div>}
+      {end && !isFetching && <Div ref={setTarget}>&ensp;</Div>}
     </ListDiv>
   );
 };

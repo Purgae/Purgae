@@ -76,7 +76,6 @@ const Login = () => {
             const hashData = await getHash(connectAddress);
             const allHashdata = await Promise.all(hashData);
             const resHashData = await allHashdata.filter((item) => item !== undefined);
-            console.log(resHashData);
             if (!isEmpty(resHashData)) {
               await login({ walletAddress: connectAddress[0], nft: resHashData });
               navigateHome();

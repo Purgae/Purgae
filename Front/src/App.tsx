@@ -59,7 +59,6 @@ const App = () => {
 
   // * web3
   const { fetchContract } = useProvider();
-  const { status } = useMetaMask();
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
@@ -113,17 +112,8 @@ const App = () => {
           await updateUser(accounts[0]);
         }
       } else if (currentAccount === undefined) {
-        // !이 부분이 로그인 페이지에서 실행됨 그러나 여기를 꼭 잡을 필요는 없을듯
-        console.log(
-          "스토어에 저장된 account가 없음 XXXXXXX, 현재 유저 불일치",
-          "스토어:",
-          currentAccount,
-          "현재유저:",
-          accounts
-        );
         await updateUser(accounts[0]);
       }
-      // !접속 후 바로 로그인시 실행이 안됨- > resetuser를 한 후 새로고침 시켜 해결
     }
   };
   const resetAccount = () => {
@@ -141,13 +131,11 @@ const App = () => {
 
       // !접속유저-주소 변경
       window.ethereum.on("accountsChanged", async (acc: string[]) => {
-        console.log("is accountsChangedaccountsChanged");
         await handleAccountsChanged(acc);
       });
 
       // !접속유저-주소 변경
       window.ethereum.on("disconnect", async (acc: string[]) => {
-        console.log("is disconnectdisconnect");
         if (location.pathname !== "/login") {
           resetAccount();
         }

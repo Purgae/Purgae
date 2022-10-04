@@ -30,7 +30,7 @@ const useGameFish = ({ gameCharacter, canvas, ctx }: UseGameFishType) => {
 
   //* 키보드 이벤트 콜백 함수
   const keydownEventHandler = (event: KeyboardEvent) => {
-    const step = 15;
+    const step = 20;
     //* 좌
     if (event.keyCode == 37) {
       setFishX((prev: number) => {

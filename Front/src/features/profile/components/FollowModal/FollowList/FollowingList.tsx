@@ -60,7 +60,7 @@ const FollowingList = (props: Props) => {
           />
         );
       })}
-      {end && !isFetching && <Div ref={setTarget}>로딩중...</Div>}
+      {end && !isFetching && <Div ref={setTarget}></Div>}
     </ListDiv>
   );
 };

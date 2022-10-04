@@ -15,11 +15,13 @@ const Seal = (props: Props) => {
   const wallet = props.walletAds;
   const [nfts, setNfts] = useState<string[]>([]);
   const [exist, setExist] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false);
 
   const myNftArr = async () => {
     if (wallet) {
       const requestNftArr = await fetchProfileNFT(wallet);
       setNfts(requestNftArr);
+      setLoading(true);
       return;
     }
   };
@@ -41,11 +43,7 @@ const Seal = (props: Props) => {
     }
   }, [nfts]);
 
-  return (
-    <FlexBox>
-      <CardPage nftLst={nfts} nftexist={exist} isProfile={true}></CardPage>
-    </FlexBox>
-  );
+  return <FlexBox>{loading && <CardPage nftLst={nfts} nftexist={exist} isProfile={true}></CardPage>}</FlexBox>;
 };
 
 export default Seal;

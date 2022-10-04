@@ -138,7 +138,7 @@ const ProfileHeader = (props: Props) => {
         {/* 2 */}
         <FlexDiv direction="column" width="15.5rem" height="5.75rem" gap="0.5rem">
           <FontP fontSize="1.5rem" fontWeight="semiBold">
-            {userData?.nickname || "유저"}
+            {userData?.nickname || ""}
           </FontP>
           <FlexDiv>
             <Link to={`/profile/${userData?.id}/aquarium`}>
@@ -146,13 +146,13 @@ const ProfileHeader = (props: Props) => {
                 styles="solid"
                 bgColor="primary500"
                 fontColor="white100"
-                width={isUser ? "15rem" : "7.5rem"}
+                width={isUser || currentUserId === undefined ? "15rem" : "7.5rem"}
                 onClick={() => {}}
               >
                 수족관 보기
               </Button>
             </Link>
-            {isUser ? (
+            {isUser || currentUserId === undefined ? (
               ""
             ) : (
               <>

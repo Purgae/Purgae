@@ -15,17 +15,21 @@ import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
 import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 import { selectUser } from "@/redux/slices/userSlice";
-import useInterval from "@/hooks/useInterval";
 import { useAppSelector } from "@/hooks/storeHook";
 import { isEmpty } from "lodash";
+import useFetchNFT from "@/hooks/useFetchNFT";
 
 const Login = () => {
-  const { status, connect, switchChain, chainId } = useMetaMask();
-  const { networkChainId, fetchContract } = useProvider();
-  const navigate = useNavigate();
-  const [login] = useLoginMutation();
+  // *react
   const { openAlertModal } = useAlertModal();
   const currentUser = useAppSelector(selectUser);
+  // *web3
+  const { status, connect, switchChain, chainId } = useMetaMask();
+  const { networkChainId } = useProvider();
+  const { fetchMyNFT } = useFetchNFT();
+  // *api
+  const navigate = useNavigate();
+  const [login] = useLoginMutation();
 
   // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
   // const config = {
@@ -38,14 +42,14 @@ const Login = () => {
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
+      const existHash = await fetchMyNFT(connectAddress[0]);
       if (existHash.length > 0) {
         const newExistHash = existHash.map(async (element: string) => {
           if (!isEmpty(element)) {
-            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
-            return { hash: data };
+            const data = element.split("https://ipfs.io/ipfs/")[1];
+            return data;
           } else {
-            return;
+            return "";
           }
         });
         return newExistHash;
@@ -74,8 +78,8 @@ const Login = () => {
           const connectAddress = await connect();
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            const allHashdata = await Promise.all(hashData);
-            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            const transHash = await Promise.all(hashData);
+            const resHashData = transHash.filter((item) => item.length > 0);
             if (!isEmpty(resHashData)) {
               await login({ walletAddress: connectAddress[0], nft: resHashData });
               navigateHome();
@@ -91,8 +95,8 @@ const Login = () => {
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
             const hashData = await getHash(connectAddress);
-            const allHashdata = await Promise.all(hashData);
-            const resHashData = await allHashdata.filter((item) => item !== undefined);
+            const transHash = await Promise.all(hashData);
+            const resHashData = transHash.filter((item) => item.length > 0);
             if (!isEmpty(resHashData)) {
               await login({ walletAddress: connectAddress[0], nft: resHashData });
               navigateHome();
@@ -150,11 +154,11 @@ const Login = () => {
     // }, 2000);
   };
 
-  useInterval(() => {
+  useEffect(() => {
     if (window.ethereum) {
       isLogined();
     }
-  }, 100);
+  }, []);
 
   return (
     <RootComponent>

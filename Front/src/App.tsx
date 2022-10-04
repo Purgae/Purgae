@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect, useState, lazy, Suspense } from "react";
+import { Fragment, useEffect, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -14,19 +14,14 @@ import LoadingModal from "@/common/LoadingModal/LoadingModal";
 import Navbar from "@/common/Navbar/Navbar";
 
 // * useHook
-import { useDispatch, useSelector } from "react-redux";
-import useInterval from "@/hooks/useInterval";
-
-// * web3
-import { useMetaMask } from "metamask-react";
-import useProvider from "@/hooks/useProvider";
-import Web3 from "web3";
+import { useDispatch } from "react-redux";
 
 // * slice
 import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { useAlertModal } from "@/hooks/useAlertModal";
 import { isEmpty, isNull } from "lodash";
+import useFetchNFT from "./hooks/useFetchNFT";
 
 //* 컴포넌트
 const Login = lazy(() => import("@/features/login/Login"));
@@ -48,7 +43,6 @@ declare global {
 const App = () => {
   //* AlertModal Status
   const { status: alertState, content, styles } = useAppSelector(selectAlert);
-  const { openAlertModal } = useAlertModal();
   const el = document.getElementById("modal")!;
 
   // * react
@@ -58,18 +52,18 @@ const App = () => {
   const [login] = useLoginMutation();
 
   // * web3
-  const { fetchContract } = useProvider();
+  const { fetchMyNFT } = useFetchNFT();
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
-      const existHash = await fetchContract.methods?.viewMyNFT(connectAddress[0]).call();
+      const existHash = await fetchMyNFT(connectAddress[0]);
       if (existHash.length > 0) {
         const newExistHash = existHash.map(async (element: string) => {
           if (!isEmpty(element)) {
-            const data = (await element.split("://")[1].split(".json")[0]) + ".png";
-            return { hash: data };
+            const data = element.split("https://ipfs.io/ipfs/")[1];
+            return data;
           } else {
-            return;
+            return "";
           }
         });
         return newExistHash;
@@ -85,11 +79,10 @@ const App = () => {
     // *네트워크 여부 고려 안함
     if (metamaskAccount) {
       const hashData = await getHash([metamaskAccount]);
-      const allHashdata = await Promise.all(hashData);
-      const resHashData = await allHashdata.filter((item) => item !== undefined);
-      console.log(resHashData);
-      if (!isEmpty(resHashData)) {
-        await login({ walletAddress: metamaskAccount, nft: resHashData });
+      const transHash = await Promise.all(hashData);
+      const allHashdata = transHash.filter((item) => item.length > 0);
+      if (!isEmpty(allHashdata)) {
+        await login({ walletAddress: metamaskAccount, nft: allHashdata });
       } else {
         await login({ walletAddress: metamaskAccount });
       }
@@ -102,12 +95,11 @@ const App = () => {
   const handleAccountsChanged = async (accounts: string[]) => {
     if (accounts.length === 0) {
       // *메타마스크 연결 해제 시
-      console.log("메타마스크 연결을 해제함, 스토어 초기화");
       resetAccount();
     } else {
       // *단순 계정 변경시 혹은 로그인시
       if (currentAccount !== undefined && accounts[0] !== currentAccount) {
-        console.log("스토어에 저장된 account와, 현재 유저 불일치", "스토어:", currentAccount, "현재유저:", accounts);
+        // console.log("스토어에 저장된 account와, 현재 유저 불일치", "스토어:", currentAccount, "현재유저:", accounts);
         if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
           await updateUser(accounts[0]);
         }
@@ -129,41 +121,36 @@ const App = () => {
       // * window.web3 = new Web3(window.ethereum);
       const metamaskAccount = window.ethereum.selectedAddress;
 
-      // !접속유저-주소 변경
       window.ethereum.on("accountsChanged", async (acc: string[]) => {
         await handleAccountsChanged(acc);
       });
 
-      // !접속유저-주소 변경
-      window.ethereum.on("disconnect", async (acc: string[]) => {
-        if (location.pathname !== "/login") {
-          resetAccount();
-        }
+      window.ethereum.on("disconnect", (acc: string[]) => {
+        resetAccount();
+        window.location.reload();
       });
 
       if (!isNull(metamaskAccount) && currentAccount === undefined) {
         updateUser(metamaskAccount);
-        console.log("자동로그인 완료-연결된 상태에서 들어옴");
+        // console.log("자동로그인 완료-연결된 상태에서 들어옴");
       } else if (isNull(metamaskAccount) && currentAccount !== undefined) {
         resetAccount();
-        console.log("접속안된 상태이나, 스토어 있으므로 초기화");
+        // console.log("접속안된 상태이나, 스토어 있으므로 초기화");
       } else if (!isNull(metamaskAccount) && currentAccount !== undefined && metamaskAccount !== currentAccount) {
         updateUser(metamaskAccount);
-        console.log("store의 유저와 다르므로 재로그인 요청");
+        // console.log("store의 유저와 다르므로 재로그인 요청");
       }
     } else {
       // @접속안된유저
-      console.log("메타마스크 설치 안됨");
+      // console.log("메타마스크 설치 안됨");
     }
 
     return () => {
       if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
-        // !접속유저-주소 변경
         window.ethereum.on("accountsChanged", async (acc: string[]) => {
-          console.log("is accountsChangedaccountsChanged");
           await handleAccountsChanged(acc);
         });
-        window.ethereum.on("disconnect", async (acc: string[]) => {
+        window.ethereum.on("disconnect", (acc: string[]) => {
           resetAccount();
         });
       }

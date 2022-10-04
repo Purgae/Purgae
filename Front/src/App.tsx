@@ -31,6 +31,7 @@ import Game from "@/features/game/Game";
 import ProfileAquarium from "@/features/profile/ProfileAquarium";
 import Faq from "@/features/faq/Faq";
 import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
+import NotFound from "@/features/404NotFound/NotFound";
 
 const App = () => {
   //* AlertModal Status
@@ -140,7 +141,7 @@ const App = () => {
     }
 
     return () => {
-      if (window.ethereum && location.pathname !== "/") {
+      if (window.ethereum) {
         window.ethereum.removeListener("accountsChanged", async (acc: string[]) => {
           await handleAccountsChanged(acc);
         });
@@ -175,6 +176,7 @@ const App = () => {
         <Route path="/" element={<Start />} />
         {/* 개인 수족관 */}
         <Route path="/profile/:userId/aquarium" element={<ProfileAquarium />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
       {/* 알럿 모달 */}
       {alertState &&

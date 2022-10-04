@@ -20,7 +20,14 @@ const Start = () => {
   };
 
   // 물고기가 한마리도 없을 경우 defaultImage를 보여준다.
-  const defaultImage = ["http://ipfs.io/ipfs/QmfRw5pNVpwvDKTwfJgeEaJkKR9JHuVgbCmHhTn6Fy9yy7"];
+  const defaultImage = [
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex1.png",
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex2.png",
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex3.png",
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex4.png",
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex5.png",
+    "https://ipfs.io/ipfs/bafybeict2szi7vftym7vdg23octxv45w2m3vcxrpipvipaaoyh7wcm566e/ex6.png",
+  ];
 
   const fetchNFTList = async () => {
     const myNFTList = await fetchTodayNFT();

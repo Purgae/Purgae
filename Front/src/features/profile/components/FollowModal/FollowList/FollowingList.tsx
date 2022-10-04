@@ -33,15 +33,21 @@ const FollowingList = (props: Props) => {
       list.current = [...list.current, ...followingData.following];
       setFollowingList(list.current);
     }
-  }, [isFetching]);
+  }, [isFetching, num.current]);
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (!end) return;
+    console.log(num.current);
     if (isIntersecting) {
       num.current += 1;
       setPage(num.current);
     }
   };
+
+  useEffect(() => {
+    console.log("초기화");
+    console.log(num.current);
+  }, []);
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
   return (
@@ -60,7 +66,7 @@ const FollowingList = (props: Props) => {
           />
         );
       })}
-      {end && !isFetching && <Div ref={setTarget}></Div>}
+      {end && !isFetching && <Div ref={setTarget}>&ensp;</Div>}
     </ListDiv>
   );
 };

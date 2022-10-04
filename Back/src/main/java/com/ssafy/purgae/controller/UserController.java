@@ -41,10 +41,13 @@ public class UserController {
 //        System.out.println("nft : " + reqData.getNft();
         Map<String, Object> result = new HashMap<>();
         List<Map<String,String>> NFTList = reqData.getNft();
+        
+        System.out.println(NFTList.get(0));
 
         String walletAddress = reqData.getWalletAddress();
         System.out.println(walletAddress);
         User user = userService.getUserInfo(walletAddress);
+        System.out.println(user.getProfileImage());
         boolean hasProfileImg = false;
         // 프로필 이미지 확인
         if(user != null && user.getProfileImage()!=null) {

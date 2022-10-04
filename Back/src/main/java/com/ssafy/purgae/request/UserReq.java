@@ -3,9 +3,6 @@ package com.ssafy.purgae.request;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
-import java.util.List;
-import java.util.Map;
-
 @Getter
 @Setter
 @ToString

@@ -116,7 +116,7 @@ const App = () => {
       return;
     }
     // @접속된 유저
-    if (window.ethereum && location.pathname !== "/") {
+    if (window.ethereum) {
       const metamaskAccount = window.ethereum.selectedAddress;
 
       window.ethereum.on("accountsChanged", async (acc: string[]) => {

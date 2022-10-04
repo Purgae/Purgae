@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
     public boolean checkNFT(List<Map<String,String>> NFTList, String profileHash) {
         for(int i=0; i<NFTList.size();i++){
             if(profileHash.equals(NFTList.get(i).get("hash"))){
+                System.out.println("checkNFT func : " + NFTList.get(i).get("hash"));
                 return true;
             }
         }

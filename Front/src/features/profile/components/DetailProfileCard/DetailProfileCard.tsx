@@ -96,9 +96,10 @@ const Img = styled.div<{ url: string }>`
   width: 38%;
   height: 100%;
   background-image: url(${(props) => props.url});
-  background-color: ${({ theme }) => theme.colors.lightBlue300};
+  background-color: ${({ theme }) => theme.colors.primary300};
   background-size: 100%;
   background-repeat: no-repeat;
+  background-position: center;
 `;
 
 const CardRight = styled.div`

@@ -7,7 +7,7 @@ export const Background = styled.div<{ selected: boolean }>`
   border: ${({ selected, theme }) => (selected ? `0.3rem solid ${theme.colors.white}` : "0")};
   box-shadow: ${({ selected, theme }) => (selected ? theme.shadows.shadow700 : "")};
   border-radius: 1.3125rem;
-  background-color: ${({ theme }) => theme.colors.lightBlue300};
+  background-color: ${({ theme }) => theme.colors.primary300};
   ${({ theme }) => theme.mixins.flexBox()}
 `;
 
@@ -19,6 +19,7 @@ export const Image = styled.div<{ url: string }>`
   background-repeat: no-repeat;
   border-radius: 1.3125rem;
   box-shadow: ${({ theme }) => theme.shadows.shadow500};
+  background-position: center;
 `;
 
 export const Group = styled.div`

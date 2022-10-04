@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect, useState, lazy, Suspense  } from "react";
+import { Fragment, useEffect, useState, lazy, Suspense } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -25,7 +25,7 @@ import Web3 from "web3";
 // * slice
 import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
+import { useAlertModal } from "@/hooks/useAlertModal";
 import { isEmpty, isNull } from "lodash";
 
 //* 컴포넌트
@@ -54,21 +54,12 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  // const storeWalletAddress = useAppSelector((state) => state.user.user?.walletAddress);
+  const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
   const [login] = useLoginMutation();
 
   // * web3
-  const { chainId, switchChain } = useMetaMask();
-  const { networkChainId, fetchContract } = useProvider();
-
-  const updateUserModal = () => {
-    const data: OpenAlertModalArg = {
-      content: "현재 연결된 유저로 자동 로그인 되었습니다. 페이지가 새로고침 됩니다.",
-      styles: "RED",
-    };
-    openAlertModal(data);
-    return;
-  };
+  const { fetchContract } = useProvider();
+  const { status } = useMetaMask();
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
@@ -92,84 +83,104 @@ const App = () => {
   };
 
   const updateUser = async (metamaskAccount: string) => {
-    // *고릴일때
-    if (chainId === networkChainId.goerli) {
-      if (metamaskAccount) {
-        const hashData = await getHash([metamaskAccount]);
-        const allHashdata = await Promise.all(hashData);
-        console.log(allHashdata);
-        if (allHashdata) {
-          await login({ walletAddress: metamaskAccount, nft: allHashdata });
-        } else {
-          await login({ walletAddress: metamaskAccount });
-        }
+    // *네트워크 여부 고려 안함
+    if (metamaskAccount) {
+      const hashData = await getHash([metamaskAccount]);
+      const allHashdata = await Promise.all(hashData);
+      const resHashData = await allHashdata.filter((item) => item !== undefined);
+      console.log(resHashData);
+      if (!isEmpty(resHashData)) {
+        await login({ walletAddress: metamaskAccount, nft: resHashData });
+      } else {
+        await login({ walletAddress: metamaskAccount });
       }
     }
-    // *고릴아닐때
-    else {
-      const metamaskAccount = window.ethereum.selectedAddress;
-      await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
-      if (metamaskAccount) {
-        const hashData = await getHash([metamaskAccount]);
-        const allHashdata = await Promise.all(hashData);
-        if (allHashdata) {
-          await login({ walletAddress: metamaskAccount, nft: allHashdata });
-        } else {
-          await login({ walletAddress: metamaskAccount });
-        }
-      }
+    if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
     }
-    updateUserModal();
     return;
   };
 
-  const [accounts, setAccounts] = useState([]);
-  const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
-
-  interface ConnectInfo {
-    chainId: string;
-  }
-
-  // For now, 'eth_accounts' will continue to always return an array
-  function handleAccountsChanged(accounts: any) {
+  const handleAccountsChanged = async (accounts: string[]) => {
     if (accounts.length === 0) {
-      // MetaMask is locked or the user has not connected any accounts
-      console.log("Please connect to MetaMask.");
-      dispatch(resetUser());
-    } else if (accounts[0] !== currentAccount) {
-      console.log("accountchange");
-      console.log(accounts);
-      // currentAccount = accounts[0];
-      // Do any other work!
-    }
-  }
-
-  // *1초에 한번씩 계정 확인
-  useEffect(() => {
-    if (window.ethereum) {
-      // *메타마스크 연결되있을때
-      // *접속된 유저와 저장된 유저가 다를경우(접속된 유저가 있지만, 로그인 안된 undefined상태도 고려)
-      // *연결된 상태에서 그냥 들어오는 경우 (이미 페이지와 연결되어 있으므로 로그인 시키면 됨)
-      // * 접속된 유저와, 저장된 유저가 같을경우
-      if (window.ethereum.isConnected()) {
-        // *현재 연결된 주소 있으면 ?
-        if (window.ethereum.selectedAddress) {
-          console.log("now", window.ethereum.selectedAddress);
-          setAccounts(window.ethereum.selectedAddress);
+      // *메타마스크 연결 해제 시
+      console.log("메타마스크 연결을 해제함, 스토어 초기화");
+      resetAccount();
+    } else {
+      // *단순 계정 변경시 혹은 로그인시
+      if (currentAccount !== undefined && accounts[0] !== currentAccount) {
+        console.log("스토어에 저장된 account와, 현재 유저 불일치", "스토어:", currentAccount, "현재유저:", accounts);
+        if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+          await updateUser(accounts[0]);
         }
-        // *주소 변경되면 ?
-        window.ethereum.on("accountsChanged", (acc: any) => {
-          handleAccountsChanged(acc);
-          // updateUser(acc[0]);
-        });
-
-        // ethereum.on('connect', handler: (connectInfo: ConnectInfo) => void);
-        // ethereum.on('disconnect', handler: (error: ProviderRpcError) => void);
+      } else if (currentAccount === undefined) {
+        // !이 부분이 로그인 페이지에서 실행됨 그러나 여기를 꼭 잡을 필요는 없을듯
+        console.log(
+          "스토어에 저장된 account가 없음 XXXXXXX, 현재 유저 불일치",
+          "스토어:",
+          currentAccount,
+          "현재유저:",
+          accounts
+        );
+        await updateUser(accounts[0]);
       }
+      // !접속 후 바로 로그인시 실행이 안됨- > resetuser를 한 후 새로고침 시켜 해결
+    }
+  };
+  const resetAccount = () => {
+    dispatch(resetUser());
+  };
+
+  useEffect(() => {
+    if (!window.ethereum) {
+      return;
+    }
+    // @접속된 유저
+    if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+      // * window.web3 = new Web3(window.ethereum);
+      const metamaskAccount = window.ethereum.selectedAddress;
+
+      // !접속유저-주소 변경
+      window.ethereum.on("accountsChanged", async (acc: string[]) => {
+        console.log("is accountsChangedaccountsChanged");
+        await handleAccountsChanged(acc);
+      });
+
+      // !접속유저-주소 변경
+      window.ethereum.on("disconnect", async (acc: string[]) => {
+        console.log("is disconnectdisconnect");
+        if (location.pathname !== "/login") {
+          resetAccount();
+        }
+      });
+
+      if (!isNull(metamaskAccount) && currentAccount === undefined) {
+        updateUser(metamaskAccount);
+        console.log("자동로그인 완료-연결된 상태에서 들어옴");
+      } else if (isNull(metamaskAccount) && currentAccount !== undefined) {
+        resetAccount();
+        console.log("접속안된 상태이나, 스토어 있으므로 초기화");
+      } else if (!isNull(metamaskAccount) && currentAccount !== undefined && metamaskAccount !== currentAccount) {
+        updateUser(metamaskAccount);
+        console.log("store의 유저와 다르므로 재로그인 요청");
+      }
+    } else {
+      // @접속안된유저
+      console.log("메타마스크 설치 안됨");
     }
 
     return () => {
-      window.ethereum.removeListener("accountsChanged", updateUser);
+      if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+        // !접속유저-주소 변경
+        window.ethereum.on("accountsChanged", async (acc: string[]) => {
+          console.log("is accountsChangedaccountsChanged");
+          await handleAccountsChanged(acc);
+        });
+      }
+      if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+        window.ethereum.on("disconnect", async (acc: string[]) => {
+          resetAccount();
+        });
+      }
     };
   }, []);
 

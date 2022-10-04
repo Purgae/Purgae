@@ -76,11 +76,10 @@ const Login = () => {
             const hashData = await getHash(connectAddress);
             const allHashdata = await Promise.all(hashData);
             const resHashData = await allHashdata.filter((item) => item !== undefined);
+            console.log(resHashData);
             if (!isEmpty(resHashData)) {
-              if (resHashData) {
-                await login({ walletAddress: connectAddress[0], nft: resHashData });
-                navigateHome();
-              }
+              await login({ walletAddress: connectAddress[0], nft: resHashData });
+              navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
               navigateHome();
@@ -96,10 +95,8 @@ const Login = () => {
             const allHashdata = await Promise.all(hashData);
             const resHashData = await allHashdata.filter((item) => item !== undefined);
             if (!isEmpty(resHashData)) {
-              if (resHashData) {
-                await login({ walletAddress: connectAddress[0], nft: resHashData });
-                navigateHome();
-              }
+              await login({ walletAddress: connectAddress[0], nft: resHashData });
+              navigateHome();
             } else {
               await login({ walletAddress: connectAddress[0] });
               navigateHome();
@@ -143,14 +140,15 @@ const Login = () => {
   };
 
   const navigateHome = () => {
-    const data: OpenAlertModalArg = {
-      content: "로그인되어 메인 페이지로 이동합니다.",
-      styles: "PRIMARY",
-    };
-    openAlertModal(data);
-    setTimeout(() => {
-      navigate("/main");
-    }, 2000);
+    navigate("/main");
+    // const data: OpenAlertModalArg = {
+    //   content: "로그인되어 메인 페이지로 이동합니다.",
+    //   styles: "PRIMARY",
+    // };
+    // openAlertModal(data);
+    // setTimeout(() => {
+    //   navigate("/main");
+    // }, 2000);
   };
 
   useInterval(() => {

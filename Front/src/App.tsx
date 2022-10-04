@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect, lazy, Suspense } from "react";
+import { Fragment, useEffect, lazy, Suspense, useState } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -21,6 +21,7 @@ import { resetUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { isEmpty, isNull } from "lodash";
 import useFetchNFT from "./hooks/useFetchNFT";
+import { useMetaMask } from "metamask-react";
 
 //* 컴포넌트
 const Login = lazy(() => import("@/features/login/Login"));
@@ -33,12 +34,6 @@ const Game = lazy(() => import("@/features/game/Game"));
 const ProfileAquarium = lazy(() => import("@/features/profile/ProfileAquarium"));
 const Faq = lazy(() => import("@/features/faq/Faq"));
 const DetailProfileCard = lazy(() => import("@/features/profile/components/DetailProfileCard/DetailProfileCard"));
-
-// declare global {
-//   interface Window {
-//     web3?: any;
-//   }
-// }
 
 const App = () => {
   //* AlertModal Status
@@ -53,6 +48,7 @@ const App = () => {
 
   // * web3
   const { fetchMyNFT } = useFetchNFT();
+  const { status } = useMetaMask();
 
   const getHash = async (connectAddress: string[]) => {
     if (connectAddress) {
@@ -108,8 +104,10 @@ const App = () => {
       }
     }
   };
+
   const resetAccount = () => {
     dispatch(resetUser());
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -117,18 +115,13 @@ const App = () => {
       return;
     }
     // @접속된 유저
-    if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
-      // * window.web3 = new Web3(window.ethereum);
+    if (window.ethereum && location.pathname !== "/") {
       const metamaskAccount = window.ethereum.selectedAddress;
 
       window.ethereum.on("accountsChanged", async (acc: string[]) => {
         await handleAccountsChanged(acc);
       });
-
-      window.ethereum.on("disconnect", (acc: string[]) => {
-        resetAccount();
-        window.location.reload();
-      });
+      window.ethereum.on("disconnect", resetAccount);
 
       if (!isNull(metamaskAccount) && currentAccount === undefined) {
         updateUser(metamaskAccount);
@@ -146,16 +139,14 @@ const App = () => {
     }
 
     return () => {
-      if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+      if (window.ethereum && location.pathname !== "/") {
         window.ethereum.removeListener("accountsChanged", async (acc: string[]) => {
           await handleAccountsChanged(acc);
         });
-        window.ethereum.removeListener("disconnect", (acc: string[]) => {
-          resetAccount();
-        });
+        window.ethereum.removeListener("disconnect", resetAccount);
       }
     };
-  }, []);
+  }, [status]);
 
   return (
     <Fragment>

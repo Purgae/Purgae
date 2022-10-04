@@ -163,8 +163,6 @@ const App = () => {
           console.log("is accountsChangedaccountsChanged");
           await handleAccountsChanged(acc);
         });
-      }
-      if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
         window.ethereum.on("disconnect", async (acc: string[]) => {
           resetAccount();
         });

@@ -147,10 +147,10 @@ const App = () => {
 
     return () => {
       if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
-        window.ethereum.on("accountsChanged", async (acc: string[]) => {
+        window.ethereum.removeListener("accountsChanged", async (acc: string[]) => {
           await handleAccountsChanged(acc);
         });
-        window.ethereum.on("disconnect", (acc: string[]) => {
+        window.ethereum.removeListener("disconnect", (acc: string[]) => {
           resetAccount();
         });
       }

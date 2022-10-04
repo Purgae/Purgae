@@ -49,6 +49,7 @@ const useInput = () => {
       if (!checkBadWord) {
         setInputStatus(false);
         setErrorMessage("비속어가 포함되어 있습니다.");
+        return;
       }
 
       //* 중복 글자 체크
@@ -56,7 +57,24 @@ const useInput = () => {
         const res = await checkNickname(inputValue).unwrap();
         if (res.message === "FAIL") {
           setInputStatus(false);
-          setErrorMessage("사용 중인 닉네임입니다.");
+          switch (res.errMsg) {
+            case "duplicate error": {
+              setErrorMessage("사용 중인 닉네임입니다.");
+              return;
+            }
+            case "slang error": {
+              setErrorMessage("비속어가 포함되어 있습니다. ");
+              return;
+            }
+            case "length error": {
+              setErrorMessage("닉네임은 최소 2글자입니다.");
+              return;
+            }
+            case "blank error": {
+              setErrorMessage("닉네임은 최소 2글자입니다. ");
+              return;
+            }
+          }
         }
       } catch (error) {
         setInputStatus(false);

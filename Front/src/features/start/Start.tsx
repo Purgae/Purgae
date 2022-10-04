@@ -17,6 +17,7 @@ const Start = () => {
   const navigate = useNavigate();
   const navigateHome = () => {
     navigate("/main");
+    window.location.reload();
   };
 
   // 물고기가 한마리도 없을 경우 defaultImage를 보여준다.

@@ -108,6 +108,9 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (status === "initializing") {
+      return;
+    }
     if (!window.ethereum) {
       return;
     }

@@ -16,5 +16,5 @@ public class UserReq {
     @ApiModelProperty(example = "지갑 주소")
     private String walletAddress;
     @ApiModelProperty(example = "NFT 목록")
-    private List<Map<String,String>> nft;
+    private List<String> nft;
 }

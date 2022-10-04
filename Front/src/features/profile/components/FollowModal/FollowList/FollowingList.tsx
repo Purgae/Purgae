@@ -37,11 +37,17 @@ const FollowingList = (props: Props) => {
 
   const onIntersect: IntersectionObserverCallback = ([{ isIntersecting }]) => {
     if (!end) return;
+    console.log(num.current);
     if (isIntersecting) {
       num.current += 1;
       setPage(num.current);
     }
   };
+
+  useEffect(() => {
+    console.log("초기화");
+    console.log(num.current);
+  }, []);
 
   const { setTarget } = useIntersectionObserver({ onIntersect });
   return (

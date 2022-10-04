@@ -58,7 +58,7 @@ const Game = () => {
                 headset_off
               </FontP>
               <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
-                OFF
+                BGM
               </FontP>
             </>
           ) : (
@@ -68,7 +68,7 @@ const Game = () => {
                 headset
               </FontP>
               <FontP fontSize="2em" fontWeight="medium" style={{ marginTop: "-0.2rem" }}>
-                ON
+                BGM
               </FontP>
             </>
           )}

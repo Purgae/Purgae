@@ -409,6 +409,30 @@ const CONTRACT_ABI: AbiItem[] = [
     inputs: [
       {
         internalType: "uint256",
+        name: "i",
+        type: "uint256",
+      },
+    ],
+    name: "testRanking",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "uint256",
         name: "tokenId",
         type: "uint256",
       },
@@ -419,6 +443,49 @@ const CONTRACT_ABI: AbiItem[] = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "viewCountDonation",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "viewDonationRanking",
+    outputs: [
+      {
+        components: [
+          {
+            internalType: "address",
+            name: "user",
+            type: "address",
+          },
+          {
+            internalType: "uint256",
+            name: "donation",
+            type: "uint256",
+          },
+          {
+            internalType: "uint256",
+            name: "number",
+            type: "uint256",
+          },
+        ],
+        internalType: "struct Minting.Ranking[]",
+        name: "",
+        type: "tuple[]",
       },
     ],
     stateMutability: "view",
@@ -527,5 +594,19 @@ const CONTRACT_ABI: AbiItem[] = [
     stateMutability: "view",
     type: "function",
   },
+  {
+    inputs: [],
+    name: "viewTotalDonation",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
 ];
+
 export default CONTRACT_ABI;

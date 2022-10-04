@@ -2,8 +2,6 @@
 
 interface ImportMetaEnv {
   readonly VITE_API: number;
-  readonly VITE_METAMASK_ADDRESS: string;
-  readonly VITE_METAMASK_SECRET_KEY: string;
   readonly VITE_CONTRACT_ADDRESS: string;
   readonly VITE_BE_METAMASK_ADDRESS: string;
   readonly VITE_BE_METAMASK_SECRET_KEY: string;

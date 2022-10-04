@@ -40,9 +40,7 @@ public class UserController {
 //        System.out.println("wallet : " + reqData.getWalletAddress());
 //        System.out.println("nft : " + reqData.getNft();
         Map<String, Object> result = new HashMap<>();
-        List<String> NFTList = reqData.getNft();
-
-        System.out.println(NFTList.get(0));
+        String[] NFTList = reqData.getNft();
 
         String walletAddress = reqData.getWalletAddress();
         User user = userService.getUserInfo(walletAddress);

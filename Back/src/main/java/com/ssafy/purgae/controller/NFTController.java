@@ -66,7 +66,7 @@ public class NFTController {
                     result.put("error", "timeout");
                     return new ResponseEntity<>(result, HttpStatus.OK);
                 }
-                randomNum = (int) (Math.random() * 99) + 1;
+                randomNum = (int) (Math.random() * 999) + 1;
                 for (int i = 0; i < NFTList.size(); i++) {
                     if (NFTList.get(i).getNFTId() == randomNum) {
                         continue label;
@@ -77,7 +77,7 @@ public class NFTController {
         } else {
             label:
             while (flag) {
-                randomNum = (int) (Math.random() * 899) + 101;
+                randomNum = (int) (Math.random() * 4999) + 1001;
                 for (int i = 0; i < NFTList.size(); i++) {
                     if (NFTList.get(i).getNFTId() == randomNum) {
                         continue label;

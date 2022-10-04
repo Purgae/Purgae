@@ -84,13 +84,12 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
         >
           탐험 시작
         </StyledGameStartButton>
-        {NFTList.length > 0 && (
+        {NFTList.length > 0 ? (
           <FlexDiv direction="column" width="100%">
             <CardGroup lst={selectedList} selectCardFunc={selectCard}></CardGroup>
             <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={NFTList}></PageNation>
           </FlexDiv>
-        )}
-        {!account && isEmpty(NFTList) && (
+        ) : (
           <StyledGameStartContent
             bgColor="white100"
             width="100%"

@@ -6,6 +6,7 @@ import { FollowingList, FollowerList } from "@/redux/types";
 
 export interface CheckNickname {
   message: string;
+  errMsg?: string;
 }
 
 export interface GameScore {

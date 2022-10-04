@@ -92,10 +92,11 @@ export const Fish = styled.div<FishProps>`
   z-index: 1;
   position: absolute;
   background-image: url(${(props) => props.fish});
-  background-size: cover;
+  background-size: contain;
+  background-repeat: no-repeat;
   width: ${(props) => props.size}vw; // 8이상 ~ 20vw이하의 랜덤 수
   min-width: 7.5rem;
-  aspect-ratio: 152/148;
+  aspect-ratio: 1/1;
   left: ${(props) => props.left}vw; // 0이상 85vw이하의 랜덤 수
   top: ${(props) => props.top}vh; // 0이상 80vh 이하의 랜덤 수
 `;

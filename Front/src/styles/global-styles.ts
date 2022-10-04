@@ -18,6 +18,10 @@ html {
 }
 body {
     min-height: 100%;
+    -webkit-user-select:none;
+    -moz-user-select:none;
+    -ms-user-select:none;
+    user-select:none
 }
 
 ol,

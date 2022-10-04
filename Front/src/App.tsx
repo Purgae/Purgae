@@ -107,6 +107,7 @@ const App = () => {
     window.location.reload();
   };
 
+  console.log(status);
   useEffect(() => {
     if (status === "initializing") {
       return;

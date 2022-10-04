@@ -17,9 +17,8 @@ import Navbar from "@/common/Navbar/Navbar";
 import { useDispatch } from "react-redux";
 
 // * slice
-import { resetUser, selectUser } from "@/redux/slices/userSlice";
+import { resetUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
-import { useAlertModal } from "@/hooks/useAlertModal";
 import { isEmpty, isNull } from "lodash";
 import useFetchNFT from "./hooks/useFetchNFT";
 
@@ -35,11 +34,12 @@ const ProfileAquarium = lazy(() => import("@/features/profile/ProfileAquarium"))
 const Faq = lazy(() => import("@/features/faq/Faq"));
 const DetailProfileCard = lazy(() => import("@/features/profile/components/DetailProfileCard/DetailProfileCard"));
 
-declare global {
-  interface Window {
-    web3?: any;
-  }
-}
+// declare global {
+//   interface Window {
+//     web3?: any;
+//   }
+// }
+
 const App = () => {
   //* AlertModal Status
   const { status: alertState, content, styles } = useAppSelector(selectAlert);

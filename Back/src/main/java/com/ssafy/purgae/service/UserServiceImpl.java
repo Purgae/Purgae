@@ -63,9 +63,10 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public boolean checkNFT(List<Map<String,String>> NFTList, String profileHash) {
-        for(int i=0; i<NFTList.size();i++){
-            if(profileHash.equals(NFTList.get(i).get("hash"))){
+    public boolean checkNFT(String[] NFTList, String profileHash) {
+        for(int i=0; i<NFTList.length;i++){
+            if(profileHash.equals(NFTList[i])){
+                System.out.println("checkNFT func : " + NFTList[i]);
                 return true;
             }
         }

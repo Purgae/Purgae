@@ -204,7 +204,7 @@ const ProfileHeader = (props: Props) => {
             <FlexDiv>
               <Icon url={Phishing} />
               <FontP fontSize="1.125rem" fontWeight="semiBold">
-                수족관 친구들
+                바다 친구들
               </FontP>
             </FlexDiv>
             {/* 하 */}

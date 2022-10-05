@@ -58,8 +58,9 @@ const ProfileHeader = (props: Props) => {
   };
 
   useEffect(() => {
+    if (!userData) return;
     fetchData();
-  }, [profileUserId]);
+  }, [profileUserId, userData]);
 
   const [follow] = useChangeFollowMutation();
   // *팔로우 여부

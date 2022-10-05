@@ -173,7 +173,7 @@ const ProfileHeader = (props: Props) => {
           </FlexDiv>
         </FlexDiv>
         {/* 3 */}
-        <FlexDiv direction="row" height="5.75rem" gap="2.5rem">
+        <FlexDiv3>
           {/* 3-1 */}
           <FlexDiv direction="column" gap="0.5rem">
             {/* 상 */}
@@ -230,7 +230,7 @@ const ProfileHeader = (props: Props) => {
               {userFollowingCnt} 명
             </FontP>
           </FlexDivButton>
-        </FlexDiv>
+        </FlexDiv3>
         {isUser ? (
           <StyledAbsoluteIcon className="material-icons" onClick={clickModalToggle}>
             settings
@@ -258,15 +258,20 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
+  ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   position: relative;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
-  width: 76.6875rem;
   background-color: ${({ theme }) => theme.colors.white};
-  justify-content: space-between;
   padding: 2rem 2.5rem;
   border-radius: 1rem;
+  width: 90%;
+  transition: all 0.5s ease-out;
+  @media screen and (min-width: 76.6875rem) {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+    max-width: 76.6875rem;
+    width: 100%;
+  }
 `;
-// min-height: 24rem;
 
 const Icon = styled.div<{ url: string }>`
   width: 2rem;
@@ -289,4 +294,19 @@ const StyledAbsoluteIcon = styled.button`
   right: 0.5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
   padding: 0.5rem;
+`;
+
+const FlexDiv3 = styled.div`
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  width: 20rem;
+  height: 13rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+    height: 5.75rem;
+    width: 40rem;
+    gap: 2.5rem;
+  }
 `;

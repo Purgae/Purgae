@@ -23,14 +23,14 @@ const DetailProfileCard = () => {
   const types: any = {
     dolphin: "돌고래",
     fish: "일반 물고기",
-    lacejellyfish: "레이스 해파리",
     turtle: "거북이",
     net: "그물망",
+    lacejellyfish: "레이스 해파리",
+    roundjellyfish: "동그란 해파리",
     plasticbag: "비닐봉지",
     plasticbottle: "페트병",
-    roundjellyfish: "동그란 해파리",
   };
-  const type = nftInfo?.title.split(" ")[0];
+  const type = nftInfo?.title.replaceAll(" ", "").split("#")[0];
 
   const attr = proPerties?.attributes;
 

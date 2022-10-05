@@ -29,7 +29,6 @@ export const Group = styled.div`
   row-gap: 6%;
   column-gap: 2%;
   width: 100%;
-
   @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(13%, auto));
   }

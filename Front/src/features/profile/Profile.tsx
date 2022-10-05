@@ -43,10 +43,7 @@ const Profile = () => {
 export default Profile;
 
 const StyledRootComponent = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   width: 100%;
   padding-top: 6rem;
   height: 100%;

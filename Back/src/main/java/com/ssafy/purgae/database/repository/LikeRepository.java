@@ -21,6 +21,4 @@ public interface LikeRepository extends JpaRepository<LikeUser, Long> {
 
     public LikeUser findByFromUserAndToUser(User fromUser, User toUser);
 
-//    @Query("select l from LikeUser l where l.toUser =:toUser")
-//    public List<LikeUser> getFollower(long toUser);
 }

@@ -3,6 +3,7 @@ package com.ssafy.purgae.controller;
 import com.ssafy.purgae.database.entity.LikeUser;
 import com.ssafy.purgae.database.entity.User;
 import com.ssafy.purgae.database.repository.LikeRepository;
+import com.ssafy.purgae.database.repository.UserRepository;
 import com.ssafy.purgae.request.GameScoreReq;
 import com.ssafy.purgae.request.UserReq;
 import com.ssafy.purgae.request.UserUpdateReq;
@@ -32,13 +33,14 @@ public class UserController {
     UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     LikeRepository likeRepository;
 
     @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody UserReq reqData){
-//        System.out.println("wallet : " + reqData.getWalletAddress());
-//        System.out.println("nft : " + reqData.getNft();
         Map<String, Object> result = new HashMap<>();
         String[] NFTList = reqData.getNft();
 
@@ -184,4 +186,23 @@ public class UserController {
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
 
+    @ApiOperation(value = "사용자 전체 지갑 리스트 가져오기", notes = "닉네임으로 사용자 정보 받아오는 API입니다.")
+    @GetMapping("/userlist")
+    public ResponseEntity<Map<String, Object>> getUserList() {
+        Map<String, Object> result = new HashMap<>();
+        List<User> list = userRepository.findAll();
+        if(list.size() == 0){
+            result.put("message", FAIL);
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        }
+
+        String[] data = new String[list.size()];
+
+        for(int i = 0; i<list.size(); i++){
+            data[i] = list.get(i).getWalletAddress();
+        }
+        result.put("message",SUCCESS);
+        result.put("data", data);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 }

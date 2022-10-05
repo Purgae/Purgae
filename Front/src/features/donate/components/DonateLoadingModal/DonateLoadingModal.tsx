@@ -16,10 +16,9 @@ const DonateLoadingModal = () => {
   const [index, setIndex] = useState<number>(0);
 
   const desc = [
-    "기부 후, NFT 발급까지는 평균적으로 1분이 걸려요!",
+    "NFT 발급 전에, 페이지를 종료하면 안 돼요!",
     "프로필 페이지에는 발급받은 NFT를 볼 수 있는 수족관이 있어요!",
     "NFT 발급이 오래 걸린다구요? 푸르게에서 게임을 플레이해보세요 🎲",
-    "창을 닫아도 NFT 발급은 안전하게 진행돼요 👷‍♂️",
     "NFT 발급이 끝나면, 프로필 페이지에서 확인할 수 있어요",
   ];
 

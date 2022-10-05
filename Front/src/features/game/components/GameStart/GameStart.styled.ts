@@ -6,7 +6,7 @@ import logo from "/assets/proomy/logo.png";
 export const StyledGameStartContainer = styled(FlexDiv)`
   @media ${({ theme }) => theme.sizes.tablet} {
     flex-direction: center;
-    gap: 4rem;
+    gap: 2.5rem;
     padding: 5rem 3rem 2rem 3rem;
     width: 85%;
     height: 95%;
@@ -36,7 +36,6 @@ export const StyledGameStartTitle = styled(FontP)`
 export const StyledGameStartButton = styled(SolidButton)`
   font-family: "UhBeeSe_hyun";
   font-weight: 500;
-  margin-top: -2rem;
   transition: 0.5s;
 
   @media ${({ theme }) => theme.sizes.tablet} {

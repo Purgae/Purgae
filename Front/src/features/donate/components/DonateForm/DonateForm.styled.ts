@@ -1,5 +1,6 @@
 // * StyledComponent
 import { styled } from "@/styles/theme";
+import { FontP } from "@/common/Common.styled";
 
 export const StyleDonateForm = styled.form`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "flex-start")};
@@ -31,5 +32,25 @@ export const DonateGridDiv = styled.div`
 
   @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+  }
+`;
+
+export const DonateFormButton = styled.button`
+  width: 100%;
+  padding: 1rem 0rem;
+  border-radius: 0.5rem;
+  box-shadow: 0px 3px 8px ${({ theme }) => theme.colors.primary300p};
+  color: ${({ theme }) => theme.colors.gray250};
+  letter-spacing: ${({ theme }) => theme.letterSpacing.button};
+  font-size: 1.025rem;
+  font-weight: 700;
+`;
+
+export const DonateETHDesc = styled(FontP)`
+  text-decoration: underline;
+  text-underline-position: under;
+
+  &:hover {
+    cursor: pointer;
   }
 `;

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Div, Description, Icon } from "./ProfileAquarium.styled";
+import LoadingModal from "@/common/LoadingModal/LoadingModal";
 
 import useFetchNFT from "@/hooks/useFetchNFT";
 import Aquarium from "@/common/Aquarium/Aquarium";
@@ -43,7 +44,7 @@ const ProfileAquarium = () => {
     <>
       {" "}
       {loading ? (
-        <div>로딩중...</div>
+        <LoadingModal />
       ) : (
         <Div>
           <Icon onClick={handleGoBack}>arrow_back</Icon>

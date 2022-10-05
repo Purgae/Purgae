@@ -20,7 +20,7 @@ const DonationRankingListItem = (props: DonationDataProps) => {
       <RankingListItemNumber>{props.idx + 1}</RankingListItemNumber>
       <RankingProfileWrapper>
         <ProfileImage size="navBar" />
-        <RankingListItemNickname>{props.user.nickname}</RankingListItemNickname>
+        <RankingListItemNickname>{props.user?.nickname}</RankingListItemNickname>
       </RankingProfileWrapper>
       <RankingContentDeatilWrapper>
         <RankingListItemContent>

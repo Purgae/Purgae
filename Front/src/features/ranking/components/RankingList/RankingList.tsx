@@ -3,8 +3,7 @@ import DonationRankingListItem from "../RankingListItem/DonationRankingListItem"
 import LikeRankingListItem from "../RankingListItem/LikeRankingListItem";
 import GameRankingListItem from "../RankingListItem/GameRankingListItem";
 import RankingBar from "../RankingBar/RankingBar";
-import { useGetGameRankingQuery } from "@/redux/api/gameRankingApi";
-import { useGetLikeRankingQuery, useGetDonationRankingQuery } from "@/redux/api/rankingApi";
+import { useGetLikeRankingQuery, useGetDonationRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { useEffect, useState } from "react";
 import { DonationDataType, LikeDataType, GameDataType } from "../../Ranking.types";
@@ -48,7 +47,7 @@ const RankingList = () => {
 
   const { fetchViewMyDonation } = useFetchNFT();
   const make = async () => {
-    const result = await fetchViewMyDonation("0xb1eAdD806b2EBC64F6Eed68ee6e38e8d27fE76eA");
+    const result = await fetchViewMyDonation("0xb1eadd806b2ebc64f6eed68ee6e38e8d27fe76ea");
     console.log(result);
   };
   make();

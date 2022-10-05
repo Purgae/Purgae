@@ -6,17 +6,20 @@ export const StyledSelectNFTProfileModal = styled(FlexShadowDiv)`
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 40rem;
+  height: 550px;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.white};
+  width: 95%;
+  padding: 1rem 3rem 1rem 3rem;
 
   @media ${({ theme }) => theme.sizes.tablet} {
+    padding: 3rem 5rem 3rem 5rem;
+    width: 80%;
+  }
+  @media ${({ theme }) => theme.sizes.pc} {
     padding: 5rem 7rem 5rem 7rem;
-
-    @media ${({ theme }) => theme.sizes.pc} {
-      padding: 5rem 7rem 5rem 7rem;
-      max-width: 80rem;
-    }
+    width: 70%;
+    max-width: 80rem;
   }
 `;
 

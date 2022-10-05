@@ -77,7 +77,7 @@ public class NFTController {
         } else {
             label:
             while (flag) {
-                randomNum = (int) (Math.random() * 4999) + 1001;
+                randomNum = (int) (Math.random() * 8999) + 1001;
                 for (int i = 0; i < NFTList.size(); i++) {
                     if (NFTList.get(i).getNFTId() == randomNum) {
                         continue label;

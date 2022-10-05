@@ -32,6 +32,7 @@ export const RankingContentDeatilWrapper = styled.div`
 `;
 
 export const RankingProfileWrapper = styled.div`
+  cursor: pointer;
   ${({ theme }) => theme.mixins.flexBox("row", "center", "start")};
   gap: 1rem;
   width: 16rem;

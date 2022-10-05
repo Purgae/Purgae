@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { MainTitle } from "../../Home.styled";
 import {
   HowManyBackground,
@@ -7,9 +8,29 @@ import {
   HowManyCardContent,
 } from "./HowMany.styled";
 import ScrollToAppear from "@/utils/animations/ScorllToAppear";
+import useFetchNFT from "@/hooks/useFetchNFT";
 
 const HowMany = () => {
   const animation = ScrollToAppear("howmany_animation", 4);
+  const [donateCount, setDonateCount] = useState();
+  const [amountOfTrash, setAmountOfTrash] = useState<string>();
+  const [amountOfETH, setAmountOfETH] = useState<string>();
+  const { fetchAmountOfMoneyAndTrash, fetchDonateCount } = useFetchNFT();
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const data = await fetchAmountOfMoneyAndTrash();
+        setAmountOfETH(data?.ETH);
+        setAmountOfTrash(data?.trash);
+        const count = await fetchDonateCount();
+        setDonateCount(count);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+
   return (
     <HowManyBackground animation={animation ? "fadeInDown 2.5s" : "none"} visibility={animation ? "visible" : "hidden"}>
       <MainTitle mt="8rem" id="howmany_animation">
@@ -22,7 +43,7 @@ const HowMany = () => {
             <br />
             해양생물 NFT
           </HowManyCardTitle>
-          <HowManyCardContent>2000개</HowManyCardContent>
+          <HowManyCardContent>{donateCount}개</HowManyCardContent>
         </HowManyCard>
         <HowManyCard backgroundimg="url(/assets/MainPage/card/card2.jpg)">
           <HowManyCardTitle>
@@ -30,7 +51,7 @@ const HowMany = () => {
             <br />
             쓰레기의 양
           </HowManyCardTitle>
-          <HowManyCardContent>1000kg</HowManyCardContent>
+          <HowManyCardContent>{amountOfTrash}t</HowManyCardContent>
         </HowManyCard>
         <HowManyCard backgroundimg="url(/assets/MainPage/card/card3.jpg)">
           <HowManyCardTitle>
@@ -38,7 +59,7 @@ const HowMany = () => {
             <br />
             기부된 이더리움
           </HowManyCardTitle>
-          <HowManyCardContent>3.4ETH</HowManyCardContent>
+          <HowManyCardContent>{amountOfETH}ETH</HowManyCardContent>
         </HowManyCard>
       </HowManyCardWrapper>
     </HowManyBackground>

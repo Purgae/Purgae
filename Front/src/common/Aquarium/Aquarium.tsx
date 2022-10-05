@@ -33,7 +33,7 @@ const Aquarium = (props: Props) => {
           key={idx}
           left={Math.floor(Math.random() * 85)}
           top={Math.floor(Math.random() * 80)}
-          size={Math.floor(Math.random() * 12) + 8}
+          size={Math.floor(Math.random() * 10) + 6}
         />
       )),
     [fishList]

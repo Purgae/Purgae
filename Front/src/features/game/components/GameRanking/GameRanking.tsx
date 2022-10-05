@@ -14,7 +14,7 @@ import {
 import { FlexDiv, FlexShadowDiv } from "@/common/Common.styled";
 import ProfileImage from "@/common/ProfileImage/ProfileImage";
 
-import { useGetGameRankingQuery } from "@/redux/api/gameRankingApi";
+import { useGetGameRankingQuery } from "@/redux/api/userApi";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
 

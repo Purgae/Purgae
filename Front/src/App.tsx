@@ -32,8 +32,6 @@ import ProfileAquarium from "@/features/profile/ProfileAquarium";
 import Faq from "@/features/faq/Faq";
 import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
 import NotFound from "@/features/404NotFound/NotFound";
-import { UserProfile } from "./redux/types";
-import useInterval from "./hooks/useInterval";
 
 const App = () => {
   //* AlertModal Status

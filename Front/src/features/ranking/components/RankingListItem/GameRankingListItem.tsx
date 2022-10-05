@@ -10,16 +10,21 @@ import {
 } from "./RankingListItem.styled";
 import { GameDataProps } from "../../Ranking.types";
 import RankingOrder from "./RankingOrder";
+import { useNavigate } from "react-router-dom";
 
 const GameRankingListItem = (props: GameDataProps) => {
   const rankNum = props.idx + 1;
   const order = RankingOrder(rankNum);
+  const navigate = useNavigate();
+  const navigateProfile = () => {
+    navigate(`/profile/${props.id}`);
+  };
 
   return (
     <RankingListItemWrapper order={order}>
       <RankingListItemNumber>{props.idx + 1}</RankingListItemNumber>
-      <RankingProfileWrapper>
-        <ProfileImage size="navBar" />
+      <RankingProfileWrapper onClick={navigateProfile}>
+        <ProfileImage size="navBar" url={props.profileImage} />
         <RankingListItemNickname>{props.nickname}</RankingListItemNickname>
       </RankingProfileWrapper>
       <RankingContentDeatilWrapper>

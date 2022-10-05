@@ -14,7 +14,6 @@ import WaterDrop from "/assets/icon/water_drop.png";
 import FollowModal from "../FollowModal/FollowModal";
 import { UserProfile } from "@/redux/types";
 import { useChangeFollowMutation, useGetAmIFollowQuery } from "@/redux/api/userApi";
-import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";
@@ -58,14 +57,26 @@ const ProfileHeader = (props: Props) => {
   };
 
   useEffect(() => {
+    if (!userData) return;
     fetchData();
-  }, [profileUserId]);
+  }, [profileUserId, userData]);
 
   const [follow] = useChangeFollowMutation();
   // *팔로우 여부
   const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  // *소유 nft개수
-  const { data: myNftLen } = useGetDonateCountQuery(profileUserId);
+
+  // * NFT 개수
+  const [nfts, setNfts] = useState<string[]>([]);
+  const { fetchMyNFT } = useFetchNFT();
+  const fetchNFTList = async () => {
+    if (userData) {
+      const myNFTList = await fetchMyNFT(userData?.walletAddress);
+      setNfts(myNFTList);
+    }
+  };
+  useEffect(() => {
+    fetchNFTList();
+  }, [userData]);
 
   const { openAlertModal } = useAlertModal();
   // *추후 `!` 제외한 로직 고려할 것
@@ -172,7 +183,7 @@ const ProfileHeader = (props: Props) => {
           </FlexDiv>
         </FlexDiv>
         {/* 3 */}
-        <FlexDiv direction="row" height="5.75rem" gap="2.5rem">
+        <FlexDiv3>
           {/* 3-1 */}
           <FlexDiv direction="column" gap="0.5rem">
             {/* 상 */}
@@ -193,12 +204,12 @@ const ProfileHeader = (props: Props) => {
             <FlexDiv>
               <Icon url={Phishing} />
               <FontP fontSize="1.125rem" fontWeight="semiBold">
-                살린 물고기
+                바다 친구들
               </FontP>
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              {myNftLen?.NFTNum} 마리
+              {nfts.length} 마리
             </FontP>
           </FlexDiv>
           {/* 3-3 */}
@@ -229,7 +240,7 @@ const ProfileHeader = (props: Props) => {
               {userFollowingCnt} 명
             </FontP>
           </FlexDivButton>
-        </FlexDiv>
+        </FlexDiv3>
         {isUser ? (
           <StyledAbsoluteIcon className="material-icons" onClick={clickModalToggle}>
             settings
@@ -257,15 +268,20 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
+  ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
   position: relative;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
-  width: 76.6875rem;
   background-color: ${({ theme }) => theme.colors.white};
-  justify-content: space-between;
   padding: 2rem 2.5rem;
   border-radius: 1rem;
+  width: 90%;
+  transition: all 0.5s ease-out;
+  @media screen and (min-width: 76.6875rem) {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+    max-width: 76.6875rem;
+    width: 100%;
+  }
 `;
-// min-height: 24rem;
 
 const Icon = styled.div<{ url: string }>`
   width: 2rem;
@@ -288,4 +304,19 @@ const StyledAbsoluteIcon = styled.button`
   right: 0.5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
   padding: 0.5rem;
+`;
+
+const FlexDiv3 = styled.div`
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+  flex-wrap: wrap;
+  gap: 2.5rem;
+  width: 20rem;
+  height: 13rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+    height: 5.75rem;
+    width: 40rem;
+    gap: 2.5rem;
+  }
 `;

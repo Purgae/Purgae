@@ -48,16 +48,22 @@ const Seal = (props: Props) => {
 
 export default Seal;
 
-/*
-background-color: ${({ theme }) => theme.colors.white};
-box-shadow: ${({ theme }) => theme.shadows.shadow600};
- */
-
+// width: 40rem;
 const FlexBox = styled(FlexDiv)`
-  width: 76.6875rem;
-  margin-top: 10px;
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
   padding: 2rem 2.5rem;
   border-radius: 1rem;
-  min-height: 25rem;
-  align-items: start;
+  width: 90%;
+  transition: all 0.5s ease-out;
+
+  @media screen and (min-width: 76.6875rem) {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+    max-width: 76.6875rem;
+    width: 100%;
+    margin-top: 10px;
+    padding: 2rem 2.5rem;
+    border-radius: 1rem;
+    min-height: 25rem;
+    align-items: start;
+  }
 `;

@@ -11,6 +11,7 @@ export const ModalContainer = styled.div`
 
 export const DialogBox = styled.dialog`
   width: 90%;
+  min-width: 21rem;
   height: 80%;
   ${({ theme }) => theme.mixins.flexBox("column", "center", "start")};
   border: none;

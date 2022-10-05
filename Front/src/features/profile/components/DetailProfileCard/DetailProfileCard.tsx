@@ -1,7 +1,6 @@
 import { FlexDiv, FontP, RootComponent, StrongSpan } from "@/common/Common.styled";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import styled from "@/styles/theme-components";
-import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 interface RouteState {
@@ -23,14 +22,14 @@ const DetailProfileCard = () => {
   const types: any = {
     dolphin: "돌고래",
     fish: "일반 물고기",
-    lacejellyfish: "레이스 해파리",
     turtle: "거북이",
     net: "그물망",
+    lacejellyfish: "레이스 해파리",
+    roundjellyfish: "동그란 해파리",
     plasticbag: "비닐봉지",
     plasticbottle: "페트병",
-    roundjellyfish: "동그란 해파리",
   };
-  const type = nftInfo?.title.split(" ")[0];
+  const type = nftInfo?.title.replaceAll(" ", "").split("#")[0];
 
   const attr = proPerties?.attributes;
 
@@ -81,33 +80,52 @@ const DetailProfileCard = () => {
 export default DetailProfileCard;
 
 const Base = styled.div`
-  position: relative;
-  width: 50rem;
-  height: 25rem;
+  min-width: 275px;
+  width: 95%;
+  height: 50rem;
   background-color: ${({ theme }) => theme.colors.white};
   color: ${({ theme }) => theme.colors.mainParagraph};
   box-shadow: ${({ theme }) => theme.shadows.shadow700};
   border-radius: 1rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+    width: 50rem;
+    height: 25rem;
+    border-radius: 1rem;
+  }
 `;
 
 const Img = styled.div<{ url: string }>`
-  position: absolute;
-  border-radius: 1rem 0rem 0rem 1rem;
-  width: 38%;
-  height: 100%;
+  border-radius: 1rem 1rem 0rem 0rem;
+  width: 100%;
+  height: 50%;
   background-image: url(${(props) => props.url});
   background-color: ${({ theme }) => theme.colors.primary300};
-  background-size: 100%;
+  background-size: 50%;
   background-repeat: no-repeat;
   background-position: center;
+  @media ${({ theme }) => theme.sizes.tablet} {
+    border-radius: 1rem 0rem 0rem 1rem;
+    width: 38%;
+    height: 100%;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 `;
 
 const CardRight = styled.div`
-  float: right;
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
-  width: 62%;
-  height: 100%;
-  border-radius: 0rem 1rem 1rem 0rem;
+  width: 100%;
+  height: 50%;
+  min-width: 275px;
+  @media ${({ theme }) => theme.sizes.tablet} {
+    ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
+    width: 62%;
+    height: 100%;
+    border-radius: 0rem 1rem 1rem 0rem;
+  }
 `;
 
 const Box = styled.div`
@@ -123,8 +141,7 @@ const TitleP = styled.p`
 `;
 
 const BoxLeft = styled.div`
-  display: flex;
-  flex-direction: column;
+  ${({ theme }) => theme.mixins.flexBox("column", "center", "start")};
   height: 100%;
   width: 30%;
 `;

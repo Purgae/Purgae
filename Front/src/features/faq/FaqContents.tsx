@@ -1,19 +1,16 @@
 export const faqTitle = ["무엇을 도와 드릴까요?", "바다를 위한 기부 플랫폼, NFT와 함께하는 푸르게입니다."];
 
-export const startPurgaeMenuTitle = [
-  "지갑 생성하기",
-  "지갑 연결하기",
-  "지갑 사용하기",
-  "이더리움 받기",
-  "수수료 알아보기",
-  "NFT 확인하기",
-];
+export const startPurgaeMenuTitle = ["지갑 생성하기", "이더리움 받기"];
 
 export const startPurgaeMenuSubTitle = [
   "푸르게를 이용하기 위해서는 지갑이 필요해요!",
-  "지갑을 생성하셨다면, 한번 연결해 볼까요?",
-  "푸르게에서는 어떤 지갑을 사용할 수 있을까요?",
   "이더리움을 받는 방법을 알려드려요!",
+];
+
+export const findOutTitle = ["지갑 연결 및 끊기", "수수료 알아보기", "NFT 확인하기"];
+
+export const findOutSubTitle = [
+  "지갑을 생성하셨다면, 한번 연결해 볼까요?",
   "서비스 및 제작자 수수료는 얼마인가요?",
   "내가 뽑은 NFT를 확인해 보아요!",
 ];

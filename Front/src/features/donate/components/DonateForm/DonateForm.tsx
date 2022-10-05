@@ -118,7 +118,7 @@ const DonateForm = () => {
           <FlexDiv align="baseline">
             <p>기부 금액 (ETH) </p>
             <DonateETHDesc color="primary600" fontWeight="medium" fontSize="0.8rem" onClick={() => navigate("/faq/1")}>
-              기부할 이더리움이 부족해요!
+              기부 금액이 부족하신가요?
             </DonateETHDesc>
           </FlexDiv>
         </CommonInput>

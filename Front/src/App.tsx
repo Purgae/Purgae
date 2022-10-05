@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -14,7 +14,7 @@ import Navbar from "@/common/Navbar/Navbar";
 import { useDispatch } from "react-redux";
 
 // * slice
-import { resetUser } from "@/redux/slices/userSlice";
+import { resetUser, selectUser } from "@/redux/slices/userSlice";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { isEmpty, isNull } from "lodash";
 import useFetchNFT from "./hooks/useFetchNFT";
@@ -32,6 +32,8 @@ import ProfileAquarium from "@/features/profile/ProfileAquarium";
 import Faq from "@/features/faq/Faq";
 import DetailProfileCard from "@/features/profile/components/DetailProfileCard/DetailProfileCard";
 import NotFound from "@/features/404NotFound/NotFound";
+import { UserProfile } from "./redux/types";
+import useInterval from "./hooks/useInterval";
 
 const App = () => {
   //* AlertModal Status
@@ -41,7 +43,8 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
+  const { user } = useAppSelector(selectUser);
+  const currentAccount = user?.walletAddress;
   const [login] = useLoginMutation();
 
   // * web3
@@ -75,13 +78,12 @@ const App = () => {
       const hashData = await getHash([metamaskAccount]);
       const transHash = await Promise.all(hashData);
       const allHashdata = transHash.filter((item) => item.length > 0);
+      console.log(metamaskAccount);
       if (!isEmpty(allHashdata)) {
         await login({ walletAddress: metamaskAccount, nft: allHashdata });
       } else {
-        await login({ walletAddress: metamaskAccount });
+        await login({ walletAddress: metamaskAccount, nft: [] });
       }
-    }
-    if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
     }
     return;
   };
@@ -94,10 +96,13 @@ const App = () => {
       // *단순 계정 변경시 혹은 로그인시
       if (currentAccount !== undefined && accounts[0] !== currentAccount) {
         // console.log("스토어에 저장된 account와, 현재 유저 불일치", "스토어:", currentAccount, "현재유저:", accounts);
-        if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
+        if (window.ethereum && location.pathname !== "/") {
+          console.log("currentAccount 여부 상관 X 현 유저와 다를때 ");
           await updateUser(accounts[0]);
         }
       } else if (currentAccount === undefined) {
+        // !로그인시 실행
+        console.log("currentaccount가 없는 단순 유저 change");
         await updateUser(accounts[0]);
       }
     }
@@ -108,14 +113,10 @@ const App = () => {
     window.location.reload();
   };
 
-  console.log(status);
   useEffect(() => {
-    if (status === "initializing") {
-      return;
-    }
-    if (!window.ethereum) {
-      return;
-    }
+    if (status === "initializing") return;
+    if (!window.ethereum) return;
+    if (status === "connecting") return;
     // @접속된 유저
     if (window.ethereum) {
       const metamaskAccount = window.ethereum.selectedAddress;
@@ -125,15 +126,16 @@ const App = () => {
       });
       window.ethereum.on("disconnect", resetAccount);
 
-      if (!isNull(metamaskAccount) && currentAccount === undefined) {
+      if (!isNull(metamaskAccount) && currentAccount === undefined && window.location.pathname !== "/login") {
+        // !로그인시 실행됨 -> 로그인 후 main페이지 이동 block
         updateUser(metamaskAccount);
-        // console.log("자동로그인 완료-연결된 상태에서 들어옴");
+        console.log("자동로그인 완료-연결된 상태에서 들어옴");
       } else if (isNull(metamaskAccount) && currentAccount !== undefined) {
         resetAccount();
-        // console.log("접속안된 상태이나, 스토어 있으므로 초기화");
+        console.log("접속안된 상태이나, 스토어 있으므로 초기화");
       } else if (!isNull(metamaskAccount) && currentAccount !== undefined && metamaskAccount !== currentAccount) {
         updateUser(metamaskAccount);
-        // console.log("store의 유저와 다르므로 재로그인 요청");
+        console.log("store의 유저와 다르므로 재로그인 요청");
       }
     } else {
       // @접속안된유저

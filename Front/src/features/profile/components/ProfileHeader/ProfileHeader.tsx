@@ -265,6 +265,7 @@ const ProfileHeaderStyled = styled(FlexDiv)`
   padding: 2rem 2.5rem;
   border-radius: 1rem;
 `;
+// min-height: 24rem;
 
 const Icon = styled.div<{ url: string }>`
   width: 2rem;

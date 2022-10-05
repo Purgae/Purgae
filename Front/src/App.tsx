@@ -43,10 +43,8 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  // const currentAccount = useAppSelector((state) => state.user.user?.walletAddress);
   const { user } = useAppSelector(selectUser);
   const currentAccount = user?.walletAddress;
-  // const currentAccount = useRef(currentAc)
   const [login] = useLoginMutation();
 
   // * web3
@@ -80,10 +78,11 @@ const App = () => {
       const hashData = await getHash([metamaskAccount]);
       const transHash = await Promise.all(hashData);
       const allHashdata = transHash.filter((item) => item.length > 0);
+      console.log(metamaskAccount);
       if (!isEmpty(allHashdata)) {
         await login({ walletAddress: metamaskAccount, nft: allHashdata });
       } else {
-        await login({ walletAddress: metamaskAccount });
+        await login({ walletAddress: metamaskAccount, nft: [] });
       }
     }
     if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {

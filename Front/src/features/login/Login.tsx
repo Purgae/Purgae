@@ -104,11 +104,11 @@ const Login = () => {
 
   const navigateHome = () => {
     // navigate("/main");
-    const data: OpenAlertModalArg = {
-      content: "성공적으로 로그인 되었습니다.",
-      styles: "PRIMARY",
-    };
-    openAlertModal(data);
+    // const data: OpenAlertModalArg = {
+    //   content: "성공적으로 로그인 되었습니다.",
+    //   styles: "PRIMARY",
+    // };
+    // openAlertModal(data);
   };
 
   useEffect(() => {

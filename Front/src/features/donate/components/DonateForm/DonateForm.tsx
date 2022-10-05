@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 //* 컴포넌트
 import { FlexDiv, StrongSpan } from "@/common/Common.styled";
-import { StyleDonateForm, DonateGridDiv } from "./DonateForm.styled";
+import { StyleDonateForm, DonateGridDiv, DonateFormButton, DonateETHDesc } from "./DonateForm.styled";
 import CommonInput from "@/common/Input/CommonInput";
 import Button from "@/common/Button/Button";
 
@@ -12,6 +12,9 @@ import Button from "@/common/Button/Button";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { useAlertModal } from "@/hooks/useAlertModal";
 import useDonate from "@/hooks/useDonate";
+
+//* API
+import { useRequestRandomNumMutation } from "@/redux/api/nftApi";
 
 //* redux
 import {
@@ -25,16 +28,11 @@ import {
 } from "@/redux/slices/donateSlice";
 import { selectUser } from "@/redux/slices/userSlice";
 
-//* API
-import { useRequestRandomNumMutation, useLazyGetDonateCountQuery } from "@/redux/api/nftApi";
-
 const DonateForm = () => {
-  const [donateCount, setDonateCount] = useState<number>(0);
   const dispatch = useAppDispatch();
   const { inputValue, inputStatus, errorMessage, submitStatus } = useAppSelector(selectDonate);
   const { user } = useAppSelector(selectUser);
   const [requestRandomNum] = useRequestRandomNumMutation();
-  const [getDonateCount] = useLazyGetDonateCountQuery();
 
   //* 훅
   const navigate = useNavigate();
@@ -103,18 +101,6 @@ const DonateForm = () => {
     };
   }, [inputValue]);
 
-  //* 기부 횟수 받아오는 함수
-  useEffect(() => {
-    if (!account || !user) return;
-    (async () => {
-      try {
-        const { NFTNum } = await getDonateCount(user!.id).unwrap();
-        if (NFTNum === undefined) return;
-        setDonateCount(NFTNum);
-      } catch (error) {}
-    })();
-  }, [account, user]);
-
   return (
     <StyleDonateForm onSubmit={submitDonateForm}>
       <FlexDiv direction="column" align="flex-start" width="100%">
@@ -128,37 +114,33 @@ const DonateForm = () => {
           status={inputStatus}
           errorMessage={errorMessage}
         >
-          <p>기부 금액(단위: ETH) </p>
+          <FlexDiv align="baseline" gap="0.5rem">
+            <p>기부 금액 (ETH) </p>
+            <DonateETHDesc color="primary600" fontWeight="medium" fontSize="0.8rem" onClick={() => navigate("/faq/1")}>
+              기부할 이더리움이 부족해요!
+            </DonateETHDesc>
+          </FlexDiv>
         </CommonInput>
-        <p>
-          하루에 최대 <StrongSpan fontWeight="bold">10회</StrongSpan> 기부가 가능하고, 최소 기부 금액은
-          <StrongSpan fontWeight="bold">0.0025ETH</StrongSpan>입니다.
-        </p>
-        {donateCount ? (
-          <p style={{ marginTop: "-0.2rem" }}>
-            {" "}
-            <StrongSpan fontWeight="bold" color="primary500p">
-              {10 - (donateCount % 10)}{" "}
-            </StrongSpan>
-            번 더 기부하면 돌고래 NFT를 받을 수 있어요!
+        <FlexDiv direction="column" gap="0.5rem" align="flex-start">
+          <p>
+            하루에 최대 <StrongSpan fontWeight="bold">5회</StrongSpan> 기부가 가능합니다. 최소 기부 금액은
+            <StrongSpan fontWeight="bold">0.005ETH</StrongSpan>입니다.
           </p>
-        ) : (
-          ""
-        )}
+        </FlexDiv>
       </FlexDiv>
       <DonateGridDiv>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0005)}>
-          +0.0005
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0015)}>
-          +0.0015
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.0025)}>
-          +0.0025
-        </Button>
-        <Button type="button" styles="outline" width="100%" onClick={() => clickAddButton(0.005)}>
+        <DonateFormButton type="button" onClick={() => clickAddButton(0.005)}>
           +0.0050
-        </Button>
+        </DonateFormButton>
+        <DonateFormButton type="button" onClick={() => clickAddButton(0.0025)}>
+          +0.0025
+        </DonateFormButton>
+        <DonateFormButton type="button" onClick={() => clickAddButton(0.0015)}>
+          +0.0015
+        </DonateFormButton>
+        <DonateFormButton type="button" onClick={() => clickAddButton(0.0005)}>
+          +0.0005
+        </DonateFormButton>
       </DonateGridDiv>
       <FlexDiv direction="column" width="100%">
         <Button disabled={!submitStatus} width="100%" bgColor={submitButtonStyle} fontColor="white100">

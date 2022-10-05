@@ -1,6 +1,7 @@
 import { FaqTextBox, FaqTextProomyWrapper, FaqProomy } from "./WalletAndNft.styled";
 import { FlexDiv } from "@/common/Common.styled";
 import { WhatIsNft, WhatIsWallet, WhatIsGas, WhatIsBlockChain } from "../../FaqContents";
+import BackButton from "../BackButton/BackButton";
 
 type Id = {
   id: number;
@@ -26,6 +27,7 @@ const WalletAndNft = (id: Id) => {
           </FaqTextProomyWrapper>
         )
       )}
+      <BackButton />
     </FlexDiv>
   );
 };

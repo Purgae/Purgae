@@ -18,11 +18,10 @@ export const FaqMenuTitle = styled.p`
 export const FaqMenuGrid = styled.div`
   display: grid;
   grid-template-columns: 20rem 20rem 20rem;
-  grid-template-rows: 6rem 6rem;
   gap: 1.1rem;
   @media screen and (max-width: 1350px) {
     grid-template-columns: 20rem 20rem;
-    grid-template-rows: 6rem 6rem 6rem;
+    grid-template-rows: 6rem 6rem;
   }
   @media screen and (max-width: 768px) {
     grid-template-columns: 20rem;
@@ -30,14 +29,22 @@ export const FaqMenuGrid = styled.div`
   }
 `;
 
-export const FaqMenuItem = styled.div`
+export const StartPurgaeMenuGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 6rem 6rem;
+  width: 100%;
+  gap: 1.1rem;
+`;
+
+export const FaqMenuItem = styled.div<{ shadow: string }>`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   padding: 1.8rem;
   border-radius: 0.3rem;
   background-color: ${({ theme }) => theme.colors.white};
   transition: all 0.5s linear;
   cursor: pointer;
-  box-shadow: ${({ theme }) => theme.shadows.shadow500};
+  box-shadow: ${(props) => props.shadow};
   &:hover {
     transform: scale(1.02);
   }

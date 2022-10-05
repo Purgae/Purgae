@@ -3,11 +3,39 @@ import DonationRankingListItem from "../RankingListItem/DonationRankingListItem"
 import LikeRankingListItem from "../RankingListItem/LikeRankingListItem";
 import GameRankingListItem from "../RankingListItem/GameRankingListItem";
 import RankingBar from "../RankingBar/RankingBar";
-import { useGetLikeRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
-import { useEffect, useState } from "react";
+import { useGetUserListQuery, useGetLikeRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
+import { useEffect, useState, useRef } from "react";
 import { LikeDataType, GameDataType } from "../../Ranking.types";
+import useFetchNFT from "@/hooks/useFetchNFT";
 
 const RankingList = () => {
+  const { fetchBalanceOf, fetchViewMyDonation } = useFetchNFT();
+  const { data: userList } = useGetUserListQuery();
+
+  // * NFT 개수 순위
+  let NFTArr = useRef<{ wallet: string; cnt: any }[]>([]);
+
+  const fetchNFTCount = async (wallet: string) => {
+    const Count = await fetchBalanceOf(wallet);
+    NFTArr.current.push({ wallet: wallet, cnt: Count.data });
+    NFTArr.current.sort((a, b) => {
+      return b.cnt - a.cnt;
+    });
+  };
+
+  useEffect(() => {
+    if (userList === undefined) return;
+    userList.data.map((item: string) => fetchNFTCount(item));
+  }, [userList]);
+
+  useEffect(() => {
+    console.log(NFTArr.current);
+    NFTArr.current.map((item) => console.log(item));
+  }, [NFTArr.current]);
+
+  // * 기부 금액 순위
+  const [DonateCount, setDonateCount] = useState<[]>();
+
   //* 좋아요 랭킹 api 요청
   const { data: likeRankingData } = useGetLikeRankingQuery();
   const [likeData, setLikeData] = useState<LikeDataType[]>();
@@ -43,7 +71,7 @@ const RankingList = () => {
           ))}
         </RankingContentWrapper>
       </RankingListWrapper> */}
-      <RankingTitle>쓰레기를 가장 많이 치운 사람들</RankingTitle>
+      <RankingTitle>기부천사! 쓰레기를 가장 열심히 치운 사람들</RankingTitle>
       <RankingTitle>푸르게의 인플루언서! 팔로워 많은 사람들</RankingTitle>
       <RankingListWrapper>
         <RankingBar title="팔로워 수" />

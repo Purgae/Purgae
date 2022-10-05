@@ -31,7 +31,7 @@ export const NavbarItemWrapper = styled.div`
 export const NavbarLinkWrappper = styled.div<{ display: string }>`
   ${({ theme }) => theme.mixins.flexBox()}
   padding: 0rem;
-  gap: 3rem;
+  gap: 3vw;
   @media screen and (max-width: 768px) {
     display: ${(props) => props.display};
     position: fixed;

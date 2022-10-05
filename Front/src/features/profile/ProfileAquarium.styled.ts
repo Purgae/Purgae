@@ -26,7 +26,7 @@ export const Description = styled.div<{ isDisplay: boolean }>`
   transform: translate(-50%);
   z-index: 3;
   font-size: 1.25rem;
-  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
   cursor: default;
   padding: 0.8rem 1rem;
@@ -36,6 +36,7 @@ export const Description = styled.div<{ isDisplay: boolean }>`
   transition: visibility 0.5s linear 300ms, opacity 300ms;
   animation: ${FadeInAnimation} 1s;
   width: fit-content;
+  font-family: "UhBeeSe_hyun";
 `;
 
 export const Icon = styled.i.attrs(() => ({ className: "material-icons" }))`

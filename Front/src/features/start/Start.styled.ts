@@ -17,6 +17,7 @@ export const Button = styled(SolidButton)`
   z-index: 3;
   transform: translate(-50%);
   opacity: 0.7;
+  font-family: "UhBeeSe_hyun";
   &:hover {
     opacity: 1;
     transition: 0.5s;
@@ -39,7 +40,7 @@ const Description = styled.div<{ isDisplay: boolean }>`
   transform: translate(-50%);
   z-index: 3;
   font-size: 1.25rem;
-  font-weight: ${({ theme }) => theme.fontWeights.semiBold};
+  font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
   cursor: default;
   padding: 0.8rem 1rem;
@@ -49,22 +50,20 @@ const Description = styled.div<{ isDisplay: boolean }>`
   transition: visibility 0.5s linear 300ms, opacity 300ms;
   animation: ${FadeInAnimation} 1s;
   width: fit-content;
+  font-family: "UhBeeSe_hyun";
 `;
 
 export const Description1 = styled(Description)`
   left: 50%;
   top: 3%;
-  /* background-color: ${({ theme }) => theme.colors.lightBlue300}; */
 `;
 
 export const Description2 = styled(Description)`
   left: 80%;
   top: 40%;
-  /* background-color: ${({ theme }) => theme.colors.primary600}; */
 `;
 
 export const Description3 = styled(Description)`
   left: 3.25rem;
   top: 88.5%;
-  /* background-color: ${({ theme }) => theme.colors.primary700}; */
 `;

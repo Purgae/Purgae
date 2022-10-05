@@ -16,7 +16,6 @@ import { useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
-import { isEmpty } from "lodash";
 import useFetchNFT from "@/hooks/useFetchNFT";
 
 const Login = () => {
@@ -40,27 +39,6 @@ const Login = () => {
   // const alchemy = new Alchemy(config);
   // const nft = await alchemy.nft.getNftsForOwner(account);
 
-  const getHash = async (connectAddress: string[]) => {
-    if (connectAddress) {
-      const existHash = await fetchMyNFT(connectAddress[0]);
-      if (existHash.length > 0) {
-        const newExistHash = existHash.map(async (element: string) => {
-          if (!isEmpty(element)) {
-            const data = element.split("https://ipfs.io/ipfs/")[1];
-            return data;
-          } else {
-            return "";
-          }
-        });
-        return newExistHash;
-      } else {
-        return [];
-      }
-    } else {
-      return [];
-    }
-  };
-
   const isLogined = () => {
     if (currentUser.user?.walletAddress !== undefined && chainId === networkChainId.goerli) {
       if (status === "connected" && window.ethereum.selectedAddress) {
@@ -77,16 +55,7 @@ const Login = () => {
         if (chainId === networkChainId.goerli) {
           const connectAddress = await connect();
           if (connectAddress) {
-            const hashData = await getHash(connectAddress);
-            const transHash = await Promise.all(hashData);
-            const resHashData = transHash.filter((item) => item.length > 0);
-            if (!isEmpty(resHashData)) {
-              await login({ walletAddress: connectAddress[0], nft: resHashData });
-              navigateHome();
-            } else {
-              await login({ walletAddress: connectAddress[0] });
-              navigateHome();
-            }
+            navigateHome();
           }
         }
         // *고릴아닐때
@@ -94,16 +63,7 @@ const Login = () => {
           const connectAddress = await connect();
           await switchChain(networkChainId.goerli); //로그인 이루어지나, connect 상태가 아님
           if (connectAddress) {
-            const hashData = await getHash(connectAddress);
-            const transHash = await Promise.all(hashData);
-            const resHashData = transHash.filter((item) => item.length > 0);
-            if (!isEmpty(resHashData)) {
-              await login({ walletAddress: connectAddress[0], nft: resHashData });
-              navigateHome();
-            } else {
-              await login({ walletAddress: connectAddress[0] });
-              navigateHome();
-            }
+            navigateHome();
           }
         }
       } else if (status === "connecting") {
@@ -143,15 +103,12 @@ const Login = () => {
   };
 
   const navigateHome = () => {
-    navigate("/main");
+    // navigate("/main");
     // const data: OpenAlertModalArg = {
-    //   content: "로그인되어 메인 페이지로 이동합니다.",
+    //   content: "성공적으로 로그인 되었습니다.",
     //   styles: "PRIMARY",
     // };
     // openAlertModal(data);
-    // setTimeout(() => {
-    //   navigate("/main");
-    // }, 2000);
   };
 
   useEffect(() => {

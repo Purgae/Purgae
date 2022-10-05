@@ -63,7 +63,7 @@ const CardPage = ({
           <FontP color="mainParagraph" fontWeight="semiBold" fontSize="1.25rem">
             아직 살린 물고기가 없어요 <RedSpan>є(･Θ･｡)э››~♡</RedSpan>
           </FontP>
-          <Link to="/donate">
+          <Link to="/donate" style={{ textDecoration: "none" }}>
             <DonateP>기부하고 물고기 NFT 받기</DonateP>
           </Link>
         </FlexBox>

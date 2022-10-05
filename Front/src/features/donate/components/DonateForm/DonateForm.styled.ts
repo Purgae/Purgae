@@ -39,7 +39,7 @@ export const DonateFormButton = styled.button`
   width: 100%;
   padding: 1rem 0rem;
   border-radius: 0.5rem;
-  box-shadow: 0px 3px 7px ${({ theme }) => theme.colors.primary300};
+  box-shadow: 0px 3px 8px ${({ theme }) => theme.colors.primary300p};
   color: ${({ theme }) => theme.colors.gray250};
   letter-spacing: ${({ theme }) => theme.letterSpacing.button};
   font-size: 1.025rem;

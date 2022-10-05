@@ -57,3 +57,9 @@ export const FaqLink = styled(NavLink)`
   line-height: 2rem;
   text-decoration: none;
 `;
+
+export const FaqExternalLink = styled.a`
+  color: ${({ theme }) => theme.colors.primary600};
+  line-height: 2rem;
+  text-decoration: none;
+`;

@@ -46,6 +46,5 @@ const StyledRootComponent = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   width: 100%;
   padding-top: 6rem;
-  height: 100%;
   padding-bottom: 3rem;
 `;

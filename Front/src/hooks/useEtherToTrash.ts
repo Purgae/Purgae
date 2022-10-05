@@ -1,10 +1,9 @@
-import { useFetchCoinPriceQuery } from "@/redux/api/coinApi";
+import { useLazyFetchCoinPriceQuery } from "@/redux/api/coinApi";
 
 const useEtherToTrash = () => {
-  const { data } = useFetchCoinPriceQuery("ETH");
-
-  const changeEtherToTrash = (ether: number) => {
-    if (!data) return;
+  const [fetchCoinPrice] = useLazyFetchCoinPriceQuery();
+  const changeEtherToTrash = async (ether: number) => {
+    const data = await fetchCoinPrice("ETH").unwrap();
     const { trade_price: currency } = data[0];
     let won: number | string = ether * currency;
     let trash: number | string = won * 0.00227273;

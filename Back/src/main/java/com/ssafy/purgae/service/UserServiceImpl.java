@@ -7,8 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-
-import java.sql.Array;
 import java.util.*;
 
 @Service("userService")
@@ -121,15 +119,9 @@ public class UserServiceImpl implements UserService {
 
     }
 
-
-//    @Override
-//    public UserDto getUserInfo(Long userId) {
-//        return null;
-//    }
     public long countUser() {
         return userRepository.count();
     }
-
 
     @Override
     public User updateUserInfo(long userId, String nickname, String profileImage, boolean profilePublc) {
@@ -158,6 +150,4 @@ public class UserServiceImpl implements UserService {
             return null;
         }
     }
-
-
 }

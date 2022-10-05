@@ -2,8 +2,6 @@ package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.User;
 
-import java.util.List;
-import java.util.Map;
 
 public interface UserService {
     public String newNickname();
@@ -30,7 +28,6 @@ public interface UserService {
 
     public User saveUser(User user);
 
-//    public UserDto getUserInfo(Long userId);
     public long countUser();
     public User updateUserInfo(long userId, String profileImage, String nickname, boolean profilePublic);
 

@@ -36,5 +36,9 @@ public class User{
     @Column(name = "profilePublic", nullable = false)
     boolean profilePublic = true;
 
+    @Column(name = "todayDonation")
+    @ColumnDefault("0")
+    int todayDonation = 0;
+
 
 }

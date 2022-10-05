@@ -14,7 +14,6 @@ import WaterDrop from "/assets/icon/water_drop.png";
 import FollowModal from "../FollowModal/FollowModal";
 import { UserProfile } from "@/redux/types";
 import { useChangeFollowMutation, useGetAmIFollowQuery } from "@/redux/api/userApi";
-import { useGetDonateCountQuery } from "@/redux/api/nftApi";
 import { useAppSelector } from "@/hooks/storeHook";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";

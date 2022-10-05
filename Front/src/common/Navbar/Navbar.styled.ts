@@ -16,6 +16,7 @@ export const NavbarBackground = styled.div<{ opacity: string }>`
   opacity: ${(props) => props.opacity};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   transition: opacity 0.5s linear;
+  z-index: 999;
   &:hover {
     opacity: 1;
   }
@@ -136,5 +137,17 @@ export const NavbarLogo = styled.img<{ width: string }>`
   transition: all 0.3s linear;
   &:hover {
     transform: scale(1.02);
+  }
+`;
+
+export const EmptySpaceToToggleSideBar = styled.div`
+  @media screen and (max-width: 768px) {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    z-index: 998;
+    opacity: 0.1;
+    background-color: gray;
+    position: fixed;
   }
 `;

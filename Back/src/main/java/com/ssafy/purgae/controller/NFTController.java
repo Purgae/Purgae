@@ -2,6 +2,7 @@ package com.ssafy.purgae.controller;
 
 import com.ssafy.purgae.database.entity.NFTInfo;
 import com.ssafy.purgae.database.entity.User;
+import com.ssafy.purgae.database.repository.NFTRepository;
 import com.ssafy.purgae.service.NFTService;
 import com.ssafy.purgae.service.UserService;
 import io.swagger.annotations.Api;
@@ -27,6 +28,8 @@ public class NFTController {
 
     @Autowired
     NFTService nftService;
+    @Autowired
+    NFTRepository nftRepository;
 
     @Autowired
     UserService userService;
@@ -75,36 +78,29 @@ public class NFTController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @PostMapping("/put/{userId}/{nftId}")
+
+    @ApiOperation(value = "기부 후 발급 받은 NFT 정보 저장", notes = "회원이 발급받은 NFT 정보 DB에 저장")
+    @PutMapping("/{userId}/{nftId}")
     public ResponseEntity<Map<String, Object>> updateNFTInfo(@PathVariable Long userId, @PathVariable Long nftId){
         Map<String, Object> result = new HashMap<>();
+        if(nftRepository.findFirstByNFTId(nftId) != null) {
+            boolean delete = nftService.deleteNFTInfo(nftId);
+        }else{
+            result.put("message", FAIL);
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        }
+
         User user = userService.getUserInfoById(userId);
-        NFTInfo newNFT = new NFTInfo();
-        newNFT.setNFTId(nftId);
-        newNFT.setOwnerId(user);
-        nftService.saveNFTInfo(newNFT);
 
-        result.put("message", SUCCESS);
-        return new ResponseEntity<>(result, HttpStatus.OK);
+        if(user != null){
+            user.setTodayDonation(user.getTodayDonation() - 1);
+            userService.saveUser(user);
+            result.put("message",SUCCESS);
+        }else{
+            result.put("message", FAIL);
+        }
+        return new ResponseEntity<>(result,HttpStatus.OK);
     }
-
-
-//
-//    @ApiOperation(value = "기부 후 발급 받은 NFT 정보 저장", notes = "회원이 발급받은 NFT 정보 DB에 저장")
-//    @PutMapping("/{userId}/{nftId}")
-//    public ResponseEntity<Map<String, Object>> updateNFTInfo(@PathVariable Long userId, @PathVariable Long nftId){
-//        Map<String, Object> result = new HashMap<>();
-//        NFTInfo nft = nftService.updateNFTInfo(userId, nftId);
-//
-//        if(nft != null){
-//            result.put("message",SUCCESS);
-//            result.put("data", nft);
-//        }else{
-//            result.put("message", FAIL);
-//        }
-//
-//        return new ResponseEntity<>(result,HttpStatus.OK);
-//    }
 
 
 }

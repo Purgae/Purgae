@@ -16,6 +16,6 @@ public interface NFTService {
 //
 //    public NFTInfo updateNFTInfo(long userId, long NFTId);
 //
-//    public boolean deleteNFTInfo(long NFTId);
+    public boolean deleteNFTInfo(long NFTId);
 
 }

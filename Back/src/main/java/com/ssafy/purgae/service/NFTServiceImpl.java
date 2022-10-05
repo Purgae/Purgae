@@ -62,13 +62,13 @@ public class NFTServiceImpl implements NFTService {
 //        }
 //    }
 //
-//    @Override
-//    public boolean deleteNFTInfo(long NFTId) {
-//        int tmp = nftRepository.deleteByNFTId(NFTId);
-//        if(tmp == 1){
-//            return true;
-//        }else{
-//            return false;
-//        }
-//    }
+    @Override
+    public boolean deleteNFTInfo(long NFTId) {
+        int tmp = nftRepository.deleteByNFTId(NFTId);
+        if(tmp == 1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

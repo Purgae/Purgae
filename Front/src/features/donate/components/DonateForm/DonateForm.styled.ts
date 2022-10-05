@@ -50,6 +50,10 @@ export const DonateETHDesc = styled(FontP)`
   text-decoration: underline;
   text-underline-position: under;
 
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 0.95rem;
+  }
+
   &:hover {
     cursor: pointer;
   }

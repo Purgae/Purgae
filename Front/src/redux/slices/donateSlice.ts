@@ -11,6 +11,8 @@ interface DonateState {
   won: string;
   trash: string;
   modalStatus: boolean;
+  descModalStatus: boolean;
+  NFTListModalStatus: boolean;
 }
 
 //* state의 초기값을 지정한다..
@@ -22,6 +24,8 @@ const initialState: DonateState = {
   won: "0",
   trash: "0",
   modalStatus: false,
+  descModalStatus: false,
+  NFTListModalStatus: false,
 };
 
 const slice = createSlice({
@@ -108,6 +112,18 @@ const slice = createSlice({
     offModal: (state) => {
       state.modalStatus = false;
     },
+    onDescModal: (state) => {
+      state.descModalStatus = true;
+    },
+    offDescModal: (state) => {
+      state.descModalStatus = false;
+    },
+    onNFTListModalStatus: (state) => {
+      state.NFTListModalStatus = true;
+    },
+    offNFTListModalStatus: (state) => {
+      state.NFTListModalStatus = false;
+    },
   },
 });
 
@@ -128,5 +144,9 @@ export const {
   setTrash,
   onModal,
   offModal,
+  onDescModal,
+  offDescModal,
+  onNFTListModalStatus,
+  offNFTListModalStatus,
 } = slice.actions;
 export default slice.reducer;

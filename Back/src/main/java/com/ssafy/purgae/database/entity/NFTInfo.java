@@ -18,12 +18,10 @@ public class NFTInfo {
     @Column(name = "infoId")
     private Long infoId;
 
-    @Column(name = "userId")
-    private Long userId;
-
     @Column(name = "NFTId")
     private Long NFTId;
 
-    @Column(name = "createdAt")
-    private LocalDate createdAt;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId")
+    private User ownerId;
 }

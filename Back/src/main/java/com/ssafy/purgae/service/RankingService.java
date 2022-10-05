@@ -11,5 +11,5 @@ import java.util.List;
 public interface RankingService {
     public List<UserMapping> getTop10GameScore();
     public List<rankingUser> getTop10Like();
-    public List<rankingDonationReq> getTop10Donation();
+//    public List<rankingDonationReq> getTop10Donation();
 }

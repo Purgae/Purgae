@@ -59,18 +59,18 @@ public class RankingController {
         return new ResponseEntity<>(result, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "해양생물을 가장 많이 구한 사람 랭킹", notes = "요청시 탑10 해양생물을 가장 많이 구한 사람 랭킹 조회")
-    @GetMapping("/donation")
-    public ResponseEntity<Map<String, Object>> likeDonation(){
-        Map<String, Object> result = new HashMap<>();
-        List<rankingDonationReq> top10 = rankingService.getTop10Donation();
-
-        if(top10 != null){
-            result.put("top10", top10);
-            result.put("message", SUCCESS);
-        }else{
-            result.put("message", FAIL);
-        }
-        return new ResponseEntity<>(result, HttpStatus.OK);
-    }
+//    @ApiOperation(value = "해양생물을 가장 많이 구한 사람 랭킹", notes = "요청시 탑10 해양생물을 가장 많이 구한 사람 랭킹 조회")
+//    @GetMapping("/donation")
+//    public ResponseEntity<Map<String, Object>> likeDonation(){
+//        Map<String, Object> result = new HashMap<>();
+////        List<rankingDonationReq> top10 = rankingService.getTop10Donation();
+//
+//        if(top10 != null){
+//            result.put("top10", top10);
+//            result.put("message", SUCCESS);
+//        }else{
+//            result.put("message", FAIL);
+//        }
+//        return new ResponseEntity<>(result, HttpStatus.OK);
+//    }
 }

@@ -38,13 +38,13 @@ public class RankingServiceImpl implements RankingService{
         return likeTop10;
     }
 
-    @Override
-    public List<rankingDonationReq> getTop10Donation() {
-        List<rankingDonation> donationTop10 = nftRepository.findDonationUserWithJPQL();
-        List<rankingDonationReq> userlist = new ArrayList<>();
-        for(int i = 0; i<donationTop10.size(); i++){
-            userlist.add(new rankingDonationReq(userRepository.findFirstById(donationTop10.get(i).getUserId()), donationTop10.get(i).getCountDonation()));
-        }
-        return userlist;
-    }
+//    @Override
+//    public List<rankingDonationReq> getTop10Donation() {
+//        List<rankingDonation> donationTop10 = nftRepository.findDonationUserWithJPQL();
+//        List<rankingDonationReq> userlist = new ArrayList<>();
+//        for(int i = 0; i<donationTop10.size(); i++){
+//            userlist.add(new rankingDonationReq(userRepository.findFirstById(donationTop10.get(i).getUserId()), donationTop10.get(i).getCountDonation()));
+//        }
+//        return userlist;
+//    }
 }

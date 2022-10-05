@@ -89,6 +89,10 @@ const useFetchNFT = () => {
     const trash = Number(res?.trash) / 1000;
     return { ETH: money.toFixed(2), trash: trash.toFixed(2) };
   };
+  const fetchBalanceOf = async (walletAddress: string) => {
+    const data = await fetchContract.methods.balanceOf(walletAddress).call();
+    return { data };
+  };
 
   return {
     changeMetaToLink,
@@ -99,6 +103,7 @@ const useFetchNFT = () => {
     getHash,
     fetchDonateCount,
     fetchAmountOfMoneyAndTrash,
+    fetchBalanceOf,
   };
 };
 

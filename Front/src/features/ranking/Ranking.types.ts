@@ -1,15 +1,3 @@
-export interface DonationDataType {
-  countDonation: number;
-  user: {
-    gameScore: number;
-    id: number;
-    nickname: string;
-    profileImage: string | null;
-    profilePublic: boolean;
-    walletAddress: string;
-  };
-}
-
 export interface DonationDataProps {
   idx: number;
   countDonation: number;

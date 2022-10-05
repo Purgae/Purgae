@@ -31,6 +31,11 @@ export interface IsFollowing {
 }
 
 // * "Ranking"
+export interface GetUserList {
+  message: string;
+  data: string[];
+}
+
 export interface GetLikeRanking {
   message: string;
   top10: {
@@ -46,19 +51,17 @@ export interface GetLikeRanking {
   }[];
 }
 
-export interface GetDonationRanking {
+export interface GetUserInfo {
   message: string;
-  top10: {
-    countDonation: number;
-    user: {
-      gameScore: number;
-      id: number;
-      nickname: string;
-      profileImage: string | null;
-      profilePublic: boolean;
-      walletAddress: string;
-    };
-  }[];
+  data: {
+    id: number;
+    walletAddress: string;
+    nickname: string;
+    profileImage: string;
+    gameScore: null | number;
+    profilePublic: boolean;
+    todayDonation: number;
+  };
 }
 
 // * "Game"
@@ -112,20 +115,22 @@ export const userApi = createApi({
       providesTags: ["Follow"],
     }),
 
-    // * 랭킹페이지 유저 가져오기
+    // * 랭킹페이지
+    getUserList: build.query<GetUserList, void>({
+      query: () => "user/userlist",
+      providesTags: [],
+    }),
     getLikeRanking: build.query<GetLikeRanking, void>({
       query: () => "ranking/like",
       providesTags: ["User"],
     }),
-    getDonationRanking: build.query<GetDonationRanking, void>({
-      query: () => "ranking/donation",
-      providesTags: ["User"],
-    }),
-
-    // * 게임 랭킹 가져오기
     getGameRanking: build.query<GetGameRanking, void>({
       query: () => "/ranking/game",
       providesTags: ["Game", "User"],
+    }),
+    getUserInfo: build.query<GetUserInfo, { walletAddress: string }>({
+      query: ({ walletAddress }) => `/user/userInfo/${walletAddress}`,
+      providesTags: ["User"],
     }),
 
     // * mutation
@@ -194,16 +199,16 @@ export const {
   useGetFollowingListQuery,
   useGetFollowerListQuery,
   useGetAmIFollowQuery,
-  useGetDonationRankingQuery,
+  useGetUserListQuery,
   useGetLikeRankingQuery,
   useGetGameRankingQuery,
+  useGetUserInfoQuery,
   useChangeProfileMutation,
   useChangeScoreMutation,
   useChangeFollowMutation,
   useCheckNicknameMutation,
   useLazyGetFollowerListQuery,
   useLazyGetFollowingListQuery,
-  useLazyGetDonationRankingQuery,
   useLazyGetLikeRankingQuery,
   useLazyGetGameRankingQuery,
 } = userApi;

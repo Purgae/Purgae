@@ -1,4 +1,5 @@
 import { styled } from "../../styles/theme";
+import { NavLink } from "react-router-dom";
 
 export const FaqBackground = styled.div`
   display: flex;
@@ -49,4 +50,10 @@ export const FaqSubTitle = styled.p`
   @media screen and (max-width: 768px) {
     font-size: 0.8rem;
   }
+`;
+
+export const FaqLink = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.primary600};
+  line-height: 2rem;
+  text-decoration: none;
 `;

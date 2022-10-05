@@ -263,8 +263,7 @@ const ProfileHeaderStyled = styled(FlexDiv)`
   background-color: ${({ theme }) => theme.colors.white};
   padding: 2rem 2.5rem;
   border-radius: 1rem;
-  max-width: 50rem;
-  width: 40rem;
+  width: 90%;
   transition: all 0.5s ease-out;
   @media screen and (min-width: 76.6875rem) {
     ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};

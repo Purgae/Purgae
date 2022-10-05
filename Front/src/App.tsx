@@ -85,8 +85,6 @@ const App = () => {
         await login({ walletAddress: metamaskAccount, nft: [] });
       }
     }
-    if (window.ethereum && location.pathname !== "/" && location.pathname !== "/login") {
-    }
     return;
   };
 
@@ -134,7 +132,6 @@ const App = () => {
         console.log("자동로그인 완료-연결된 상태에서 들어옴");
       } else if (isNull(metamaskAccount) && currentAccount !== undefined) {
         resetAccount();
-        `+`;
         console.log("접속안된 상태이나, 스토어 있으므로 초기화");
       } else if (!isNull(metamaskAccount) && currentAccount !== undefined && metamaskAccount !== currentAccount) {
         updateUser(metamaskAccount);

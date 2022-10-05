@@ -264,7 +264,17 @@ const ProfileHeaderStyled = styled(FlexDiv)`
   justify-content: space-between;
   padding: 2rem 2.5rem;
   border-radius: 1rem;
+
+  @media ${({ theme }) => theme.sizes.pc} {
+    min-width: 100%;
+    width: 76.6875rem;
+  }
+  @media ${({ theme }) => theme.sizes.tablet} {
+    min-width: 80%;
+    width: 30rem;
+  }
 `;
+// min-height: 24rem;
 
 const Icon = styled.div<{ url: string }>`
   width: 2rem;

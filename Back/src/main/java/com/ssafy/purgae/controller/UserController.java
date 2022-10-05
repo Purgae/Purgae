@@ -205,4 +205,18 @@ public class UserController {
         result.put("data", data);
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
+
+    @ApiOperation(value = "지갑주소로 정보 가져오기", notes = "지갑주소로 사용자 정보 받아오는 API입니다.")
+    @GetMapping ("/userInfo/{walletAddress}")
+    public ResponseEntity<Map<String, Object>> getUserByWallet(@PathVariable String walletAddress) {
+        Map<String, Object> result = new HashMap<>();
+        User user = userService.getUserInfo(walletAddress);
+        if(user == null){
+            result.put("message", FAIL);
+            return new ResponseEntity<>(result,HttpStatus.OK);
+        }
+        result.put("message",SUCCESS);
+        result.put("data", user);
+        return new ResponseEntity<>(result,HttpStatus.OK);
+    }
 }

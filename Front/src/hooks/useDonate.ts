@@ -2,7 +2,7 @@ import useProvider from "./useProvider";
 import { useMetaMask } from "metamask-react";
 import { TEST_WALLET_ADDRESS } from "@/utils/smart-contract/MetaEnv";
 import { useAlertModal } from "./useAlertModal";
-import { useSucceedToDonateMutation } from "@/redux/api/nftApi";
+import { useFailDonateMutation } from "@/redux/api/nftApi";
 import { useAppDispatch } from "@/hooks/storeHook";
 import { offModal } from "@/redux/slices/donateSlice";
 
@@ -10,7 +10,7 @@ const useDonate = () => {
   const { contract, changeEtherToWei, networkChainId } = useProvider();
   const { chainId, switchChain } = useMetaMask();
   const { openAlertModal } = useAlertModal();
-  const [succeedToDonate] = useSucceedToDonateMutation();
+  const [failDonate] = useFailDonateMutation();
   const dispatch = useAppDispatch();
 
   const donate = ({ uid, id, ether, address }: { uid: number; id: number; ether: string; address: string }) => {
@@ -25,9 +25,9 @@ const useDonate = () => {
         try {
           await switchChain(networkChainId.goerli);
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
-          await succeedToDonate({ userId: uid, nftId: id });
           dispatch(offModal());
         } catch (error: any) {
+          failDonate({ userId: uid, nftId: id });
           dispatch(offModal());
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";
@@ -42,9 +42,9 @@ const useDonate = () => {
       (async () => {
         try {
           await contract.methods.transferNFT(id, TEST_WALLET_ADDRESS, address).send(transactionObject);
-          await succeedToDonate({ userId: uid, nftId: id });
           dispatch(offModal());
         } catch (error: any) {
+          failDonate({ userId: uid, nftId: id });
           dispatch(offModal());
           if (error.message === "User rejected the request.") {
             const content = "네트워크 연결 요청을 거부하셨습니다.";

@@ -75,9 +75,9 @@ const slice = createSlice({
         return;
       }
 
-      if (checkMinValue({ data: state.inputValue, min: 0.0025 })) {
+      if (checkMinValue({ data: state.inputValue, min: 0.005 })) {
         state.inputStatus = false;
-        state.errorMessage = "0.0025ETH보다 큰 금액만 기부할 수 있습니다.";
+        state.errorMessage = "0.005ETH보다 큰 금액만 기부할 수 있습니다.";
         state.submitStatus = false;
         return;
       }

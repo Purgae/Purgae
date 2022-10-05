@@ -31,8 +31,8 @@ export const FaqMenuGrid = styled.div`
 
 export const StartPurgaeMenuGrid = styled.div`
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: 6rem 6rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 6rem;
   width: 100%;
   gap: 1.1rem;
 `;

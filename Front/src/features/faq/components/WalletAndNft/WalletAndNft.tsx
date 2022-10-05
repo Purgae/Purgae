@@ -1,14 +1,23 @@
 import { FaqTextBox, FaqTextProomyWrapper, FaqProomy } from "./WalletAndNft.styled";
 import { FlexDiv } from "@/common/Common.styled";
 import { WhatIsNft, WhatIsWallet, WhatIsGas, WhatIsBlockChain } from "../../FaqContents";
-import BackButton from "../BackButton/BackButton";
+import { SolidButton } from "@/common/Button/Button.styled";
+import { useNavigate } from "react-router-dom";
 
 type Id = {
   id: number;
 };
 
 const WalletAndNft = (id: Id) => {
+  const navigate = useNavigate();
   const contentNum = id.id;
+  const onHandleTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+    return;
+  };
 
   const WalletAndNftContent = [WhatIsNft, WhatIsWallet, WhatIsGas, WhatIsBlockChain];
 
@@ -27,7 +36,18 @@ const WalletAndNft = (id: Id) => {
           </FaqTextProomyWrapper>
         )
       )}
-      <BackButton />
+      <SolidButton
+        fontSize="1rem"
+        width="fit-content"
+        bgColor="white300"
+        fontColor="white"
+        onClick={() => {
+          onHandleTop();
+          navigate("/faq");
+        }}
+      >
+        목록보기
+      </SolidButton>
     </FlexDiv>
   );
 };

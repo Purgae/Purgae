@@ -6,6 +6,7 @@ export const StartPurgaeBackground = styled.div`
   border-radius: 0.3rem;
   background-color: ${({ theme }) => theme.colors.white};
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
+  margin-bottom: 2rem;
   @media screen and (max-width: 1350px) {
     width: 46rem;
   }

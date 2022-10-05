@@ -70,7 +70,7 @@ const FaqMenu = () => {
       </FaqMenuTitleItemWrapper>
       <FaqMenuTitleItemWrapper>
         <FaqMenuTitle>지갑과 NFT</FaqMenuTitle>
-        <FaqMenuGrid>
+        <StartPurgaeMenuGrid>
           {nftMenuTitle.map((title, index) => (
             <FaqMenuItem
               shadow="0px 0px 8px rgba(0, 0, 0, 0.1);"
@@ -84,7 +84,7 @@ const FaqMenu = () => {
               <MenuItemSubTitle>{nftMenuSubTitle[index]}</MenuItemSubTitle>
             </FaqMenuItem>
           ))}
-        </FaqMenuGrid>
+        </StartPurgaeMenuGrid>
       </FaqMenuTitleItemWrapper>
     </FlexDiv>
   );

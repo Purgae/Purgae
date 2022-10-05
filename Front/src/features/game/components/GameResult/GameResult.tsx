@@ -11,13 +11,13 @@ import {
 import { useMetaMask } from "metamask-react";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
-import { useUpdateGameScoreMutation } from "@/redux/api/gameRankingApi";
+import { useChangeScoreMutation } from "@/redux/api/userApi";
 import useKakao from "@/hooks/useKaKao";
 
 const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => {
   const { account } = useMetaMask();
   const { user } = useAppSelector(selectUser);
-  const [updateGameScore] = useUpdateGameScoreMutation();
+  const [updateGameScore] = useChangeScoreMutation();
   const { kakaoShare } = useKakao();
 
   const [result, setResult] = useState<number>();

@@ -3,23 +3,11 @@ import DonationRankingListItem from "../RankingListItem/DonationRankingListItem"
 import LikeRankingListItem from "../RankingListItem/LikeRankingListItem";
 import GameRankingListItem from "../RankingListItem/GameRankingListItem";
 import RankingBar from "../RankingBar/RankingBar";
-import { useGetLikeRankingQuery, useGetDonationRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
+import { useGetLikeRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
 import { useEffect, useState } from "react";
-import { DonationDataType, LikeDataType, GameDataType } from "../../Ranking.types";
+import { LikeDataType, GameDataType } from "../../Ranking.types";
 
 const RankingList = () => {
-  //* 기부 랭킹 api 요청
-  const { data: donationRankingData } = useGetDonationRankingQuery();
-  const [donationData, setDonationData] = useState<DonationDataType[]>();
-
-  useEffect(() => {
-    if (!donationRankingData) return;
-    else {
-      const data = donationRankingData!.top10.slice(0, 10);
-      setDonationData(data);
-    }
-  }, [donationRankingData]);
-
   //* 좋아요 랭킹 api 요청
   const { data: likeRankingData } = useGetLikeRankingQuery();
   const [likeData, setLikeData] = useState<LikeDataType[]>();
@@ -46,15 +34,16 @@ const RankingList = () => {
 
   return (
     <RankingTitleListWrapper>
-      <RankingTitle>해양생물 NFT를 가장 많이 구한 사람들</RankingTitle>
-      <RankingListWrapper>
+      <RankingTitle>바다 친구들이 가장 많은 사람들</RankingTitle>
+      {/* <RankingListWrapper>
         <RankingBar title="총 기부횟수 및 기부량" />
         <RankingContentWrapper>
           {donationData?.map((content, index) => (
             <DonationRankingListItem {...content} key={index} idx={index} />
           ))}
         </RankingContentWrapper>
-      </RankingListWrapper>
+      </RankingListWrapper> */}
+      <RankingTitle>쓰레기를 가장 많이 치운 사람들</RankingTitle>
       <RankingTitle>푸르게의 인플루언서! 팔로워 많은 사람들</RankingTitle>
       <RankingListWrapper>
         <RankingBar title="팔로워 수" />

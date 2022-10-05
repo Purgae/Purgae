@@ -35,7 +35,7 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound, gameScore, setGameS
   const COIN_WIDTH = 80;
   const ITEM_ARGS = {
     speed: { min: 40, max: 60 },
-    addMS: 2000,
+    addMS: 1300,
     updateMS: 200,
   };
 
@@ -61,7 +61,7 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound, gameScore, setGameS
     ctx,
     canvas,
     ...ITEM_ARGS,
-    addMS: 1500,
+    addMS: 2000,
   });
 
   //* 플라스틱 보틀
@@ -71,7 +71,7 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound, gameScore, setGameS
     ctx,
     canvas,
     ...ITEM_ARGS,
-    addMS: 1300,
+    addMS: 1500,
   });
 
   //* 게임 코인

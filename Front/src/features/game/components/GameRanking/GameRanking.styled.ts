@@ -7,8 +7,8 @@ export const StyledGameRankingContainer = styled(FlexDiv)`
   background-color: rgba(255, 255, 255, 0.7);
 
   @media ${({ theme }) => theme.sizes.tablet} {
-    gap: 4rem;
-    padding: 5rem 7rem 3rem 7rem;
+    gap: 3rem;
+    padding: 2rem 7rem 2rem 7rem;
   }
 `;
 

@@ -27,6 +27,8 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
   const [selectNumber, setSelectNumber] = useState<number>(0);
   const [selectedList, setSelectedList] = useState<string[]>(NFTList.slice(0, 12));
 
+  //* 로딩
+  const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     if (isEmpty(NFTList)) return;
     setSelectedList(NFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
@@ -42,6 +44,7 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
     (async () => {
       const data = await fetchMyNFT(account);
       setNFTList(data);
+      setLoading(true);
     })();
   }, [account]);
 
@@ -62,34 +65,58 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
       <StyledGameStartBackIcon className="material-icons" onClick={() => setGamePage(0)} onMouseOver={toggleSound}>
         arrow_back
       </StyledGameStartBackIcon>
-      <StyledGameStartContainer direction="column" gap="3rem" width="100%" height="100%" padding="4rem 1rem">
-        <FlexDiv direction="column" gap="2rem">
-          <StyledGameStartTitle color="gray300" fontSize="1rem">
-            플레이할 NFT를 선택해주세요
-          </StyledGameStartTitle>
-          <FontP fontWeight="semiBold" fontSize="1.25rem" color="gray250">
-            선택하지 않을 시, 우리의 고래 친구 푸레미로 탐험을 하게됩니다.
-          </FontP>
-        </FlexDiv>
-        <StyledGameStartButton
-          fontSize="1rem"
-          bgColor="gray300"
-          fontColor="white100"
-          width="fit-content"
-          onClick={() => {
-            turnOnGameBGM();
-            setGamePage(2);
-          }}
-          onMouseOver={toggleSound}
-        >
-          탐험 시작
-        </StyledGameStartButton>
-        {NFTList.length > 0 ? (
+      {account && loading && NFTList.length > 0 && (
+        <StyledGameStartContainer direction="column" gap="3rem" width="100%" height="100%" padding="4rem 1rem">
+          <FlexDiv direction="column" gap="2rem">
+            <StyledGameStartTitle color="gray300" fontSize="1rem">
+              플레이할 NFT를 선택해주세요
+            </StyledGameStartTitle>
+            <FontP fontWeight="semiBold" fontSize="1.25rem" color="gray250">
+              선택하지 않을 시, 우리의 고래 친구 푸레미로 탐험을 하게됩니다.
+            </FontP>
+          </FlexDiv>
+          <StyledGameStartButton
+            fontSize="1rem"
+            bgColor="gray300"
+            fontColor="white100"
+            width="fit-content"
+            onClick={() => {
+              turnOnGameBGM();
+              setGamePage(2);
+            }}
+            onMouseOver={toggleSound}
+          >
+            탐험 시작
+          </StyledGameStartButton>
           <FlexDiv direction="column" width="100%">
             <CardGroup lst={selectedList} selectCardFunc={selectCard}></CardGroup>
             <PageNation selectPage={selectNumber} setSelectPage={setSelectNumber} lst={NFTList}></PageNation>
           </FlexDiv>
-        ) : (
+        </StyledGameStartContainer>
+      )}
+      {((account && loading && NFTList.length === 0) || !account) && (
+        <StyledGameStartContainer direction="column" gap="3rem" width="100%" height="100%" padding="4rem 1rem">
+          <FlexDiv direction="column" gap="2rem">
+            <StyledGameStartTitle color="gray300" fontSize="1rem">
+              플레이할 NFT를 선택해주세요
+            </StyledGameStartTitle>
+            <FontP fontWeight="semiBold" fontSize="1.25rem" color="gray250">
+              선택하지 않을 시, 우리의 고래 친구 푸레미로 탐험을 하게됩니다.
+            </FontP>
+          </FlexDiv>
+          <StyledGameStartButton
+            fontSize="1rem"
+            bgColor="gray300"
+            fontColor="white100"
+            width="fit-content"
+            onClick={() => {
+              turnOnGameBGM();
+              setGamePage(2);
+            }}
+            onMouseOver={toggleSound}
+          >
+            탐험 시작
+          </StyledGameStartButton>
           <StyledGameStartContent
             bgColor="white100"
             width="100%"
@@ -104,8 +131,8 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
               푸르게에서 기부를 하면 NFT를 받을 수 있어요
             </FontP>
           </StyledGameStartContent>
-        )}
-      </StyledGameStartContainer>
+        </StyledGameStartContainer>
+      )}
     </>
   );
 };

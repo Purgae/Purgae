@@ -29,6 +29,7 @@ export const Small = styled(Round)`
 export const ExtraSmall = styled(Round)`
   height: 3.5rem;
   width: 3.5rem;
+  aspect-ratio: 1;
 `;
 export const NavBar = styled(Round)`
   height: 2.25rem;

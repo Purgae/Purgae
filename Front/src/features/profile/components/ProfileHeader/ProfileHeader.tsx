@@ -65,8 +65,19 @@ const ProfileHeader = (props: Props) => {
   const [follow] = useChangeFollowMutation();
   // *팔로우 여부
   const { data: isfollow } = useGetAmIFollowQuery(wantFollow);
-  // *소유 nft개수
-  const { data: myNftLen } = useGetDonateCountQuery(profileUserId);
+
+  // * NFT 개수
+  const [nfts, setNfts] = useState<string[]>([]);
+  const { fetchMyNFT } = useFetchNFT();
+  const fetchNFTList = async () => {
+    if (userData) {
+      const myNFTList = await fetchMyNFT(userData?.walletAddress);
+      setNfts(myNFTList);
+    }
+  };
+  useEffect(() => {
+    fetchNFTList();
+  }, [userData]);
 
   const { openAlertModal } = useAlertModal();
   // *추후 `!` 제외한 로직 고려할 것
@@ -194,12 +205,12 @@ const ProfileHeader = (props: Props) => {
             <FlexDiv>
               <Icon url={Phishing} />
               <FontP fontSize="1.125rem" fontWeight="semiBold">
-                살린 물고기
+                수족관 친구들
               </FontP>
             </FlexDiv>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
-              {myNftLen?.NFTNum} 마리
+              {nfts.length} 마리
             </FontP>
           </FlexDiv>
           {/* 3-3 */}

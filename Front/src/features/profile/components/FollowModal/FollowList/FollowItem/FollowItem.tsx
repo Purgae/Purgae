@@ -5,6 +5,7 @@ import { FlexDiv } from "@/common/Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
 import { useChangeFollowMutation } from "@/redux/api/userApi";
 import { styled } from "@/styles/theme";
+import { useState } from "react";
 
 interface Props {
   myFollow: boolean;
@@ -16,6 +17,7 @@ interface Props {
 }
 
 const FollowItem = (props: Props) => {
+  const [isFollowing, setIsFollowing] = useState(props.following);
   // * 프로필 이동
   const navigate = useNavigate();
   const navigateProfile = () => {
@@ -35,6 +37,7 @@ const FollowItem = (props: Props) => {
   const following = async () => {
     const wantFollow = { fromUser: currentUserId, toUser: props.userId };
     await follow(wantFollow);
+    setIsFollowing(!isFollowing);
     return;
   };
 
@@ -46,7 +49,7 @@ const FollowItem = (props: Props) => {
           <ProfileImage size="extraSmall" url={profileImage} />
           {props.nickname}
         </FlexCursor>
-        {props.following ? (
+        {isFollowing ? (
           <Button styles="solid" bgColor="white250" fontColor="gray150" onClick={following}>
             팔로잉
           </Button>

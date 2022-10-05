@@ -1,8 +1,6 @@
 package com.ssafy.purgae.service;
 
 import com.ssafy.purgae.database.entity.UserMapping;
-import com.ssafy.purgae.database.entity.rankingDonation;
-import com.ssafy.purgae.database.entity.rankingDonationReq;
 import com.ssafy.purgae.database.entity.rankingUser;
 import com.ssafy.purgae.database.repository.LikeRepository;
 import com.ssafy.purgae.database.repository.NFTRepository;
@@ -11,7 +9,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("rankingService")
@@ -38,13 +35,4 @@ public class RankingServiceImpl implements RankingService{
         return likeTop10;
     }
 
-//    @Override
-//    public List<rankingDonationReq> getTop10Donation() {
-//        List<rankingDonation> donationTop10 = nftRepository.findDonationUserWithJPQL();
-//        List<rankingDonationReq> userlist = new ArrayList<>();
-//        for(int i = 0; i<donationTop10.size(); i++){
-//            userlist.add(new rankingDonationReq(userRepository.findFirstById(donationTop10.get(i).getUserId()), donationTop10.get(i).getCountDonation()));
-//        }
-//        return userlist;
-//    }
 }

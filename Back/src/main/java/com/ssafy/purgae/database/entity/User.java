@@ -26,7 +26,7 @@ public class User{
     @Column(name = "nickname", length = 16, nullable = false)
     String nickname;
 
-    @Column(name = "profileImage", length = 50)
+    @Column(name = "profileImage", length = 100)
     String profileImage;
 
     @Column(name = "gameScore")

@@ -37,8 +37,6 @@ public class UserController {
     @ApiOperation(value = "로그인(회원추가)", notes = "지갑 주소로 로그인(최초 로그인시 회원추가)")
     @PostMapping("/login")
     public ResponseEntity<Map<String,Object>> login(@RequestBody UserReq reqData){
-//        System.out.println("wallet : " + reqData.getWalletAddress());
-//        System.out.println("nft : " + reqData.getNft();
         Map<String, Object> result = new HashMap<>();
         String[] NFTList = reqData.getNft();
 
@@ -183,5 +181,4 @@ public class UserController {
 
         return new ResponseEntity<>(result,HttpStatus.OK);
     }
-
 }

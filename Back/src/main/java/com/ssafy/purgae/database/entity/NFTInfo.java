@@ -3,7 +3,6 @@ package com.ssafy.purgae.database.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 
 @Table(name = "NFT")
 @Entity

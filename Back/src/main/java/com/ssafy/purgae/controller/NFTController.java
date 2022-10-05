@@ -39,7 +39,7 @@ public class NFTController {
     public ResponseEntity<Map<String, Object>> insertNFTInfo(@PathVariable Long userId) {
         Map<String, Object> result = new HashMap<>();
         User user = userService.getUserInfoById(userId);
-        if(user.getTodayDonation() >= 125){
+        if(user.getTodayDonation() >= 5){
             result.put("message", FAIL);
             result.put("error", "over");
             return new ResponseEntity<>(result, HttpStatus.OK);

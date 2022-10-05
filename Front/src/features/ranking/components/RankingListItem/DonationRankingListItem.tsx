@@ -11,21 +11,33 @@ import {
 import { DonationDataProps } from "../../Ranking.types";
 import RankingOrder from "./RankingOrder";
 import useFetchNFT from "@/hooks/useFetchNFT";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const DonationRankingListItem = (props: DonationDataProps) => {
   const { fetchViewMyDonation } = useFetchNFT();
   const rankNum = props.idx + 1;
   const order = RankingOrder(rankNum);
-  const [waste, setWaste] = useState("");
-  const make = async () => {
-    const result = await fetchViewMyDonation(props.user.walletAddress);
-    if (result) {
-      setWaste(result?.trash);
+
+  // * 쓰레기량 가져오기
+  const userData = props.user;
+  const [trashMount, setTrashMount] = useState("0");
+  const fetchData = async () => {
+    if (userData !== undefined) {
+      const response = await fetchViewMyDonation(userData.walletAddress);
+      if (response === undefined) return;
+      setTrashMount(response.trash);
+      return response;
+    } else {
+      return false;
     }
   };
-  make();
+
+  useEffect(() => {
+    if (!userData) return;
+    fetchData();
+  }, [userData]);
+
   const navigate = useNavigate();
   const navigateProfile = () => {
     navigate(`/profile/${props.user.id}`);
@@ -49,7 +61,7 @@ const DonationRankingListItem = (props: DonationDataProps) => {
           <RankingContentIcon className="material-icons-outlined" color="#6b6b6b" size="1.4rem">
             delete
           </RankingContentIcon>
-          {waste}kg
+          {trashMount}kg
         </RankingListItemContent>
       </RankingContentDeatilWrapper>
     </RankingListItemWrapper>

@@ -86,7 +86,7 @@ const useFetchNFT = () => {
     const data = await fetchContract.methods.viewTotalDonation().call();
     const money = data / 10 ** 18;
     const res = await changeWeiToTrash(data);
-    const trash = Number(res.trash) / 1000;
+    const trash = Number(res?.trash) / 1000;
     return { ETH: money.toFixed(2), trash: trash.toFixed(2) };
   };
 

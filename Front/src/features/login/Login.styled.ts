@@ -5,6 +5,7 @@ export const LoginBox = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   gap: 5rem;
   color: ${({ theme }) => theme.colors.mainParagraph};
+  width: 100%;
 `;
 
 export const LoginDescription = styled.div`
@@ -32,7 +33,8 @@ export const LoginDescription2blue = styled.span(({ theme }) => ({
 export const LoginMetaDiv = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
   gap: 2rem;
-  width: 39.5rem;
+  max-width: 39.5rem;
+  width: 100%;
   height: 5.75rem;
   border-radius: 1rem;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};

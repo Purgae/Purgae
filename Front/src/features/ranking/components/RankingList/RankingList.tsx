@@ -96,24 +96,6 @@ const RankingList = () => {
 
   return (
     <RankingTitleListWrapper>
-      <RankingTitle>바다 친구들이 가장 많은 사람들</RankingTitle>
-      <RankingListWrapper>
-        <RankingBar title="바다 친구들" />
-        <RankingContentWrapper>
-          {NFTList.map((content, index) => (
-            <NFTRankingListItem {...content} key={index} idx={index} />
-          ))}
-        </RankingContentWrapper>
-      </RankingListWrapper>
-      <RankingTitle>기부천사! 쓰레기를 가장 열심히 치운 사람들</RankingTitle>
-      <RankingListWrapper>
-        <RankingBar title="치운 쓰레기량" />
-        <RankingContentWrapper>
-          {DonateList.map((content, index) => (
-            <DonateRankingListItem {...content} key={index} idx={index} />
-          ))}
-        </RankingContentWrapper>
-      </RankingListWrapper>
       <RankingTitle>푸르게의 인플루언서! 팔로워 많은 사람들</RankingTitle>
       <RankingListWrapper>
         <RankingBar title="팔로워 수" />
@@ -129,6 +111,24 @@ const RankingList = () => {
         <RankingContentWrapper>
           {gameData?.map((content, index) => (
             <GameRankingListItem {...content} key={index} idx={index} />
+          ))}
+        </RankingContentWrapper>
+      </RankingListWrapper>
+      <RankingTitle>바다 친구들이 가장 많은 사람들</RankingTitle>
+      <RankingListWrapper>
+        <RankingBar title="바다 친구들" />
+        <RankingContentWrapper>
+          {NFTList.map((content, index) => (
+            <NFTRankingListItem {...content} key={index} idx={index} />
+          ))}
+        </RankingContentWrapper>
+      </RankingListWrapper>
+      <RankingTitle>기부천사! 쓰레기를 가장 열심히 치운 사람들</RankingTitle>
+      <RankingListWrapper>
+        <RankingBar title="치운 쓰레기량" />
+        <RankingContentWrapper>
+          {DonateList.map((content, index) => (
+            <DonateRankingListItem {...content} key={index} idx={index} />
           ))}
         </RankingContentWrapper>
       </RankingListWrapper>

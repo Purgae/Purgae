@@ -6,7 +6,6 @@ export const StyledSelectNFTProfileModal = styled(FlexShadowDiv)`
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
-  height: 550px;
   border-radius: 1rem;
   background-color: ${({ theme }) => theme.colors.white};
   width: 95%;

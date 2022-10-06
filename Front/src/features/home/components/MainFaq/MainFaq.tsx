@@ -88,16 +88,13 @@ const MainFaq = () => {
           title="서비스 및 제작자 수수료는 얼마인가요?"
           contents={
             <>
-              <p>
-                NFT란 Non-Fungible Token의 약자로 대체 불가능한 토큰을 의미합니다. 블록체인 기술을 이용해서 디지털
-                자산의 소유주를 증명하는 가상의 토큰 입니다. NFT는 거래내역을 블록체인에 영구적으로 남김으로써 그
-                고유성을 보장받습니다.
-              </p>
+              <p>제작자 수수료는 없습니다!</p>
+              <p>단, 거래를 위해서는 가스비를 필수로 소모하기 때문에 가스비라는 수수료가 발생합니다.</p>
               <button
                 style={{ color: "#40B6FF", textDecoration: "underline", textUnderlinePosition: "under" }}
-                onClick={() => navigate("/faq/3")}
+                onClick={() => navigate("/faq/7")}
               >
-                자주 묻는 질문: 수수료 알아보기
+                자주 묻는 질문: 가스비가 뭔가요?
               </button>
             </>
           }
@@ -107,9 +104,9 @@ const MainFaq = () => {
           contents={
             <>
               <p>
-                NFT란 Non-Fungible Token의 약자로 대체 불가능한 토큰을 의미합니다. 블록체인 기술을 이용해서 디지털
-                자산의 소유주를 증명하는 가상의 토큰 입니다. NFT는 거래내역을 블록체인에 영구적으로 남김으로써 그
-                고유성을 보장받습니다.
+                NFT는 블록체인에 기록되어 있어, 어디서든 확인할 수 있습니다! OpenSea Testnet과 같은 외부사이트에서
+                확인이 가능합니다. 단, 푸르게 사이트의 프로필 페이지에서는 푸르게에서 발급받은 NFT만 볼 수 있어요. NFT를
+                모아 나만의 수족관을 꾸며보세요!
               </p>
               <button
                 style={{ color: "#40B6FF", textDecoration: "underline", textUnderlinePosition: "under" }}
@@ -124,10 +121,10 @@ const MainFaq = () => {
           title="지갑이 연결되지 않아요!"
           contents={
             <>
+              <p>먼저, 메타마스크를 설치했는지 확인해주세요.</p>
               <p>
-                NFT란 Non-Fungible Token의 약자로 대체 불가능한 토큰을 의미합니다. 블록체인 기술을 이용해서 디지털
-                자산의 소유주를 증명하는 가상의 토큰 입니다. NFT는 거래내역을 블록체인에 영구적으로 남김으로써 그
-                고유성을 보장받습니다.
+                설치해도 메타마스크가 켜지지 않는다면 WebDRM을 사용하고 있는지 확인해주세요! WebDRM을 종료하거나 다른
+                브라우저를 사용하여 푸르게 시작하기를 다시 누르면 지갑이 연결됩니다.
               </p>
               <button
                 style={{ color: "#40B6FF", textDecoration: "underline", textUnderlinePosition: "under" }}

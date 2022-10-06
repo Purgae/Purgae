@@ -211,4 +211,5 @@ export const {
   useLazyGetFollowingListQuery,
   useLazyGetLikeRankingQuery,
   useLazyGetGameRankingQuery,
+  useLazyGetUserInfoQuery,
 } = userApi;

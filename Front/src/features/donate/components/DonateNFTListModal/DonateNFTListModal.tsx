@@ -75,9 +75,9 @@ const DonateNFTListModal = () => {
       <FlexShadowDiv
         direction="column"
         gap="3rem"
-        width="80%"
+        width="70%"
         shadow="shadow700"
-        padding="3rem 2rem"
+        padding="2rem"
         bgColor="mainWhite"
         style={{ maxWidth: "70rem" }}
         borderRadius="0.5rem"

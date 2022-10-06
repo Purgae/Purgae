@@ -24,6 +24,8 @@ const AlertModal = styled.div<{ top: string; right: string }>`
   border-radius: 0.5rem;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   animation: ${FadeInAnimation} 1s;
+  width: 100%;
+  max-width: 40rem;
 `;
 
 export const DefaultAlertModal = styled(AlertModal)`

@@ -7,7 +7,7 @@ export const startPurgaeMenuSubTitle = [
   "이더리움을 받는 방법을 알려드려요!",
 ];
 
-export const findOutTitle = ["지갑 연결 및 끊기", "수수료 알아보기", "NFT 확인하기"];
+export const findOutTitle = ["지갑 연결 및 끊기", "수수료 알아보기", "푸르게 NFT 확인하기"];
 
 export const findOutSubTitle = [
   "지갑을 생성하셨다면, 한번 연결해 볼까요?",

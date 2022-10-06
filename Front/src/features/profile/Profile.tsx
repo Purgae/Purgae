@@ -27,6 +27,7 @@ const Profile = () => {
 
   //* unmount시, 개인 정보 수정 modal을 off
   useEffect(() => {
+    window.scrollTo(0, 0);
     return () => {
       dispatch(closeSelectNFTProfile());
       dispatch(closeEditProfile());

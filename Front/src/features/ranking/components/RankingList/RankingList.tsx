@@ -25,13 +25,20 @@ const RankingList = () => {
 
   useEffect(() => {
     if (userList === undefined) return;
-    userList.data.map((item: string) => fetchNFTCount(item));
+    (async () => {
+      const data = await userList.data.map(async (item: string) => {
+        const address = item;
+        const { data } = await fetchBalanceOf(item);
+        return { address, count: Number(data) };
+      });
+      const dataList = await Promise.all(data);
+    })();
   }, [userList]);
 
-  useEffect(() => {
-    console.log(NFTArr.current);
-    NFTArr.current.map((item) => console.log(item));
-  }, [NFTArr.current]);
+  // useEffect(() => {
+  //   console.log(NFTArr.current);
+  //   NFTArr.current.map((item) => console.log(item));
+  // }, [NFTArr.current]);
 
   // * 기부 금액 순위
   const [DonateCount, setDonateCount] = useState<[]>();

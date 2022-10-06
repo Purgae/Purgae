@@ -61,14 +61,14 @@ const RankingList = () => {
   return (
     <RankingTitleListWrapper>
       <RankingTitle>바다 친구들이 가장 많은 사람들</RankingTitle>
-      {/* <RankingListWrapper>
+      <RankingListWrapper>
         <RankingBar title="총 기부횟수 및 기부량" />
         <RankingContentWrapper>
-          {donationData?.map((content, index) => (
+          {/* {donationData?.map((content, index) => (
             <DonationRankingListItem {...content} key={index} idx={index} />
-          ))}
+          ))} */}
         </RankingContentWrapper>
-      </RankingListWrapper> */}
+      </RankingListWrapper>
       <RankingTitle>기부천사! 쓰레기를 가장 열심히 치운 사람들</RankingTitle>
       <RankingTitle>푸르게의 인플루언서! 팔로워 많은 사람들</RankingTitle>
       <RankingListWrapper>

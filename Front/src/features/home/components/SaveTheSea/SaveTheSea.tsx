@@ -33,18 +33,18 @@ const SaveTheSea = () => {
                 width="12rem"
                 bgColor="white"
                 fontColor="lightBlue500"
-                onClick={() => navigate("/faq")}
+                onClick={() => navigate("/faq/0")}
               >
-                푸르게가 뭔가요?
+                푸르게 시작하기
               </OutLineButton>
               <SolidButton
                 fontSize="1rem"
                 width="12rem"
                 bgColor="lightBlue500"
                 fontColor="white"
-                onClick={() => navigate("/faq/0")}
+                onClick={() => navigate("/faq/5")}
               >
-                어떻게 기부하나요?
+                NFT가 뭔가요?
               </SolidButton>
             </MainButtonWrapper>
             <MainButtonWrapper>

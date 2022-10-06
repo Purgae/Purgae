@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import { StartPurgaeText } from "../StartPurgae.styled";
-import { FaqLink } from "../../../Faq.styled";
+import { FaqExternalLink } from "../../../Faq.styled";
 import { FaqProomy } from "../../WalletAndNft/WalletAndNft.styled";
 
-const ContetnWrapper = styled.div`
+const ContentWrapper = styled.div`
   ${({ theme }) => theme.mixins.flexBox("column", "start", "flex-start")};
   padding: 1rem 0rem 1rem 1rem;
   width: 100%;
@@ -15,14 +15,14 @@ const Empasis = styled.span`
 
 const MakeWallet = () => {
   return (
-    <ContetnWrapper>
+    <ContentWrapper>
       <StartPurgaeText weight="600" size="1.3rem" margin="0rem 0rem 1rem 0rem">
         1. 메타마스크 설치하기
       </StartPurgaeText>
       <StartPurgaeText weight="500" size="1rem" margin="0rem">
         메타마스크를 설치하기 위해 크롬 웹스토어에 접속해 주세요.
         <br />
-        <FaqLink to="https://chrome.google.com/webstore/search/metamask?hl=ko">크롬 웹스토어</FaqLink>
+        <FaqExternalLink href="https://chrome.google.com/webstore/search/metamask?hl=ko">크롬 웹스토어</FaqExternalLink>
         <br />
         웹스토어에 접속한 다음 왼쪽 상단의 스토어 검색에서
         <br />
@@ -50,7 +50,7 @@ const MakeWallet = () => {
         지갑이 생성됩니다.
         <br />첫 암호화폐 지갑 생성을 축하드려요!
       </StartPurgaeText>
-    </ContetnWrapper>
+    </ContentWrapper>
   );
 };
 

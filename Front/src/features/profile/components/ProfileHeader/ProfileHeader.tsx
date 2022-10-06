@@ -310,9 +310,9 @@ const FlexDiv3 = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
   flex-wrap: wrap;
   gap: 2.5rem;
-  width: 20rem;
+  width: 22rem;
   height: 13rem;
-
+  row-gap: 1rem;
   @media ${({ theme }) => theme.sizes.tablet} {
     ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
     height: 5.75rem;

@@ -51,9 +51,9 @@ export default Seal;
 // width: 40rem;
 const FlexBox = styled(FlexDiv)`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
-  padding: 2rem 2.5rem;
+  padding: 1rem 1rem;
   border-radius: 1rem;
-  width: 90%;
+  width: 95%;
   transition: all 0.5s ease-out;
 
   @media screen and (min-width: 76.6875rem) {

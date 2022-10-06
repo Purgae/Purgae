@@ -8,11 +8,11 @@ import {
   RankingListItemNumber,
   RankingProfileWrapper,
 } from "./RankingListItem.styled";
-import { DonateDataProps } from "../../Ranking.types";
+import { DonateDataPropsType } from "../../Ranking.types";
 import RankingOrder from "./RankingOrder";
 import { useNavigate } from "react-router-dom";
 
-const DonateRankingListItem = (props: DonateDataProps) => {
+const DonateRankingListItem = (props: DonateDataPropsType) => {
   const rankNum = props.idx + 1;
   const order = RankingOrder(rankNum);
 

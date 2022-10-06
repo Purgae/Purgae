@@ -8,11 +8,11 @@ import {
   RankingListItemNumber,
   RankingProfileWrapper,
 } from "./RankingListItem.styled";
-import { NFTDataProps } from "../../Ranking.types";
+import { NFTDataPropsType } from "../../Ranking.types";
 import RankingOrder from "./RankingOrder";
 import { useNavigate } from "react-router-dom";
 
-const NFTRankingListItem = (props: NFTDataProps) => {
+const NFTRankingListItem = (props: NFTDataPropsType) => {
   const rankNum = props.idx + 1;
   const order = RankingOrder(rankNum);
 

@@ -1,4 +1,4 @@
-export interface NFTDataProps {
+export interface NFTDataPropsType {
   idx: number;
   count: number;
   user: {
@@ -11,7 +11,7 @@ export interface NFTDataProps {
   };
 }
 
-export interface DonateDataProps {
+export interface DonateDataPropsType {
   idx: number;
   amount: number;
   user: {

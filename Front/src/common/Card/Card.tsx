@@ -1,8 +1,5 @@
 import useFetchNFT from "@/hooks/useFetchNFT";
-import useProfileFetchNft from "@/hooks/useProfileFetchNft";
-import { isEmpty } from "lodash";
-import { useMetaMask } from "metamask-react";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Background, Image, Group } from "./Card.styled";
 import { CardProps, CardGroupProps } from "./Card.types";

@@ -1,5 +1,6 @@
 import { styled } from "@/styles/theme";
 import { keyframes } from "@/styles/theme-components";
+import { FontP } from "@/common/Common.styled";
 
 const Animate = keyframes`
   17% { border-bottom-right-radius: 3px; }
@@ -26,6 +27,7 @@ export const StyledDonateLoadingContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
+  padding-top: 4rem;
   background-color: rgba(255, 255, 255, 0.9);
 `;
 
@@ -33,6 +35,7 @@ export const StyledLoadingBoxWrapper = styled.div`
   position: relative;
   width: 9rem;
   height: 10rem;
+  margin-top: 2rem;
 `;
 
 export const StyledLoadingBox = styled.div`
@@ -56,4 +59,13 @@ export const StyledLoadingShadow = styled.div`
   left: 0;
   border-radius: 50%;
   animation: ${Shadow} 0.7s linear infinite;
+`;
+
+export const StyledLoadingTransferGame = styled(FontP)`
+  text-decoration: underline;
+  text-underline-position: under;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;

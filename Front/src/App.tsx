@@ -41,6 +41,8 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
+  // * 이부분은 getfetchquery로 바꾸지 않아도 될것 같습니다.
+  // * (app.tsx라서 undefined일때도 요청이 갈 것 같음 + 초기 undefined일때를 catch하기 위해 사용한 로직임)
   const { user } = useAppSelector(selectUser);
   const currentAccount = user?.walletAddress;
   const [login] = useLoginMutation();
@@ -76,7 +78,6 @@ const App = () => {
       const hashData = await getHash([metamaskAccount]);
       const transHash = await Promise.all(hashData);
       const allHashdata = transHash.filter((item) => item.length > 0);
-      console.log(metamaskAccount);
       if (!isEmpty(allHashdata)) {
         await login({ walletAddress: metamaskAccount, nft: allHashdata });
       } else {
@@ -112,18 +113,33 @@ const App = () => {
   };
 
   useEffect(() => {
+    if (!window.ethereum) return;
+    if (status === "connecting") return;
+    // @접속된 유저
+    if (window.ethereum) {
+      window.ethereum.on("accountsChanged", async (acc: string[]) => {
+        console.log("startAccountChange");
+        await handleAccountsChanged(acc);
+      });
+      window.ethereum.on("disconnect", resetAccount);
+    }
+    return () => {
+      if (window.ethereum) {
+        window.ethereum.removeListener("accountsChanged", async (acc: string[]) => {
+          await handleAccountsChanged(acc);
+        });
+        window.ethereum.removeListener("disconnect", resetAccount);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
     if (status === "initializing") return;
     if (!window.ethereum) return;
     if (status === "connecting") return;
     // @접속된 유저
     if (window.ethereum) {
       const metamaskAccount = window.ethereum.selectedAddress;
-
-      window.ethereum.on("accountsChanged", async (acc: string[]) => {
-        await handleAccountsChanged(acc);
-      });
-      window.ethereum.on("disconnect", resetAccount);
-
       if (!isNull(metamaskAccount) && currentAccount === undefined && window.location.pathname !== "/login") {
         // !로그인시 실행됨 -> 로그인 후 main페이지 이동 block
         updateUser(metamaskAccount);
@@ -136,19 +152,14 @@ const App = () => {
         console.log("store의 유저와 다르므로 재로그인 요청");
       }
     } else {
-      // @접속안된유저
-      // console.log("메타마스크 설치 안됨");
+      // @메타마스크 설치 안됨
     }
-
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener("accountsChanged", async (acc: string[]) => {
-          await handleAccountsChanged(acc);
-        });
-        window.ethereum.removeListener("disconnect", resetAccount);
-      }
-    };
   }, [status]);
+
+  //* 스크롤 리셋
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   return (
     <Fragment>

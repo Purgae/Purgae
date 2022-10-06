@@ -1,5 +1,6 @@
-export interface DonationDataType {
-  countDonation: number;
+export interface NFTDataPropsType {
+  idx: number;
+  count: number;
   user: {
     gameScore: number;
     id: number;
@@ -10,9 +11,9 @@ export interface DonationDataType {
   };
 }
 
-export interface DonationDataProps {
+export interface DonateDataPropsType {
   idx: number;
-  countDonation: number;
+  amount: number;
   user: {
     gameScore: number;
     id: number;

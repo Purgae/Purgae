@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMetaMask } from "metamask-react";
 import { useNavigate } from "react-router-dom";
 
@@ -24,7 +24,7 @@ import {
   validInputValue,
   resetInputValue,
   onModal,
-  offModal,
+  onDescModal,
 } from "@/redux/slices/donateSlice";
 import { selectUser } from "@/redux/slices/userSlice";
 
@@ -61,6 +61,7 @@ const DonateForm = () => {
       navigate("/login");
       const content = "지갑이 연결되어야 기부가 가능합니다.";
       openAlertModal({ content, styles: "DANGER" });
+      return;
     }
     event.preventDefault();
     dispatch(resetInputValue());
@@ -83,10 +84,12 @@ const DonateForm = () => {
         ether: inputValue,
       };
       dispatch(onModal());
+      dispatch(onDescModal());
       donate(payload);
     } catch (error) {
       const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
       openAlertModal({ content, styles: "DANGER" });
+      return;
     }
   };
 
@@ -114,10 +117,10 @@ const DonateForm = () => {
           status={inputStatus}
           errorMessage={errorMessage}
         >
-          <FlexDiv align="baseline" gap="0.5rem">
+          <FlexDiv align="baseline">
             <p>기부 금액 (ETH) </p>
             <DonateETHDesc color="primary600" fontWeight="medium" fontSize="0.8rem" onClick={() => navigate("/faq/1")}>
-              기부할 이더리움이 부족해요!
+              기부 금액이 부족하신가요?
             </DonateETHDesc>
           </FlexDiv>
         </CommonInput>

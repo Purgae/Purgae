@@ -25,6 +25,9 @@ export const FaqRootComponent = styled.div`
   @media screen and (min-width: 1350px) {
     padding: 0rem 6rem 1rem;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const TitleWrapper = styled.div`
@@ -53,6 +56,12 @@ export const FaqSubTitle = styled.p`
 `;
 
 export const FaqLink = styled(NavLink)`
+  color: ${({ theme }) => theme.colors.primary600};
+  line-height: 2rem;
+  text-decoration: none;
+`;
+
+export const FaqExternalLink = styled.a`
   color: ${({ theme }) => theme.colors.primary600};
   line-height: 2rem;
   text-decoration: none;

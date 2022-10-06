@@ -39,7 +39,7 @@ function SelectNFTProfileModal({ selectImage }: Props) {
   // * 선택된 card의 index 초기는 null
   const [selectIdx, setSelectIdx] = useState<null | number>(null);
   const selectCard = (idx: string) => {
-    setSelectIdx(Number(idx));
+    setSelectIdx(selectNumber * 12 + Number(idx));
   };
 
   // * 아무것도 선택하지 않고 설정하기 버튼을 눌렀을 시 나올 alert

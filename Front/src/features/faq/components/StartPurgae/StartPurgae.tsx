@@ -8,6 +8,7 @@ import {
 import { startPurgaeMenuTitle } from "../../FaqContents";
 import { useNavigate } from "react-router-dom";
 import MakeWallet from "./StartPurgaeContents/MakeWallet";
+import GetEth from "./StartPurgaeContents/GetEth";
 import { SolidButton } from "@/common/Button/Button.styled";
 import { FlexDiv } from "@/common/Common.styled";
 
@@ -18,13 +19,6 @@ type Id = {
 const StartPurgae = (id: Id) => {
   const navigate = useNavigate();
   const contentNum = id.id;
-  const onHandleTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    return;
-  };
   return (
     <FlexDiv direction="column" align="flex-start">
       <StartPurgaeBackground>
@@ -38,7 +32,7 @@ const StartPurgae = (id: Id) => {
         </StartPurgaeMenuBox>
         <StartPurgaeContentBox>
           <StartPurgaeTitle>{startPurgaeMenuTitle[contentNum]}</StartPurgaeTitle>
-          {contentNum === 0 ? <MakeWallet /> : <div>2번</div>}
+          {contentNum === 0 ? <MakeWallet /> : <GetEth />}
         </StartPurgaeContentBox>
       </StartPurgaeBackground>
       <SolidButton
@@ -46,10 +40,7 @@ const StartPurgae = (id: Id) => {
         width="fit-content"
         bgColor="white300"
         fontColor="white"
-        onClick={() => {
-          onHandleTop();
-          navigate("/faq");
-        }}
+        onClick={() => navigate("/faq")}
       >
         목록보기
       </SolidButton>

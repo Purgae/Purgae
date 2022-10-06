@@ -49,12 +49,12 @@ export const RankingProfileWrapper = styled.div`
 `;
 
 export const RankingListItemContent = styled.p`
-  ${({ theme }) => theme.mixins.flexBox("row", "center", "start")};
+  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
   ${({ theme }) => theme.mixins.font("1rem", "500")};
   color: ${({ theme }) => theme.colors.mainParagraph};
   line-height: 1rem;
   width: 100%;
-  text-align: left;
+  text-align: center;
   @media screen and (max-width: 768px) {
     ${({ theme }) => theme.mixins.font("0.6rem", "500")};
   }

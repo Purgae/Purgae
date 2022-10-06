@@ -78,7 +78,10 @@ const NftDiv = styled.div`
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 4rem;
+  @media screen and (min-width: 76.6875rem) {
+    gap: 1rem;
+  }
 `;
 
 const RedSpan = styled.span`

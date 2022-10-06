@@ -15,7 +15,7 @@ public class resetTodayDonation {
     UserRepository userRepository;
 
     // 매일 정각마다 2일 전 등록된 NFTId 중 소유자가 지정되지 않은 내역 삭제
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "0 0 15 * * *")
     public void deleteNFTId(){
         List<User> list = userRepository.findAll();
 

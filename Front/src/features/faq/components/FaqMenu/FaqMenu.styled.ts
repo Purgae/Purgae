@@ -35,6 +35,10 @@ export const StartPurgaeMenuGrid = styled.div`
   grid-template-rows: 6rem;
   width: 100%;
   gap: 1.1rem;
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 6rem;
+  }
 `;
 
 export const FaqMenuItem = styled.div<{ shadow: string }>`

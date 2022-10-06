@@ -25,6 +25,9 @@ export const FaqRootComponent = styled.div`
   @media screen and (min-width: 1350px) {
     padding: 0rem 6rem 1rem;
   }
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const TitleWrapper = styled.div`

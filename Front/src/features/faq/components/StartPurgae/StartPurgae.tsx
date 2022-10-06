@@ -19,13 +19,6 @@ type Id = {
 const StartPurgae = (id: Id) => {
   const navigate = useNavigate();
   const contentNum = id.id;
-  const onHandleTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    return;
-  };
   return (
     <FlexDiv direction="column" align="flex-start">
       <StartPurgaeBackground>
@@ -47,10 +40,7 @@ const StartPurgae = (id: Id) => {
         width="fit-content"
         bgColor="white300"
         fontColor="white"
-        onClick={() => {
-          onHandleTop();
-          navigate("/faq");
-        }}
+        onClick={() => navigate("/faq")}
       >
         목록보기
       </SolidButton>

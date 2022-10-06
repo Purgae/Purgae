@@ -1,6 +1,19 @@
-export interface DonationDataProps {
+export interface NFTDataPropsType {
   idx: number;
-  countDonation: number;
+  count: number;
+  user: {
+    gameScore: number;
+    id: number;
+    nickname: string;
+    profileImage: string | null;
+    profilePublic: boolean;
+    walletAddress: string;
+  };
+}
+
+export interface DonateDataPropsType {
+  idx: number;
+  amount: number;
   user: {
     gameScore: number;
     id: number;

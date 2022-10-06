@@ -47,6 +47,14 @@ const RankingBarContent = styled.p`
     ${({ theme }) => theme.mixins.font("0.6rem", "500")};
   }
 `;
+const RankingBarContentCenter = styled.p`
+  ${({ theme }) => theme.mixins.font("1rem", "500")};
+  color: ${({ theme }) => theme.colors.white};
+  text-align: center;
+  @media screen and (max-width: 768px) {
+    ${({ theme }) => theme.mixins.font("0.6rem", "500")};
+  }
+`;
 
 type Title = {
   title: string;
@@ -58,12 +66,12 @@ const RankingBar = (title: Title) => {
       <RankingBarBackground>
         <RankingBarContent>순위</RankingBarContent>
         <RankingBarContent>프로필</RankingBarContent>
-        <RankingBarContent>{title.title}</RankingBarContent>
+        <RankingBarContentCenter>{title.title}</RankingBarContentCenter>
       </RankingBarBackground>
       <RankingSecondBarBackground>
         <RankingBarContent>순위</RankingBarContent>
         <RankingBarContent>프로필</RankingBarContent>
-        <RankingBarContent>{title.title}</RankingBarContent>
+        <RankingBarContentCenter>{title.title}</RankingBarContentCenter>
       </RankingSecondBarBackground>
     </RankingBarWrapper>
   );

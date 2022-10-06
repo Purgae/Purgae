@@ -11,7 +11,7 @@ export const StartPurgaeBackground = styled.div`
     width: 46rem;
   }
   @media screen and (max-width: 768px) {
-    width: 90%;
+    width: 22rem;
   }
 `;
 
@@ -62,14 +62,13 @@ export const StartPurgaeMenu = styled.p`
   cursor: pointer;
 `;
 
-export const StartPurgaeText = styled.p<{ weight: string; size: string; margin: string }>`
+export const StartPurgaeText = styled.p<{ weight: string; size: string }>`
   font-size: ${(props) => props.size};
   font-weight: ${(props) => props.weight};
   color: ${({ theme }) => theme.colors.gray350};
   text-align: left;
-  line-height: 1.5rem;
+  line-height: 2rem;
   white-space: pre-line;
-  margin: ${(props) => props.margin};
   @media screen and (max-width: 768px) {
     ${({ theme }) => theme.mixins.font("0.6rem", "500")};
     line-height: 1rem;

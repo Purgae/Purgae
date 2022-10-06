@@ -12,7 +12,7 @@ import {
 } from "./Login.styled";
 import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
@@ -125,12 +125,15 @@ const Login = () => {
           <LoginDescription1>지갑 연결 하기</LoginDescription1>
           <LoginDescription2>
             <span>
-              로그인을 위해서 <LoginDescription2blue>지갑</LoginDescription2blue>을 연결해야해요
+              로그인을 위해서 <LoginDescription2blue onClick={LoginFunction}>지갑</LoginDescription2blue>을 연결해야해요
             </span>
             <span>지갑은 간단하게 생성할 수 있어요.</span>
             <span>
-              지갑과 가상화폐에 대해 궁금하시다면, <LoginDescription2blue>소개</LoginDescription2blue> 페이지에서
-              확인해보세요!
+              지갑과 가상화폐에 대해 궁금하시다면,
+              <Link to="/faq" style={{ textDecoration: "none" }}>
+                <LoginDescription2blue>자주 묻는 질문</LoginDescription2blue>
+              </Link>
+              에서 확인해보세요!
             </span>
           </LoginDescription2>
         </LoginDescription>

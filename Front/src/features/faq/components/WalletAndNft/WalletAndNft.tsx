@@ -11,13 +11,6 @@ type Id = {
 const WalletAndNft = (id: Id) => {
   const navigate = useNavigate();
   const contentNum = id.id;
-  const onHandleTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-    return;
-  };
 
   const WalletAndNftContent = [WhatIsNft, WhatIsWallet, WhatIsGas, WhatIsBlockChain];
 
@@ -41,10 +34,7 @@ const WalletAndNft = (id: Id) => {
         width="fit-content"
         bgColor="white300"
         fontColor="white"
-        onClick={() => {
-          onHandleTop();
-          navigate("/faq");
-        }}
+        onClick={() => navigate("/faq")}
       >
         목록보기
       </SolidButton>

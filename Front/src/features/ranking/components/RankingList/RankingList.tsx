@@ -31,6 +31,7 @@ const RankingList = () => {
         return { address, count: Number(data) };
       });
       const dataList = await Promise.all(data);
+
       const top10 = await dataList
         .sort((a, b) => {
           return b.count - a.count;

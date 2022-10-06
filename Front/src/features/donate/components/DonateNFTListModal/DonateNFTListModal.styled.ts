@@ -4,14 +4,12 @@ import { FlexShadowDiv, FlexDiv } from "@/common/Common.styled";
 export const StyledNFTListModalContainer = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
   position: fixed;
-  top: 4rem;
+  top: 0;
   left: 0;
   width: 100%;
   min-height: 100%;
   background-color: ${({ theme }) => theme.colors.mainModalBg};
-  @media ${({ theme }) => theme.sizes.tablet} {
-    top: 0;
-  }
+  padding-top: 4rem;
 `;
 
 export const StyleNFTListModalBox = styled.div`
@@ -21,11 +19,11 @@ export const StyleNFTListModalBox = styled.div`
   justify-content: center;
   align-items: center;
   align-content: center;
+  row-gap: 3rem;
+  column-gap: 2rem;
   width: 100%;
   border-radius: 1rem;
   font-size: 1rem;
-  row-gap: 3rem;
-  column-gap: 2rem;
 
   @media ${({ theme }) => theme.sizes.tablet} {
     grid-template-columns: repeat(auto-fill, minmax(20%, auto));

@@ -1,9 +1,11 @@
 import useProvider from "./useProvider";
 import useWeiToTrash from "@/hooks/useWeiToTrash";
+import useEtherToTrash from "./useEtherToTrash";
 
 const useFetchNFT = () => {
   const { fetchContract } = useProvider();
   const { changeWeiToTrash } = useWeiToTrash();
+  const { changeEtherToTrashNum } = useEtherToTrash();
 
   const changeMetaToLink = (meta: string): string => {
     const url = "https://ipfs.io/ipfs/" + meta.split("://")[1];
@@ -82,13 +84,15 @@ const useFetchNFT = () => {
     const data = await fetchContract.methods.viewCountDonation().call();
     return data;
   };
+
   const fetchAmountOfMoneyAndTrash = async () => {
     const data = await fetchContract.methods.viewTotalDonation().call();
     const money = data / 10 ** 18;
-    const res = await changeWeiToTrash(data);
-    const trash = Number(res?.trash) / 1000;
+    const res = await changeEtherToTrashNum(money);
+    const trash = res?.trash / 1000;
     return { ETH: money.toFixed(2), trash: trash.toFixed(2) };
   };
+
   const fetchBalanceOf = async (walletAddress: string) => {
     const data = await fetchContract.methods.balanceOf(walletAddress).call();
     return { data };

@@ -3,7 +3,12 @@ import DonationRankingListItem from "../RankingListItem/DonationRankingListItem"
 import LikeRankingListItem from "../RankingListItem/LikeRankingListItem";
 import GameRankingListItem from "../RankingListItem/GameRankingListItem";
 import RankingBar from "../RankingBar/RankingBar";
-import { useGetUserListQuery, useGetLikeRankingQuery, useGetGameRankingQuery } from "@/redux/api/userApi";
+import {
+  useGetUserListQuery,
+  useGetLikeRankingQuery,
+  useGetGameRankingQuery,
+  useLazyGetUserInfoQuery,
+} from "@/redux/api/userApi";
 import { useEffect, useState, useRef } from "react";
 import { LikeDataType, GameDataType } from "../../Ranking.types";
 import useFetchNFT from "@/hooks/useFetchNFT";
@@ -11,27 +16,20 @@ import useFetchNFT from "@/hooks/useFetchNFT";
 const RankingList = () => {
   const { fetchBalanceOf, fetchViewMyDonation } = useFetchNFT();
   const { data: userList } = useGetUserListQuery();
+  const [NFTTop10, setNFTTop10] = useState<{ address: string; count: number }[]>([]);
 
   // * NFT 개수 순위
-  let NFTArr = useRef<{ wallet: string; cnt: any }[]>([]);
-
-  const fetchNFTCount = async (wallet: string) => {
-    const Count = await fetchBalanceOf(wallet);
-    NFTArr.current.push({ wallet: wallet, cnt: Count.data });
-    NFTArr.current.sort((a, b) => {
-      return b.cnt - a.cnt;
-    });
-  };
-
   useEffect(() => {
     if (userList === undefined) return;
-    userList.data.map((item: string) => fetchNFTCount(item));
+    (async () => {
+      const data = await userList.data.map(async (item: string) => {
+        const address = item;
+        const { data } = await fetchBalanceOf(item);
+        return { address, count: Number(data) };
+      });
+      const dataList = await Promise.all(data);
+    })();
   }, [userList]);
-
-  useEffect(() => {
-    console.log(NFTArr.current);
-    NFTArr.current.map((item) => console.log(item));
-  }, [NFTArr.current]);
 
   // * 기부 금액 순위
   const [DonateCount, setDonateCount] = useState<[]>();

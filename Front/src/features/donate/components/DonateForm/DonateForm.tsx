@@ -61,6 +61,7 @@ const DonateForm = () => {
       navigate("/login");
       const content = "지갑이 연결되어야 기부가 가능합니다.";
       openAlertModal({ content, styles: "DANGER" });
+      return;
     }
     event.preventDefault();
     dispatch(resetInputValue());
@@ -88,6 +89,7 @@ const DonateForm = () => {
     } catch (error) {
       const content = "에러가 발생했습니다. 잠시 후에 시도해주세요.";
       openAlertModal({ content, styles: "DANGER" });
+      return;
     }
   };
 

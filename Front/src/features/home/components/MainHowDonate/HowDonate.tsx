@@ -97,7 +97,7 @@ export const MainHowDonate = () => {
             fontColor="lightBlue600"
             onClick={() => {
               onHandleTop();
-              navigate(`/faq/9`);
+              navigate(`/faq/8`);
             }}
           >
             블록체인이 뭔가요?
@@ -122,7 +122,7 @@ export const MainHowDonate = () => {
             fontColor="lightBlue600"
             onClick={() => {
               onHandleTop();
-              navigate(`/faq/1`);
+              navigate(`/faq/6`);
             }}
           >
             암호화폐 지갑이란?
@@ -148,7 +148,7 @@ export const MainHowDonate = () => {
             fontColor="lightBlue600"
             onClick={() => {
               onHandleTop();
-              navigate(`/faq/6`);
+              navigate(`/faq/5`);
             }}
           >
             NFT가 뭔가요?

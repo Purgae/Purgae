@@ -6,7 +6,6 @@ import { useAppSelector, useAppDispatch } from "@/hooks/storeHook";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "@/redux/api/userApi";
 import { closeSelectNFTProfile, closeEditProfile } from "@/redux/slices/modalSlice";
-import NotFound from "@/features/404NotFound/NotFound";
 
 const Profile = () => {
   const dispatch = useAppDispatch();
@@ -35,7 +34,6 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    console.log(profileData);
     if (profileData?.message !== "FAIL" && profileData !== undefined) {
       setWallet(profileData?.data.walletAddress);
     }

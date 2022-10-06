@@ -77,6 +77,7 @@ function SelectNFTProfileModal({ selectImage }: Props) {
 
   useEffect(() => {
     setSelectedList(myNFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
+    setSelectIdx(null);
   }, [selectNumber]);
 
   return (

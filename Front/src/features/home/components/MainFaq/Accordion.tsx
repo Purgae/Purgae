@@ -18,7 +18,8 @@ const MainFaqTextBox = styled.div`
   }
   @media screen and (max-width: 768px) {
     width: 20rem;
-    & > div {
+    & > div,
+    button {
       font-size: 0.6rem;
     }
   }

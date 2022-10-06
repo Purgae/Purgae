@@ -28,32 +28,8 @@ const RankingList = () => {
         return { address, count: Number(data) };
       });
       const dataList = await Promise.all(data);
-      const top10 = await dataList
-        .sort((a, b) => {
-          return b.count - a.count;
-        })
-        .slice(0, 10);
-      // setNFTTop10(top10);
-      // top10.map((item)=>{})
-      console.log(top10);
     })();
   }, [userList]);
-  // const params = { walletAddress: "0xc33300ae6b486b2fddb26dffe772f77262c5763a" };
-  // const [UserInfo] = useLazyGetUserInfoQuery({ walletAddress: "0xc33300ae6b486b2fddb26dffe772f77262c5763a" });
-  // NFTTop10.map((item) => {
-  //   params
-  //   console.log(UserInfo);
-  // });
-  // async function getInfoMessage(user){
-  //   return new Promise
-  // }
-  // async function showUserInfo(walletAddress){
-  //   const messages = await Promise.all(
-  //     NFTTop10.map((user)=>{
-  //       return
-  //     })
-  //   )
-  // }
 
   // * 기부 금액 순위
   const [DonateCount, setDonateCount] = useState<[]>();

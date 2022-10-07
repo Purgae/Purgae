@@ -22,13 +22,14 @@ const PageNation = ({ selectPage, setSelectPage, lst, ...props }: React.PropsWit
       setNumList([]);
     }
   };
-  useInterval(() => {
-    setPage();
-  }, 10);
 
   useInterval(() => {
-    setSelectNumList(numLst.slice(Math.floor(selectPage / 3) * 3, Math.floor(selectPage / 3) * 3 + 3)); // 0, 1, 2
-  }, 10);
+    setPage();
+  }, 100);
+
+  useInterval(() => {
+    setSelectNumList(numLst.slice(Math.floor(selectPage / 3) * 3, Math.floor(selectPage / 3) * 3 + 3));
+  }, 100);
 
   useEffect(() => {
     setPage();

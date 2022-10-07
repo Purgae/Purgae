@@ -1,8 +1,6 @@
 import { styled } from "@/styles/theme";
 import { FlexDiv } from "@/common/Common.styled";
 import sea from "/assets/game/sea.png";
-import play from "/assets/aquarium/play.png";
-import pause from "/assets/aquarium/pause.png";
 
 export const StyledGameContainer = styled(FlexDiv)`
   position: relative;

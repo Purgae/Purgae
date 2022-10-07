@@ -192,7 +192,7 @@ VITE_GA_KEY = {google analytics}
 
 <br>
 
-## 6**. 프로젝트 산출물**
+## 6. 프로젝트 산출물
 
 - [발표자료](https://docs.google.com/presentation/d/1WI1bnst0weqybZ_Kiq9_drXL2-qv-BGa4mz5zdKgrNU/edit#slide=id.p)
 

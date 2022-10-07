@@ -147,9 +147,7 @@ export const userApi = createApi({
           const { data } = await queryFulfilled;
           if (data.message === "FAIL") return;
           await dispatch(setUser(data.data));
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       },
     }),
 
@@ -176,9 +174,7 @@ export const userApi = createApi({
         try {
           const { data } = await queryFulfilled;
           await dispatch(setUser(data.data));
-        } catch (error) {
-          console.error(error);
-        }
+        } catch (error) {}
       },
     }),
 

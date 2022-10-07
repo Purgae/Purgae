@@ -4,8 +4,7 @@ import { createGlobalStyle } from "styled-components";
 // 스타일 초기화를 위한 reset 불러오기
 import reset from "styled-reset";
 
-// 글로벌 스타일 만들기
-// 외부에서 import 해서 사용
+// 글로벌 스타일, 외부에서 import 해서 사용
 // app.tsx에 적용함
 export const GlobalStyle = createGlobalStyle`
   /* 여기에 css파일 작성하면 됩니다. */

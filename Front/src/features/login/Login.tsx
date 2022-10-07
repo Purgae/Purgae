@@ -10,13 +10,11 @@ import {
   LoginMetaDiv,
   LoginMetaImgDiv,
 } from "./Login.styled";
-import { useLoginMutation } from "@/redux/api/authApi";
 import { OpenAlertModalArg, useAlertModal } from "@/hooks/useAlertModal";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { RootComponent } from "@/common/Common.styled";
 import { selectUser } from "@/redux/slices/userSlice";
 import { useAppSelector } from "@/hooks/storeHook";
-import useFetchNFT from "@/hooks/useFetchNFT";
 
 const Login = () => {
   // *react
@@ -25,19 +23,6 @@ const Login = () => {
   // *web3
   const { status, connect, switchChain, chainId } = useMetaMask();
   const { networkChainId } = useProvider();
-  const { fetchMyNFT } = useFetchNFT();
-  // *api
-  const navigate = useNavigate();
-  const [login] = useLoginMutation();
-
-  // *추후 내 nft에서 purgae발행 확인하게되면 사용할 것
-  // const config = {
-  //   apiKey: ALCHEMY_API_KEY,
-  //   network: Network.ETH_GOERLI,
-  // };
-
-  // const alchemy = new Alchemy(config);
-  // const nft = await alchemy.nft.getNftsForOwner(account);
 
   const isLogined = () => {
     if (currentUser.user?.walletAddress !== undefined && chainId === networkChainId.goerli) {
@@ -102,14 +87,7 @@ const Login = () => {
     }
   };
 
-  const navigateHome = () => {
-    // navigate("/main");
-    // const data: OpenAlertModalArg = {
-    //   content: "성공적으로 로그인 되었습니다.",
-    //   styles: "PRIMARY",
-    // };
-    // openAlertModal(data);
-  };
+  const navigateHome = () => {};
 
   useEffect(() => {
     if (window.ethereum) {

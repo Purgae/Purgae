@@ -1,5 +1,5 @@
 import { Route, Routes, useLocation } from "react-router-dom";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 // * Alert
@@ -41,8 +41,6 @@ const App = () => {
   // * react
   const dispatch = useDispatch();
   const location = useLocation();
-  // * 이부분은 getfetchquery로 바꾸지 않아도 될것 같습니다.
-  // * (app.tsx라서 undefined일때도 요청이 갈 것 같음 + 초기 undefined일때를 catch하기 위해 사용한 로직임)
   const { user } = useAppSelector(selectUser);
   const currentAccount = user?.walletAddress;
   const [login] = useLoginMutation();
@@ -94,14 +92,11 @@ const App = () => {
     } else {
       // *단순 계정 변경시 혹은 로그인시
       if (currentAccount !== undefined && accounts[0] !== currentAccount) {
-        // console.log("스토어에 저장된 account와, 현재 유저 불일치", "스토어:", currentAccount, "현재유저:", accounts);
         if (window.ethereum && location.pathname !== "/") {
-          console.log("currentAccount 여부 상관 X 현 유저와 다를때 ");
           await updateUser(accounts[0]);
         }
       } else if (currentAccount === undefined) {
         // !로그인시 실행
-        console.log("currentaccount가 없는 단순 유저 change");
         await updateUser(accounts[0]);
       }
     }
@@ -118,7 +113,6 @@ const App = () => {
     // @접속된 유저
     if (window.ethereum) {
       window.ethereum.on("accountsChanged", async (acc: string[]) => {
-        console.log("startAccountChange");
         await handleAccountsChanged(acc);
       });
       window.ethereum.on("disconnect", resetAccount);
@@ -143,13 +137,10 @@ const App = () => {
       if (!isNull(metamaskAccount) && currentAccount === undefined && window.location.pathname !== "/login") {
         // !로그인시 실행됨 -> 로그인 후 main페이지 이동 block
         updateUser(metamaskAccount);
-        console.log("자동로그인 완료-연결된 상태에서 들어옴");
       } else if (isNull(metamaskAccount) && currentAccount !== undefined) {
         resetAccount();
-        console.log("접속안된 상태이나, 스토어 있으므로 초기화");
       } else if (!isNull(metamaskAccount) && currentAccount !== undefined && metamaskAccount !== currentAccount) {
         updateUser(metamaskAccount);
-        console.log("store의 유저와 다르므로 재로그인 요청");
       }
     } else {
       // @메타마스크 설치 안됨

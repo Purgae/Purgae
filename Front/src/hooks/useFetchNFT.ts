@@ -21,7 +21,6 @@ const useFetchNFT = () => {
         const imageUrl = await changeMetaToLink(data.properties.image.description);
         return imageUrl;
       } catch (error) {
-        console.log(error);
         return "";
       }
     });
@@ -35,7 +34,6 @@ const useFetchNFT = () => {
       const myNFTList = await Promise.all(NFTList);
       return myNFTList;
     } catch (error) {
-      console.log(error);
       return [];
     }
   };
@@ -47,7 +45,6 @@ const useFetchNFT = () => {
       const todayNFTList = await Promise.all(NFTList);
       return todayNFTList;
     } catch (error) {
-      console.log(error);
       return [];
     }
   };
@@ -59,7 +56,6 @@ const useFetchNFT = () => {
       const changeEth = await changeWeiToTrash(data);
       return changeEth;
     } catch (error) {
-      console.log(error);
       return { won: "0", trash: "0" };
     }
   };

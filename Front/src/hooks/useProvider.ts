@@ -32,32 +32,6 @@ const useProvider = () => {
     goerli: "0x5", // 5
   };
 
-  //* chainId 변경하는 함수
-  // const switchChainId = (func: Function) => {
-  //   if (chainId !== networkChainId.rinkeby) {
-  //     // 모달을 만들어서 네트워크를 변경해야만 해당 사항을 할 수 있다.
-  //     // 모달 yes => 네트워크
-  //     (async () => {
-  //       try {
-  //         const data = await switchChain(networkChainId.rinkeby);
-  //         const result = await // 내가 실행할 함수
-  //         console.log(result);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     })();
-  //   } else {
-  //     async () => {
-  //       try {
-  //         const result = await func();
-  //         console.log(result);
-  //       } catch (error) {
-  //         console.log(error);
-  //       }
-  //     };
-  //   }
-  // };
-
   return {
     provider,
     contract,

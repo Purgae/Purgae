@@ -1,5 +1,5 @@
 import styled from "@/styles/theme-components";
-import { MainTitle, MainText } from "../../Home.styled";
+import { MainTitle } from "../../Home.styled";
 import Accordion from "./Accordion";
 import { useNavigate } from "react-router-dom";
 

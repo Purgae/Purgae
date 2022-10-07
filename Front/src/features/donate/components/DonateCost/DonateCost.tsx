@@ -1,7 +1,6 @@
 import { FlexDiv, StrongSpan } from "@/common/Common.styled";
 import { StyledDonateCost, StyledTrashDesc, StyledTrashAmount } from "./DonateCost.styled";
 import { useEffect } from "react";
-import { useAlertModal, OpenAlertModalArg } from "@/hooks/useAlertModal";
 import { useFetchCoinPriceQuery } from "@/redux/api/coinApi";
 import { useAppDispatch, useAppSelector } from "@/hooks/storeHook";
 import { selectDonate, setWon, setTrash } from "@/redux/slices/donateSlice";
@@ -9,9 +8,8 @@ import { ethToTrash } from "@/utils/functions/ethChange";
 
 const DonateCost = () => {
   const { inputValue, won, trash } = useAppSelector(selectDonate);
-  const { data, error, isLoading } = useFetchCoinPriceQuery("ETH");
+  const { data } = useFetchCoinPriceQuery("ETH");
   const dispatch = useAppDispatch();
-  const { openAlertModal } = useAlertModal();
 
   useEffect(() => {
     const debounce = setTimeout(() => {

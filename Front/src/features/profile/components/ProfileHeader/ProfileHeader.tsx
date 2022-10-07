@@ -79,17 +79,23 @@ const ProfileHeader = (props: Props) => {
   }, [userData]);
 
   const { openAlertModal } = useAlertModal();
-  // *추후 `!` 제외한 로직 고려할 것
-  const followingMsgFunc = () => {
-    if (isfollow?.following !== true) {
+
+  const followingMsgFunc = (msg: string) => {
+    if (msg === "follow") {
       const data: OpenAlertModalArg = {
         content: "팔로우에 성공하였습니다.",
         styles: "PRIMARY",
       };
       openAlertModal(data);
-    } else {
+    } else if (msg === "unfollow") {
       const data: OpenAlertModalArg = {
         content: "팔로우를 해제하였습니다.",
+        styles: "PRIMARY",
+      };
+      openAlertModal(data);
+    } else {
+      const data: OpenAlertModalArg = {
+        content: "팔로우 요청이 전달되지 않았습니다.",
         styles: "PRIMARY",
       };
       openAlertModal(data);
@@ -101,8 +107,8 @@ const ProfileHeader = (props: Props) => {
       return;
     } else {
       const wantFollow = { fromUser: currentUserId, toUser: profileUserId };
-      await follow(wantFollow);
-      followingMsgFunc();
+      const data = await follow(wantFollow).unwrap();
+      followingMsgFunc(data.message);
       return;
     }
   };

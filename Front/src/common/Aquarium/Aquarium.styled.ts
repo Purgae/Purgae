@@ -1,6 +1,6 @@
 import { styled } from "@/styles/theme";
 import { keyframes } from "@/styles/theme-components";
-import { CubeProps, FishProps, BubbleType, StyledBubbleType } from "./Aquarium.types";
+import { CubeProps, FishProps, StyledBubbleType } from "./Aquarium.types";
 import back from "/assets/aquarium/back.png";
 import side from "/assets/aquarium/side1.png";
 import top from "/assets/aquarium/top.png";
@@ -21,18 +21,6 @@ export const Cube = styled.div<CubeProps>`
   width: 100%;
   height: 100%;
 `;
-
-// export const Cube = styled.div.attrs((props<CubeProps>) => ({
-//   style: {
-//     transform: "perspective(5000px) rotateY(" + props.rotationX + "deg) rotateX(" + rotationY + "deg)",
-//   },
-// }))`
-//   position: relative;
-//   transform-origin: 50%;
-//   transform-style: preserve-3d;
-//   width: 100%;
-//   height: 100%;
-// `;
 
 export const CubeFace = styled.div`
   position: absolute;

@@ -25,9 +25,7 @@ const HowMany = () => {
         setAmountOfTrash(data?.trash);
         const count = await fetchDonateCount();
         setDonateCount(count);
-      } catch (error) {
-        console.error(error);
-      }
+      } catch (error) {}
     })();
   }, []);
 

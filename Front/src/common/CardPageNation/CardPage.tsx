@@ -16,7 +16,7 @@ const CardPage = ({
   selectCardFunc,
 }: React.PropsWithChildren<CardPageProps>) => {
   // * 부모 컴포넌트에서, nft존재하는지 여부 함께 내려주기
-  // const [exist, setExist] = useState<boolean>(false);
+  // * const [exist, setExist] = useState<boolean>(false);
 
   const [selectNumber, setSelectNumber] = useState<number>(0);
   const [selectedList, setSelectedList] = useState<string[]>(nftLst?.slice(0, 12));

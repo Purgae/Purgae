@@ -61,7 +61,6 @@ function SelectNFTProfileModal({ selectImage }: Props) {
       return;
     } else {
       selectImage(myNFTList[selectIdx]);
-      console.log(myNFTList[selectIdx]);
       clickClose();
     }
   };

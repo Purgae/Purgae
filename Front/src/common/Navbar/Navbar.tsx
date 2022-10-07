@@ -15,13 +15,11 @@ import { Outlet } from "react-router";
 import { useState, Fragment, useEffect } from "react";
 import { FlexDiv } from "../Common.styled";
 import { useAppSelector } from "@/hooks/storeHook";
-import { useGetProfileQuery } from "@/redux/api/userApi";
 import ProfileImage from "@/common/ProfileImage/ProfileImage";
 
 const Navbar = () => {
   const [ScrollY, setHeaderColor] = useState(0);
   const [HeaderStatus, setHeaderStatus] = useState(false);
-  // const { data: userData } = useGetProfileQuery(userId);
 
   const userData = useAppSelector((state) => state.user.user);
   const userId = userData?.id;

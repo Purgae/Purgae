@@ -80,13 +80,15 @@ PC환경으로 제작되었습니다. 반응형 페이지가 적용되어 있습
 
 ## 4. 프로젝트 소개
 
+|                         메인 수족관                          |                             메인                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![purgae_1_welcome](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_1_welcome.gif) | ![purgae_2_main](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_2_main.gif) |
+
 ### 초기 접속 페이지(수족관)
 
 - 수족관이 보이고, 오늘 기부한 후 발급된 해양생물 NFT가 떠다닌다.
 - 음악을 재생할 수 있고, 배경을 누르면 물방울이 올라간다.
 - 프로필에서 접속하는 개인수족관은 개인이 기부한 후 발급받은 NFT가 보인다.
-
-<br>
 
 ### 메인페이지
 
@@ -95,6 +97,12 @@ PC환경으로 제작되었습니다. 반응형 페이지가 적용되어 있습
 
 <br>
 
+---
+
+|                            로그인                            |                 로그인 (네트워크가 다를 시)                  |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![purgae_3_login](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_3_login.gif) | ![purgae_3_1_login](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_3_1_login.gif) |
+
 ### 로그인
 
 - 메타마스크를 이용하여 고릴 네트워크로 연결할 수 있다. 초기 렌덤 닉네임이 발급된다.
@@ -102,27 +110,31 @@ PC환경으로 제작되었습니다. 반응형 페이지가 적용되어 있습
 
 <br>
 
+---
+
+|                           기부하기                           |                             랭킹                             |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![purgae_4_donate](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_4_donate.gif) | ![purgae_6_ranking](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_6_ranking.gif) |
+
 ### 기부
 
 - 최소 0.005ETH를 기부할 수 있고, 기부한 금액으로 몇kg의 쓰레기를 치웠는지 볼 수 있다.
 - 기부를 누르게되면, 메타마스크 창이 열리고 거래가 진행된다. 기부된 금액은 100% 기부되며, opensea에서 재판매시 금액의 10%가 푸르게 서비스로 기부된다.
 - 도감상세를 누르면 제공되는 해양생물 NFT종류를 볼 수 있고,발급된 NFT는 프로필페이지에서 볼 수 있다.
 
-<br>
 
-### 프로필
+### 랭킹
 
-**개인정보 수정**
-
-- 프로필 페이지에서 내 NFT를 등록할 수 있고, 초기 발급받은 랜덤 닉네임이 수정 가능하다.
-- 유효성 검사, 닉네임 글자수 제한이 되어있다.
-
-**프로필 팔로우 및 도감**
-
-- 다른 사용자의 프로필을 팔로우, 팔로우 해제할 수 있으며 리스트에서 볼 수 있다.
-- 기부를 통해 발급받은 NFT를 도감으로 볼 수 있고, NFT를 클릭하면 도감 상세를 확인할 수 있다.
+- 팔로워, 게임랭킹을 볼 수 있다.
+- web3를 통해 NFT기부 횟수, 기부횟수에 따른 쓰레기를 치운 횟수를 볼 수 있다.
 
 <br>
+
+---
+
+|                        게임 (플레이)                         |                       게임 (공유하기)                        |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![purgae_5_game](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_5_game.gif) | ![purgae_5_2_game](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_5_2_game.gif) |
 
 ### 게임
 
@@ -131,12 +143,31 @@ PC환경으로 제작되었습니다. 반응형 페이지가 적용되어 있습
 
 <br>
 
-### 랭킹
+---
 
-- 팔로워, 게임랭킹을 볼 수 있다.
-- web3를 통해 NFT기부 횟수, 기부횟수에 따른 쓰레기를 치운 횟수를 볼 수 있다.
+| 프로필                                                       | 프로필 (개인 정보 수정)                                      |
+| ------------------------------------------------------------ | ------------------------------------------------------------ |
+| ![purgae_8_1_profile](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_8_1_profile.gif) | ![purgae_9_profile](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_9_profile.gif) |
+
+### 프로필
+
+**프로필 팔로우 및 도감**
+
+- 다른 사용자의 프로필을 팔로우, 팔로우 해제할 수 있으며 리스트에서 볼 수 있다.
+- 기부를 통해 발급받은 NFT를 도감으로 볼 수 있고, NFT를 클릭하면 도감 상세를 확인할 수 있다.
+
+**개인정보 수정**
+
+- 프로필 페이지에서 내 NFT를 등록할 수 있고, 초기 발급받은 랜덤 닉네임을 수정할 수 있다. 
+- 유효성 검사, 닉네임 글자수 제한이 되어있다.
 
 <br>
+
+---
+
+|                             FAQ                              |                             FAQ                              |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| ![purgae_7_FAQ](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_7_FAQ.gif) | ![purgae_7_1_FAQ](https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_7_1_FAQ.gif) |
 
 ### 자주 묻는 질문
 

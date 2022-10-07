@@ -14,7 +14,7 @@ PC환경으로 제작되었습니다. 반응형 페이지가 적용되어 있습
 
 ### 심각한 환경 문제 중 하나인 해양 쓰레기를 처리하기 위한 기부 사이트 입니다.
 
-<img src="https://raw.githubusercontent.com/JaeKP/image_repo/main/img/purgae_4.png" alt="purgae_4" style="zoom: 50%;" /> 
+<img src="https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221007120023186.png" alt="purgae_4" style="zoom: 50%;" /> 
 
 > 기존에 단순히 성금 모금과 전달에 머물렀던 기부 서비스를 NFT와 결합하여 기부자에게 새로운 재미와 보람을 제공합니다.
 

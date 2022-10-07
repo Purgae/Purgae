@@ -1,6 +1,6 @@
  # NFT를 통한 투명한 해양 기부 서비스, 푸르게
 
-<img src="https://raw.githubusercontent.com/JaeKP/image_repo/main/img/logo.png" alt="logo" style="zoom:20%;" /> 
+<img src="https://raw.githubusercontent.com/JaeKP/image_repo/main/img/image-20221007115830334.png" alt="logo"/> 
 
 ### 🌊 https://purgae.net/
 

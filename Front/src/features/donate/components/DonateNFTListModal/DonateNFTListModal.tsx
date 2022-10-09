@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 //* 컴포넌트
 import {
   StyledNFTListModalContainer,
@@ -5,6 +7,7 @@ import {
   StyledNFTListModalCard,
   StyledNFTListImg,
   StyledNFTListContent,
+  StyledNFTListModalShadow,
 } from "./DonateNFTListModal.styled";
 import { FontP, FlexShadowDiv, FlexDiv } from "@/common/Common.styled";
 
@@ -70,16 +73,29 @@ const DonateNFTListModal = () => {
     event.stopPropagation();
   };
 
+  //* 외부 스크롤 막기
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = "";
+      window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
+    };
+  }, []);
+
   return (
     <StyledNFTListModalContainer onClick={() => dispatch(offNFTListModalStatus())}>
-      <FlexShadowDiv
+      <StyledNFTListModalShadow
         direction="column"
         gap="3rem"
-        width="70%"
+        width="80%"
         shadow="shadow700"
         padding="2rem"
         bgColor="mainWhite"
-        style={{ maxWidth: "70rem" }}
         borderRadius="0.5rem"
       >
         <FlexDiv direction="column" gap="0.8rem">
@@ -103,7 +119,7 @@ const DonateNFTListModal = () => {
             </StyledNFTListModalCard>
           ))}
         </StyleNFTListModalBox>
-      </FlexShadowDiv>
+      </StyledNFTListModalShadow>
     </StyledNFTListModalContainer>
   );
 };

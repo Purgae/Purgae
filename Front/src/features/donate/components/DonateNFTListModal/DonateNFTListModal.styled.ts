@@ -1,5 +1,5 @@
 import { styled } from "@/styles/theme";
-import { FlexDiv } from "@/common/Common.styled";
+import { FlexDiv, FlexShadowDiv } from "@/common/Common.styled";
 
 export const StyledNFTListModalContainer = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
@@ -10,6 +10,23 @@ export const StyledNFTListModalContainer = styled.div`
   min-height: 100%;
   background-color: ${({ theme }) => theme.colors.mainModalBg};
   padding-top: 4rem;
+  overflow-y: auto;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    padding-top: 2rem;
+  }
+`;
+
+export const StyledNFTListModalShadow = styled(FlexShadowDiv)`
+  max-width: 70rem;
+  position: absolute;
+  top: 4rem;
+
+  @media ${({ theme }) => theme.sizes.tablet} {
+    position: relative;
+    top: 0rem;
+    width: 70%;
+  }
 `;
 
 export const StyleNFTListModalBox = styled.div`
@@ -19,13 +36,21 @@ export const StyleNFTListModalBox = styled.div`
   justify-content: center;
   align-items: center;
   align-content: center;
-  row-gap: 3rem;
+  row-gap: 1rem;
   column-gap: 2rem;
   width: 100%;
   border-radius: 1rem;
   font-size: 1rem;
 
   @media ${({ theme }) => theme.sizes.tablet} {
+    width: 80%;
+    row-gap: 3rem;
+    column-gap: 2rem;
+    grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+  }
+
+  @media ${({ theme }) => theme.sizes.pc} {
+    width: 80%;
     grid-template-columns: repeat(auto-fill, minmax(20%, auto));
   }
 `;

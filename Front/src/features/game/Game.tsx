@@ -93,7 +93,9 @@ const Game = () => {
             setGameScore={setGameScore}
           />
         )}
-        {gamePage === 3 && <GameResult setGamePage={setGamePage} gameScore={99} toggleSound={toggleGameButton} />}
+        {gamePage === 3 && (
+          <GameResult setGamePage={setGamePage} gameScore={gameScore} toggleSound={toggleGameButton} />
+        )}
         {gamePage === 4 && <GameDesc setGamePage={setGamePage} toggleSound={toggleGameButton} />}
         {gamePage === 5 && <GameRanking setGamePage={setGamePage} toggleSound={toggleGameButton} />}
       </StyledGameContainer>

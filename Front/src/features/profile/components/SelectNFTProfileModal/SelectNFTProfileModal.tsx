@@ -61,7 +61,6 @@ function SelectNFTProfileModal({ selectImage }: Props) {
       return;
     } else {
       selectImage(myNFTList[selectIdx]);
-      console.log(myNFTList[selectIdx]);
       clickClose();
     }
   };
@@ -77,6 +76,7 @@ function SelectNFTProfileModal({ selectImage }: Props) {
 
   useEffect(() => {
     setSelectedList(myNFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
+    setSelectIdx(null);
   }, [selectNumber]);
 
   return (

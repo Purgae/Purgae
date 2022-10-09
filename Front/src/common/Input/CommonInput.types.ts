@@ -1,5 +1,3 @@
-import { PayloadAction } from "@reduxjs/toolkit";
-
 //* props types
 export interface CommonInputProps {
   // input과 label을 연결 하는 id 값

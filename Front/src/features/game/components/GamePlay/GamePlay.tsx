@@ -156,7 +156,6 @@ const GamePlay = ({ setGamePage, gameCharacter, toggleSound, gameScore, setGameS
     const { width, height } = canvas.getBoundingClientRect();
 
     debounce = setTimeout(() => {
-      console.log("조정");
       setWidth(width * 1.2);
       setHeight(height * 1.2);
     }, 1000);

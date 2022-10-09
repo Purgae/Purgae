@@ -1,5 +1,5 @@
 import { styled } from "@/styles/theme";
-import { FlexDiv, FontP, FlexShadowDiv } from "@/common/Common.styled";
+import { FlexDiv, FontP } from "@/common/Common.styled";
 
 export const StyledGameRankingContainer = styled(FlexDiv)`
   border: 0.2rem dashed ${({ theme }) => theme.colors.lightBlue800};

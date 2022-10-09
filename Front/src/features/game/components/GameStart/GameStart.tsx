@@ -36,6 +36,7 @@ const GameStart = ({ setGamePage, toggleSound, turnOnGameBGM, setGameCharacter }
 
   useEffect(() => {
     setSelectedList(NFTList.slice(selectNumber * 12, selectNumber * 12 + 12));
+    setGameCharacter(littleproomy_pink);
   }, [selectNumber]);
 
   //* 데이터 fetch

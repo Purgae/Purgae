@@ -1,5 +1,5 @@
 import { styled } from "@/styles/theme";
-import { FlexShadowDiv, FlexDiv } from "@/common/Common.styled";
+import { FlexDiv } from "@/common/Common.styled";
 
 export const StyledNFTListModalContainer = styled.div`
   ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};

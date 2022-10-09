@@ -1,5 +1,5 @@
 import useFetchNFT from "@/hooks/useFetchNFT";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Background, Image, Group } from "./Card.styled";
 import { CardProps, CardGroupProps } from "./Card.types";
@@ -31,8 +31,13 @@ const CardGroup = ({
   const { changeMetaToLink } = useFetchNFT();
   const profileUserId = Number(useParams().userId);
 
-  const newArr = Array(lst.length).fill(false);
+  let newArr = Array(lst.length).fill(false);
   const [isSelected, setIsSelected] = useState(newArr);
+
+  useEffect(() => {
+    newArr = Array(lst.length).fill(false);
+    setIsSelected(newArr);
+  }, [lst]);
 
   const clickCard = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target instanceof HTMLDivElement) {

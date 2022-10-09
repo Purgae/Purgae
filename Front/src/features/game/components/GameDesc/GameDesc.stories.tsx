@@ -10,6 +10,4 @@ export default {
   },
 } as Meta;
 
-export const Default: Story<GameDescType> = () => (
-  <GameDesc setGamePage={() => console.log("페이지 변경")} toggleSound={() => console.log("사운드")}></GameDesc>
-);
+export const Default: Story<GameDescType> = () => <GameDesc setGamePage={() => {}} toggleSound={() => {}}></GameDesc>;

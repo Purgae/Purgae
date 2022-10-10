@@ -1,7 +1,7 @@
 import { FlexDiv, FontP, RootComponent, StrongSpan } from "@/common/Common.styled";
 import useFetchNFT from "@/hooks/useFetchNFT";
 import styled from "@/styles/theme-components";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 interface RouteState {
   state: {
@@ -12,6 +12,7 @@ interface RouteState {
 const DetailProfileCard = () => {
   const { state } = useLocation() as RouteState;
   const { changeMetaToLink } = useFetchNFT();
+  const navigate = useNavigate();
 
   // *nft정보
   const nftInfo = state?.nftInfo;
@@ -33,8 +34,13 @@ const DetailProfileCard = () => {
 
   const attr = proPerties?.attributes;
 
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
   return (
     <RootComponent>
+      <Icon onClick={handleGoBack}>arrow_back</Icon>
       {nftInfo ? (
         <Base>
           <Img url={changeMetaToLink(proPerties.image.description)} />
@@ -87,7 +93,6 @@ const Base = styled.div`
   color: ${({ theme }) => theme.colors.mainParagraph};
   box-shadow: ${({ theme }) => theme.shadows.shadow700};
   border-radius: 1rem;
-
   @media ${({ theme }) => theme.sizes.tablet} {
     ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
     width: 50rem;
@@ -141,7 +146,7 @@ const TitleP = styled.p`
 `;
 
 const BoxLeft = styled.div`
-  ${({ theme }) => theme.mixins.flexBox("column", "center", "start")};
+  ${({ theme }) => theme.mixins.flexBox("column", "start", "start")};
   height: 100%;
   width: 30%;
 `;
@@ -157,4 +162,16 @@ const BoxRight = styled.div`
   height: 100%;
   width: 70%;
   gap: 1rem;
+`;
+
+const Icon = styled.i.attrs(() => ({ className: "material-icons" }))`
+  position: fixed;
+  color: ${({ theme }) => theme.colors.gray100};
+  top: 4.5rem;
+  left: 1%;
+  width: 1.7rem;
+  height: 1.7rem;
+  cursor: pointer;
+  border: 1px dashed;
+  border-radius: 1rem;
 `;

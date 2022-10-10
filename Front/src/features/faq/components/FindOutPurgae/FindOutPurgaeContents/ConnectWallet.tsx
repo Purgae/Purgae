@@ -35,7 +35,7 @@ const ConnectWallet = () => {
         <br />
         푸르게 서비스에서는 <FaqLink to="/login">로그인 페이지</FaqLink> 에서 지갑을 연결할 수 있습니다.
         <br />
-        로그인 페이지에서 MeTaMask 버튼을 눌러주세요!
+        로그인 페이지에서 MetaMask 버튼을 눌러주세요!
       </StartPurgaeText>
       <StartPurgaeText weight="600" size="1.3rem">
         <br />
@@ -44,13 +44,13 @@ const ConnectWallet = () => {
       <StartPurgaeText weight="500" size="1rem">
         푸르게 서비스에 다른 계정으로 연결하고 싶다면,
         <br />
-        계정과 사이트의 연결을 해제해주어야 해요.
+        계정과 사이트의 연결을 해제해 주어야 해요.
       </StartPurgaeText>
       <ContentImage src="/assets/faq/connect_wallet.png" />
       <StartPurgaeText weight="500" size="1rem">
-        위 사진의 <Empasis>연결됨</Empasis>을 눌러서 연결을 해제해주세요!
+        위 사진의 <Empasis>연결됨</Empasis>을 눌러서 연결을 해제해 주세요!
         <br />
-        그 후 메타마스크에서 계정을 바꾸고 로그인하면,
+        그 후 MetaMask에서 계정을 바꾸고 로그인하면,
         <br />
         축하합니다! 새로운 계정으로 로그인을 성공했어요 🎉
       </StartPurgaeText>

@@ -4,7 +4,7 @@ import { FlexDiv } from "@/common/Common.styled";
 export const RankingBackground = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 4rem 0rem 10rem 0rem;
+  padding: 4rem 0rem 3rem 0rem;
   background-color: ${({ theme }) => theme.colors.white100};
   min-height: 100vh;
 `;
@@ -24,12 +24,12 @@ export const RankingRootComponent = styled.div`
   align-items: center;
   width: 100%;
   min-height: 100vh;
-  padding: 10rem 1rem 1rem;
+  padding: 0rem 0rem 1rem 1rem;
   gap: 8rem;
   background-color: ${({ theme }) => theme.colors.white100};
 
   @media screen and (min-width: 1350px) {
-    padding: 10rem 6rem 1rem;
+    padding: 4rem 6rem 1rem;
   } ;
 `;
 

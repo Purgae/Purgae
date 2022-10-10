@@ -25,7 +25,7 @@ export const Description = styled.div<{ isDisplay: boolean }>`
   position: fixed;
   transform: translate(-50%);
   z-index: 3;
-  font-size: 1.25rem;
+  font-size: 0.7rem;
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
   cursor: default;
@@ -37,6 +37,9 @@ export const Description = styled.div<{ isDisplay: boolean }>`
   animation: ${FadeInAnimation} 1s;
   width: fit-content;
   font-family: "UhBeeSe_hyun";
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 1.25rem;
+  }
 `;
 
 export const Icon = styled.i.attrs(() => ({ className: "material-icons" }))`

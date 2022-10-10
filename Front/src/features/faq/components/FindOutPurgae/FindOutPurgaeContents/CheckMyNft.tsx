@@ -42,7 +42,7 @@ const CheckMyNft = () => {
         <br /> 기부금이 부족하다면,
         <br />
         <FaqLink to="/faq/1">이더리움 받기</FaqLink> 에서 어떻게 기부금을 받는지 알 수 있어요!
-        <br /> 기부가 완료되었다는 메타마스크 알림을 받으셨나요?
+        <br /> 기부가 완료되었다는 MetaMask 알림을 받으셨나요?
       </StartPurgaeText>
       <StartPurgaeText weight="600" size="1.1rem">
         <br />
@@ -55,14 +55,14 @@ const CheckMyNft = () => {
       </StartPurgaeText>
       <StartPurgaeText weight="600" size="1.1rem">
         <br />
-        3. 오픈씨에서 확인하기
+        3. Opensea에서 확인하기
       </StartPurgaeText>
       <ContentImage src="/assets/faq/faq_opensea.png" />
       <StartPurgaeText weight="500" size="1rem">
         <Empasis>짜잔</Empasis>🎉 방금 기부하고 받은 NFT를 우리 서비스가 아닌
         <br />
-        <FaqExternalLink href="https://testnets.opensea.io/">오픈씨 테스트넷</FaqExternalLink>에서도 볼 수 있어요!
-        <br /> 오픈씨에서 판매도 가능하답니다!
+        <FaqExternalLink href="https://testnets.opensea.io/">Opensea Testnet</FaqExternalLink>에서도 볼 수 있어요!
+        <br /> Opensea에서 판매도 가능하답니다!
         <br /> 다만, 판매했을 때 10%의 기부금이 자동으로 푸르게로 기부되어요 🤗
       </StartPurgaeText>
     </ContentWrapper>

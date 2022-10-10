@@ -39,7 +39,8 @@ const Description = styled.div<{ isDisplay: boolean }>`
   position: fixed;
   transform: translate(-50%);
   z-index: 3;
-  font-size: 1.25rem;
+  font-size: 0.7rem;
+  line-height: 1rem;
   font-weight: ${({ theme }) => theme.fontWeights.regular};
   color: ${({ theme }) => theme.colors.white};
   cursor: default;
@@ -51,6 +52,9 @@ const Description = styled.div<{ isDisplay: boolean }>`
   animation: ${FadeInAnimation} 1s;
   width: fit-content;
   font-family: "UhBeeSe_hyun";
+  @media ${({ theme }) => theme.sizes.tablet} {
+    font-size: 1.25rem;
+  }
 `;
 
 export const Description1 = styled(Description)`
@@ -61,9 +65,13 @@ export const Description1 = styled(Description)`
 export const Description2 = styled(Description)`
   left: 80%;
   top: 40%;
+  text-align: center;
 `;
 
 export const Description3 = styled(Description)`
-  left: 3.25rem;
+  left: 2rem;
   top: 88.5%;
+  @media ${({ theme }) => theme.sizes.tablet} {
+    left: 4rem;
+  }
 `;

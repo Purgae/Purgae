@@ -19,6 +19,7 @@ import useFetchNFT from "@/hooks/useFetchNFT";
 import { selectModal, openEditProfile } from "@/redux/slices/modalSlice";
 import { useAppDispatch } from "@/hooks/storeHook";
 import EditProfileModal from "@/features/profile/components/EditProfileModal/EditProfileModal";
+import { relative } from "path";
 
 type Props = {
   data?: UserProfile;
@@ -191,56 +192,60 @@ const ProfileHeader = (props: Props) => {
         {/* 3 */}
         <FlexDiv3>
           {/* 3-1 */}
-          <FlexDiv direction="column" gap="0.5rem">
+          <FlexDiv direction="column" gap="0.5rem" align="flex-start" style={{ position: "relative" }}>
             {/* 상 */}
-            <FlexDiv>
-              <Icon url={TrashCan} />
-              <FontP fontSize="1.125rem" fontWeight="semiBold">
-                치운 쓰레기양
-              </FontP>
-            </FlexDiv>
+            <Icon url={TrashCan} />
+            <FontP fontSize="1.125rem" fontWeight="semiBold">
+              치운 쓰레기양
+            </FontP>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
               {trashMount} kg
             </FontP>
           </FlexDiv>
           {/* 3-2 */}
-          <FlexDiv direction="column" gap="0.5rem">
+          <FlexDiv direction="column" gap="0.5rem" align="flex-start" style={{ position: "relative" }}>
             {/* 상 */}
-            <FlexDiv>
-              <Icon url={Phishing} />
-              <FontP fontSize="1.125rem" fontWeight="semiBold">
-                바다 친구들
-              </FontP>
-            </FlexDiv>
+            <Icon url={Phishing} />
+            <FontP fontSize="1.125rem" fontWeight="semiBold">
+              바다 친구들
+            </FontP>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
               {nfts.length} 마리
             </FontP>
           </FlexDiv>
           {/* 3-3 */}
-          <FlexDivButton direction="column" gap="0.5rem" onClick={handleModalFollower}>
+          <FlexDivButton
+            direction="column"
+            gap="0.5rem"
+            align="flex-start"
+            onClick={handleModalFollower}
+            style={{ position: "relative" }}
+          >
             {/* 상 */}
-            <FlexDiv>
-              <Icon url={WaterDrop} />
-              <FontP fontSize="1.125rem" fontWeight="semiBold">
-                팔로워
-              </FontP>
-            </FlexDiv>
+            <Icon url={WaterDrop} />
+            <FontP fontSize="1.125rem" fontWeight="semiBold">
+              팔로워
+            </FontP>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
               {userFollowerCnt} 명
             </FontP>
           </FlexDivButton>
           {/* 3-4 */}
-          <FlexDivButton direction="column" gap="0.5rem" onClick={handleModalFollowing}>
+          <FlexDivButton
+            direction="column"
+            gap="0.5rem"
+            align="flex-start"
+            onClick={handleModalFollowing}
+            style={{ position: "relative" }}
+          >
             {/* 상 */}
-            <FlexDiv>
-              <Icon url={WaterDrop} />
-              <FontP fontSize="1.125rem" fontWeight="semiBold">
-                팔로잉
-              </FontP>
-            </FlexDiv>
+            <Icon url={WaterDrop} />
+            <FontP fontSize="1.125rem" fontWeight="semiBold">
+              팔로잉
+            </FontP>
             {/* 하 */}
             <FontP fontSize="1.125rem" fontWeight="semiBold">
               {userFollowingCnt} 명
@@ -274,22 +279,26 @@ const ProfileHeader = (props: Props) => {
 export default ProfileHeader;
 
 const ProfileHeaderStyled = styled(FlexDiv)`
-  ${({ theme }) => theme.mixins.flexBox("column", "center", "space-between")};
+  ${({ theme }) => theme.mixins.flexBox("column", "center", "center")};
   position: relative;
   box-shadow: ${({ theme }) => theme.shadows.shadow600};
   background-color: ${({ theme }) => theme.colors.white};
-  padding: 2rem 2.5rem;
   border-radius: 1rem;
+  padding: 2rem 1rem;
   width: 90%;
   transition: all 0.5s ease-out;
-  @media screen and (min-width: 76.6875rem) {
+  @media ${({ theme }) => theme.sizes.pc} {
     ${({ theme }) => theme.mixins.flexBox("row", "center", "space-between")};
+    padding: 2rem 2rem 2rem 3rem;
     max-width: 76.6875rem;
     width: 100%;
   }
 `;
 
 const Icon = styled.div<{ url: string }>`
+  position: absolute;
+  top: -0.25rem;
+  left: -2.25rem;
   width: 2rem;
   height: 2rem;
   background-image: url(${(props) => props.url});
@@ -313,16 +322,26 @@ const StyledAbsoluteIcon = styled.button`
 `;
 
 const FlexDiv3 = styled.div`
-  ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
-  flex-wrap: wrap;
-  gap: 2.5rem;
-  width: 22rem;
-  height: 13rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(40%, auto));
+  justify-items: left;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
   row-gap: 1rem;
+  column-gap: 2rem;
+  width: 95%;
+  margin-left: 25%;
+
   @media ${({ theme }) => theme.sizes.tablet} {
-    ${({ theme }) => theme.mixins.flexBox("row", "center", "center")};
+    display: flex;
+    gap: 6rem;
     height: 5.75rem;
     width: 40rem;
-    gap: 2.5rem;
+    margin-left: 10%;
+  }
+
+  @media ${({ theme }) => theme.sizes.pc} {
+    margin-left: 2rem;
   }
 `;

@@ -10,6 +10,7 @@ const ContentWrapper = styled.div`
 
 const Empasis = styled.span`
   font-weight: 700;
+  word-break: break-all;
 `;
 
 const FindOutFee = () => {

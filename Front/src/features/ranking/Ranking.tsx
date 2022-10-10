@@ -7,6 +7,7 @@ import {
   RankingSpeechBubble,
 } from "./Ranking.styled";
 import RankingList from "./components/RankingList/RankingList";
+import TopButton from "@/common/TopButton/TopButton";
 
 type Props = {};
 
@@ -24,6 +25,7 @@ const Ranking = (props: Props) => {
           <RankingList />
         </RankingRootComponent>
       </RankingBackground>
+      <TopButton />
     </>
   );
 };

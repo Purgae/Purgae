@@ -37,7 +37,7 @@ export const RankingContentWrapper = styled.div`
   grid-template-columns: 35rem 35rem;
   grid-template-rows: 1fr;
   column-gap: 4rem;
-  padding-bottom: 6rem;
+  padding-bottom: 2rem;
   @media screen and (max-width: 1350px) {
     grid-template-columns: 35rem;
     grid-template-rows: 1fr;

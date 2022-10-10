@@ -25,9 +25,13 @@ const GameResult = ({ setGamePage, gameScore, toggleSound }: GameResultType) => 
 
   //* 게임 점수가 0부터 점점 증가한다.
   useEffect(() => {
+    const step = Math.ceil(gameScore / 100);
     const interval = setInterval(() => {
-      if (score.current >= gameScore) return;
-      score.current++;
+      if (score.current + step >= gameScore) {
+        setResult(gameScore);
+        return;
+      }
+      score.current += step;
       setResult(score.current);
     }, 10);
     return () => clearInterval(interval);
